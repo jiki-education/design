@@ -75,12 +75,16 @@
             padding: 1.5rem;
             transition: all 0.3s ease;
             background: #fafafa;
+            text-decoration: none;
+            display: block;
+            color: inherit;
         }
 
         .design-card:hover {
             border-color: #3498db;
             box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
             transform: translateY(-2px);
+            cursor: pointer;
         }
 
         .design-card h3 {
@@ -92,23 +96,7 @@
         .design-card p {
             color: #7f8c8d;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .design-card a {
-            display: inline-block;
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border: 1px solid #3498db;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .design-card a:hover {
-            background: #3498db;
-            color: #fff;
+            margin-bottom: 0;
         }
 
         .empty-state {
@@ -151,59 +139,14 @@
             <h2>Authentication & Onboarding</h2>
             <p class="section-description">Login, signup, and user onboarding flows</p>
             <div class="design-grid">
-                <div class="design-card">
+                <a href="login.html" class="design-card">
                     <h3>Login Page</h3>
                     <p>Main login page with email/password and Google sign-in options. Features split-screen design with branded gradient panel.</p>
-                    <a href="login.html">View Design</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dashboard & Main Views -->
-        <section class="section">
-            <h2>Dashboard & Main Views</h2>
-            <p class="section-description">Primary application dashboards and main interfaces</p>
-            <div class="design-grid">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📊</div>
-                    <p>No designs in this section yet</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Forms & Data Entry -->
-        <section class="section">
-            <h2>Forms & Data Entry</h2>
-            <p class="section-description">Form layouts, input screens, and data collection interfaces</p>
-            <div class="design-grid">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📝</div>
-                    <p>No designs in this section yet</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Settings & Configuration -->
-        <section class="section">
-            <h2>Settings & Configuration</h2>
-            <p class="section-description">User settings, preferences, and configuration pages</p>
-            <div class="design-grid">
-                <div class="empty-state">
-                    <div class="empty-state-icon">⚙️</div>
-                    <p>No designs in this section yet</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Components & Patterns -->
-        <section class="section">
-            <h2>Components & Patterns</h2>
-            <p class="section-description">Reusable UI patterns, modals, navigation, and component compositions</p>
-            <div class="design-grid">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🧩</div>
-                    <p>No designs in this section yet</p>
-                </div>
+                </a>
+                <a href="signup.html" class="design-card">
+                    <h3>Sign Up Page</h3>
+                    <p>User registration page with email/password and Google sign-up options. Matches login page design with appropriate copy changes.</p>
+                </a>
             </div>
         </section>
 
