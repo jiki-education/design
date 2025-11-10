@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Getting Started
+
+**Before working on any tasks, always read `README.md` in the repository root.** This provides an overview of the repository structure and links to key resources.
+
 ## Repository Purpose
 
 This repository is used to create HTML design mockups that will later be implemented by a front-end developer. All designs are static HTML files with inline CSS that demonstrate the visual design and layout.
