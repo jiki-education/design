@@ -96,96 +96,112 @@
 /* Field Wrapper - Large */
 .ui-form-field-large {
     position: relative;
+
+    /* Label - Large */
+    & > label {
+        display: block;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-gray-700);
+        margin-bottom: 8px;
+        transition: color 0.3s ease;
+    }
+
+    &:focus-within > label {
+        color: var(--color-primary-500);
+    }
+
+    /* Input Wrapper - Large */
+    & > div {
+        position: relative;
+
+        /* Input with icon has extra left padding */
+        &:has(svg) input {
+            padding-left: 48px;
+        }
+
+        /* Icon focus behavior */
+        &:focus-within svg:first-of-type {
+            opacity: 0;
+        }
+
+        &:focus-within svg:last-of-type {
+            opacity: 1;
+        }
+    }
+
+    /* Input - Large */
+    & input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--color-gray-200);
+        border-radius: 12px;
+        font-size: 16px;
+        background: white;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+    }
+
+    /* Icons - Large (Optional) */
+    & svg {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+
+        &:first-of-type {
+            opacity: 1;
+        }
+
+        &:last-of-type {
+            opacity: 0;
+        }
+    }
+
+    /* Error Message */
+    & .ui-form-field-error-message {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-error-500);
+        margin-top: 4px;
+    }
+
+    /* Error state */
+    &.ui-form-field-error input {
+        border-color: var(--color-error-500);
+        animation: ui-shake 0.5s;
+
+        &:focus {
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+    }
 }
 
-/* Label - Large */
-.ui-form-field-label-large {
-    display: block;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-gray-700);
-    margin-bottom: 8px;
-    transition: color 0.3s ease;
-}
+/* ========================================
+   LINK COMPONENTS
+   ======================================== */
 
-.ui-form-field-large:focus-within .ui-form-field-label-large {
+.ui-link {
     color: var(--color-primary-500);
+    text-decoration: none;
+    font-weight: 500;
 }
 
-/* Input Wrapper - Large */
-.ui-form-field-input-wrapper-large {
-    position: relative;
-}
-
-/* Input - Large */
-.ui-form-field-input-large {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid var(--color-gray-200);
-    border-radius: 12px;
-    font-size: 16px;
-    background: white;
-    transition: all 0.3s ease;
-}
-
-/* Input with icon has extra left padding */
-.ui-form-field-input-large.ui-form-field-input-with-icon {
-    padding-left: 48px;
-}
-
-.ui-form-field-input-large:hover {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-}
-
-.ui-form-field-input-large:focus {
-    outline: none;
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-}
-
-/* Error state */
-.ui-form-field-large.ui-form-field-error .ui-form-field-input-large {
-    border-color: var(--color-error-500);
-    animation: ui-shake 0.5s;
-}
-
-.ui-form-field-large.ui-form-field-error .ui-form-field-input-large:focus {
-    border-color: var(--color-primary-500);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-}
-
-/* Icons - Large (Optional) */
-.ui-form-field-icon-large {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.ui-form-field-icon-grey {
-    opacity: 1;
-}
-
-.ui-form-field-icon-blue {
-    opacity: 0;
-}
-
-.ui-form-field-input-wrapper-large:focus-within .ui-form-field-icon-grey {
-    opacity: 0;
-}
-
-.ui-form-field-input-wrapper-large:focus-within .ui-form-field-icon-blue {
-    opacity: 1;
-}
-
-/* Error Message */
-.ui-form-field-error-message {
-    font-size: 14px;
-    color: var(--color-error-500);
-    margin-top: 4px;
+.ui-link:hover {
+    text-decoration: underline;
 }
