@@ -25,7 +25,7 @@
    ======================================== */
 
 /* Button Base Styles - Large Size */
-.btn-large {
+.ui-btn-large {
     padding: 16px 20px;
     border: 2px solid;
     border-radius: 12px;
@@ -43,27 +43,27 @@
 }
 
 /* Primary Button */
-.btn-primary {
+.ui-btn-primary {
     border-color: var(--color-primary-500);
     color: white;
     background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
     box-shadow: 0 2px 8px var(--color-primary-shadow);
 }
 
-.btn-primary:hover {
+.ui-btn-primary:hover {
     border-color: var(--color-primary-600);
     box-shadow: 0 0 0 4px var(--color-primary-shadow-hover), 0 4px 16px rgba(59, 130, 246, 0.4);
 }
 
 /* Secondary Button */
-.btn-secondary {
+.ui-btn-secondary {
     border-color: var(--color-gray-200);
     color: var(--color-gray-800);
     background: white;
     box-shadow: 0 2px 8px var(--color-shadow-subtle);
 }
 
-.btn-secondary:hover {
+.ui-btn-secondary:hover {
     border-color: var(--color-primary-500);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 16px rgba(59, 130, 246, 0.2);
 }
