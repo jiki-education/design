@@ -62,6 +62,12 @@ The `ui-kit/` folder contains the design system:
 - Include comments in HTML to explain design decisions or component usage
 - Demonstrate different states (hover, active, disabled) using multiple examples rather than JavaScript
 
+### CSS Styling Rules
+
+- **Inline styles by default**: Use inline `style=""` attributes for all styling unless the class is used in multiple places
+- **Create classes only for reuse**: Only define CSS classes in `<style>` tags when the same styles are applied to multiple elements
+- **Exception for UI Kit**: UI Kit components (`.ui-*` classes) should always use classes, not inline styles
+
 ## File Organization
 
 - Keep each design as a single HTML file with inline styles for easy sharing
