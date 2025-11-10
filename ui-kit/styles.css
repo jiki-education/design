@@ -3,6 +3,17 @@
    ======================================== */
 
 /* ========================================
+   GLOBAL STYLES
+   ======================================== */
+
+.ui-body,
+.ui-body * {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
    CSS VARIABLES - COLOR PALETTE
    ======================================== */
 :root {
@@ -12,7 +23,11 @@
 
     /* Neutral Colors */
     --color-gray-200: #e2e8f0;
+    --color-gray-700: #2d3748;
     --color-gray-800: #1a365d;
+
+    /* Error Colors */
+    --color-error-500: #ef4444;
 
     /* Shadow Colors */
     --color-primary-shadow: rgba(59, 130, 246, 0.3);
@@ -33,7 +48,6 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -66,4 +80,112 @@
 .ui-btn-secondary:hover {
     border-color: var(--color-primary-500);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 16px rgba(59, 130, 246, 0.2);
+}
+
+/* ========================================
+   FORM FIELD COMPONENTS
+   ======================================== */
+
+/* Shake animation for error state */
+@keyframes ui-shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+}
+
+/* Field Wrapper - Large */
+.ui-form-field-large {
+    position: relative;
+}
+
+/* Label - Large */
+.ui-form-field-label-large {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.ui-form-field-large:focus-within .ui-form-field-label-large {
+    color: var(--color-primary-500);
+}
+
+/* Input Wrapper - Large */
+.ui-form-field-input-wrapper-large {
+    position: relative;
+}
+
+/* Input - Large */
+.ui-form-field-input-large {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--color-gray-200);
+    border-radius: 12px;
+    font-size: 16px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+/* Input with icon has extra left padding */
+.ui-form-field-input-large.ui-form-field-input-with-icon {
+    padding-left: 48px;
+}
+
+.ui-form-field-input-large:hover {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.ui-form-field-input-large:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* Error state */
+.ui-form-field-large.ui-form-field-error .ui-form-field-input-large {
+    border-color: var(--color-error-500);
+    animation: ui-shake 0.5s;
+}
+
+.ui-form-field-large.ui-form-field-error .ui-form-field-input-large:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* Icons - Large (Optional) */
+.ui-form-field-icon-large {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.ui-form-field-icon-grey {
+    opacity: 1;
+}
+
+.ui-form-field-icon-blue {
+    opacity: 0;
+}
+
+.ui-form-field-input-wrapper-large:focus-within .ui-form-field-icon-grey {
+    opacity: 0;
+}
+
+.ui-form-field-input-wrapper-large:focus-within .ui-form-field-icon-blue {
+    opacity: 1;
+}
+
+/* Error Message */
+.ui-form-field-error-message {
+    font-size: 14px;
+    color: var(--color-error-500);
+    margin-top: 4px;
 }
