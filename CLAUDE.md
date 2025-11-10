@@ -12,8 +12,10 @@ This repository is used to create HTML design mockups that will later be impleme
 jiki-design/
 ├── designs/          # All design mockups live here as HTML files
 │   ├── index.html       # Catalog page listing all designs by category
+│   ├── login.html       # Example design file
 │   └── README.md        # Guidelines for adding and organizing designs
 ├── ui-kit/          # Design system components and guidelines
+│   ├── styles.css       # Shared CSS with variables and components
 │   ├── components.html  # Visual reference of all UI components
 │   └── README.md       # UI Kit rules and documentation
 ├── experimentation/ # Experimental designs and prototypes (not final)
@@ -71,3 +73,59 @@ The `experimentation/` folder is for exploratory work:
 - Files can be rough, incomplete, or exploratory
 - Once approved, refine experiments and move them to `designs/`
 - See `experimentation/README.md` for detailed guidelines
+
+---
+
+## UI Kit Implementation Details
+
+### Shared Stylesheet (`ui-kit/styles.css`)
+
+All UI Kit components are defined in `ui-kit/styles.css` which should be imported into design files:
+
+```html
+<link rel="stylesheet" href="../ui-kit/styles.css">
+```
+
+**Key Features:**
+- CSS variables for colors (`:root`)
+- CSS nesting for component organization
+- `.ui-body` class for global font and antialiasing
+- All UI Kit classes prefixed with `.ui-` (e.g., `.ui-btn-large`, `.ui-form-field-large`, `.ui-link`)
+
+### Component Structure Philosophy
+
+**Nested Selectors:** UI Kit components use CSS nesting to minimize class requirements in HTML. Elements are styled based on their position within a parent `.ui-` class rather than requiring individual classes.
+
+Example - Form fields only need the parent class:
+```html
+<div class="ui-form-field-large">
+    <label for="email">Email</label>
+    <div>
+        <svg>...</svg>  <!-- Automatically styled -->
+        <svg>...</svg>  <!-- Automatically styled -->
+        <input type="email" id="email">  <!-- Automatically styled -->
+    </div>
+</div>
+```
+
+**See `ui-kit/README.md` for:**
+- Complete color palette with variable names
+- Button variants and sizes
+- Form field structure and states
+- Link styling
+- Component documentation
+
+### Design Tokens
+
+- **Typography**: Poppins font family (applied via `.ui-body` class on `<body>`)
+- **Colors**: All colors use CSS variables (see `ui-kit/styles.css` `:root` section)
+- **Sizing**: Component sizes (Large, etc.) are distinct classes that handle all size-related properties
+- **Variants**: Component variants (Primary, Secondary) are separate classes that handle only color/style differences
+
+### Adding New Components
+
+1. Define styles in `ui-kit/styles.css` using CSS nesting
+2. Add visual examples to `ui-kit/components.html`
+3. Document in `ui-kit/README.md`
+4. Use `.ui-` prefix for all class names
+5. Leverage nesting to minimize required classes in HTML

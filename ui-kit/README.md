@@ -144,6 +144,17 @@ A form field consists of:
 
 **Error Message**
 - Font size: 14px
+- Font weight: 500
 - Color: Error 500
 - Margin top: 4px
 - Only displayed when field has `.ui-form-field-error` class
+
+### Links
+
+**Link Component (`.ui-link`)**
+- Color: Primary 500
+- Text decoration: none
+- Font weight: 500
+- Hover state: underline
+
+**Note**: Font size is not specified - links inherit the font size from their context
