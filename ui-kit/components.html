@@ -4,13 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI Kit - Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
+        /* ========================================
+           PAGE STYLES
+           ======================================== */
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             line-height: 1.6;
+            color: #333;
+        }
+
+        h1 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro {
+            color: #666;
+            margin-bottom: 3rem;
         }
 
         .component-section {
@@ -21,25 +37,109 @@
 
         .component-section h2 {
             color: #333;
-            margin-bottom: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
         }
 
         .component-example {
             background: #f5f5f5;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 8px;
             margin-bottom: 1rem;
+        }
+
+        .component-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .component-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .state-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .state-example {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .state-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Width variants for demonstration */
+        .btn-full-width {
+            width: 100%;
+        }
+
+        .btn-auto-width {
+            width: auto;
         }
     </style>
 </head>
 <body>
     <h1>UI Kit - Components</h1>
-    <p>This page contains the component styles and examples for the design system.</p>
+    <p class="intro">This page contains the component styles and examples for the design system.</p>
 
     <div class="component-section">
         <h2>Buttons</h2>
+
+        <!-- Primary Button - Large -->
         <div class="component-example">
-            <!-- Add button examples here -->
+            <div class="component-title">Primary Button - Large</div>
+            <p class="component-description">
+                Main call-to-action button with gradient background and enhanced hover state.
+                Width is contextual (full-width in forms, auto-width in other contexts).
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <button class="btn-large btn-primary btn-auto-width">Primary Button</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Button - Large -->
+        <div class="component-example">
+            <div class="component-title">Secondary Button - Large</div>
+            <p class="component-description">
+                Secondary action button with white background and subtle shadow. Supports optional icons.
+                Width is contextual (full-width in forms, auto-width in other contexts).
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <span class="state-label">Without Icon</span>
+                    <button class="btn-large btn-secondary btn-auto-width">Secondary Button</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">With Icon</span>
+                    <button class="btn-large btn-secondary btn-auto-width">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                        </svg>
+                        Sign In with Google
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
