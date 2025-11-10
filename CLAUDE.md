@@ -11,6 +11,8 @@ This repository is used to create HTML design mockups that will later be impleme
 ```
 jiki-design/
 ├── designs/          # All design mockups live here as HTML files
+│   ├── index.html       # Catalog page listing all designs by category
+│   └── README.md        # Guidelines for adding and organizing designs
 ├── ui-kit/          # Design system components and guidelines
 │   ├── components.html  # Visual reference of all UI components
 │   └── README.md       # UI Kit rules and documentation
@@ -28,6 +30,16 @@ jiki-design/
 3. Reference components and styles from the UI Kit (`ui-kit/components.html`)
 4. Use semantic HTML and organize styles clearly
 5. Name files descriptively (e.g., `login-page.html`, `dashboard-layout.html`)
+6. Add new designs to `designs/index.html` in the appropriate category section
+
+### Design Index
+
+The `designs/index.html` file serves as a visual catalog of all designs:
+
+- Organized into sections: Authentication & Onboarding, Dashboard & Main Views, Forms & Data Entry, Settings & Configuration, Components & Patterns
+- When adding a new design, update the corresponding section in `index.html`
+- If creating a design that doesn't fit existing sections, add a new section following the same structure
+- See `designs/README.md` for detailed organization guidelines
 
 ### UI Kit Workflow
 

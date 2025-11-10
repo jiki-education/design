@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Catalog - Jiki Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #34495e;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .section-description {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .design-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .design-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .design-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .design-card p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .design-card a {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .design-card a:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #95a5a6;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Design Catalog</h1>
+            <p class="subtitle">Browse all available design mockups organized by category</p>
+        </header>
+
+        <!-- Authentication & Onboarding -->
+        <section class="section">
+            <h2>Authentication & Onboarding</h2>
+            <p class="section-description">Login, signup, and user onboarding flows</p>
+            <div class="design-grid">
+                <!-- Example design card - remove or replace when adding real designs -->
+                <div class="design-card">
+                    <h3>Example Design</h3>
+                    <p>This is a placeholder. Add your design files to this folder and update this index.</p>
+                    <a href="#" onclick="return false;">View Design</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard & Main Views -->
+        <section class="section">
+            <h2>Dashboard & Main Views</h2>
+            <p class="section-description">Primary application dashboards and main interfaces</p>
+            <div class="design-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📊</div>
+                    <p>No designs in this section yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forms & Data Entry -->
+        <section class="section">
+            <h2>Forms & Data Entry</h2>
+            <p class="section-description">Form layouts, input screens, and data collection interfaces</p>
+            <div class="design-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <p>No designs in this section yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings & Configuration -->
+        <section class="section">
+            <h2>Settings & Configuration</h2>
+            <p class="section-description">User settings, preferences, and configuration pages</p>
+            <div class="design-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚙️</div>
+                    <p>No designs in this section yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components & Patterns -->
+        <section class="section">
+            <h2>Components & Patterns</h2>
+            <p class="section-description">Reusable UI patterns, modals, navigation, and component compositions</p>
+            <div class="design-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🧩</div>
+                    <p>No designs in this section yet</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>For the UI Kit and component library, see <a href="../ui-kit/components.html">UI Kit Components</a></p>
+            <p>For experimental designs, see the <a href="../experimentation/">experimentation folder</a></p>
+        </footer>
+    </div>
+</body>
+</html>
