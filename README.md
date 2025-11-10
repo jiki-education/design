@@ -10,6 +10,8 @@ This repository contains HTML design mockups for the Jiki project. All designs a
 ## Rules
 
 - No font size below 14px, except for labels with text-transform uppercase and font weight of 500+, which may be 13px.
+- All UI Kit classes must start with `.ui-` prefix (e.g., `.ui-btn-large`, `.ui-form-field-large`).
+- UI Kit components should use CSS nesting to style child elements rather than requiring sub-classes in HTML.
 
 ## Repository Structure
 
