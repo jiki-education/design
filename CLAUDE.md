@@ -67,6 +67,7 @@ The `ui-kit/` folder contains the design system:
 - **Inline styles by default**: Use inline `style=""` attributes for all styling unless the class is used in multiple places
 - **Create classes only for reuse**: Only define CSS classes in `<style>` tags when the same styles are applied to multiple elements
 - **Exception for UI Kit**: UI Kit components (`.ui-*` classes) should always use classes, not inline styles
+- **Text wrapping**: Always use `text-wrap-style: balance;` on text elements (paragraphs, headings, labels, etc.) to ensure balanced, visually appealing line breaks
 
 ## File Organization
 
