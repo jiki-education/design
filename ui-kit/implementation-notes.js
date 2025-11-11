@@ -239,31 +239,29 @@
     `;
     document.head.appendChild(style);
 
-    // Simple markdown-like parser
+    // Load marked.js library dynamically
+    function loadMarked() {
+        return new Promise((resolve, reject) => {
+            if (window.marked) {
+                resolve();
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js';
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load marked.js'));
+            document.head.appendChild(script);
+        });
+    }
+
+    // Parse markdown using marked.js
     function parseNotes(text) {
-        return text
-            // Headers
-            .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-            .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-            .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-            // Bold
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            // Italic
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            // Code
-            .replace(/`([^`]+)`/g, '<code>$1</code>')
-            // Unordered lists
-            .replace(/^\- (.*$)/gm, '<li>$1</li>')
-            // Wrap lists
-            .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
-            // Line breaks
-            .replace(/\n\n/g, '</p><p>')
-            // Wrap in paragraphs
-            .replace(/^(?!<[hul]|<\/[hul])(.*$)/gm, '<p>$1</p>')
-            // Clean up empty paragraphs
-            .replace(/<p><\/p>/g, '')
-            .replace(/<p>(<[uh])/g, '$1')
-            .replace(/(<\/[uh][^>]*>)<\/p>/g, '$1');
+        if (window.marked) {
+            return marked.parse(text);
+        }
+        // Fallback if marked isn't loaded yet
+        return '<p>Loading...</p>';
     }
 
     // Create button and modal HTML
@@ -314,7 +312,15 @@
     }
 
     // Initialize when DOM is ready
-    function init() {
+    async function init() {
+        // Load marked.js first
+        try {
+            await loadMarked();
+        } catch (error) {
+            console.error('Failed to load markdown parser:', error);
+            return;
+        }
+
         const { button, modal } = createImplementationNotes();
         const closeBtn = document.getElementById('impl-notes-close');
         const bodyElement = document.getElementById('impl-notes-body');
