@@ -177,19 +177,24 @@
 
     <!-- Page Variants Configuration -->
     <script>
+        // Reset function called before each variant
+        const PAGE_VARIANTS_RESET = () => {
+            const passwordField = document.getElementById('password-field');
+            const passwordErrorMessage = document.getElementById('password-error-message');
+            const submitBtn = document.getElementById('submit-btn');
+
+            passwordField.classList.remove('ui-form-field-error');
+            passwordErrorMessage.style.display = 'none';
+            submitBtn.classList.remove('ui-btn-loading');
+            submitBtn.textContent = 'Log In';
+        };
+
         const PAGE_VARIANTS = [
             {
                 id: 'default',
                 label: 'Default',
                 apply: () => {
-                    const passwordField = document.getElementById('password-field');
-                    const passwordErrorMessage = document.getElementById('password-error-message');
-                    const submitBtn = document.getElementById('submit-btn');
-
-                    passwordField.classList.remove('ui-form-field-error');
-                    passwordErrorMessage.style.display = 'none';
-                    submitBtn.classList.remove('ui-btn-loading');
-                    submitBtn.textContent = 'Log In';
+                    // No additional changes needed for default
                 }
             },
             {
@@ -198,24 +203,17 @@
                 apply: () => {
                     const passwordField = document.getElementById('password-field');
                     const passwordErrorMessage = document.getElementById('password-error-message');
-                    const submitBtn = document.getElementById('submit-btn');
 
                     passwordField.classList.add('ui-form-field-error');
                     passwordErrorMessage.style.display = 'block';
-                    submitBtn.classList.remove('ui-btn-loading');
-                    submitBtn.textContent = 'Log In';
                 }
             },
             {
                 id: 'processing',
                 label: 'Button Processing',
                 apply: () => {
-                    const passwordField = document.getElementById('password-field');
-                    const passwordErrorMessage = document.getElementById('password-error-message');
                     const submitBtn = document.getElementById('submit-btn');
 
-                    passwordField.classList.remove('ui-form-field-error');
-                    passwordErrorMessage.style.display = 'none';
                     submitBtn.classList.add('ui-btn-loading');
                     submitBtn.textContent = 'Logging in...';
                 }

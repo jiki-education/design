@@ -190,15 +190,28 @@ The UI Kit includes a shared variants menu system (`variants.js`) that allows de
    <script src="../ui-kit/variants.js"></script>
    ```
 
-2. **Define variants** in a `<script>` tag in the `<head>` section, before the variants.js import:
+2. **Define a reset function and variants** in a `<script>` tag in the `<head>` section, before the variants.js import:
    ```html
    <script>
+       // Reset function called before each variant
+       const PAGE_VARIANTS_RESET = () => {
+           // Reset all elements to default state
+           const passwordField = document.getElementById('password-field');
+           const passwordErrorMessage = document.getElementById('password-error-message');
+           const submitBtn = document.getElementById('submit-btn');
+
+           passwordField.classList.remove('ui-form-field-error');
+           passwordErrorMessage.style.display = 'none';
+           submitBtn.classList.remove('ui-btn-loading');
+           submitBtn.textContent = 'Log In';
+       };
+
        const PAGE_VARIANTS = [
            {
                id: 'default',
                label: 'Default',
                apply: () => {
-                   // Reset to default state
+                   // No additional changes needed for default
                }
            },
            {
@@ -216,12 +229,16 @@ The UI Kit includes a shared variants menu system (`variants.js`) that allows de
 
 3. **The variants menu will automatically appear** in the bottom-right corner of the page with a floating button.
 
+### Reset Function
+
+The `PAGE_VARIANTS_RESET` function is called before each variant is applied. This function should reset all page elements to their default state, making variant implementations cleaner since they only need to apply changes, not undo previous states.
+
 ### Variant Object Structure
 
 Each variant object must have:
 - `id` (string): Unique identifier for the variant
 - `label` (string): Display name shown in the menu
-- `apply` (function): Function that applies the variant's changes to the page
+- `apply` (function): Function that applies the variant's changes to the page (after reset has been called)
 
 ### Features
 

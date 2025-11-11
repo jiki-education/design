@@ -7,14 +7,21 @@
  *
  * Usage:
  * 1. Include this script in your HTML: <script src="../ui-kit/variants.js"></script>
- * 2. Define variants in a script tag before including this file:
+ * 2. Define PAGE_VARIANTS_RESET and PAGE_VARIANTS in a script tag before including this file:
  *    <script>
+ *      // Reset function called before each variant
+ *      const PAGE_VARIANTS_RESET = () => {
+ *        // Reset all elements to default state
+ *        document.getElementById('password-field').classList.remove('ui-form-field-error');
+ *        document.getElementById('password-error-message').style.display = 'none';
+ *      };
+ *
  *      const PAGE_VARIANTS = [
  *        {
  *          id: 'default',
  *          label: 'Default',
  *          apply: () => {
- *            // Reset to default state
+ *            // No additional changes needed for default
  *          }
  *        },
  *        {
@@ -23,6 +30,7 @@
  *          apply: () => {
  *            // Apply error state
  *            document.getElementById('password-field').classList.add('ui-form-field-error');
+ *            document.getElementById('password-error-message').style.display = 'block';
  *          }
  *        }
  *      ];
@@ -205,6 +213,11 @@
                 // Update active state
                 variantOptions.forEach(opt => opt.classList.remove('active'));
                 option.classList.add('active');
+
+                // Call reset function if defined
+                if (typeof PAGE_VARIANTS_RESET === 'function') {
+                    PAGE_VARIANTS_RESET();
+                }
 
                 // Apply variant
                 if (typeof variant.apply === 'function') {
