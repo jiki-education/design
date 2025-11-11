@@ -70,6 +70,10 @@ The `ui-kit/` folder contains the design system:
 - **Text wrapping**: Always use `text-wrap-style: balance;` on text elements (paragraphs, headings, labels, etc.) to ensure balanced, visually appealing line breaks
 - **Avoid margin-top**: Prefer `margin-bottom` for spacing or use flexbox with `gap`. This creates more predictable and maintainable layouts. Only use `margin-top` when truly necessary (e.g., negative margins for overlapping elements)
 
+### Git Workflow
+
+- **Do not commit unless explicitly requested**: Never commit changes automatically. Always wait for explicit user instruction to commit and push changes.
+
 ## File Organization
 
 - Keep each design as a single HTML file with inline styles for easy sharing
