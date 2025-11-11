@@ -16,14 +16,8 @@
  *        document.getElementById('password-error-message').style.display = 'none';
  *      };
  *
+ *      // Note: A "Default" variant is automatically added - you don't need to define it
  *      const PAGE_VARIANTS = [
- *        {
- *          id: 'default',
- *          label: 'Default',
- *          apply: () => {
- *            // No additional changes needed for default
- *          }
- *        },
  *        {
  *          id: 'error',
  *          label: 'Password Error',
@@ -41,9 +35,23 @@
     'use strict';
 
     // Check if PAGE_VARIANTS is defined
-    if (typeof PAGE_VARIANTS === 'undefined' || !Array.isArray(PAGE_VARIANTS) || PAGE_VARIANTS.length === 0) {
-        console.warn('PAGE_VARIANTS not defined or empty. Variants menu will not be shown.');
+    if (typeof PAGE_VARIANTS === 'undefined' || !Array.isArray(PAGE_VARIANTS)) {
+        console.warn('PAGE_VARIANTS not defined. Variants menu will not be shown.');
         return;
+    }
+
+    // Automatically prepend a "Default" variant that just calls reset
+    const defaultVariant = {
+        id: 'default',
+        label: 'Default',
+        apply: () => {
+            // Default variant just uses the reset function
+        }
+    };
+
+    // Only add default if it doesn't already exist
+    if (!PAGE_VARIANTS.find(v => v.id === 'default')) {
+        PAGE_VARIANTS.unshift(defaultVariant);
     }
 
     // Inject CSS styles
