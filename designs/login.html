@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ui-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,21 +14,20 @@
         }
 
         body {
-            height: 100vh;
-            overflow: hidden;
         }
 
-        /* Left side - Gradient background */
-        .left-side {
+        /* Right side - Gradient background */
+        .right-side {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 40px;
             padding: 60px;
             color: white;
-            position: relative;
+            position: sticky;
+            top: 0;
+            height: 100vh;
             overflow: hidden;
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #667eea 100%);
         }
@@ -39,6 +38,8 @@
             font-weight: 500;
             z-index: 1;
             text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            line-height: 1;
         }
 
         .tagline {
@@ -46,8 +47,9 @@
             font-weight: 500;
             text-align: center;
             z-index: 1;
-            line-height: 1.4;
+            line-height: 1.3;
             text-wrap-style: balance;
+            margin-bottom: 20px;
         }
 
         .description {
@@ -58,17 +60,18 @@
             line-height: 1.6;
             z-index: 1;
             text-wrap-style: balance;
+            margin-bottom: 52px;
         }
 
-        /* Right side - Form area */
-        .right-side {
+        /* Left side - Form area */
+        .left-side {
             flex: 1;
             background: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 60px;
+            padding: 32px 60px;
         }
 
         .form-container {
@@ -126,6 +129,18 @@
             text-wrap-style: balance;
         }
 
+        .success-message {
+            background: #e0f5d2;
+            border: 2px solid #78ce4d;
+            border-radius: 8px;
+            padding: 16px;
+            color: #2e571d;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+            text-wrap-style: balance;
+        }
+
         .creators-badge {
             text-align: center;
             z-index: 1;
@@ -150,7 +165,7 @@
                 flex-direction: column;
             }
 
-            .left-side {
+            .right-side {
                 min-height: 300px;
                 padding: 40px 30px;
             }
@@ -167,11 +182,22 @@
                 font-size: 16px;
             }
 
-            .right-side {
+            .left-side {
                 padding: 40px 30px;
             }
         }
     </style>
+
+    <!-- Implementation Notes -->
+    <script>
+        const IMPLEMENTATION_NOTES = `
+### Layout Behavior
+
+- The right-hand side (gradient background) should stay locked in place while the left-hand side (form) scrolls
+- This is achieved on this page via a sticky RHS using \`position: sticky; top: 0; height: 100vh;\`
+- The LHS has flexible padding and no fixed height, allowing it to scroll naturally if content grows
+        `;
+    </script>
 
     <!-- Page Variants Configuration -->
     <script>
@@ -180,14 +206,24 @@
             const passwordField = document.getElementById('password-field');
             const passwordErrorMessage = document.getElementById('password-error-message');
             const submitBtn = document.getElementById('submit-btn');
+            const successMessage = document.getElementById('success-message');
 
             passwordField.classList.remove('ui-form-field-error');
             passwordErrorMessage.style.display = 'none';
             submitBtn.classList.remove('ui-btn-loading');
             submitBtn.textContent = 'Log In';
+            if (successMessage) successMessage.style.display = 'none';
         };
 
         const PAGE_VARIANTS = [
+            {
+                id: 'password-reset-sent',
+                label: 'Password Reset Sent',
+                apply: () => {
+                    const successMessage = document.getElementById('success-message');
+                    if (successMessage) successMessage.style.display = 'block';
+                }
+            },
             {
                 id: 'error',
                 label: 'Password Error',
@@ -213,9 +249,9 @@
     </script>
 </head>
 <body class="ui-body">
-    <div style="display: flex; height: 100vh;">
+    <div style="display: flex;">
         <!-- Left Side - Form -->
-        <div class="right-side">
+        <div class="left-side">
             <div class="form-container">
                 <div class="form-header">
                     <h1 class="form-title">Log In</h1>
@@ -237,6 +273,10 @@
                         <div class="divider-line"></div>
                         <span class="divider-text">OR</span>
                         <div class="divider-line"></div>
+                    </div>
+
+                    <div id="success-message" class="success-message" style="display: none;">
+                        You will receive an email with instructions on how to reset your password in a few minutes.
                     </div>
 
                     <div class="ui-form-field-large">
@@ -290,7 +330,7 @@
         </div>
 
         <!-- Right Side - Visual/Inspiration -->
-        <div class="left-side">
+        <div class="right-side">
             <div class="logo-large">Jiki</div>
             <h1 class="tagline">Your coding journey starts here</h1>
             <p class="description">Join millions of learners transforming their careers through hands-on coding practice.</p>
@@ -304,5 +344,8 @@
 
     <!-- Shared Variants Menu Script -->
     <script src="../ui-kit/variants.js"></script>
+
+    <!-- Implementation Notes Script -->
+    <script src="../ui-kit/implementation-notes.js"></script>
 </body>
 </html>
