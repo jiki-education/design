@@ -208,13 +208,6 @@ The UI Kit includes a shared variants menu system (`variants.js`) that allows de
 
        const PAGE_VARIANTS = [
            {
-               id: 'default',
-               label: 'Default',
-               apply: () => {
-                   // No additional changes needed for default
-               }
-           },
-           {
                id: 'error',
                label: 'Password Error',
                apply: () => {
@@ -222,12 +215,21 @@ The UI Kit includes a shared variants menu system (`variants.js`) that allows de
                    document.getElementById('password-field').classList.add('ui-form-field-error');
                    document.getElementById('password-error-message').style.display = 'block';
                }
+           },
+           {
+               id: 'processing',
+               label: 'Button Processing',
+               apply: () => {
+                   // Apply processing state
+                   document.getElementById('submit-btn').classList.add('ui-btn-loading');
+                   document.getElementById('submit-btn').textContent = 'Logging in...';
+               }
            }
        ];
    </script>
    ```
 
-3. **The variants menu will automatically appear** in the bottom-right corner of the page with a floating button.
+3. **The variants menu will automatically appear** in the bottom-right corner of the page with a floating button. A "Default" variant is automatically added as the first option - you don't need to define it manually.
 
 ### Reset Function
 
