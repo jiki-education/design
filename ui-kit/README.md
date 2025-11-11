@@ -5,6 +5,8 @@ This folder contains the design system components and guidelines for the jiki-de
 ## Files
 
 - **components.html** - A visual reference page showcasing all UI components with their various states and variations
+- **styles.css** - Shared stylesheet containing all UI Kit component styles
+- **variants.js** - Shared JavaScript for adding a variants menu to design pages
 
 ## UI Kit Rules
 
@@ -94,6 +96,22 @@ All designs should use Poppins as the primary typeface, with system font fallbac
 
 **Note**: Button width is contextual and should be set based on the container or use case (e.g., full-width in forms, auto-width in navigation).
 
+#### Button States
+
+**Loading State (`.ui-btn-loading`)**
+- Purpose: Indicate processing or loading action
+- Works with both Primary and Secondary variants
+- Features:
+  - Animated spinner using `::before` pseudo-element
+  - Spinner size: 18px × 18px
+  - Animation: 0.6s linear infinite rotation
+  - Primary button: White spinner on gradient background
+  - Secondary button: Blue spinner (Primary 500) on white background
+  - Disabled interaction: `pointer-events: none`
+  - Flexbox layout with 12px gap between spinner and text
+- Usage: Add `.ui-btn-loading` class to button along with variant class
+- Text recommendation: Use messages like "Logging in...", "Processing...", "One moment please..."
+
 ### Form Fields
 
 #### Form Field Structure
@@ -158,3 +176,70 @@ A form field consists of:
 - Hover state: underline
 
 **Note**: Font size is not specified - links inherit the font size from their context
+
+---
+
+## Page Variants System
+
+The UI Kit includes a shared variants menu system (`variants.js`) that allows design pages to demonstrate different states and variations (e.g., error states, loading states, empty states).
+
+### Usage
+
+1. **Include the script** in your HTML file (before the closing `</body>` tag):
+   ```html
+   <script src="../ui-kit/variants.js"></script>
+   ```
+
+2. **Define variants** in a `<script>` tag in the `<head>` section, before the variants.js import:
+   ```html
+   <script>
+       const PAGE_VARIANTS = [
+           {
+               id: 'default',
+               label: 'Default',
+               apply: () => {
+                   // Reset to default state
+               }
+           },
+           {
+               id: 'error',
+               label: 'Password Error',
+               apply: () => {
+                   // Apply error state
+                   document.getElementById('password-field').classList.add('ui-form-field-error');
+                   document.getElementById('password-error-message').style.display = 'block';
+               }
+           }
+       ];
+   </script>
+   ```
+
+3. **The variants menu will automatically appear** in the bottom-right corner of the page with a floating button.
+
+### Variant Object Structure
+
+Each variant object must have:
+- `id` (string): Unique identifier for the variant
+- `label` (string): Display name shown in the menu
+- `apply` (function): Function that applies the variant's changes to the page
+
+### Features
+
+- **Automatic menu injection**: The script automatically creates and styles the floating menu
+- **Active state tracking**: Shows which variant is currently active
+- **Click-outside to close**: Menu closes when clicking anywhere outside of it
+- **Smooth transitions**: All state changes are animated
+- **No CSS required**: All styles are injected automatically by the script
+
+### When to Use
+
+Use the variants system when you want to demonstrate:
+- Error states (form validation, network errors, etc.)
+- Loading states
+- Empty states (no data, no results, etc.)
+- Different user permissions or roles
+- Alternative layouts or content arrangements
+
+### Example
+
+See `designs/login.html` for a complete working example of the variants system.

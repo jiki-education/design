@@ -82,6 +82,36 @@
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 16px rgba(59, 130, 246, 0.2);
 }
 
+/* Loading Button State */
+.ui-btn-loading {
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0.8;
+}
+
+.ui-btn-loading::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: ui-spin 0.6s linear infinite;
+}
+
+/* Secondary button loading state has different spinner colors */
+.ui-btn-secondary.ui-btn-loading::before {
+    border-color: rgba(59, 130, 246, 0.3);
+    border-top-color: var(--color-primary-500);
+}
+
+@keyframes ui-spin {
+    to { transform: rotate(360deg); }
+}
+
 /* ========================================
    FORM FIELD COMPONENTS
    ======================================== */
