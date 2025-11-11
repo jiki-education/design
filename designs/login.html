@@ -25,6 +25,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 40px;
             padding: 60px;
             color: white;
             position: relative;
@@ -36,7 +37,6 @@
         .logo-large {
             font-size: 72px;
             font-weight: 500;
-            margin-bottom: 32px;
             z-index: 1;
             text-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
@@ -44,7 +44,6 @@
         .tagline {
             font-size: 32px;
             font-weight: 500;
-            margin-bottom: 20px;
             text-align: center;
             z-index: 1;
             line-height: 1.4;
@@ -98,7 +97,6 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin: 24px 0;
         }
 
         .divider-line {
@@ -115,24 +113,20 @@
 
         .forgot-password {
             text-align: right;
-            margin-bottom: 32px;
             font-size: 15px;
         }
 
         .footer-links {
-            margin-top: 24px;
             text-align: center;
         }
 
         .footer-links p {
             font-size: 15px;
             color: #4a5568;
-            margin-bottom: 8px;
             text-wrap-style: balance;
         }
 
         .creators-badge {
-            margin-top: 40px;
             text-align: center;
             z-index: 1;
         }
@@ -228,7 +222,7 @@
                     <p class="form-subtitle">Don't have an account? <a href="signup.html" class="ui-link">Sign up for free.</a></p>
                 </div>
 
-                <form>
+                <form style="display: flex; flex-direction: column; gap: 20px;">
                     <button type="button" class="ui-btn-large ui-btn-secondary" style="width: 100%;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -239,13 +233,13 @@
                         Log In with Google
                     </button>
 
-                    <div class="divider">
+                    <div class="divider" style="margin: 4px 0;">
                         <div class="divider-line"></div>
                         <span class="divider-text">OR</span>
                         <div class="divider-line"></div>
                     </div>
 
-                    <div class="ui-form-field-large" style="margin-bottom: 20px;">
+                    <div class="ui-form-field-large">
                         <label for="login-email">Email</label>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
@@ -260,28 +254,30 @@
                         </div>
                     </div>
 
-                    <div class="ui-form-field-large" id="password-field" style="margin-bottom: 10px;">
-                        <label for="login-password">Password</label>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
-                                <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                                <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                                <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                                <path stroke="#737b87" d="M12 15v4" stroke-width="2"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
-                                <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                                <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                                <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                                <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
-                            </svg>
-                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div class="ui-form-field-large" id="password-field">
+                            <label for="login-password">Password</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                    <path stroke="#737b87" d="M12 15v4" stroke-width="2"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
+                                </svg>
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                            </div>
+                            <div id="password-error-message" class="ui-form-field-error-message" style="display: none;">Your password is incorrect. Please try again.</div>
                         </div>
-                        <div id="password-error-message" class="ui-form-field-error-message" style="display: none;">Your password is incorrect. Please try again.</div>
-                    </div>
 
-                    <div class="forgot-password">
-                        <a href="#" class="ui-link">Forgot your password?</a>
+                        <div class="forgot-password" style="margin-bottom: 22px;">
+                            <a href="#" class="ui-link">Forgot your password?</a>
+                        </div>
                     </div>
 
                     <button type="submit" id="submit-btn" class="ui-btn-large ui-btn-primary" style="width: 100%;">Log In</button>
