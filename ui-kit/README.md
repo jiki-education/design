@@ -42,20 +42,30 @@ All designs should use Poppins as the primary typeface, with system font fallbac
 ### Color Palette
 
 #### Primary Colors
-- **Primary 500** (`--color-primary-500`): `#3b82f6` - Main primary color
-- **Primary 600** (`--color-primary-600`): `#2563eb` - Darker primary for hover states and gradients
+- **Blue 500** (`--color-blue-500`): `#3b82f6` - Main blue color
+- **Blue 600** (`--color-blue-600`): `#2563eb` - Darker blue for hover states and gradients
+- **Purple 500** (`--color-purple-500`): `#a855f7` - Purple accent (e.g., "In Progress" states)
+- **Green 500** (`--color-green-500`): `#10b981` - Green accent (e.g., "Complete" states)
 
-#### Neutral Colors
-- **Gray 200** (`--color-gray-200`): `#e2e8f0` - Light gray for borders
-- **Gray 700** (`--color-gray-700`): `#2d3748` - Medium gray for labels
-- **Gray 800** (`--color-gray-800`): `#1a365d` - Dark gray for text
+#### Lynch Gray Scale
+- **Lynch 50** (`--color-lynch-50`): `#f6f7f9` - Lightest gray for backgrounds
+- **Lynch 100** (`--color-lynch-100`): `#eceef2` - Very light gray
+- **Lynch 200** (`--color-lynch-200`): `#d5d9e2` - Light gray for borders
+- **Lynch 300** (`--color-lynch-300`): `#b1bbc8` - Light-medium gray
+- **Lynch 400** (`--color-lynch-400`): `#8695aa` - Medium gray (used for "Locked" active state)
+- **Lynch 500** (`--color-lynch-500`): `#64748b` - Medium gray (subtitles, default tab text)
+- **Lynch 600** (`--color-lynch-600`): `#526077` - Medium-dark gray
+- **Lynch 700** (`--color-lynch-700`): `#434e61` - Dark gray for labels
+- **Lynch 800** (`--color-lynch-800`): `#3a4252` - Darker gray
+- **Lynch 900** (`--color-lynch-900`): `#343a46` - Very dark gray
+- **Lynch 950** (`--color-lynch-950`): `#23272e` - Darkest gray for headings and primary text
 
 #### Error Colors
 - **Error 500** (`--color-error-500`): `#ef4444` - Error states and messages
 
 #### Shadow Colors
-- **Primary Shadow** (`--color-primary-shadow`): `rgba(59, 130, 246, 0.3)` - Default shadow for primary elements
-- **Primary Shadow Hover** (`--color-primary-shadow-hover`): `rgba(59, 130, 246, 0.2)` - Lighter shadow for hover states
+- **Blue Shadow** (`--color-blue-shadow`): `rgba(59, 130, 246, 0.3)` - Default shadow for blue elements
+- **Blue Shadow Hover** (`--color-blue-shadow-hover`): `rgba(59, 130, 246, 0.2)` - Lighter shadow for hover states
 - **Subtle Shadow** (`--color-shadow-subtle`): `rgba(0, 0, 0, 0.06)` - Light shadow for secondary elements
 
 ### Buttons
@@ -176,6 +186,113 @@ A form field consists of:
 - Hover state: underline
 
 **Note**: Font size is not specified - links inherit the font size from their context
+
+### Page Header
+
+**Page Header Component (`.ui-page-header`)**
+
+Standard page header used at the top of main content areas.
+
+**Structure:**
+- H1 title with optional icon
+- Subtitle paragraph
+
+**Styling:**
+- H1: 34px, font-weight 600, color Lynch 950, flexbox with 12px gap for icon
+- Icon: 34px × 34px, color Blue 500
+- Subtitle: 16px, color Lynch 500
+- Both title and subtitle use text-wrap-style: balance
+
+**Usage:**
+```html
+<header class="ui-page-header">
+    <h1>
+        <svg>...</svg>
+        Page Title
+    </h1>
+    <p>Subtitle description text</p>
+</header>
+```
+
+### Page Tabs
+
+**Page Tabs Component (`.ui-page-tabs`)**
+
+Horizontal tab navigation for filtering or switching page views.
+
+**Structure:**
+- Container with flexbox layout (24px gap, wraps)
+- Button elements for each tab
+- Optional SVG icons in tabs
+
+**Tab States:**
+- Default: Lynch 500 text color
+- Hover: Blue 500 text color
+- Active: Colored with 2px underline indicator
+
+**Color Variants:**
+- **Blue (default)**: No data attribute needed - use for primary navigation (e.g., "All")
+- **Purple**: `data-color="purple"` - use for "In Progress" states
+- **Green**: `data-color="green"` - use for "Complete" states
+- **Gray**: `data-color="gray"` - use for "Locked" states (Lynch 400)
+
+**Styling:**
+- Font size: 15px, font-weight 450
+- Padding: 8px 0
+- Icon size: 16px × 16px
+- Gap between icon and text: 8px
+- Active underline: 2px height, border-radius 2px
+
+**Usage:**
+```html
+<div class="ui-page-tabs">
+    <button class="active" data-tab="all">
+        <svg>...</svg>
+        All
+    </button>
+    <button data-color="purple" data-tab="in-progress">
+        <svg>...</svg>
+        In Progress
+    </button>
+    <button data-color="green" data-tab="complete">
+        <svg>...</svg>
+        Complete
+    </button>
+    <button data-color="gray" data-tab="locked">
+        <svg>...</svg>
+        Locked
+    </button>
+</div>
+
+<!-- Tab content sections -->
+<div data-tab-content="all">
+    Content for All tab
+</div>
+<div data-tab-content="in-progress" style="display: none;">
+    Content for In Progress tab
+</div>
+<!-- etc... -->
+
+<!-- Include tabs.js script -->
+<script src="../ui-kit/tabs.js"></script>
+```
+
+**Tab Functionality (tabs.js):**
+
+The UI Kit includes a `tabs.js` script that provides automatic tab switching functionality.
+
+**How it works:**
+1. Add `data-tab="unique-id"` attribute to each tab button
+2. Add `data-tab-content="unique-id"` attribute to corresponding content sections
+3. Include `<script src="../ui-kit/tabs.js"></script>` before closing `</body>` tag
+4. The script automatically handles:
+   - Adding/removing `.active` class on tabs
+   - Showing/hiding content sections based on selected tab
+   - Preserving color variants (data-color attributes)
+
+**Initial State:**
+- Set `class="active"` on the default tab button
+- Set `style="display: none;"` on all non-default content sections
 
 ---
 
