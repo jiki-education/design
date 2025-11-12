@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Jiki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+- The header and tabs are both UI components
+- The tab's selected color is linked to the type (e.g. completed tab is green). Use \`data-color\` to achieve this.
+        `;
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: white;
+            color: #1a202c;
+            display: flex;
+            margin: 0;
+        }
+
+        /* Sidebar Placeholder */
+        .sidebar-placeholder {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-right: 2px solid #d5d9e2;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Placeholder for future content */
+        .content-placeholder {
+            background: #f6f7f9;
+            border: 2px dashed #d5d9e2;
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <!-- Sidebar Placeholder (for future navigation) -->
+    <aside class="sidebar-placeholder">
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="ui-page-header">
+                <h1>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.24"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Projects
+                </h1>
+                <p>Build real applications and games to practice your coding skills.</p>
+            </header>
+
+            <!-- Page Tabs -->
+            <div class="ui-page-tabs">
+                <button class="active" data-tab="all">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                        <rect x="3" y="13" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                        <rect x="13" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                        <rect x="13" y="13" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                    </svg>
+                    All
+                </button>
+                <button data-color="purple" data-tab="in-progress">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    In Progress
+                </button>
+                <button data-tab="not-started">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                    </svg>
+                    Not started
+                </button>
+                <button data-color="green" data-tab="complete">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Complete
+                </button>
+                <button data-color="gray" data-tab="locked">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M8 10V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V10" stroke="currentColor" stroke-width="2.5"/>
+                    </svg>
+                    Locked
+                </button>
+            </div>
+
+            <!-- Tab Content: All -->
+            <div data-tab-content="all">
+                <div class="content-placeholder">
+                    All projects will be shown here
+                </div>
+            </div>
+
+            <!-- Tab Content: In Progress -->
+            <div data-tab-content="in-progress" style="display: none;">
+                <div class="content-placeholder">
+                    In Progress projects will be shown here
+                </div>
+            </div>
+
+            <!-- Tab Content: Not Started -->
+            <div data-tab-content="not-started" style="display: none;">
+                <div class="content-placeholder">
+                    Not Started projects will be shown here
+                </div>
+            </div>
+
+            <!-- Tab Content: Complete -->
+            <div data-tab-content="complete" style="display: none;">
+                <div class="content-placeholder">
+                    Complete projects will be shown here
+                </div>
+            </div>
+
+            <!-- Tab Content: Locked -->
+            <div data-tab-content="locked" style="display: none;">
+                <div class="content-placeholder">
+                    Locked projects will be shown here
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation Script -->
+    <script src="../ui-kit/tabs.js"></script>
+
+    <!-- Implementation Notes Script -->
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

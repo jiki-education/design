@@ -62,6 +62,85 @@ The `ui-kit/` folder contains the design system:
 - Include comments in HTML to explain design decisions or component usage
 - Demonstrate different states (hover, active, disabled) using multiple examples rather than JavaScript
 
+### Implementation Notes
+
+The UI Kit includes an **implementation notes system** (`ui-kit/implementation-notes.js`) that displays technical notes in a floating modal:
+
+- Define notes in a `IMPLEMENTATION_NOTES` constant using markdown format
+- Place the constant in a `<script>` tag in the `<head>` section
+- Include `<script src="../ui-kit/implementation-notes.js"></script>` before closing `</body>`
+- A green floating button appears in the bottom-right corner
+- Clicking the button opens a modal with formatted notes
+- Use markdown for formatting (headings, lists, code, bold, etc.)
+
+**When to add implementation notes:**
+- Document which UI Kit components are used
+- Explain color variants and semantic meanings
+- Note special patterns or conventions
+- Describe JavaScript functionality
+- Highlight important technical details for implementers
+
+**Example:**
+```html
+<head>
+    ...
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+- The tab's selected color is linked to the type (e.g. completed tab is green)
+- The header and tabs are both UI components
+        `;
+    </script>
+</head>
+<body>
+    ...
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+```
+
+### Page Variants
+
+The UI Kit includes a **variants system** (`ui-kit/variants.js`) for demonstrating different states of a design:
+
+- Use variants to show error states, loading states, empty states, etc.
+- Define variants in a `<script>` tag in the `<head>` section
+- Create a `PAGE_VARIANTS_RESET` function that resets all elements to default state
+- Create a `PAGE_VARIANTS` array with variant objects (`id`, `label`, `apply` function)
+- The script automatically adds a floating menu to switch between variants
+- A "Default" variant is automatically included
+
+**When to use variants:**
+- Demonstrating form validation errors
+- Showing button loading states
+- Displaying empty states vs. populated states
+- Showing different user permission levels
+- Any other state variations that aren't the default
+
+**Example usage:**
+```html
+<script>
+    const PAGE_VARIANTS_RESET = () => {
+        // Reset all elements to default state
+        document.getElementById('field').classList.remove('ui-form-field-error');
+        document.getElementById('btn').classList.remove('ui-btn-loading');
+    };
+
+    const PAGE_VARIANTS = [
+        {
+            id: 'error',
+            label: 'Form Error',
+            apply: () => {
+                document.getElementById('field').classList.add('ui-form-field-error');
+            }
+        }
+    ];
+</script>
+<script src="../ui-kit/variants.js"></script>
+```
+
+See `ui-kit/README.md` for complete variants system documentation.
+
 ### CSS Styling Rules
 
 - **Inline styles by default**: Use inline `style=""` attributes for all styling unless the class is used in multiple places

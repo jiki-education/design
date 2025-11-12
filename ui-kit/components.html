@@ -286,6 +286,116 @@
     </div>
 
     <div class="component-section">
+        <h2>Page Header</h2>
+
+        <!-- Page Header Component -->
+        <div class="component-example">
+            <div class="component-title">Page Header</div>
+            <p class="component-description">
+                Standard page header with icon, title, and subtitle. Used at the top of main content areas.
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <header class="ui-page-header">
+                        <h1>
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.24"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Projects
+                        </h1>
+                        <p>Build real applications and games to practice your coding skills.</p>
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="component-section">
+        <h2>Page Tabs</h2>
+
+        <!-- Page Tabs Component -->
+        <div class="component-example">
+            <div class="component-title">Page Tabs</div>
+            <p class="component-description">
+                Horizontal tab navigation for filtering or switching page views. Supports color variants via data-color attribute (blue default, purple, green, gray).
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Blue (Default) -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Blue Active (Default)</div>
+                    <div class="ui-page-tabs">
+                        <button class="active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                                <rect x="3" y="13" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                                <rect x="13" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                                <rect x="13" y="13" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2.5"/>
+                            </svg>
+                            All
+                        </button>
+                        <button>
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                            </svg>
+                            Not started
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Purple -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Purple Active (data-color="purple")</div>
+                    <div class="ui-page-tabs">
+                        <button data-color="purple" class="active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                                <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                            In Progress
+                        </button>
+                        <button>Other Tab</button>
+                    </div>
+                </div>
+
+                <!-- Green -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Green Active (data-color="green")</div>
+                    <div class="ui-page-tabs">
+                        <button data-color="green" class="active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                                <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Complete
+                        </button>
+                        <button>Other Tab</button>
+                    </div>
+                </div>
+
+                <!-- Gray -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Gray Active (data-color="gray")</div>
+                    <div class="ui-page-tabs">
+                        <button data-color="gray" class="active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                                <path d="M8 10V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V10" stroke="currentColor" stroke-width="2.5"/>
+                            </svg>
+                            Locked
+                        </button>
+                        <button>Other Tab</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="component-section">
         <h2>Typography</h2>
         <div class="component-example">
             <!-- Add typography examples here -->
