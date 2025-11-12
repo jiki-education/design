@@ -15,6 +15,7 @@
 
 - The header and tabs are both UI components
 - The tab's selected color is linked to the type (e.g. completed tab is green). Use \`data-color\` to achieve this.
+- Project cards are UI components with state variants using \`data-state\` attribute (in-progress, complete, locked)
         `;
     </script>
 
@@ -52,18 +53,6 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        /* Placeholder for future content */
-        .content-placeholder {
-            background: #f6f7f9;
-            border: 2px dashed #d5d9e2;
-            border-radius: 12px;
-            padding: 60px 20px;
-            text-align: center;
-            color: #64748b;
-            font-size: 16px;
-            font-weight: 500;
         }
     </style>
 </head>
@@ -131,36 +120,246 @@
 
             <!-- Tab Content: All -->
             <div data-tab-content="all">
-                <div class="content-placeholder">
-                    All projects will be shown here
+                <div class="ui-project-cards-grid">
+                    <!-- Tic-Tac-Toe - In Progress -->
+                    <div class="ui-project-card" data-state="in-progress" style="--target-width: 65%;">
+                        <div class="status-badge">In Progress</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="90" cy="90" r="80" fill="#a855f7" opacity="0.1"/>
+                                    <path d="M60 60L120 120M120 60L60 120" stroke="#a855f7" stroke-width="8" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Tic-Tac-Toe</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Tic-Tac-Toe</div>
+                            <div class="description">
+                                Build the classic game with win detection, player turns, and an unbeatable AI using minimax algorithm.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Logic, AI +3</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
+
+                    <!-- Battleships - Not Started -->
+                    <div class="ui-project-card" style="--target-width: 0%;">
+                        <div class="status-badge">Not started</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="40" y="70" width="100" height="40" rx="8" fill="#3b82f6" opacity="0.2"/>
+                                    <rect x="60" y="50" width="60" height="20" rx="4" fill="#3b82f6"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Battleships</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Battleships</div>
+                            <div class="description">
+                                Create the strategic naval combat game with grid placement, turn-based gameplay, and AI opponent.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Arrays, Loops +8</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
+
+                    <!-- Space Invaders - Complete -->
+                    <div class="ui-project-card" data-state="complete" style="--target-width: 100%;">
+                        <div class="status-badge">Complete</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M90 40L70 80H110L90 40Z" fill="#10b981"/>
+                                    <rect x="85" y="80" width="10" height="60" fill="#10b981" opacity="0.6"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Space Invaders</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Space Invaders</div>
+                            <div class="description">
+                                Build a classic arcade shooter with enemy waves, player controls, and collision detection.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Canvas, Events +5</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
+
+                    <!-- Snake Game - Locked -->
+                    <div class="ui-project-card" data-state="locked" style="--target-width: 0%;">
+                        <div class="status-badge">Locked</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="50" y="80" width="20" height="20" rx="4" fill="#64748b"/>
+                                    <rect x="70" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.8"/>
+                                    <rect x="90" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.6"/>
+                                    <rect x="110" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.4"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Snake Game</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Snake Game</div>
+                            <div class="description">
+                                Create the classic snake game with growth mechanics, collision detection, and score tracking.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Arrays, Timing +4</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
                 </div>
             </div>
 
             <!-- Tab Content: In Progress -->
             <div data-tab-content="in-progress" style="display: none;">
-                <div class="content-placeholder">
-                    In Progress projects will be shown here
+                <div class="ui-project-cards-grid">
+                    <!-- Tic-Tac-Toe - In Progress -->
+                    <div class="ui-project-card" data-state="in-progress" style="--target-width: 65%;">
+                        <div class="status-badge">In Progress</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="90" cy="90" r="80" fill="#a855f7" opacity="0.1"/>
+                                    <path d="M60 60L120 120M120 60L60 120" stroke="#a855f7" stroke-width="8" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Tic-Tac-Toe</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Tic-Tac-Toe</div>
+                            <div class="description">
+                                Build the classic game with win detection, player turns, and an unbeatable AI using minimax algorithm.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Logic, AI +3</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
                 </div>
             </div>
 
             <!-- Tab Content: Not Started -->
             <div data-tab-content="not-started" style="display: none;">
-                <div class="content-placeholder">
-                    Not Started projects will be shown here
+                <div class="ui-project-cards-grid">
+                    <!-- Battleships - Not Started -->
+                    <div class="ui-project-card" style="--target-width: 0%;">
+                        <div class="status-badge">Not started</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="40" y="70" width="100" height="40" rx="8" fill="#3b82f6" opacity="0.2"/>
+                                    <rect x="60" y="50" width="60" height="20" rx="4" fill="#3b82f6"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Battleships</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Battleships</div>
+                            <div class="description">
+                                Create the strategic naval combat game with grid placement, turn-based gameplay, and AI opponent.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Arrays, Loops +8</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
                 </div>
             </div>
 
             <!-- Tab Content: Complete -->
             <div data-tab-content="complete" style="display: none;">
-                <div class="content-placeholder">
-                    Complete projects will be shown here
+                <div class="ui-project-cards-grid">
+                    <!-- Space Invaders - Complete -->
+                    <div class="ui-project-card" data-state="complete" style="--target-width: 100%;">
+                        <div class="status-badge">Complete</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M90 40L70 80H110L90 40Z" fill="#10b981"/>
+                                    <rect x="85" y="80" width="10" height="60" fill="#10b981" opacity="0.6"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Space Invaders</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Space Invaders</div>
+                            <div class="description">
+                                Build a classic arcade shooter with enemy waves, player controls, and collision detection.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Canvas, Events +5</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
                 </div>
             </div>
 
             <!-- Tab Content: Locked -->
             <div data-tab-content="locked" style="display: none;">
-                <div class="content-placeholder">
-                    Locked projects will be shown here
+                <div class="ui-project-cards-grid">
+                    <!-- Snake Game - Locked -->
+                    <div class="ui-project-card" data-state="locked" style="--target-width: 0%;">
+                        <div class="status-badge">Locked</div>
+                        <div class="hero">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="50" y="80" width="20" height="20" rx="4" fill="#64748b"/>
+                                    <rect x="70" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.8"/>
+                                    <rect x="90" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.6"/>
+                                    <rect x="110" y="80" width="20" height="20" rx="4" fill="#64748b" opacity="0.4"/>
+                                </svg>
+                            </div>
+                            <div class="project-title">Snake Game</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="project-title">Snake Game</div>
+                            <div class="description">
+                                Create the classic snake game with growth mechanics, collision detection, and score tracking.
+                            </div>
+                            <div class="stats-row">
+                                <span class="skills">Arrays, Timing +4</span>
+                            </div>
+                        </div>
+                        <a href="#" class="action-link"></a>
+                    </div>
                 </div>
             </div>
         </div>
