@@ -16,6 +16,7 @@
 - The header and tabs are both UI components
 - The tab's selected color is linked to the type (e.g. completed tab is green). Use \`data-color\` to achieve this.
 - Project cards use \`.card\` class with state variants via \`data-state\` attribute (in-progress, complete, locked)
+- Look carefully at the different starting states and transitions for each card. They're slightly different depending on state
         `;
     </script>
 
@@ -301,34 +302,28 @@
         /* Locked State */
         .card[data-state="locked"] {
             opacity: 0.6;
-            border: 2px solid white;
+            border: 2px solid var(--color-gray-200);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            cursor: default;
         }
 
         .card[data-state="locked"] .status-badge {
-            background: rgba(148, 163, 184, 0.1);
+            background: var(--color-gray-100);
             color: var(--color-gray-600);
-            transition: none;
-            border: 2px solid transparent;
-            border-top: none;
         }
 
         .card[data-state="locked"] .hero .progress-bar {
             display: none;
         }
 
-        .card[data-state="locked"]:hover {
-            transform: none;
-            border-color: var(--color-gray-400);
-            box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.1), 0 4px 16px rgba(148, 163, 184, 0.2);
+        .card[data-state="locked"] .action-link {
+            display: none;
         }
 
-        .card[data-state="locked"]:hover .status-badge {
-            background: white;
-            color: var(--color-gray-950);
-            border: 2px solid var(--color-gray-400);
-            border-top: none;
-            transition: none;
+        .card[data-state="locked"]:hover {
+            transform: none;
+            border-color: var(--color-gray-200);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
         /* Progress Bar Animation */
