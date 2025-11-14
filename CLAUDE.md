@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Before working on any tasks, always read `README.md` in the repository root.** This provides an overview of the repository structure and links to key resources.
 
+### Running the Development Server
+
+Design files use JavaScript features (like `fetch()` for loading shared components) that require a web server to work properly. If you encounter CORS errors or files not loading when opening HTML files directly:
+
+**Run the development server:**
+```bash
+./bin/dev
+```
+
+This starts an http-server on port 8000. Access designs at:
+- http://localhost:8000/designs/
+- http://localhost:8000/ui-kit/components.html
+
+**Note:** Opening HTML files directly with `file://` protocol will cause errors due to browser security restrictions. Always use the development server for testing.
+
+**Important:** The designer is not technical, so will need you to run `./bin/dev` for her if she can't get things working. Proactively propose doing this if she reports issues viewing designs and the server is not already running.
+
 ## Repository Purpose
 
 This repository is used to create HTML design mockups that will later be implemented by a front-end developer. All designs are static HTML files with inline CSS that demonstrate the visual design and layout.
