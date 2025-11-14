@@ -121,6 +121,7 @@
         /* Form field styling within settings */
         .setting-item .ui-form-field-large {
             margin-bottom: 12px;
+            max-width: 530px;
         }
 
         .setting-item .ui-form-field-large:last-child {
@@ -130,6 +131,11 @@
         /* Button on new line */
         .button-row {
             margin-top: 12px;
+        }
+
+        .button-row .ui-btn {
+            width: 100%;
+            max-width: 210px;
         }
 
         /* 2FA row layout */
@@ -148,6 +154,8 @@
 
         .setting-row .ui-btn {
             flex-shrink: 0;
+            width: 100%;
+            max-width: 210px;
         }
 
         /* Warning text styling */
@@ -392,7 +400,7 @@
                 <p style="margin-bottom: 8px;">Permanently delete your account and all associated data. This action cannot be undone.</p>
                 <p class="warning-text">⚠️ <strong>Warning:</strong> This will permanently delete your account, all your progress, completed exercises, and personal data. This action is irreversible.</p>
                 <div class="button-row">
-                    <button class="ui-btn ui-btn-danger" style="max-width: 220px; width: 100%;">Delete Account</button>
+                    <button class="ui-btn ui-btn-danger">Delete Account</button>
                 </div>
             </div>
         </div>

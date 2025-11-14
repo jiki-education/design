@@ -109,7 +109,7 @@
 
             <div class="state-grid">
                 <div class="state-example">
-                    <button class="ui-btn-large ui-btn-primary btn-auto-width">Primary Button</button>
+                    <button class="ui-btn-large ui-btn-primary" style="max-width: 400px;">Primary Button</button>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
         <div class="component-example">
             <div class="component-title">Secondary Button - Large</div>
             <p class="component-description">
-                Secondary action button with white background and subtle shadow. Supports optional icons.
+                Blue-themed action button with white background and blue border.
                 Width is contextual (full-width in forms, auto-width in other contexts).
             </p>
 
@@ -130,6 +130,33 @@
                 <div class="state-example">
                     <span class="state-label">With Icon</span>
                     <button class="ui-btn-large ui-btn-secondary btn-auto-width">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tertiary Button - Large -->
+        <div class="component-example">
+            <div class="component-title">Tertiary Button - Large</div>
+            <p class="component-description">
+                Neutral action button with white background and gray border. Supports optional icons.
+                Width is contextual (full-width in forms, auto-width in other contexts).
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <span class="state-label">Without Icon</span>
+                    <button class="ui-btn-large ui-btn-tertiary btn-auto-width">Tertiary Button</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">With Icon</span>
+                    <button class="ui-btn-large ui-btn-tertiary btn-auto-width">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -142,11 +169,26 @@
             </div>
         </div>
 
+        <!-- Danger Button - Large -->
+        <div class="component-example">
+            <div class="component-title">Danger Button - Large</div>
+            <p class="component-description">
+                Destructive action button with white background and red accents for dangerous operations.
+                Width is contextual (full-width in forms, auto-width in other contexts).
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <button class="ui-btn-large ui-btn-danger" style="max-width: 400px;">Delete Account</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Loading Button States -->
         <div class="component-example">
             <div class="component-title">Button - Loading State</div>
             <p class="component-description">
-                Buttons in loading/processing state with animated spinner. Applies to both Primary and Secondary variants.
+                Buttons in loading/processing state with animated spinner. Applies to Primary, Secondary, and Danger variants.
                 Button is disabled with pointer-events: none during loading.
             </p>
 
@@ -158,6 +200,10 @@
                 <div class="state-example">
                     <span class="state-label">Secondary Loading</span>
                     <button class="ui-btn-large ui-btn-secondary ui-btn-loading btn-auto-width">Processing...</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">Danger Loading</span>
+                    <button class="ui-btn-large ui-btn-danger ui-btn-loading btn-auto-width">Deleting...</button>
                 </div>
             </div>
         </div>
@@ -429,7 +475,11 @@
                 </div>
                 <div class="state-example">
                     <span class="state-label">Secondary</span>
-                    <button class="ui-btn ui-btn-secondary btn-auto-width">Enable 2FA</button>
+                    <button class="ui-btn ui-btn-secondary btn-auto-width">Save Changes</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">Tertiary</span>
+                    <button class="ui-btn ui-btn-tertiary btn-auto-width">Cancel</button>
                 </div>
                 <div class="state-example">
                     <span class="state-label">Danger</span>

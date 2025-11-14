@@ -73,13 +73,35 @@
     --color-gray-900: #343a46;
     --color-gray-950: #23272e;
 
-    /* Error Colors */
-    --color-error-500: #ef4444;
+    /* Red Scale (Coral Red) */
+    --color-red-50: #fef2f2;
+    --color-red-100: #fee2e2;
+    --color-red-200: #fecaca;
+    --color-red-300: #fca5a5;
+    --color-red-400: #f87171;
+    --color-red-500: #ef4444;
+    --color-red-600: #dc2626;
+    --color-red-700: #b91c1c;
+    --color-red-800: #991b1b;
+    --color-red-900: #7f1d1d;
+    --color-red-950: #450a0a;
 
-    /* Shadow Colors */
-    --color-blue-shadow: rgba(59, 130, 246, 0.3);
-    --color-blue-shadow-hover: rgba(59, 130, 246, 0.2);
-    --color-shadow-subtle: rgba(0, 0, 0, 0.06);
+    /* Shadow Colors - Blue */
+    --color-blue-500-6: color-mix(in srgb, var(--color-blue-500) 6%, transparent);
+    --color-blue-500-10: color-mix(in srgb, var(--color-blue-500) 10%, transparent);
+    --color-blue-500-15: color-mix(in srgb, var(--color-blue-500) 15%, transparent);
+    --color-blue-500-20: color-mix(in srgb, var(--color-blue-500) 20%, transparent);
+    --color-blue-500-30: color-mix(in srgb, var(--color-blue-500) 30%, transparent);
+    --color-blue-500-40: color-mix(in srgb, var(--color-blue-500) 40%, transparent);
+    --color-blue-600-6: color-mix(in srgb, var(--color-blue-600) 6%, transparent);
+
+    /* Shadow Colors - Red */
+    --color-red-500-20: color-mix(in srgb, var(--color-red-500) 20%, transparent);
+    --color-red-500-30: color-mix(in srgb, var(--color-red-500) 30%, transparent);
+    --color-red-500-40: color-mix(in srgb, var(--color-red-500) 40%, transparent);
+
+    /* Shadow Colors - Gray */
+    --color-gray-900-30: color-mix(in srgb, var(--color-gray-900) 30%, transparent);
 }
 
 /* ========================================
@@ -125,12 +147,12 @@
     border-color: var(--color-blue-500);
     color: white;
     background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-600) 100%);
-    box-shadow: 0 2px 8px var(--color-blue-shadow);
+    box-shadow: 0 2px 8px var(--color-blue-500-30);
 }
 
 .ui-btn-primary:hover {
     border-color: var(--color-blue-600);
-    box-shadow: 0 0 0 4px var(--color-blue-shadow-hover), 0 4px 16px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 0 4px var(--color-blue-500-20), 0 4px 16px var(--color-blue-500-40);
 }
 
 /* Secondary Button */
@@ -138,27 +160,40 @@
     background: white;
     color: var(--color-blue-500);
     border-color: var(--color-blue-300);
-    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 2px 8px var(--color-blue-500-30);
 }
 
 .ui-btn-secondary:hover {
-    background: var(--color-blue-50);
+    background: white;
     border-color: var(--color-blue-500);
-    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 0 4px var(--color-blue-500-20), 0 4px 16px var(--color-blue-500-40);
+}
+
+/* Tertiary Button */
+.ui-btn-tertiary {
+    border-color: var(--color-gray-200);
+    color: var(--color-gray-950);
+    background: white;
+    box-shadow: 0 2px 8px var(--color-gray-900-30);
+}
+
+.ui-btn-tertiary:hover {
+    border-color: var(--color-blue-500);
+    box-shadow: 0 0 0 4px var(--color-blue-500-10), 0 4px 16px var(--color-blue-500-20);
 }
 
 /* Danger Button */
 .ui-btn-danger {
     background: white;
-    color: var(--color-error-500);
-    border-color: #fca5a5;
-    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.1);
+    color: var(--color-red-500);
+    border-color: var(--color-red-300);
+    box-shadow: 0 2px 8px var(--color-red-500-30);
 }
 
 .ui-btn-danger:hover {
-    background: #fef2f2;
-    border-color: #f87171;
-    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+    background: white;
+    border-color: var(--color-red-500);
+    box-shadow: 0 0 0 4px var(--color-red-500-20), 0 4px 16px var(--color-red-500-40);
 }
 
 /* Loading Button State */
@@ -183,14 +218,14 @@
 
 /* Secondary button loading state has different spinner colors */
 .ui-btn-secondary.ui-btn-loading::before {
-    border-color: rgba(59, 130, 246, 0.3);
+    border-color: var(--color-blue-500-30);
     border-top-color: var(--color-blue-500);
 }
 
 /* Danger button loading state has red spinner */
 .ui-btn-danger.ui-btn-loading::before {
-    border-color: rgba(239, 68, 68, 0.3);
-    border-top-color: var(--color-error-500);
+    border-color: var(--color-red-500-30);
+    border-top-color: var(--color-red-500);
 }
 
 @keyframes ui-spin {
@@ -257,13 +292,13 @@
 
         &:hover {
             border-color: var(--color-blue-500);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 2px var(--color-blue-500-10);
         }
 
         &:focus {
             outline: none;
             border-color: var(--color-blue-500);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 0 4px var(--color-blue-500-15);
         }
     }
 
@@ -291,18 +326,18 @@
     .ui-form-field-error-message {
         font-size: 14px;
         font-weight: 500;
-        color: var(--color-error-500);
+        color: var(--color-red-500);
         margin-top: 4px;
     }
 
     /* Error state */
     &.ui-form-field-error input {
-        border-color: var(--color-error-500);
+        border-color: var(--color-red-500);
         animation: ui-shake 0.5s;
 
         &:focus {
             border-color: var(--color-blue-500);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 0 4px var(--color-blue-500-15);
         }
     }
 }
@@ -472,14 +507,14 @@
 
         /* Red variant (Danger Zone) */
         &[data-color="red"]:hover {
-            color: var(--color-error-500);
+            color: var(--color-red-500);
         }
 
         &[data-color="red"].active {
-            color: var(--color-error-500);
+            color: var(--color-red-500);
 
             &::after {
-                background: var(--color-error-500);
+                background: var(--color-red-500);
             }
         }
     }
@@ -619,7 +654,7 @@
         }
 
         &.active {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(37, 99, 235, 0.06) 100%);
+            background: linear-gradient(135deg, var(--color-blue-500-6) 0%, var(--color-blue-600-6) 100%);
             color: var(--color-blue-500);
             font-weight: 600;
         }
@@ -655,6 +690,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        /* TODO: When we properly style this button, use colors from our palette instead of custom purple */
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         text-decoration: none;
         font-family: 'Poppins', sans-serif;
@@ -673,6 +709,7 @@
 
         &:hover {
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            /* TODO: When we properly style this button, use colors from our palette instead of custom purple */
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
