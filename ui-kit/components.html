@@ -461,5 +461,55 @@
             </div>
         </div>
     </div>
+
+    <!-- ========================================
+         LEFT-HAND MENU COMPONENT
+         ======================================== -->
+    <div class="component-section">
+        <h2>Left-Hand Menu (.ui-lhs-menu)</h2>
+
+        <div class="component-example">
+            <div class="component-title">Left-Hand Menu</div>
+            <p class="component-description">
+                Fixed left-hand navigation menu with support for expanded (260px) and collapsed (80px) states.
+                The menu is loaded from <code>shared/menu.html</code> using the <code>includeHTML()</code> utility function
+                from <code>ui-kit/include.js</code>.
+            </p>
+
+            <p class="component-description">
+                <strong>Usage:</strong>
+            </p>
+            <pre style="background: #333; color: #fff; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+&lt;!-- In your HTML body --&gt;
+&lt;div id="sidebar-container"&gt;&lt;/div&gt;
+
+&lt;!-- At end of body, before other scripts --&gt;
+&lt;script src="../ui-kit/include.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    includeHTML('sidebar-container', '../shared/menu.html');
+&lt;/script&gt;</pre>
+
+            <p class="component-description">
+                <strong>Collapsed State:</strong> Add <code>.collapsed</code> class to the menu element (ID: <code>sidebar</code>) to toggle between expanded and collapsed states.
+            </p>
+
+            <p class="component-description">
+                <strong>Features:</strong>
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Fixed positioning on left side</li>
+                <li>260px wide (expanded) / 80px wide (collapsed)</li>
+                <li>Logo with full and collapsed variants</li>
+                <li>Navigation items with icons and labels</li>
+                <li>Active state highlighting for current page</li>
+                <li>Premium upgrade button at bottom</li>
+                <li>Smooth 0.3s transitions between states</li>
+            </ul>
+
+            <p class="component-description">
+                <strong>Note:</strong> The menu content is maintained in <code>shared/menu.html</code>. Update that file to change menu items across all pages.
+            </p>
+        </div>
+    </div>
 </body>
 </html>

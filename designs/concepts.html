@@ -33,16 +33,6 @@
             margin: 0;
         }
 
-        /* Sidebar Placeholder */
-        .sidebar-placeholder {
-            width: 260px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            border-right: 2px solid var(--color-gray-200);
-        }
-
         /* Main Content */
         .main-content {
             margin-left: 260px;
@@ -267,9 +257,8 @@
     </style>
 </head>
 <body class="ui-body">
-    <!-- Sidebar Placeholder (for future navigation) -->
-    <aside class="sidebar-placeholder">
-    </aside>
+    <!-- Sidebar Navigation -->
+    <div id="sidebar-container"></div>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -443,6 +432,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Include menu -->
+    <script src="../ui-kit/include.js"></script>
+    <script>
+        includeHTML('sidebar-container', '../shared/menu.html');
+    </script>
 
     <!-- Implementation notes modal -->
     <script src="../ui-kit/implementation-notes.js"></script>
