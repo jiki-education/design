@@ -391,14 +391,74 @@
                         <button>Other Tab</button>
                     </div>
                 </div>
+
+                <!-- Red -->
+                <div>
+                    <div style="font-size: 0.85rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Red Active (data-color="red")</div>
+                    <div class="ui-page-tabs">
+                        <button data-color="red" class="active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 21H22L12 2Z" fill="currentColor" opacity="0.24"/>
+                                <path d="M12 2L2 21H22L12 2Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Danger Zone
+                        </button>
+                        <button>Other Tab</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="component-section">
-        <h2>Typography</h2>
+        <h2>Buttons - Standard Size</h2>
+
+        <!-- Standard Button -->
         <div class="component-example">
-            <!-- Add typography examples here -->
+            <div class="component-title">Standard Button</div>
+            <p class="component-description">
+                Standard size button (14px/20px padding, 16px font) for use in settings and other contexts where the large button is too prominent.
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <span class="state-label">Primary</span>
+                    <button class="ui-btn ui-btn-primary btn-auto-width">Update Email</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">Secondary</span>
+                    <button class="ui-btn ui-btn-secondary btn-auto-width">Enable 2FA</button>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">Danger</span>
+                    <button class="ui-btn ui-btn-danger btn-auto-width">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="component-section">
+        <h2>Toggle Switch</h2>
+
+        <!-- Toggle Switch -->
+        <div class="component-example">
+            <div class="component-title">Toggle Switch</div>
+            <p class="component-description">
+                Toggle switch component for binary on/off settings. Click to toggle between active and inactive states.
+            </p>
+
+            <div class="state-grid">
+                <div class="state-example">
+                    <span class="state-label">Active</span>
+                    <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                </div>
+                <div class="state-example">
+                    <span class="state-label">Inactive</span>
+                    <div class="ui-toggle-switch" onclick="this.classList.toggle('active')"></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
