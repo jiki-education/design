@@ -86,6 +86,23 @@
    BUTTON COMPONENTS
    ======================================== */
 
+/* Button Base Styles - Standard Size */
+.ui-btn {
+    padding: 14px 20px;
+    border: 2px solid;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+
 /* Button Base Styles - Large Size */
 .ui-btn-large {
     padding: 16px 20px;
@@ -127,6 +144,20 @@
 .ui-btn-secondary:hover {
     border-color: var(--color-blue-500);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 16px rgba(59, 130, 246, 0.2);
+}
+
+/* Danger Button */
+.ui-btn-danger {
+    border-color: #f56565;
+    color: white;
+    background: #fc8181;
+    box-shadow: 0 2px 8px rgba(252, 129, 129, 0.3);
+}
+
+.ui-btn-danger:hover {
+    background: #f56565;
+    border-color: #e53e3e;
+    box-shadow: 0 0 0 4px rgba(245, 101, 101, 0.2), 0 4px 16px rgba(245, 101, 101, 0.4);
 }
 
 /* Loading Button State */
@@ -284,6 +315,40 @@
 }
 
 /* ========================================
+   TOGGLE SWITCH COMPONENT
+   ======================================== */
+
+.ui-toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--color-gray-300);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.ui-toggle-switch.active {
+    background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-600) 100%);
+}
+
+.ui-toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.ui-toggle-switch.active::after {
+    transform: translateX(20px);
+}
+
+/* ========================================
    PAGE HEADER COMPONENT
    ======================================== */
 
@@ -395,6 +460,19 @@
 
             &::after {
                 background: var(--color-gray-400);
+            }
+        }
+
+        /* Red variant (Danger Zone) */
+        &[data-color="red"]:hover {
+            color: var(--color-error-500);
+        }
+
+        &[data-color="red"].active {
+            color: var(--color-error-500);
+
+            &::after {
+                background: var(--color-error-500);
             }
         }
     }
