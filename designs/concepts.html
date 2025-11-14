@@ -17,6 +17,54 @@
 - The search bar should be a standard ui-input
 - Note that the sub-concepts box has some styling on hover
         `;
+
+        const PAGE_VARIANTS_RESET = () => {
+            // Reset breadcrumb
+            document.querySelector('.breadcrumb').innerHTML = `
+                <span class="breadcrumb-item breadcrumb-label">Library :</span>
+                <span class="breadcrumb-item breadcrumb-current">All Concepts</span>
+            `;
+
+            // Reset heading
+            document.querySelector('.page-heading').innerHTML = `
+                <svg class="heading-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" fill="currentColor" opacity="0.24"/>
+                    <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Concept Library
+            `;
+
+            // Show search bar
+            document.querySelector('.search-bar').style.display = 'block';
+        };
+
+        const PAGE_VARIANTS = [
+            {
+                id: 'category',
+                label: 'Category View (No Search)',
+                apply: () => {
+                    // Update breadcrumb to show category level
+                    document.querySelector('.breadcrumb').innerHTML = `
+                        <span class="breadcrumb-item breadcrumb-label">Library :</span>
+                        <span class="breadcrumb-item">All Concepts</span>
+                        <span class="breadcrumb-separator">></span>
+                        <span class="breadcrumb-item breadcrumb-current">Fundamentals</span>
+                    `;
+
+                    // Update heading to show category name
+                    document.querySelector('.page-heading').innerHTML = `
+                        <svg class="heading-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Fundamentals
+                    `;
+
+                    // Hide search bar
+                    document.querySelector('.search-bar').style.display = 'none';
+                }
+            }
+        ];
     </script>
 
     <style>
@@ -181,6 +229,39 @@
             gap: 20px;
             text-align: left;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+            /*&.card-container {
+                margin-right:14px;
+                position:relative;
+
+                .children {
+                    top:-2px;
+                    right:-14px;
+                    bottom:-2px;
+                    position:absolute;
+                    z-index:-1;
+                
+                    div {
+                        width:50px;
+                        border: 2px solid var(--color-gray-100);
+                        border-radius: 16px;
+                        height:100%;
+                        position:absolute;
+                        top:0;
+                        bottom:0;
+
+                        &:nth-child(1) {
+                            right:0;
+                        }
+                        &:nth-child(2) {
+                            right:4px;
+                        }
+                        &:nth-child(3) {
+                            right:8px;
+                        }
+                    }
+                }
+            }*/
         }
 
         .concept-card:hover {
@@ -266,7 +347,6 @@
             <div class="breadcrumb">
                 <span class="breadcrumb-item breadcrumb-label">Library :</span>
                 <span class="breadcrumb-item breadcrumb-current">All Concepts</span>
-                <span class="breadcrumb-separator">></span>
             </div>
 
             <h1 class="page-heading">
@@ -284,7 +364,7 @@
             </div>
 
             <div class="concepts-grid">
-                <div class="concept-card">
+                <div class="concept-card card-container">
                     <div class="concept-icon">
                         <img src="images/concept-icons/icon-classes.png" alt="Fundamentals">
                     </div>
@@ -303,6 +383,11 @@
                             <span><span class="count-number">2</span> sub-concepts</span>
                         </div>
                     </div>
+                    <!--<div class="children">
+                        <div class="child"></div>
+                        <div class="child"></div>
+                        <div class="child"></div>
+                    </div>-->
                 </div>
 
                 <div class="concept-card">
@@ -438,6 +523,9 @@
     <script>
         includeHTML('sidebar-container', '../shared/menu.html');
     </script>
+
+    <!-- Variants system -->
+    <script src="../ui-kit/variants.js"></script>
 
     <!-- Implementation notes modal -->
     <script src="../ui-kit/implementation-notes.js"></script>
