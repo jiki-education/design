@@ -69,7 +69,7 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: var(--color-primary-500);
+            background: var(--color-blue-500, #3b82f6);
             border: 3px solid white;
             box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
             cursor: pointer;
@@ -80,7 +80,7 @@
         }
 
         .variants-toggle:hover {
-            background: var(--color-primary-600);
+            background: var(--color-blue-600, #2563eb);
             box-shadow: 0 6px 24px rgba(59, 130, 246, 0.5);
             transform: scale(1.05);
         }
