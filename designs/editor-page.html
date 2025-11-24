@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Page V6 - Color Bars</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FFFFFF;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #0F172A;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Top Bar - Clean Light */
+        .top-bar {
+            background: #FAFBFC;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .progress-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: #94A3B8;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar-outer {
+            width: 100%;
+            height: 12px;
+            background: #E2E8F0;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2570eb 100%);
+            border-radius: 6px;
+            width: 66%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .close-button {
+            width: 32px;
+            height: 32px;
+            background: #E2E8F0;
+            border: 1px solid #94A3B8;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #94A3B8;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-button:hover {
+            background: #EF4444;
+            border-color: #EF4444;
+            color: white;
+        }
+
+        .exercise-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 342px minmax(250px, 1fr);
+            flex: 1;
+            row-gap: 8px;
+            column-gap: 8px;
+            background: #FAFBFC;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .vertical-divider {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #FAFBFC;
+            cursor: col-resize;
+            z-index: 1000;
+            transform: translateX(-50%);
+            transition: background 0.2s;
+        }
+
+        .vertical-divider:hover {
+            background: #E2E8F0;
+        }
+
+        .vertical-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 40px;
+            background: #CBD5E1;
+            border-radius: 1px;
+        }
+
+        .vertical-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -2px;
+            bottom: 0;
+            width: 1px;
+            background: #E2E8F0;
+        }
+
+        /* Code Editor */
+        .code-editor {
+            grid-row: 1;
+            grid-column: 1;
+            background: #FFFFFF;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            border-radius: 8px;
+            border: 1px solid #E2E8F0;
+            margin: 8px 0 0 8px;
+        }
+
+        .horizontal-divider {
+            position: absolute;
+            left: 8px;
+            right: calc(50% + 4px);
+            top: 346px;
+            height: 8px;
+            background: #FAFBFC;
+            cursor: row-resize;
+            z-index: 1000;
+            transition: background 0.2s;
+        }
+
+        .horizontal-divider:hover {
+            background: #E2E8F0;
+        }
+
+        .horizontal-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 2px;
+            background: #CBD5E1;
+            border-radius: 1px;
+        }
+
+        .code-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .code-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .code-content::-webkit-scrollbar-thumb {
+            background: rgba(203, 213, 225, 0.7);
+            border-radius: 4px;
+        }
+
+        .code-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.9);
+        }
+
+        .check-button {
+            position: absolute;
+            bottom: 9px;
+            right: 16px;
+            z-index: 100;
+        }
+
+        .code-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px 20px 10px 10px;
+            margin-right: 5px;
+            background: #FFFFFF;
+            display: flex;
+            gap: 2px;
+            align-items: flex-start;
+        }
+
+        .line-numbers-container {
+            flex-shrink: 0;
+            padding-right: 5px;
+            padding-left: 10px;
+        }
+
+        .line-numbers {
+            color: #94A3B8;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            line-height: 1.74;
+            text-align: left;
+            user-select: none;
+            white-space: pre;
+            margin: 0;
+            padding: 0;
+        }
+
+        .code-row {
+            display: flex;
+            align-items: center;
+            height: 24.36px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .code-row:hover {
+            background: rgba(168, 85, 247, 0.08);
+        }
+
+        .code-row:hover .line-dot {
+            opacity: 1;
+        }
+
+        .line-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #a855f7;
+            margin-left: 4px;
+            margin-right: 4px;
+            opacity: 0;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .code-row.active .line-dot {
+            opacity: 1;
+            background: #a855f7;
+        }
+
+        .code-row.active {
+            background: rgba(168, 85, 247, 0.12);
+        }
+
+        .code-row.active .line-number {
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        .line-number {
+            color: #94A3B8;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            user-select: none;
+            min-width: 24px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .line-code {
+            flex: 1;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            white-space: pre;
+        }
+
+        .code-editor pre {
+            color: #CBD5E1;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            line-height: 1.74;
+            flex: 1;
+            margin: 0;
+            padding: 0;
+            padding-left: 0px;
+            min-width: 0;
+        }
+
+        .code-line {
+            position: relative;
+            padding: 2px 0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .code-line:hover {
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .code-tooltip {
+            position: fixed;
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            width: 380px;
+            max-width: 380px;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+            z-index: 10001;
+            display: none;
+            pointer-events: auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .code-tooltip * {
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .code-line.active .code-tooltip {
+            display: block;
+        }
+
+        body:not(.tooltips-enabled) .code-tooltip {
+            display: none !important;
+        }
+
+        .tooltips-enabled .code-line {
+            cursor: pointer;
+        }
+
+        .code-tooltip::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #3b82f6 transparent transparent;
+        }
+
+        .code-tooltip::after {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 8px 8px 0;
+            border-color: transparent white transparent transparent;
+        }
+
+        .tooltip-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 20px;
+            height: 20px;
+            background: none;
+            border: none;
+            color: #3b82f6;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .tooltip-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 12px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .tooltip-content {
+            font-size: 14px;
+            color: #0F172A;
+            line-height: 1.36;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .tooltip-highlight {
+            background: #f3e8ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 12px;
+            color: #7c3aed;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: inline;
+        }
+
+        /* Test Results Area */
+        .test-results-area {
+            grid-row: 2;
+            grid-column: 1;
+            background: #FFFFFF;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px 8px 0 8px;
+            border: 1px solid #E2E8F0;
+            min-height: 200px;
+            margin: 8px;
+        }
+
+        /* V14 Dot Indicators */
+        .v14-dots-section {
+            background: #FFFFFF;
+            padding: 12px 15px 0 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .v14-status-line {
+            width: calc(100% + 30px);
+            margin-left: -15px;
+            margin-right: -15px;
+            height: 3px;
+            background: #48bb78;
+            transition: background 0.2s ease;
+        }
+
+        .v14-status-line.failed {
+            background: #f56565;
+        }
+
+        .v14-status-line.incomplete {
+            background: #E2E8F0;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .v14-status-line.flash {
+            animation: flash 0.4s ease-in-out;
+        }
+
+        .v14-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            height: 24px;
+        }
+
+        .v14-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .v14-dot:hover {
+            width: 24px;
+            height: 24px;
+            margin-left: -2px;
+            margin-right: -2px;
+        }
+
+        .v14-dot.active:hover {
+            width: 20px;
+            height: 20px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .v14-dot.passed {
+            background: #48bb78;
+        }
+
+        .v14-dot.failed {
+            background: #f56565;
+        }
+
+        .v14-dot.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 3px #CBD5E1;
+            position: relative;
+        }
+
+        .v14-dot.active::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #E2E8F0;
+        }
+
+        .v14-dot.passed.active {
+            box-shadow: 0 0 0 3px #9AE6B4;
+        }
+
+        .v14-dot.passed.active::after {
+            border-top-color: #48bb78;
+        }
+
+        .v14-dot.failed.active {
+            box-shadow: 0 0 0 3px #FEB2B2;
+        }
+
+        .v14-dot.failed.active::after {
+            border-top-color: #f56565;
+        }
+
+        .v14-counter {
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .reset-button {
+            padding: 8px 16px;
+            background: #E2E8F0;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #94A3B8;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+        }
+
+        .reset-button:hover {
+            background: #94A3B8;
+            color: #0F172A;
+            border-color: #475569;
+        }
+
+        .scenario-button {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: #E2E8F0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .scenario-button:hover {
+            opacity: 0.8;
+        }
+
+        .scenario-button.passed {
+            background: #48bb78;
+        }
+
+        .scenario-button.failed {
+            background: #f56565;
+        }
+
+        .scenario-button.inactive {
+            background: #E2E8F0;
+            cursor: not-allowed;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .scenario-button.active {
+            transform: scale(1.5);
+            box-shadow: 0 0 0 3px #CBD5E1;
+        }
+
+        .scenario-button.passed.active {
+            box-shadow: 0 0 0 3px #9AE6B4;
+        }
+
+        .scenario-button.failed.active {
+            box-shadow: 0 0 0 3px #FEB2B2;
+        }
+
+        .check-button {
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2570eb 100%);
+            color: #FFFFFF;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-button:hover {
+            border-color: #2570eb;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), 0 4px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .keyboard-shortcut {
+            font-family: 'Source Code Pro', monospace;
+            background: rgba(0, 0, 0, 0.1);
+            margin-left: 8px;
+            padding: 5px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        /* Visual Player */
+        .visual-player {
+            flex: 1;
+            background: #FFFFFF;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr auto;
+            overflow: hidden;
+        }
+
+        .player-canvas {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .player-content-row {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 0;
+        }
+
+        .content-below-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: stretch;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .left-column-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            position: relative;
+            min-width: 310px;
+            height: 100%;
+            overflow-y: auto;
+            min-height: 120px;
+        }
+
+        .test-description {
+            padding: 16px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+            overflow: scroll;
+        }
+
+        .test-description::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .test-description::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .test-description::-webkit-scrollbar-thumb {
+            background: rgba(203, 213, 225, 0.7);
+            border-radius: 4px;
+        }
+
+        .test-description::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.9);
+        }
+
+        .test-description p {
+            font-size: 15px;
+            color: #2d3748;
+            margin: 0 0 12px 0;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .instruction-label {
+            display: block;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+
+        /* Active State (Blue) */
+        .test-description {
+            border-color: #3b82f6;
+        }
+
+        .test-description .instruction-label {
+            color: #2d3748;
+        }
+
+        /* Passed State (Green) */
+        .test-description.state-passed {
+            border-color: #48bb78;
+        }
+
+        .test-description.state-passed .instruction-label {
+            color: #2d3748;
+        }
+
+        /* Failed State (Red) */
+        .test-description.state-failed {
+            border-color: #f56565;
+        }
+
+        .test-description.state-failed .instruction-label {
+            color: #2d3748;
+        }
+
+        .test-description.state-failed .test-feedback {
+            color: #EF4444;
+        }
+
+        /* Incomplete State (Gray) */
+        .test-description.state-incomplete {
+            border-color: #e2e8f0;
+        }
+
+        .test-description.state-incomplete .instruction-label {
+            color: #94A3B8;
+        }
+
+        .test-description.state-incomplete .test-feedback {
+            display: none;
+        }
+
+        .test-description.state-incomplete p {
+            color: #64748b;
+        }
+
+        .test-feedback {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #ecfdf7; /* --color-green-50 */
+            border-radius: 5px;
+            margin: 0;
+            padding: 12px;
+        }
+
+        .test-feedback .badge {
+            background: #10b981; /* --color-green-500 */
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-self: flex-start;
+        }
+
+        .test-feedback .message {
+            font-size: 15px;
+            color: #047852; /* --color-green-700 */
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .test-description.state-failed .test-feedback {
+            background: #fef2f2; /* --color-red-50 */
+        }
+
+        .test-description.state-failed .test-feedback .badge {
+            background: #ef4444; /* --color-red-500 */
+        }
+
+        .test-description.state-failed .test-feedback .message {
+            color: #991b1b; /* --color-red-800 */
+        }
+
+        .test-feedback-icon {
+            width: 32px;
+            height: 32px;
+            background: #10B981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .test-description.state-failed .test-feedback-icon {
+            background: #f56565;
+        }
+
+        .right-video-container {
+            background: #FAF5FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border-left: 1px solid #E2E8F0;
+            position: relative;
+        }
+
+        .battleships-video {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            flex-shrink: 0;
+            background:
+                linear-gradient(to bottom, #87CEEB 0%, #87CEEB 6%, transparent 6%),
+                repeating-linear-gradient(
+                    0deg,
+                    #8B4513 0px,
+                    #8B4513 2px,
+                    #a0522d 2px,
+                    #a0522d 22px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    #8B4513 0px,
+                    #8B4513 2px,
+                    #a0522d 2px,
+                    #a0522d 32px
+                );
+            background-color: #a0522d;
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            position: relative;
+            align-self: flex-start;
+        }
+
+        .video-placeholder {
+            color: #475569;
+            font-size: 48px;
+            text-align: center;
+        }
+
+        .video-placeholder-text {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+            color: #94A3B8;
+        }
+
+        /* Playback Controls */
+        .control-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #FFFFFF;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .play-btn {
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .play-btn:hover {
+            background: #2570eb;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        .scrubber {
+            flex: 1;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            overflow: visible;
+        }
+
+        .scrubber-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #2570eb 100%);
+            border-radius: 4px;
+            width: 30%;
+            position: relative;
+            overflow: visible;
+        }
+
+        .scrubber-progress::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            border: 3px solid #FFFFFF;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .scrubber:hover .scrubber-progress::after {
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .nav-btn {
+            width: 24px;
+            height: 24px;
+            background: #FFFFFF;
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            color: #3b82f6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            padding-bottom: 2px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #3b82f6;
+            color: #FFFFFF;
+        }
+
+        .nav-btn + .nav-btn {
+            margin-left: -4px;
+        }
+
+        .code-nav-btn {
+            width: 24px;
+            height: 24px;
+            background: #a855f7;
+            border: 2px solid #a855f7;
+            border-radius: 6px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            padding-bottom: 2px;
+            transition: all 0.2s;
+        }
+
+        .code-nav-btn.visible {
+            display: flex;
+        }
+
+        .code-nav-btn:hover {
+            background: #9133ea;
+            border-color: #9133ea;
+        }
+
+        .code-nav-btn + .code-nav-btn {
+            margin-left: -4px;
+        }
+
+        .toggle-btn {
+            width: 42px;
+            height: 24px;
+            background: #E2E8F0;
+            border-radius: 12px;
+            border: 2px solid #CBD5E1;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-btn::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #94A3B8;
+            border-radius: 50%;
+            top: 50%;
+            left: 2px;
+            transform: translateY(-50%);
+            transition: left 0.2s ease;
+        }
+
+        .toggle-btn.on {
+            background: linear-gradient(135deg, #3b82f6 0%, #2570eb 100%);
+            border-color: #3b82f6;
+        }
+
+        .toggle-btn.on::after {
+            left: calc(100% - 18px);
+            background: white;
+        }
+
+        .toggle-btn:hover {
+            border-color: #3b82f6;
+        }
+
+        .toggle-btn:hover::after {
+            background: #3b82f6;
+        }
+
+        .toggle-btn.on:hover {
+            background: linear-gradient(135deg, #2570eb 0%, #1d64d8 100%);
+            border-color: #2570eb;
+        }
+
+        .toggle-btn.on:hover::after {
+            background: white;
+        }
+
+        /* Right Column */
+        .right-column {
+            grid-row: 1 / 3;
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #FAFBFC;
+            position: relative;
+        }
+
+        .top-tab-bar {
+            display: flex;
+            background: #FFFFFF;
+            padding: 3px 20px;
+            gap: 24px;
+            overflow-x: auto;
+        }
+
+        .top-tab {
+            padding: 8.5px 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 450;
+            color: #718096;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-tab:hover {
+            color: #7C3AED;
+        }
+
+        .top-tab.active {
+            color: #7C3AED;
+            padding-bottom: 4px;
+        }
+
+        .top-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #7C3AED;
+            border-radius: 2px;
+        }
+
+        .top-tab-content {
+            flex: 1;
+            overflow-y: scroll;
+            border-top: none;
+        }
+
+        .top-tab-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .top-tab-content::-webkit-scrollbar-track {
+            background: #FAFBFC;
+        }
+
+        .top-tab-content::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+
+        .top-tab-content::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        .instructions-content {
+            padding: 0;
+        }
+
+        .instructions-content h1 {
+            color: #1a202c;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .instructions-content h2 {
+            color: #1a202c;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .instructions-subhead {
+            color: #94A3B8;
+            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .instructions-header {
+            display: block;
+        }
+
+        .instructions-header.hidden {
+            display: none;
+        }
+
+        .instructions-content h3 {
+            color: #1a202c;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-top: 34px;
+            line-height: 1.6;
+        }
+
+        .instructions-content h3:first-of-type {
+            margin-top: 10px;
+        }
+
+        .instructions-content p {
+            color: #2d3748;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .instructions-content code {
+            background: #E0E7FF;
+            color: #4338CA;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Tab Content Visibility */
+        .tab-content-section {
+            display: none;
+            padding: 0 20px 20px 20px;
+            background: #FDFCFF;
+        }
+
+        .tab-content-section.active {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .tab-content-section.chat-section {
+            position: relative;
+        }
+
+        .tab-content-section.chat-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-section-title {
+            color: #1a202c;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            margin-top: 15px;
+        }
+
+        .tab-section-subtitle {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+
+        /* Tasks Tab */
+        .tasks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            counter-reset: task-counter;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 2px solid #E2E8F0;
+            counter-increment: task-counter;
+            position: relative;
+        }
+
+        .task-item::before {
+            content: counter(task-counter);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .task-item.complete {
+            background: #ECFDF5;
+            border-color: #10B981;
+        }
+
+        .task-item.complete::before {
+            background: #10B981;
+            color: white;
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #CBD5E1;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            order: 10;
+        }
+
+        .task-item.complete .task-checkbox {
+            display: flex;
+            background: #10B981;
+            border-color: #10B981;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .task-text {
+            color: #2d3748;
+            font-size: 15px;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .task-item.complete .task-text {
+            color: #2d3748;
+        }
+
+        /* Functions Tab */
+        .function-item {
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .function-title {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 15px;
+            font-weight: 500;
+            color: #4338CA;
+            margin-bottom: 8px;
+            background: #E0E7FF;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .function-description {
+            color: #2d3748;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .function-params {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .function-params li {
+            color: #2d3748;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+
+        /* Hints Tab */
+        .hint-item {
+            margin-bottom: 12px;
+            border: 2px solid #C4B5FD;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #F5F3FF;
+        }
+
+        .hint-question {
+            padding: 14px 16px;
+            background: #F5F3FF;
+            color: #2d3748;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .hint-question:hover {
+            background: #EDE9FE;
+        }
+
+        .hint-question::after {
+            content: '›';
+            font-size: 20px;
+            color: #7C3AED;
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+
+        .hint-item.expanded .hint-question::after {
+            transform: rotate(90deg);
+        }
+
+        .hint-answer {
+            padding: 0 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .hint-item.expanded .hint-answer {
+            max-height: 500px;
+            padding: 16px;
+            background: white;
+        }
+
+        .hint-answer p {
+            color: #2d3748;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .hint-answer code {
+            background: #E0E7FF;
+            color: #4338CA;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 15px;
+        }
+
+        /* Console Tab - Console Logs */
+        .console-output {
+            background: #FAFBFC;
+            border-radius: 8px;
+            padding: 12px 0;
+        }
+
+        .console-log-entry {
+            padding: 8px 16px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #1a202c;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .console-log-entry:hover {
+            background: #F1F5F9;
+            border-left-color: #3b82f6;
+        }
+
+        .console-log-line {
+            color: #94A3B8;
+            font-size: 12px;
+            min-width: 50px;
+            flex-shrink: 0;
+            user-select: none;
+        }
+
+        .console-log-content {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .console-log-string {
+            color: #059669;
+        }
+
+        .console-log-number {
+            color: #7C3AED;
+        }
+
+        .console-log-boolean {
+            color: #DC2626;
+        }
+
+        .console-log-object {
+            color: #2563EB;
+        }
+
+        .code-block code {
+            font-family: 'Source Code Pro', monospace;
+            color: #1a202c;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .code-keyword {
+            color: #c026d3;
+            font-weight: 600;
+        }
+
+        .code-function {
+            color: #2563eb;
+        }
+
+        .code-string {
+            color: #059669;
+        }
+
+        .code-number {
+            color: #d97706;
+        }
+
+        .code-comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Concepts Tab */
+        .concepts-content {
+            padding: 15px 0 20px 0;
+            margin-left: 0;
+        }
+
+        .references-search {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-icon-grey {
+            opacity: 1;
+        }
+
+        .search-icon-blue {
+            opacity: 0;
+        }
+
+        .references-search:focus-within .search-icon-grey {
+            opacity: 0;
+        }
+
+        .references-search:focus-within .search-icon-blue {
+            opacity: 1;
+        }
+
+        .references-search input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .references-search input:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        .references-search input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .search-hint {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #94A3B8;
+            pointer-events: none;
+        }
+
+        .references-search input:focus + .search-hint,
+        .references-search input:not(:placeholder-shown) + .search-hint {
+            display: none;
+        }
+
+        .references-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: normal;
+            margin-bottom: 12px;
+        }
+
+        .concept-card {
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .concept-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .concept-icon img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .concept-content {
+            flex: 1;
+        }
+
+        .concept-card::after {
+            content: '›';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #3b82f6;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .concept-card:hover {
+            border-color: #3b82f6;
+            background: #F0F9FF;
+        }
+
+        .concept-card:hover::after {
+            opacity: 1;
+        }
+
+        .concept-card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .concept-card-description {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .view-all-concepts {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #E2E8F0;
+            text-align: center;
+        }
+
+        .view-all-link {
+            font-size: 15px;
+            font-weight: 600;
+            color: #3b82f6;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .view-all-link:hover {
+            color: #2563eb;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 550px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            margin: 20px 20px 0 20px;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: #7C3AED;
+            margin-bottom: 0;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .chat-header-icon {
+            font-size: 28px;
+        }
+
+        .chat-header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-footer {
+            text-align: center;
+            padding-top: 14px;
+            font-size: 13px;
+            color: #94A3B8;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 15px 40px 0 40px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .chat-message.jiki-message {
+            flex-direction: row;
+        }
+
+        .chat-message.user-message {
+            flex-direction: row-reverse;
+        }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #A78BFA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .user-avatar-img {
+            background: transparent;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .user-avatar-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .chat-bubble {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 14px 18px;
+            max-width: 85%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-message.jiki-message .chat-bubble {
+            background: #FFFFFF;
+            border: none;
+        }
+
+        .chat-message.user-message .chat-bubble {
+            background: #FFFFFF;
+            border: none;
+        }
+
+        .chat-bubble p {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1a202c;
+        }
+
+        .chat-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .chat-bubble code {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+        }
+
+        .chat-input-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 40px;
+            margin-top: -40px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 16px 18px;
+            padding-bottom: 32px;
+            border: 2px solid #E9D5FF;
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.2s;
+            background: #FFFFFF;
+            resize: none;
+            min-height: 80px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #C4B5FD;
+        }
+
+        .chat-input::placeholder {
+            color: #94A3B8;
+        }
+
+        .chat-input-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 56px;
+            font-size: 18px;
+            color: #94A3B8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            pointer-events: none;
+        }
+
+        .chat-send-button {
+            display: none;
+        }
+
+        .chat-send-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Section Filters */
+        .section-filters {
+            display: flex;
+            gap: 8px;
+            margin: 0 -20px 0 -20px;
+            padding: 17px 20px 0 20px;
+            border-bottom: 1px solid #64748b;
+            background: #FFFFFF;
+            overflow-x: auto;
+            justify-content: flex-start;
+        }
+
+        .filter-chip {
+            padding: 2px 12px 5px 12px;
+            background: #FAFBFC;
+            border: 2px solid #F1F5F9;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .filter-chip:hover {
+            background: #EDE9FE;
+            border-color: #C4B5FD;
+            color: #7C3AED;
+        }
+
+        .filter-chip.active {
+            background: #64748b;
+            border-color: #64748b;
+            border-bottom: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">JIKI</div>
+
+        <div class="top-bar-actions">
+            <button class="close-button">×</button>
+        </div>
+    </div>
+
+    <div class="exercise-container">
+        <div class="vertical-divider"></div>
+        <div class="code-editor">
+            <div class="code-content">
+                <div class="code-rows">
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">1</span><span class="line-code"><span style="color: #475569;">// TODO: Set your initial variables here</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">2</span><span class="line-code"><span style="color: #60A5FA;">set</span> flower_radius <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">0</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">3</span><span class="line-code"><span style="color: #60A5FA;">set</span> flower_x <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">50</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">4</span><span class="line-code"><span style="color: #60A5FA;">set</span> flower_y <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">90</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">5</span><span class="line-code"><span style="color: #60A5FA;">set</span> flower_color <span style="color: #60A5FA;">to</span> <span style="color: #A78BFA;">"purple"</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">6</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">7</span><span class="line-code"><span style="color: #60A5FA;">set</span> flowermiddle_radius <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">0</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">8</span><span class="line-code"><span style="color: #60A5FA;">set</span> flowermiddle_x <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">50</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">9</span><span class="line-code"><span style="color: #60A5FA;">set</span> flowermiddle_y <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">90</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">10</span><span class="line-code"><span style="color: #60A5FA;">set</span> flowermiddle_color <span style="color: #60A5FA;">to</span> <span style="color: #A78BFA;">"yellow"</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">11</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">12</span><span class="line-code"><span style="color: #60A5FA;">set</span> stem_x <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">50</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">13</span><span class="line-code"><span style="color: #60A5FA;">set</span> stem_y <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">90</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">14</span><span class="line-code"><span style="color: #60A5FA;">set</span> stem_height <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">0</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">15</span><span class="line-code"><span style="color: #60A5FA;">set</span> stem_width <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">0</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">16</span><span class="line-code"><span style="color: #60A5FA;">set</span> stem_color <span style="color: #60A5FA;">to</span> <span style="color: #A78BFA;">"green"</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">17</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">18</span><span class="line-code"><span style="color: #60A5FA;">set</span> leftleaf_center_x <span style="color: #60A5FA;">to</span> stem_x-<span style="color: #F472B6;">0.25</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">19</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">20</span><span class="line-code"><span style="color: #60A5FA;">set</span> leaf_center_y <span style="color: #60A5FA;">to</span> stem_y-<span style="color: #F472B6;">0.5</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">21</span><span class="line-code"><span style="color: #60A5FA;">set</span> leaf_radius_x <span style="color: #60A5FA;">to</span> flower_radius+<span style="color: #F472B6;">0.2</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">22</span><span class="line-code"><span style="color: #60A5FA;">set</span> leaf_radius_y <span style="color: #60A5FA;">to</span> flower_radius+<span style="color: #F472B6;">0.08</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">23</span><span class="line-code"><span style="color: #60A5FA;">set</span> leaf_color <span style="color: #60A5FA;">to</span> <span style="color: #A78BFA;">"green"</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">24</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">25</span><span class="line-code"><span style="color: #60A5FA;">set</span> rightleaf_center_x <span style="color: #60A5FA;">to</span> <span style="color: #F472B6;">50</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">26</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">27</span><span class="line-code"><span style="color: #60A5FA;">repeat</span> <span style="color: #F472B6;">60</span> <span style="color: #60A5FA;">times do</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">28</span><span class="line-code">  <span style="color: #475569;">// TODO: Update your variables here</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">29</span><span class="line-code"> <span style="color: #A78BFA;">clear</span>()</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">30</span><span class="line-code">  <span style="color: #60A5FA;">change</span> flower_radius <span style="color: #60A5FA;">to</span> flower_radius+<span style="color: #F472B6;">0.4</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">31</span><span class="line-code">  <span style="color: #60A5FA;">change</span> flower_y <span style="color: #60A5FA;">to</span> flower_y-<span style="color: #F472B6;">1</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">32</span><span class="line-code">  <span style="color: #60A5FA;">change</span> flowermiddle_radius <span style="color: #60A5FA;">to</span> flowermiddle_radius+<span style="color: #F472B6;">0.1</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">33</span><span class="line-code">  <span style="color: #60A5FA;">change</span> flowermiddle_y <span style="color: #60A5FA;">to</span> flowermiddle_y-<span style="color: #F472B6;">1</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">34</span><span class="line-code">  <span style="color: #60A5FA;">change</span> stem_height <span style="color: #60A5FA;">to</span> stem_height+<span style="color: #F472B6;">1</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">35</span><span class="line-code">  <span style="color: #60A5FA;">change</span> stem_width <span style="color: #60A5FA;">to</span> stem_height/ <span style="color: #F472B6;">10</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">36</span><span class="line-code">  <span style="color: #60A5FA;">change</span> stem_y <span style="color: #60A5FA;">to</span> stem_y-<span style="color: #F472B6;">1</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">37</span><span class="line-code">  <span style="color: #60A5FA;">change</span> stem_x <span style="color: #60A5FA;">to</span> flower_x - stem_width/<span style="color: #F472B6;">2</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">38</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">39</span><span class="line-code">  <span style="color: #60A5FA;">change</span> leaf_center_y <span style="color: #60A5FA;">to</span> stem_y+stem_height*<span style="color: #F472B6;">0.5</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">40</span><span class="line-code">  <span style="color: #60A5FA;">change</span> leaf_radius_x <span style="color: #60A5FA;">to</span> flower_radius*<span style="color: #F472B6;">0.5</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">41</span><span class="line-code">  <span style="color: #60A5FA;">change</span> leaf_radius_y <span style="color: #60A5FA;">to</span> flower_radius*<span style="color: #F472B6;">0.2</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">42</span><span class="line-code">  <span style="color: #60A5FA;">change</span> leftleaf_center_x <span style="color: #60A5FA;">to</span> stem_x-leaf_radius_x</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">43</span><span class="line-code">  <span style="color: #60A5FA;">change</span> rightleaf_center_x <span style="color: #60A5FA;">to</span> stem_x+stem_width+leaf_radius_x</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">44</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">45</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">46</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">47</span><span class="line-code">  <span style="color: #475569;">// Sky</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">48</span><span class="line-code">  <span style="color: #A78BFA;">fill_color_hex</span>(<span style="color: #A78BFA;">"#ADD8E6"</span>)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">49</span><span class="line-code">  <span style="color: #A78BFA;">rectangle</span>(<span style="color: #F472B6;">0</span>, <span style="color: #F472B6;">0</span>, <span style="color: #F472B6;">100</span>, <span style="color: #F472B6;">90</span>)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">50</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">51</span><span class="line-code">  <span style="color: #475569;">// Ground</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">52</span><span class="line-code">  <span style="color: #A78BFA;">fill_color_hex</span>(<span style="color: #A78BFA;">"green"</span>)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">53</span><span class="line-code">  <span style="color: #A78BFA;">rectangle</span>(<span style="color: #F472B6;">0</span>, <span style="color: #F472B6;">90</span>, <span style="color: #F472B6;">100</span>, <span style="color: #F472B6;">3</span>)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">54</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">55</span><span class="line-code">    <span style="color: #475569;">// TODO: Draw the stem (rectangle)</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">56</span><span class="line-code">  <span style="color: #A78BFA;">fill_color_hex</span>(stem_color)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">57</span><span class="line-code">  <span style="color: #A78BFA;">rectangle</span> (stem_x, stem_y, stem_width, stem_height)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">58</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">59</span><span class="line-code">   <span style="color: #475569;">// TODO: Draw the flower (a circle)</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">60</span><span class="line-code">  <span style="color: #A78BFA;">fill_color_hex</span>(flower_color)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">61</span><span class="line-code">  <span style="color: #A78BFA;">circle</span> (flower_x, flower_y, flower_radius)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">62</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">63</span><span class="line-code">   <span style="color: #475569;">// TODO: Draw the flower middle (a circle)</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">64</span><span class="line-code">  <span style="color: #A78BFA;">fill_color_hex</span>(flowermiddle_color)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">65</span><span class="line-code">  <span style="color: #A78BFA;">circle</span> (flowermiddle_x, flowermiddle_y, flowermiddle_radius)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">66</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">67</span><span class="line-code">    <span style="color: #475569;">// TODO: Draw the left leaf</span></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">68</span><span class="line-code">    <span style="color: #A78BFA;">fill_color_hex</span>(leaf_color)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">69</span><span class="line-code">    <span style="color: #A78BFA;">ellipse</span> (leftleaf_center_x, leaf_center_x, leaf_radius_x, leaf_radius_y)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">70</span><span class="line-code">    <span style="color: #A78BFA;">ellipse</span> (rightleaf_center_x, leaf_center_y, leaf_radius_x, leaf_radius_y)</span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">71</span><span class="line-code"></span></div>
+                    <div class="code-row"><div class="line-dot"></div><span class="line-number">72</span><span class="line-code"><span style="color: #60A5FA;">end</span></span></div>
+                </div>
+            </div>
+            <button class="check-button"><span>Run Code</span><span class="keyboard-shortcut">⌘⏎</span></button>
+        </div>
+
+        <div class="horizontal-divider"></div>
+
+        <div class="test-results-area">
+            <div class="v14-dots-section">
+                <div class="v14-dots">
+                    <button class="v14-dot passed active" data-scenario="1"></button>
+                    <button class="v14-dot passed" data-scenario="2"></button>
+                    <button class="v14-dot passed" data-scenario="3"></button>
+                    <button class="v14-dot passed" data-scenario="4"></button>
+                    <button class="v14-dot passed" data-scenario="5"></button>
+                    <button class="v14-dot failed" data-scenario="6"></button>
+                    <button class="v14-dot failed" data-scenario="7"></button>
+                    <button class="v14-dot failed" data-scenario="8"></button>
+                    <button class="v14-dot failed" data-scenario="9"></button>
+                    <button class="v14-dot failed" data-scenario="10"></button>
+                </div>
+                <div class="v14-status-line"></div>
+            </div>
+            <div class="visual-player">
+                <div class="player-canvas">
+                    <div class="player-content-row">
+                        <div class="content-below-tabs">
+                            <div class="left-column-content">
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Three Rows of Aliens</span>Create a 10x10 grid and place ships according to game rules. Ensure ships don't overlap. Give it a try and see how you get on.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Grid Initialization</span>Initialize the grid with proper dimensions and spacing.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Collision Detection</span>Properly detect when aliens collide with barriers or player.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Movement Logic</span>Ensure aliens move in the correct pattern across the screen.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Scoring System</span>Award correct points for each alien destroyed.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                <div class="test-description state-failed">
+                                    <p><span class="instruction-label">Final Flower Head</span>Verify the final flower head is rendered correctly with all petals.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Fail</span>
+                                        <div class="message">Uh oh! The final Flower Head isn't correct</div>
+                                    </div>
+                                </div>
+                                <div class="test-description state-failed">
+                                    <p><span class="instruction-label">Laser Firing</span>Verify that laser fires correctly from player position.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Fail</span>
+                                        <div class="message">Uh oh! The final Flower Head isn't correct</div>
+                                    </div>
+                                </div>
+                                <div class="test-description state-failed">
+                                    <p><span class="instruction-label">Barrier Destruction</span>Check that barriers are destroyed properly when hit.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Fail</span>
+                                        <div class="message">Uh oh! The final Flower Head isn't correct</div>
+                                    </div>
+                                </div>
+                                <div class="test-description state-failed">
+                                    <p><span class="instruction-label">Game Over State</span>Ensure game over triggers when all aliens reach bottom.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Fail</span>
+                                        <div class="message">Uh oh! The final Flower Head isn't correct</div>
+                                    </div>
+                                </div>
+                                <div class="test-description state-failed">
+                                    <p><span class="instruction-label">Level Progression</span>Advance to next level when all aliens destroyed.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Fail</span>
+                                        <div class="message">Uh oh! The final Flower Head isn't correct</div>
+                                    </div>
+                                </div>
+                                <!-- For passed state, use:
+                                <div class="test-description">
+                                    <p><span class="instruction-label">Three Rows of Aliens</span>Create a 10x10 grid and place ships according to game rules. Ensure ships don't overlap.</p>
+                                    <div class="test-feedback">
+                                        <span class="badge">Pass</span>
+                                        <div class="message">Amazing effort! You've successfully navigated the maze and reached the goal.</div>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="control-bar">
+                                    <button class="play-btn">▶</button>
+                                    <div class="scrubber"><div class="scrubber-progress"></div></div>
+                                    <button class="nav-btn">‹</button>
+                                    <button class="nav-btn">›</button>
+                                    <button class="code-nav-btn" id="code-nav-prev">‹</button>
+                                    <button class="code-nav-btn" id="code-nav-next">›</button>
+                                    <div class="toggle-btn"></div>
+                                </div>
+                            </div>
+
+                            <div class="right-video-container">
+                                <div class="battleships-video">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="top-tab-bar">
+                <button class="top-tab active">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    Instructions
+                </button>
+                <button class="top-tab">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Talk to Jiki
+                </button>
+                <button class="top-tab">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M7 7h10M7 12h7M7 17h4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    Console
+                </button>
+                <button class="top-tab">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="12" cy="17" r="1" fill="currentColor"/>
+                    </svg>
+                    Hints
+                </button>
+            </div>
+            <div class="top-tab-content">
+                <!-- Instructions Tab -->
+                <div class="tab-content-section active">
+                </div>
+
+                <!-- Talk to Jiki AI Tab -->
+                <div class="tab-content-section chat-section">
+                </div>
+
+                <!-- Console Tab -->
+                <div class="tab-content-section">
+                </div>
+
+                <!-- Hints Tab -->
+                <div class="tab-content-section">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle tooltips functionality
+        const speedToggle = document.querySelector('.toggle-btn');
+        const codeRows = document.querySelectorAll('.code-row');
+        const rowsWithTooltips = Array.from(codeRows).filter(row => row.querySelector('.code-tooltip'));
+        let tooltipsEnabled = false;
+
+        if (speedToggle) {
+            speedToggle.addEventListener('click', function() {
+                tooltipsEnabled = !tooltipsEnabled;
+                this.classList.toggle('on');
+                document.body.classList.toggle('tooltips-enabled', tooltipsEnabled);
+
+                if (tooltipsEnabled && rowsWithTooltips.length > 0) {
+                    // Show first tooltip when enabled
+                    const firstRow = rowsWithTooltips[0];
+                    firstRow.classList.add('active');
+
+                    const tooltip = firstRow.querySelector('.code-tooltip');
+                    const rowRect = firstRow.getBoundingClientRect();
+                    const codeEditor = document.querySelector('.code-editor');
+                    const editorRect = codeEditor.getBoundingClientRect();
+
+                    tooltip.style.left = (editorRect.right + 20) + 'px';
+                    tooltip.style.top = (rowRect.top + rowRect.height / 2) + 'px';
+                    tooltip.style.transform = 'translateY(-50%)';
+
+                    firstRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    codeRows.forEach(row => row.classList.remove('active'));
+                }
+            });
+        }
+
+        codeRows.forEach(row => {
+            row.addEventListener('click', function(e) {
+                if (!tooltipsEnabled) return;
+                if (!this.querySelector('.code-tooltip')) return;
+
+                codeRows.forEach(r => r.classList.remove('active'));
+                this.classList.add('active');
+
+                const tooltip = this.querySelector('.code-tooltip');
+                const rowRect = this.getBoundingClientRect();
+                const codeEditor = document.querySelector('.code-editor');
+                const editorRect = codeEditor.getBoundingClientRect();
+
+                tooltip.style.left = (editorRect.right + 20) + 'px';
+                tooltip.style.top = (rowRect.top + rowRect.height / 2) + 'px';
+                tooltip.style.transform = 'translateY(-50%)';
+
+                e.stopPropagation();
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.code-row') && tooltipsEnabled) {
+                codeRows.forEach(row => row.classList.remove('active'));
+            }
+        });
+
+        // Scenario button click functionality
+        const scenarioContent = {
+            1: { state: '', label: 'Three Rows of Aliens', text: 'Create a 10x10 grid and place ships according to game rules. Ensure ships don\'t overlap. Give it a try and see how you get on.', badge: 'Pass', message: 'Amazing effort! You\'ve successfully navigated the maze and reached the goal.', showFeedback: true },
+            2: { state: 'state-passed', label: 'Five columns of invaders', text: 'Arrange enemies in a 5-column formation with proper spacing between each unit.', badge: 'Pass', message: 'Amazing effort! You\'ve successfully navigated the maze and reached the goal.', showFeedback: true },
+            3: { state: 'state-passed', label: 'Diagonal wave pattern', text: 'Create a diagonal formation of enemies moving in a wave pattern across the screen.', badge: 'Pass', message: 'Amazing effort! You\'ve successfully navigated the maze and reached the goal.', showFeedback: true },
+            4: { state: 'state-passed', label: 'Circle formation', text: 'Position enemies in a circular pattern around a central point with equal spacing.', badge: 'Pass', message: 'Amazing effort! You\'ve successfully navigated the maze and reached the goal.', showFeedback: true },
+            5: { state: 'state-passed', label: 'V-formation attack', text: 'Arrange enemies in a V-shaped formation moving toward the player position.', badge: 'Pass', message: 'Amazing effort! You\'ve successfully navigated the maze and reached the goal.', showFeedback: true },
+            6: { state: 'state-failed', label: 'Random scatter pattern', text: 'Generate a random distribution of enemies across the play area with minimum spacing rules.', badge: 'Fail', message: 'Uh oh! The final Flower Head isn\'t correct', showFeedback: true },
+            7: { state: 'state-failed', label: 'Boss battle formation', text: 'Create a boss enemy with shield generators positioned around it in a defensive pattern.', badge: 'Fail', message: 'Uh oh! The final Flower Head isn\'t correct', showFeedback: true },
+            8: { state: 'state-failed', label: 'Spiral movement', text: 'Position enemies in a spiral pattern that rotates around the center of the screen.', badge: 'Fail', message: 'Uh oh! The final Flower Head isn\'t correct', showFeedback: true },
+            9: { state: 'state-failed', label: 'Twin laser towers', text: 'Create two synchronized towers that fire laser beams across the play field.', badge: 'Fail', message: 'Uh oh! The final Flower Head isn\'t correct', showFeedback: true },
+            10: { state: 'state-failed', label: 'Asteroid field', text: 'Generate a field of asteroids with random positions and sizes scattered across the area.', badge: 'Fail', message: 'Uh oh! The final Flower Head isn\'t correct', showFeedback: true }
+        };
+
+        // Initialize: hide all test descriptions except the first one
+        document.querySelectorAll('.test-description').forEach((desc, index) => {
+            desc.style.display = index === 0 ? 'block' : 'none';
+        });
+
+        document.querySelectorAll('.v14-dot').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active from all buttons
+                document.querySelectorAll('.v14-dot').forEach(btn => btn.classList.remove('active'));
+                // Add active to clicked button
+                this.classList.add('active');
+
+                const number = parseInt(this.getAttribute('data-scenario'));
+                const content = scenarioContent[number];
+
+                // Update counter
+                const counter = document.querySelector('.v14-counter');
+                if (counter) {
+                    counter.textContent = `Test ${number} of 10`;
+                }
+
+                // Hide all test descriptions and show only the selected one
+                const allTestDescriptions = document.querySelectorAll('.test-description');
+                allTestDescriptions.forEach((desc, index) => {
+                    if (index + 1 === number) {
+                        desc.style.display = 'block';
+                        desc.className = 'test-description ' + content.state;
+
+                        // Update text content
+                        const testText = desc.querySelector('p');
+                        testText.innerHTML = '<span class="instruction-label">' + content.label + '</span>' + content.text;
+
+                        // Update feedback
+                        const feedbackElement = desc.querySelector('.test-feedback');
+                        if (content.showFeedback) {
+                            feedbackElement.style.display = 'flex';
+                            feedbackElement.innerHTML = '<span class="badge">' + content.badge + '</span><div class="message">' + content.message + '</div>';
+                        } else {
+                            feedbackElement.style.display = 'none';
+                        }
+                    } else {
+                        desc.style.display = 'none';
+                    }
+                });
+
+                // Update status line color
+                const statusLine = document.querySelector('.v14-status-line');
+                statusLine.classList.remove('failed', 'incomplete', 'flash');
+                if (content.state === 'state-failed') {
+                    statusLine.classList.add('failed');
+                } else if (content.state === 'state-incomplete') {
+                    statusLine.classList.add('incomplete');
+                }
+
+                // Trigger flash animation on status line
+                setTimeout(() => {
+                    statusLine.classList.add('flash');
+                }, 10);
+
+                // Remove flash class after animation completes
+                statusLine.addEventListener('animationend', function() {
+                    this.classList.remove('flash');
+                }, { once: true });
+
+            });
+        });
+
+        // Code row click functionality for line selection (purple nav buttons)
+        const allCodeRowsForNav = document.querySelectorAll('.code-row');
+        const codeNavPrev = document.getElementById('code-nav-prev');
+        const codeNavNext = document.getElementById('code-nav-next');
+        let activeLineIndex = -1;
+
+        allCodeRowsForNav.forEach((row, index) => {
+            row.addEventListener('click', function(e) {
+                // Don't interfere if tooltips are enabled
+                if (document.body.classList.contains('tooltips-enabled')) return;
+
+                // If clicking on already selected row, deactivate it
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    activeLineIndex = -1;
+                    // Hide code nav buttons
+                    codeNavPrev.classList.remove('visible');
+                    codeNavNext.classList.remove('visible');
+                    return;
+                }
+
+                // Remove selected from all rows
+                allCodeRowsForNav.forEach(r => r.classList.remove('selected'));
+                // Add selected to clicked row
+                this.classList.add('selected');
+                activeLineIndex = index;
+
+                // Show code nav buttons
+                codeNavPrev.classList.add('visible');
+                codeNavNext.classList.add('visible');
+            });
+        });
+
+        // Code nav button functionality
+        codeNavPrev.addEventListener('click', function() {
+            if (activeLineIndex <= 0) return;
+            allCodeRowsForNav[activeLineIndex].classList.remove('selected');
+            activeLineIndex--;
+            allCodeRowsForNav[activeLineIndex].classList.add('selected');
+            allCodeRowsForNav[activeLineIndex].scrollIntoView({ block: 'nearest' });
+        });
+
+        codeNavNext.addEventListener('click', function() {
+            if (activeLineIndex >= allCodeRowsForNav.length - 1) return;
+            allCodeRowsForNav[activeLineIndex].classList.remove('selected');
+            activeLineIndex++;
+            allCodeRowsForNav[activeLineIndex].classList.add('selected');
+            allCodeRowsForNav[activeLineIndex].scrollIntoView({ block: 'nearest' });
+        });
+
+        // Vertical divider drag functionality
+        const divider = document.querySelector('.vertical-divider');
+        const container = document.querySelector('.exercise-container');
+
+        let isDragging = false;
+
+        divider.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+
+            const containerRect = container.getBoundingClientRect();
+            const offsetX = e.clientX - containerRect.left;
+            const percentage = (offsetX / containerRect.width) * 100;
+
+            if (percentage >= 30 && percentage <= 70) {
+                container.style.gridTemplateColumns = `${percentage}% ${100 - percentage}%`;
+                divider.style.left = `${percentage}%`;
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+
+        // Horizontal divider drag functionality
+        const horizontalDivider = document.querySelector('.horizontal-divider');
+        let isHorizontalDragging = false;
+
+        horizontalDivider.addEventListener('mousedown', function(e) {
+            isHorizontalDragging = true;
+            document.body.style.cursor = 'row-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isHorizontalDragging) return;
+
+            const containerRect = container.getBoundingClientRect();
+            const offsetY = e.clientY - containerRect.top;
+            const pixelPosition = offsetY;
+
+            if (pixelPosition >= 200 && pixelPosition <= containerRect.height - 200) {
+                horizontalDivider.style.top = pixelPosition + 'px';
+                container.style.gridTemplateRows = `${pixelPosition}px 1fr`;
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (isHorizontalDragging) {
+                isHorizontalDragging = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+
+        // Tab switching functionality
+        const topTabs = document.querySelectorAll('.top-tab');
+        const tabContentSections = document.querySelectorAll('.tab-content-section');
+
+        topTabs.forEach((tab, index) => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                topTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Hide all content sections
+                tabContentSections.forEach(section => section.classList.remove('active'));
+                // Show corresponding content section
+                if (tabContentSections[index]) {
+                    tabContentSections[index].classList.add('active');
+                }
+
+                // If Instructions tab is clicked (index 0), reset to Overview section
+                if (index === 0) {
+                    const filterChips = document.querySelectorAll('.filter-chip');
+                    const instructionSections = document.querySelectorAll('.instruction-section');
+                    const instructionsHeader = document.querySelector('.instructions-header');
+
+                    // Reset filter chips to Overview
+                    filterChips.forEach(c => c.classList.remove('active'));
+                    filterChips[0].classList.add('active');
+
+                    // Show only Overview section
+                    instructionSections.forEach(section => section.style.display = 'none');
+                    const overviewSection = document.getElementById('overview');
+                    if (overviewSection) {
+                        overviewSection.style.display = 'block';
+                    }
+
+                    // Make sure instructions header is visible
+                    if (instructionsHeader) {
+                        instructionsHeader.classList.remove('hidden');
+                    }
+                }
+
+                // If Concept Library tab is clicked (index 3), reset to Featured section
+                if (index === 3) {
+                    const conceptFilterChips = tabContentSections[index].querySelectorAll('.filter-chip');
+                    const conceptSections = tabContentSections[index].querySelectorAll('.instruction-section');
+
+                    // Reset filter chips to Featured
+                    conceptFilterChips.forEach(c => c.classList.remove('active'));
+                    if (conceptFilterChips[0]) {
+                        conceptFilterChips[0].classList.add('active');
+                    }
+
+                    // Show only Featured section
+                    conceptSections.forEach(section => section.style.display = 'none');
+                    const featuredSection = document.getElementById('concepts-featured');
+                    if (featuredSection) {
+                        featuredSection.style.display = 'block';
+                    }
+                }
+            });
+        });
+
+        // Section filter functionality
+        const filterChips = document.querySelectorAll('.filter-chip');
+        const instructionSections = document.querySelectorAll('.instruction-section');
+        const instructionsHeader = document.querySelector('.instructions-header');
+
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                // Remove active class from all chips
+                filterChips.forEach(c => c.classList.remove('active'));
+                // Add active class to clicked chip
+                this.classList.add('active');
+
+                // Hide all sections
+                instructionSections.forEach(section => section.style.display = 'none');
+
+                // Show the selected section
+                const sectionId = this.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.style.display = 'block';
+                }
+
+                // Toggle header visibility - only show for overview
+                if (instructionsHeader) {
+                    if (sectionId === 'overview') {
+                        instructionsHeader.classList.remove('hidden');
+                    } else {
+                        instructionsHeader.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Hint expansion functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.hint-question')) {
+                const hintItem = e.target.closest('.hint-item');
+                if (hintItem) {
+                    hintItem.classList.toggle('expanded');
+                }
+            }
+        });
+
+        // Console line click functionality (for future timeline navigation)
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.console-line')) {
+                const consoleLine = e.target.closest('.console-line');
+                // Add visual feedback
+                document.querySelectorAll('.console-line').forEach(line => {
+                    line.style.background = '';
+                });
+                consoleLine.style.background = 'rgba(59, 130, 246, 0.2)';
+
+                // Future: Jump to timeline position based on line number
+                console.log('Console line clicked:', consoleLine.querySelector('.console-line-number').textContent);
+            }
+        });
+    </script>
+</body>
+</html>
