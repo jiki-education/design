@@ -489,7 +489,7 @@
         .payment-history-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 15px;
             margin-top: 34px;
         }
 
@@ -499,7 +499,7 @@
             color: var(--color-gray-500);
             padding: 0 0 12px 0;
             border-bottom: 1px solid var(--color-gray-200);
-            font-size: 13px;
+            font-size: 15px;
         }
 
         .payment-history-table th:last-child {
@@ -550,7 +550,7 @@
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 500;
         }
 
@@ -631,6 +631,15 @@
             color: var(--color-gray-700);
         }
 
+        /* Gradient text style (like "Accelerate" in premium modal) */
+        .gradient-text {
+            background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
         /* Current Plan with Premium Pill */
         .current-plan-item {
             position: relative;
@@ -644,7 +653,7 @@
             padding: 6px 14px;
             background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             color: white;
         }
@@ -657,7 +666,7 @@
 
         /* Premium Benefits (for Premium subscribers) */
         .benefits-label {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--color-gray-700);
             margin: 24px 0 16px 0;
@@ -667,13 +676,15 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px 40px;
+            margin-top: 18px;
+            margin-bottom: 18px;
         }
 
         .premium-benefit {
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            font-size: 14px;
+            font-size: 16px;
             color: var(--color-gray-600);
             line-height: 1.5;
         }
@@ -687,6 +698,27 @@
 
         .premium-benefit strong {
             color: var(--color-gray-700);
+        }
+
+        .benefits-footer {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+
+        .benefits-footer a {
+            color: var(--color-gray-500);
+            text-decoration: underline;
+        }
+
+        .benefits-footer a:hover {
+            color: var(--color-gray-700);
+        }
+
+        /* Benefits section with purple shadow */
+        .benefits-section {
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2);
         }
 
         /* Cancel Button */
@@ -1020,13 +1052,13 @@
         <!-- Placeholder content for other tabs -->
         <div class="settings-content" data-tab-content="subscription" style="display: none;">
             <div class="setting-item current-plan-item">
-                <span class="premium-pill">Jiki Premium</span>
                 <h3>Current Plan</h3>
-                <p>You are on the <strong>Jiki Premium</strong> plan at <strong>$3.99/month</strong>. Your next billing date is <strong>Feb 15, 2026</strong>.</p>
+                <p>You are on the <span class="gradient-text">Jiki Premium</span> plan at <strong>$3.99/month</strong>. Your next billing date is <strong>Feb 15, 2026</strong>.</p>
+            </div>
 
-                <hr class="section-divider">
-
-                <p class="benefits-label">Your Premium benefits:</p>
+            <div class="setting-item benefits-section">
+                <h3>Your benefits</h3>
+                <p>Everything you get with your Premium subscription.</p>
                 <div class="premium-benefits">
                     <div class="premium-benefit">
                         <svg viewBox="0 0 24 24" fill="none">
@@ -1083,6 +1115,7 @@
                         </div>
                     </div>
                 </div>
+                <p class="benefits-footer">Learn more about <a href="#">what's included in Premium</a> and our <a href="#">fair use policy</a>.</p>
             </div>
 
             <div class="setting-item">
