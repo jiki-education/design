@@ -6,7 +6,7 @@
     <title>Settings - Jiki</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../ui-kit/styles.css">
     <script>
         const IMPLEMENTATION_NOTES = `
@@ -398,13 +398,19 @@
             font-size: 16px;
             color: var(--color-gray-500);
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
             text-wrap-style: balance;
             max-width: 600px;
         }
 
         /* Remove text-wrap and max-width for danger zone paragraphs */
         .settings-content[data-tab-content="danger"] .setting-item p {
+            text-wrap-style: auto;
+            max-width: none;
+        }
+
+        /* Remove text-wrap and max-width for subscription paragraphs */
+        .settings-content[data-tab-content="subscription"] .setting-item p {
             text-wrap-style: auto;
             max-width: none;
         }
@@ -477,6 +483,232 @@
 
         .toggle-row .ui-toggle-switch {
             flex-shrink: 0;
+        }
+
+        /* Payment History Table */
+        .payment-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 34px;
+        }
+
+        .payment-history-table th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            padding: 0 0 12px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 13px;
+        }
+
+        .payment-history-table th:last-child {
+            text-align: right;
+        }
+
+        .payment-history-table td {
+            padding: 16px 0;
+            color: var(--color-gray-700);
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .payment-history-table td:last-child {
+            text-align: right;
+        }
+
+        .payment-history-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .payment-history-table th:nth-child(1),
+        .payment-history-table td:nth-child(1) {
+            width: 25%;
+        }
+
+        .payment-history-table th:nth-child(2),
+        .payment-history-table td:nth-child(2) {
+            width: 15%;
+        }
+
+        .payment-history-table th:nth-child(3),
+        .payment-history-table td:nth-child(3) {
+            width: 20%;
+        }
+
+        .payment-history-table th:nth-child(4),
+        .payment-history-table td:nth-child(4) {
+            width: 15%;
+        }
+
+        .payment-history-table th:nth-child(5),
+        .payment-history-table td:nth-child(5) {
+            width: 25%;
+        }
+
+        .ui-btn.ui-btn-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .ui-btn.ui-btn-small svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .payment-history-table .ui-btn.ui-btn-secondary {
+            background: #eceef2;
+            color: #434e61;
+            border: none;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        .payment-history-table .ui-btn.ui-btn-secondary:hover {
+            background: #d5d9e2;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Premium Upsell Section */
+        .premium-upsell {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .premium-upsell-headline {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 12px 0;
+        }
+
+        .premium-upsell-headline .highlight {
+            background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .premium-upsell-subtitle {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            margin: 0 0 32px 0;
+        }
+
+        .premium-upsell-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 40px;
+            text-align: left;
+            max-width: 680px;
+            margin: 0 auto 32px auto;
+        }
+
+        .premium-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--color-gray-600);
+            line-height: 1.5;
+        }
+
+        .premium-feature svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .premium-feature strong {
+            color: var(--color-gray-700);
+        }
+
+        .premium-upsell-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 20px 28px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .premium-upsell-card-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .premium-upsell-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .premium-upsell-pricing {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .premium-upsell-price {
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+            line-height: 1;
+        }
+
+        .premium-upsell-price .amount {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--color-gray-900);
+        }
+
+        .premium-upsell-price .period {
+            font-size: 14px;
+            color: var(--color-gray-500);
+        }
+
+        .premium-upsell-note {
+            font-size: 12px;
+            color: #9333ea;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        /* Upgrade Button */
+        .upgrade-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: #eceef2;
+            color: #434e61;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .upgrade-button:hover {
+            background: #d5d9e2;
         }
     </style>
 </head>
@@ -715,8 +947,105 @@
         <!-- Placeholder content for other tabs -->
         <div class="settings-content" data-tab-content="subscription" style="display: none;">
             <div class="setting-item">
-                <h3>Subscription Settings</h3>
-                <p>Subscription details will be added here.</p>
+                <h3>Current Plan</h3>
+                <p>You are on the <strong>Free</strong> plan. This gives you all the content plus Jiki AI to help you out for one exercise per month.</p>
+            </div>
+
+            <div class="setting-item">
+                <h3>Payment History</h3>
+                <p>View and download receipts for your past payments.</p>
+                <table class="payment-history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Method</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jan 15, 2026</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dec 15, 2025</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td>Nov 15, 2025</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="premium-upsell">
+                <h2 class="premium-upsell-headline">Unlock a <span class="highlight">better</span> way to learn</h2>
+                <p class="premium-upsell-subtitle">You're currently on the Free plan. Upgrade to Premium to unlock:</p>
+
+                <div class="premium-upsell-features">
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Unlimited AI help:</strong> Get personalised guidance from Jiki whenever you're stuck
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Unlimited content:</strong> Access all exercises, projects, and learning paths
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Certificates:</strong> Earn shareable certificates when you complete courses
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Ad-free:</strong> Enjoy a distraction-free learning experience
+                        </div>
+                    </div>
+                </div>
+
+                <div class="premium-upsell-card">
+                    <div class="premium-upsell-card-info">
+                        <h3 class="premium-upsell-title">Jiki Premium</h3>
+                        <div class="premium-upsell-pricing">
+                            <div class="premium-upsell-price">
+                                <span class="amount">$3.99</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="premium-upsell-note">That's only $0.13 a day</p>
+                        </div>
+                    </div>
+                    <button class="upgrade-button">Upgrade to Premium</button>
+                </div>
             </div>
         </div>
 
