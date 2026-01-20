@@ -697,7 +697,7 @@
         }
 
         .premium-benefit strong {
-            color: var(--color-gray-700);
+            color: #9333ea;
         }
 
         .benefits-footer {
@@ -705,6 +705,7 @@
             color: var(--color-gray-500);
             margin-top: 20px;
             margin-bottom: 0;
+            text-align: center;
         }
 
         .benefits-footer a {
@@ -716,9 +717,13 @@
             color: var(--color-gray-700);
         }
 
-        /* Benefits section with purple shadow */
+        /* Benefits section with purple fill and grid pattern */
         .benefits-section {
-            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2);
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg opacity='0.05'%3E%3Cline x1='20' y1='0' x2='20' y2='20' stroke='%23000' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='20' y2='20' stroke='%23000' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
+                linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            background-repeat: repeat, no-repeat;
+            background-size: auto, 100% 100%;
         }
 
         /* Cancel Button */
@@ -1057,7 +1062,7 @@
             </div>
 
             <div class="setting-item benefits-section">
-                <h3>Your benefits</h3>
+                <h3>⭐ Your benefits</h3>
                 <p>Everything you get with your Premium subscription.</p>
                 <div class="premium-benefits">
                     <div class="premium-benefit">
