@@ -553,9 +553,12 @@
         }
 
         .ui-btn.ui-btn-small {
-            padding: 8px 16px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
             font-size: 15px;
+            font-weight: 500;
         }
 
         .ui-btn.ui-btn-small svg {
@@ -564,32 +567,18 @@
             flex-shrink: 0;
         }
 
-        /* Tertiary Button */
-        .ui-btn.ui-btn-tertiary {
-            --primary-color: var(--color-primary-500);
-            --primary-shadow-light: color-mix(in srgb, var(--color-primary-500) 20%, transparent);
-            --primary-shadow-lighter: color-mix(in srgb, var(--color-primary-500) 10%, transparent);
-
-            border: 2px solid var(--color-gray-200);
-            color: var(--color-gray-950);
-            background: white;
-            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-gray-900) 30%, transparent);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-align: center;
-            text-decoration: none;
+        .payment-history-table .ui-btn.ui-btn-secondary {
+            background: #eceef2;
+            color: #434e61;
+            border: none;
+            border-radius: 8px;
+            box-shadow: none;
         }
 
-        .ui-btn.ui-btn-tertiary:hover {
-            border-color: var(--primary-color);
-            box-shadow:
-                0 0 0 4px var(--primary-shadow-lighter),
-                0 4px 16px var(--primary-shadow-light);
+        .payment-history-table .ui-btn.ui-btn-secondary:hover {
+            background: #d5d9e2;
+            border: none;
+            box-shadow: none;
         }
 
         /* Premium Upsell Section */
@@ -1006,21 +995,21 @@
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Dec 15, 2025</td>
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Nov 15, 2025</td>
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
                         </tr>
                     </tbody>
                 </table>
