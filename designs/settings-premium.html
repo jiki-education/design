@@ -985,41 +985,40 @@
             margin-bottom: 24px;
         }
 
-        .modal-features-lost {
-            background: #fef2f2;
-            border-radius: 12px;
-            padding: 20px;
+        .modal-benefits-panel {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 28px;
         }
 
-        .modal-features-lost h4 {
-            font-size: 15px;
+        .modal-benefits-panel h4 {
+            font-size: 16px;
             font-weight: 600;
-            color: #b91c1c;
-            margin-bottom: 12px;
+            color: #9133ea;
+            margin-bottom: 16px;
             text-align: center;
         }
 
-        .modal-features-lost ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .modal-features-lost li {
+        .modal-benefits-panel .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
             font-size: 15px;
             color: var(--color-gray-700);
-            padding: 6px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .modal-features-lost li::before {
-            content: "×";
-            color: #ef4444;
-            font-weight: 700;
-            font-size: 16px;
+        .modal-benefits-panel .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-benefits-panel .benefit-item svg {
+            width: 20px;
+            height: 20px;
+            color: #a855f7;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .modal-buttons {
@@ -1477,16 +1476,24 @@
                 <h3>Cancel your subscription?</h3>
                 <p>We'd hate to see you go! If you cancel, you'll lose access to Premium at the end of your current billing period.</p>
 
-                <div class="modal-features-lost">
-                    <h4>You'll lose access to:</h4>
-                    <ul>
-                        <li>Unlimited AI help from Jiki</li>
-                        <li>All projects and learning paths</li>
-                        <li>Completion certificates</li>
-                        <li>Ad-free experience</li>
-                        <li>Priority support</li>
-                        <li>Early access to new features</li>
-                    </ul>
+                <div class="modal-benefits-panel">
+                    <h4>You're currently enjoying:</h4>
+                    <div class="benefit-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Unlimited AI help from Jiki</span>
+                    </div>
+                    <div class="benefit-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>All projects and learning paths</span>
+                    </div>
+                    <div class="benefit-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Completion certificates</span>
+                    </div>
+                    <div class="benefit-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Ad-free experience</span>
+                    </div>
                 </div>
 
                 <div class="modal-buttons">
