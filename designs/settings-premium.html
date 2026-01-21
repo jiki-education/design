@@ -675,37 +675,41 @@
         .premium-benefits {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px 40px;
-            margin-top: 18px;
-            margin-bottom: 18px;
+            gap: 28px 48px;
+            margin-top: 28px;
+            margin-bottom: 28px;
+            padding: 0 20px;
         }
 
         .premium-benefit {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 14px;
             font-size: 16px;
             color: var(--color-gray-600);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .premium-benefit svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
             margin-top: 2px;
         }
 
         .premium-benefit strong {
-            color: #9333ea;
+            color: var(--color-gray-900);
+            font-weight: 600;
         }
 
         .benefits-footer {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--color-gray-500);
-            margin-top: 20px;
-            margin-bottom: 0;
+            margin: 0 20px;
+            padding: 16px 20px;
             text-align: center;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
         }
 
         .benefits-footer a {
@@ -717,32 +721,69 @@
             color: var(--color-gray-700);
         }
 
-        /* Benefits section with purple fill and grid pattern */
+        /* Benefits section with purple fill */
         .benefits-section {
-            background:
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg opacity='0.05'%3E%3Cline x1='20' y1='0' x2='20' y2='20' stroke='%23000' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='20' y2='20' stroke='%23000' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
-                linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
-            background-repeat: repeat, no-repeat;
-            background-size: auto, 100% 100%;
-            padding-top: 36px;
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            padding: 40px 32px 36px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1px;
+        }
+
+        .splash-decoration {
+            width: 42px;
+            height: auto;
+            flex-shrink: 0;
+            opacity: 0.45;
+        }
+
+        .splash-left {
+            transform: scaleX(-1) rotate(40deg) translate(-10px, 7px);
+        }
+
+        .splash-right {
+            transform: rotate(40deg) translate(-10px, 7px);
         }
 
         .benefits-section h3 {
-            font-size: 21px;
+            font-size: 24px;
+            font-weight: 700;
             text-align: center;
+            margin: 0;
         }
 
         .benefits-section > p {
             text-align: center;
+            font-size: 16px;
+            color: var(--color-gray-500);
+            margin-bottom: 0;
+        }
+
+        .benefits-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: #7c3aed;
+            letter-spacing: -0.2px;
         }
 
         /* Cancel Button */
-        .cancel-btn {
+        .setting-row .cancel-btn {
             background: #eceef2;
             color: #434e61;
             border: none;
             border-radius: 8px;
             box-shadow: none;
+            width: auto;
+            max-width: none;
+            min-width: 175px;
         }
 
         .cancel-btn:hover {
@@ -1072,8 +1113,12 @@
             </div>
 
             <div class="setting-item benefits-section">
-                <h3><span class="gradient-text">Jiki Premium</span> Benefits</h3>
-                <p>Everything you get with your Premium subscription.</p>
+                <div class="benefits-header">
+                    <img src="../splash.png" alt="" class="splash-decoration splash-left">
+                    <h3>You're enjoying <span class="gradient-text">Premium</span> benefits</h3>
+                    <img src="../splash.png" alt="" class="splash-decoration splash-right">
+                </div>
+                <p class="benefits-subtitle">Here's what you're unlocking every day</p>
                 <div class="premium-benefits">
                     <div class="premium-benefit">
                         <svg viewBox="0 0 24 24" fill="none">
@@ -1130,7 +1175,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="benefits-footer">Learn more about <a href="#">what's included in Premium</a> and our <a href="#">fair use policy</a>.</p>
+                <p class="benefits-footer">Got a question? Learn more about <a href="#">what's included</a> or <a href="#">contact support</a>.</p>
             </div>
 
             <div class="setting-item">
@@ -1176,7 +1221,7 @@
                 <h3>Cancel Subscription</h3>
                 <div class="setting-row">
                     <p>If you cancel, you'll lose access to Premium features at the end of your billing period. You can always resubscribe later.</p>
-                    <button class="ui-btn cancel-btn">Cancel Subscription</button>
+                    <button class="ui-btn ui-btn-small cancel-btn">Cancel</button>
                 </div>
             </div>
         </div>
