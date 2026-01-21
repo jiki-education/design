@@ -60,6 +60,13 @@
         :root {
             --color-primary-500: #3b82f6;
             --color-primary-600: #2563eb;
+            --color-purple-300: #dab4fe;
+            --color-purple-500: #a855f7;
+            --color-purple-600: #9133ea;
+            --color-purple-500-15: color-mix(in srgb, #a855f7 15%, transparent);
+            --color-purple-500-20: color-mix(in srgb, #a855f7 20%, transparent);
+            --color-purple-500-30: color-mix(in srgb, #a855f7 30%, transparent);
+            --color-purple-500-40: color-mix(in srgb, #a855f7 40%, transparent);
             --color-gray-50: #f6f7f9;
             --color-gray-100: #eceef2;
             --color-gray-200: #d5d9e2;
@@ -546,12 +553,9 @@
         }
 
         .ui-btn.ui-btn-small {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 15px;
-            font-weight: 500;
         }
 
         .ui-btn.ui-btn-small svg {
@@ -560,18 +564,32 @@
             flex-shrink: 0;
         }
 
-        .payment-history-table .ui-btn.ui-btn-secondary {
-            background: #eceef2;
-            color: #434e61;
-            border: none;
-            border-radius: 8px;
-            box-shadow: none;
+        /* Tertiary Button */
+        .ui-btn.ui-btn-tertiary {
+            --primary-color: var(--color-primary-500);
+            --primary-shadow-light: color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+            --primary-shadow-lighter: color-mix(in srgb, var(--color-primary-500) 10%, transparent);
+
+            border: 2px solid var(--color-gray-200);
+            color: var(--color-gray-950);
+            background: white;
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-gray-900) 30%, transparent);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+            text-decoration: none;
         }
 
-        .payment-history-table .ui-btn.ui-btn-secondary:hover {
-            background: #d5d9e2;
-            border: none;
-            box-shadow: none;
+        .ui-btn.ui-btn-tertiary:hover {
+            border-color: var(--primary-color);
+            box-shadow:
+                0 0 0 4px var(--primary-shadow-lighter),
+                0 4px 16px var(--primary-shadow-light);
         }
 
         /* Premium Upsell Section */
@@ -692,26 +710,41 @@
             white-space: nowrap;
         }
 
-        /* Upgrade Button */
-        .upgrade-button {
-            display: flex;
+        /* Primary Button Component */
+        .ui-btn-primary-purple {
+            --primary-color: var(--color-purple-500);
+            --primary-color-dark: var(--color-purple-600);
+            --primary-color-light: var(--color-purple-300);
+            --primary-shadow: var(--color-purple-500-30);
+            --primary-shadow-light: var(--color-purple-500-20);
+            --primary-shadow-lighter: var(--color-purple-500-15);
+            --primary-shadow-dark: var(--color-purple-500-40);
+
+            border: 2px solid var(--primary-color);
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+            box-shadow: 0 2px 8px var(--primary-shadow);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 24px;
-            background: #a855f7;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            gap: 12px;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 16px;
             white-space: nowrap;
             flex-shrink: 0;
         }
 
-        .upgrade-button:hover {
-            background: #9333ea;
+        .ui-btn-primary-purple:hover {
+            border-color: var(--primary-color-dark);
+            box-shadow:
+                0 0 0 4px var(--primary-shadow-light),
+                0 4px 16px var(--primary-shadow-dark);
         }
     </style>
 </head>
@@ -973,21 +1006,21 @@
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Dec 15, 2025</td>
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Nov 15, 2025</td>
                             <td>$9.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1047,7 +1080,7 @@
                             <p class="premium-upsell-note">That's only $0.13 a day</p>
                         </div>
                     </div>
-                    <button class="upgrade-button">Upgrade to Premium</button>
+                    <button class="ui-btn-primary-purple">Upgrade to Premium</button>
                 </div>
             </div>
         </div>
