@@ -423,19 +423,29 @@
         /* Setting item sections */
         .setting-item {
             padding: 24px 0;
-            border-bottom: 1px solid var(--color-gray-200);
+            position: relative;
+        }
+
+        .setting-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 37px;
+            height: 1px;
+            background: var(--color-gray-200);
         }
 
         .setting-item:first-child {
             padding-top: 0;
         }
 
-        .setting-item:last-child {
-            border-bottom: none;
+        .setting-item:last-child::after {
+            display: none;
         }
 
-        .setting-item:has(+ .premium-upsell) {
-            border-bottom: none;
+        .setting-item:has(+ .premium-upsell)::after {
+            display: none;
         }
 
         .setting-item h3 {
@@ -630,7 +640,7 @@
         .premium-upsell {
             background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
             border-radius: 16px;
-            padding: 24px 40px 40px 40px;
+            padding: 24px 30px 40px 30px;
             text-align: center;
             margin-top: 12px;
             margin-bottom: 24px;
@@ -670,7 +680,7 @@
         .premium-upsell-features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px 40px;
+            gap: 20px 24px;
             text-align: left;
             max-width: 680px;
             margin: 0 auto 32px auto;
@@ -700,11 +710,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 24px;
             background: white;
             border: 1px solid var(--color-gray-200);
             border-radius: 16px;
-            padding: 24px 32px;
-            max-width: 680px;
+            padding: 20px 24px;
             margin: 0 auto;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
@@ -712,11 +722,11 @@
         .premium-upsell-card-info {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 20px;
         }
 
         .premium-upsell-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--color-gray-900);
             margin: 0;
@@ -727,7 +737,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding-left: 32px;
+            padding-left: 20px;
             border-left: 1px solid var(--color-gray-200);
         }
 
@@ -740,18 +750,18 @@
 
         .premium-upsell-price .amount {
             font-family: 'Baloo 2', sans-serif;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--color-gray-900);
         }
 
         .premium-upsell-price .period {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--color-gray-500);
         }
 
         .premium-upsell-note {
-            font-size: 13px;
+            font-size: 14px;
             color: #9333ea;
             margin: 2px 0 0 0;
             white-space: nowrap;
@@ -772,6 +782,7 @@
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
             box-shadow: 0 2px 8px var(--primary-shadow);
             font-weight: 500;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
@@ -780,9 +791,9 @@
             gap: 12px;
             text-align: center;
             text-decoration: none;
-            padding: 12px 18px;
+            padding: 10px 16px;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 14px;
             white-space: nowrap;
             flex-shrink: 0;
         }
@@ -839,10 +850,10 @@
 
         .editable-field-input-row input {
             flex: 1;
-            padding: 14px 16px;
+            padding: 8px 14px;
             border: 1px solid var(--color-gray-200);
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-family: 'Poppins', sans-serif;
             background: white;
             transition: all 0.2s ease;
@@ -866,10 +877,10 @@
         }
 
         .editable-field-password-fields input {
-            padding: 14px 16px;
+            padding: 8px 14px;
             border: 1px solid var(--color-gray-200);
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-family: 'Poppins', sans-serif;
             background: white;
             transition: all 0.2s ease;
@@ -891,12 +902,23 @@
             flex-shrink: 0;
         }
 
-        /* Consistent width for view mode buttons */
+        /* Consistent width and position for view mode buttons */
         .editable-field-header .ui-btn {
             min-width: 100px;
+            margin-right: 37px;
         }
 
-        /* Button size variant for editable fields */
+        .editable-field-header .ui-toggle-switch {
+            margin-right: 37px;
+        }
+
+        /* Button size variants */
+        .ui-btn-small {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
         .ui-btn-default {
             padding: 12px 18px;
             border-radius: 10px;
@@ -948,7 +970,7 @@
         .segmented-toggle {
             display: inline-flex;
             border: 1px solid var(--color-gray-200);
-            border-radius: 100px;
+            border-radius: 10px;
             padding: 4px;
             background: white;
         }
@@ -957,7 +979,7 @@
             padding: 10px 32px;
             border: none;
             background: transparent;
-            border-radius: 100px;
+            border-radius: 8px;
             font-size: 15px;
             font-weight: 500;
             font-family: 'Poppins', sans-serif;
@@ -967,8 +989,8 @@
         }
 
         .segmented-toggle button.active {
-            background: var(--color-purple-500-15);
-            color: var(--color-purple-600);
+            background: rgba(59, 130, 246, 0.15);
+            color: #2563eb;
         }
 
         .segmented-toggle button:hover:not(.active) {
@@ -1127,7 +1149,7 @@
                             <span class="editable-field-label">Name</span>
                             <div class="editable-field-value">Nicole Chalmers</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1136,8 +1158,8 @@
                     <span class="editable-field-label">Name</span>
                     <div class="editable-field-input-row">
                         <input type="text" id="name-input" value="Nicole Chalmers">
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveNameEdit()">Save</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveNameEdit()">Save</button>
                     </div>
                 </div>
 
@@ -1157,7 +1179,7 @@
                             </span>
                             <div id="name-saved-value" class="editable-field-value">Nicole Chalmers</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1171,7 +1193,7 @@
                             <span class="editable-field-label">Username</span>
                             <div class="editable-field-value">nicole_codes</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1180,8 +1202,8 @@
                     <span class="editable-field-label">Username</span>
                     <div class="editable-field-input-row">
                         <input type="text" id="username-input" value="nicole_codes">
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveUsernameEdit()">Save</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveUsernameEdit()">Save</button>
                     </div>
                 </div>
 
@@ -1201,7 +1223,7 @@
                             </span>
                             <div id="username-saved-value" class="editable-field-value">nicole_codes</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1215,7 +1237,7 @@
                             <span class="editable-field-label">Email</span>
                             <div class="editable-field-value">learner@example.com</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1224,8 +1246,8 @@
                     <span class="editable-field-label">Email</span>
                     <div class="editable-field-input-row">
                         <input type="email" id="email-input" value="learner@example.com">
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveEmailEdit()">Save</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveEmailEdit()">Save</button>
                     </div>
                 </div>
 
@@ -1245,7 +1267,7 @@
                             </span>
                             <div id="email-saved-value" class="editable-field-value">learner@example.com</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1259,7 +1281,7 @@
                             <span class="editable-field-label">Password</span>
                             <div class="editable-field-value">••••••••••••</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
                     </div>
                 </div>
 
@@ -1272,8 +1294,8 @@
                             <input type="password" id="new-password" placeholder="New password">
                             <input type="password" id="confirm-password" placeholder="Confirm new password">
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
                     </div>
                 </div>
 
@@ -1293,7 +1315,7 @@
                             </span>
                             <div class="editable-field-value">••••••••••••</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
                     </div>
                 </div>
             </div>
@@ -1301,15 +1323,12 @@
             <!-- Two-Factor Authentication -->
             <div class="setting-item">
                 <div class="editable-field">
-                    <div class="editable-field-header">
+                    <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Two-Factor Authentication</span>
                             <div class="editable-field-value">Add an extra layer of security to your account.</div>
                         </div>
-                        <div class="segmented-toggle">
-                            <button onclick="this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Enabled</button>
-                            <button class="active" onclick="this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Disabled</button>
-                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray">Enable</button>
                     </div>
                 </div>
             </div>
@@ -1431,7 +1450,7 @@
         <div class="settings-content" data-tab-content="notifications" style="display: none;">
             <div class="setting-item">
                 <div class="editable-field">
-                    <div class="editable-field-header">
+                    <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Daily Reminders</span>
                             <div class="editable-field-value">Get a daily reminder to practice coding.</div>
@@ -1443,7 +1462,7 @@
 
             <div class="setting-item">
                 <div class="editable-field">
-                    <div class="editable-field-header">
+                    <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Achievement Notifications</span>
                             <div class="editable-field-value">Receive notifications when you unlock new skills or achievements.</div>
@@ -1455,7 +1474,7 @@
 
             <div class="setting-item">
                 <div class="editable-field">
-                    <div class="editable-field-header">
+                    <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Weekly Progress Report</span>
                             <div class="editable-field-value">Get a weekly email summary of your learning progress.</div>
@@ -1467,7 +1486,7 @@
 
             <div class="setting-item">
                 <div class="editable-field">
-                    <div class="editable-field-header">
+                    <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Product Updates</span>
                             <div class="editable-field-value">Stay informed about new features and improvements.</div>
@@ -1497,9 +1516,9 @@
                     <div class="editable-field-header" style="align-items: flex-end;">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Delete Account</span>
-                            <div class="editable-field-value">Permanently delete your account and all associated data. This action cannot be undone.</div>
+                            <div class="editable-field-value">Permanently delete your account and all associated data.<br>This action cannot be undone.</div>
                         </div>
-                        <button class="ui-btn ui-btn-default ui-btn-danger">Delete</button>
+                        <button class="ui-btn ui-btn-small ui-btn-danger">Delete</button>
                     </div>
                 </div>
             </div>
