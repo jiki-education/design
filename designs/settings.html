@@ -852,17 +852,19 @@
         .editable-field-input-row input {
             flex: 1;
             padding: 8px 14px;
-            border: 1px solid var(--color-gray-200);
+            border: 1px solid var(--color-blue-200);
             border-radius: 8px;
             font-size: 15px;
             font-family: 'Poppins', sans-serif;
             background: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
             transition: all 0.2s ease;
         }
 
         .editable-field-input-row input:focus {
             outline: none;
-            border-color: var(--color-gray-300);
+            border-color: var(--color-blue-400);
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
         }
 
         .editable-field-input-row .ui-btn {
@@ -879,17 +881,19 @@
 
         .editable-field-password-fields input {
             padding: 8px 14px;
-            border: 1px solid var(--color-gray-200);
+            border: 1px solid var(--color-blue-200);
             border-radius: 8px;
             font-size: 15px;
             font-family: 'Poppins', sans-serif;
             background: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
             transition: all 0.2s ease;
         }
 
         .editable-field-password-fields input:focus {
             outline: none;
-            border-color: var(--color-gray-300);
+            border-color: var(--color-blue-400);
+            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
         }
 
         .editable-field-button-row {
@@ -1157,10 +1161,12 @@
                 <!-- Edit State (hidden by default) -->
                 <div id="name-edit-state" class="editable-field" style="display: none;">
                     <span class="editable-field-label">Name</span>
-                    <div class="editable-field-input-row">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
                         <input type="text" id="name-input" value="Nicole Chalmers">
-                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveNameEdit()">Save</button>
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveNameEdit()">Save</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1201,10 +1207,12 @@
                 <!-- Edit State (hidden by default) -->
                 <div id="username-edit-state" class="editable-field" style="display: none;">
                     <span class="editable-field-label">Username</span>
-                    <div class="editable-field-input-row">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
                         <input type="text" id="username-input" value="nicole_codes">
-                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveUsernameEdit()">Save</button>
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveUsernameEdit()">Save</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1245,10 +1253,12 @@
                 <!-- Edit State (hidden by default) -->
                 <div id="email-edit-state" class="editable-field" style="display: none;">
                     <span class="editable-field-label">Email</span>
-                    <div class="editable-field-input-row">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
                         <input type="email" id="email-input" value="learner@example.com">
-                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveEmailEdit()">Save</button>
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="saveEmailEdit()">Save</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1289,14 +1299,16 @@
                 <!-- Edit State (hidden by default) -->
                 <div id="password-edit-state" class="editable-field" style="display: none;">
                     <span class="editable-field-label">Password</span>
-                    <div class="editable-field-input-row">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
                         <div class="editable-field-password-fields">
                             <input type="password" id="current-password" placeholder="Current password">
                             <input type="password" id="new-password" placeholder="New password">
                             <input type="password" id="confirm-password" placeholder="Confirm new password">
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
-                        <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
+                        </div>
                     </div>
                 </div>
 
