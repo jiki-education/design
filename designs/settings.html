@@ -347,7 +347,7 @@
         }
 
         .container {
-            max-width: 774px;
+            max-width: 660px;
         }
 
         /* Filter Tabs - Projects style */
@@ -355,7 +355,6 @@
             display: flex;
             gap: 24px;
             margin-bottom: 26px;
-            flex-wrap: wrap;
         }
 
         .filter-tab {
@@ -372,6 +371,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .filter-tab:hover {
@@ -542,7 +542,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 15px;
-            margin-top: 34px;
+            margin-top: 20px;
         }
 
         .payment-history-table th {
@@ -630,9 +630,9 @@
         .premium-upsell {
             background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
             border-radius: 16px;
-            padding: 40px;
+            padding: 24px 40px 40px 40px;
             text-align: center;
-            margin-top: 24px;
+            margin-top: 12px;
             margin-bottom: 24px;
             position: relative;
         }
@@ -812,6 +812,8 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0;
+            flex: 1;
         }
 
         .editable-field-label {
@@ -831,7 +833,7 @@
         /* Editing state */
         .editable-field-input-row {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             gap: 12px;
         }
 
@@ -860,6 +862,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            flex: 1;
         }
 
         .editable-field-password-fields input {
@@ -1263,12 +1266,12 @@
                 <!-- Edit State (hidden by default) -->
                 <div id="password-edit-state" class="editable-field" style="display: none;">
                     <span class="editable-field-label">Password</span>
-                    <div class="editable-field-password-fields">
-                        <input type="password" id="current-password" placeholder="Current password">
-                        <input type="password" id="new-password" placeholder="New password">
-                        <input type="password" id="confirm-password" placeholder="Confirm new password">
-                    </div>
-                    <div class="editable-field-button-row">
+                    <div class="editable-field-input-row">
+                        <div class="editable-field-password-fields">
+                            <input type="password" id="current-password" placeholder="Current password">
+                            <input type="password" id="new-password" placeholder="New password">
+                            <input type="password" id="confirm-password" placeholder="Confirm new password">
+                        </div>
                         <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
                         <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
                     </div>
@@ -1297,12 +1300,16 @@
 
             <!-- Two-Factor Authentication -->
             <div class="setting-item">
-                <h3>Two-Factor Authentication</h3>
-                <div class="setting-row">
-                    <p>Add an extra layer of security to your account.</p>
-                    <div class="segmented-toggle">
-                        <button onclick="this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Enabled</button>
-                        <button class="active" onclick="this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Disabled</button>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Two-Factor Authentication</span>
+                            <div class="editable-field-value">Add an extra layer of security to your account.</div>
+                        </div>
+                        <div class="segmented-toggle">
+                            <button onclick="this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Enabled</button>
+                            <button class="active" onclick="this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Disabled</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1311,8 +1318,12 @@
         <!-- Placeholder content for other tabs -->
         <div class="settings-content" data-tab-content="subscription" style="display: none;">
             <div class="setting-item">
-                <h3>Current Plan</h3>
-                <p style="margin-bottom: 0;">You are on the <strong>Free</strong> plan. This gives you all the content plus Jiki AI to help you out for one exercise per month.</p>
+                <div class="editable-field">
+                    <div class="editable-field-label-group">
+                        <span class="editable-field-label">Current Plan</span>
+                        <div class="editable-field-value">You are on the <strong>Free</strong> plan. This gives you all the content plus Jiki AI to help you out for one exercise per month.</div>
+                    </div>
+                </div>
             </div>
 
             <div class="premium-upsell">
@@ -1374,8 +1385,12 @@
             </div>
 
             <div class="setting-item">
-                <h3>Payment History</h3>
-                <p>View and download receipts for your past payments.</p>
+                <div class="editable-field">
+                    <div class="editable-field-label-group">
+                        <span class="editable-field-label">Payment History</span>
+                        <div class="editable-field-value">View and download receipts for your past payments.</div>
+                    </div>
+                </div>
                 <table class="payment-history-table">
                     <thead>
                         <tr>
@@ -1415,52 +1430,77 @@
 
         <div class="settings-content" data-tab-content="notifications" style="display: none;">
             <div class="setting-item">
-                <h3>Daily Reminders</h3>
-                <div class="toggle-row">
-                    <p>Get a daily reminder to practice coding.</p>
-                    <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Daily Reminders</span>
+                            <div class="editable-field-value">Get a daily reminder to practice coding.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="setting-item">
-                <h3>Achievement Notifications</h3>
-                <div class="toggle-row">
-                    <p>Receive notifications when you unlock new skills or achievements.</p>
-                    <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Achievement Notifications</span>
+                            <div class="editable-field-value">Receive notifications when you unlock new skills or achievements.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="setting-item">
-                <h3>Weekly Progress Report</h3>
-                <div class="toggle-row">
-                    <p>Get a weekly email summary of your learning progress.</p>
-                    <div class="ui-toggle-switch" onclick="this.classList.toggle('active')"></div>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Weekly Progress Report</span>
+                            <div class="editable-field-value">Get a weekly email summary of your learning progress.</div>
+                        </div>
+                        <div class="ui-toggle-switch" onclick="this.classList.toggle('active')"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="setting-item">
-                <h3>Product Updates</h3>
-                <div class="toggle-row">
-                    <p>Stay informed about new features and improvements.</p>
-                    <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Product Updates</span>
+                            <div class="editable-field-value">Stay informed about new features and improvements.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="settings-content" data-tab-content="privacy" style="display: none;">
             <div class="setting-item">
-                <h3>Privacy Settings</h3>
-                <p>Privacy preferences will be added here.</p>
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Privacy Settings</span>
+                            <div class="editable-field-value">Privacy preferences will be added here.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="settings-content" data-tab-content="danger" style="display: none;">
             <div class="setting-item">
-                <h3>Delete Account</h3>
-                <p style="margin-bottom: 8px;">Permanently delete your account and all associated data. This action cannot be undone.</p>
-                <p class="warning-text">⚠️ <strong>Warning:</strong> This will permanently delete your account, all your progress, completed exercises, and personal data. This action is irreversible.</p>
-                <div class="button-row">
-                    <button class="ui-btn ui-btn-danger">Delete Account</button>
+                <div class="editable-field">
+                    <div class="editable-field-header" style="align-items: flex-end;">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Delete Account</span>
+                            <div class="editable-field-value">Permanently delete your account and all associated data. This action cannot be undone.</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-danger">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1479,12 +1519,41 @@
             sidebar.classList.toggle('collapsed');
         }
 
+        // Close all edit states and return to view
+        function closeAllEdits() {
+            // Name
+            document.getElementById('name-input').value = originalNameValue;
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = 'none';
+            document.getElementById('name-view-state').style.display = '';
+
+            // Username
+            document.getElementById('username-input').value = originalUsernameValue;
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-saved-state').style.display = 'none';
+            document.getElementById('username-view-state').style.display = '';
+
+            // Email
+            document.getElementById('email-input').value = originalEmailValue;
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-saved-state').style.display = 'none';
+            document.getElementById('email-view-state').style.display = '';
+
+            // Password
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-saved-state').style.display = 'none';
+            document.getElementById('password-view-state').style.display = '';
+        }
+
         // Name field edit functionality
         let originalNameValue = 'Nicole Chalmers';
 
         function showNameEdit() {
+            closeAllEdits();
             document.getElementById('name-view-state').style.display = 'none';
-            document.getElementById('name-saved-state').style.display = 'none';
             document.getElementById('name-edit-state').style.display = '';
             document.getElementById('name-input').focus();
         }
@@ -1520,8 +1589,8 @@
         let originalUsernameValue = 'nicole_codes';
 
         function showUsernameEdit() {
+            closeAllEdits();
             document.getElementById('username-view-state').style.display = 'none';
-            document.getElementById('username-saved-state').style.display = 'none';
             document.getElementById('username-edit-state').style.display = '';
             document.getElementById('username-input').focus();
         }
@@ -1552,8 +1621,8 @@
         let originalEmailValue = 'learner@example.com';
 
         function showEmailEdit() {
+            closeAllEdits();
             document.getElementById('email-view-state').style.display = 'none';
-            document.getElementById('email-saved-state').style.display = 'none';
             document.getElementById('email-edit-state').style.display = '';
             document.getElementById('email-input').focus();
         }
@@ -1582,8 +1651,8 @@
 
         // Password field edit functionality
         function showPasswordEdit() {
+            closeAllEdits();
             document.getElementById('password-view-state').style.display = 'none';
-            document.getElementById('password-saved-state').style.display = 'none';
             document.getElementById('password-edit-state').style.display = '';
             document.getElementById('current-password').focus();
         }
