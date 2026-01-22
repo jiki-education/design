@@ -24,6 +24,12 @@
   - Password fields use lock icon (grey/blue states)
   - Icons automatically toggle on focus using UI Kit's nested selectors
 
+### Editable Fields (New Pattern)
+- **View state**: Label + plain text value + "Edit" button on right
+- **Editing state**: Label + input field + "Cancel" and "Save" buttons
+- **Saved state**: Label with green checkmark and "Saved" text + plain text value
+- Use variants menu to switch between states
+
 ### Buttons
 - **Secondary Buttons**: \`.ui-btn .ui-btn-secondary\` (standard size: 14px/20px padding, 16px font)
   - Update Email button
@@ -50,11 +56,41 @@
 - Corresponding content sections use \`data-tab-content\` attributes
 
 ## Custom Styling
-- \`.setting-item\` cards with light grey background for visual grouping
+- \`.setting-item\` sections separated by grey border lines
 - Maximum width of 774px for settings content area
 - Buttons placed on separate lines below inputs (not inline)
 - 2FA setting uses row layout (description left, button right)
         `;
+    </script>
+
+    <script>
+        const PAGE_VARIANTS_RESET = () => {
+            // Reset Name field to view state
+            document.getElementById('name-view-state').style.display = '';
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = 'none';
+        };
+
+        const PAGE_VARIANTS = [
+            {
+                id: 'editing',
+                label: 'Name Editing',
+                apply: () => {
+                    document.getElementById('name-view-state').style.display = 'none';
+                    document.getElementById('name-edit-state').style.display = '';
+                    document.getElementById('name-saved-state').style.display = 'none';
+                }
+            },
+            {
+                id: 'saved',
+                label: 'Name Saved',
+                apply: () => {
+                    document.getElementById('name-view-state').style.display = 'none';
+                    document.getElementById('name-edit-state').style.display = 'none';
+                    document.getElementById('name-saved-state').style.display = '';
+                }
+            }
+        ];
     </script>
     <style>
         :root {
@@ -311,8 +347,7 @@
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 774px;
         }
 
         /* Filter Tabs - Projects style */
@@ -385,12 +420,22 @@
             max-width: 774px;
         }
 
-        /* Setting item cards */
+        /* Setting item sections */
         .setting-item {
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .setting-item:first-child {
+            padding-top: 0;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-item:has(+ .premium-upsell) {
+            border-bottom: none;
         }
 
         .setting-item h3 {
@@ -587,6 +632,19 @@
             border-radius: 16px;
             padding: 40px;
             text-align: center;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .premium-upsell::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--color-gray-200);
         }
 
         .premium-upsell-headline {
@@ -735,6 +793,184 @@
                 0 0 0 4px var(--primary-shadow-light),
                 0 4px 16px var(--primary-shadow-dark);
         }
+
+        /* Editable Field Component */
+        .editable-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .editable-field-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .editable-field-label-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .editable-field-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editable-field-value {
+            font-size: 16px;
+            color: var(--color-gray-700);
+        }
+
+        /* Editing state */
+        .editable-field-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .editable-field-input-row input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .editable-field-input-row input:focus {
+            outline: none;
+            border-color: var(--color-gray-300);
+        }
+
+        .editable-field-input-row .ui-btn {
+            flex-shrink: 0;
+        }
+
+        /* Password fields layout */
+        .editable-field-password-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .editable-field-password-fields input {
+            padding: 14px 16px;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .editable-field-password-fields input:focus {
+            outline: none;
+            border-color: var(--color-gray-300);
+        }
+
+        .editable-field-button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* Editable field buttons using UI Kit button system */
+        .editable-field .ui-btn {
+            flex-shrink: 0;
+        }
+
+        /* Consistent width for view mode buttons */
+        .editable-field-header .ui-btn {
+            min-width: 100px;
+        }
+
+        /* Button size variant for editable fields */
+        .ui-btn-default {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* Gray secondary filled buttons */
+        .ui-btn-secondary-filled.ui-btn-gray {
+            background: var(--color-gray-100);
+            color: var(--color-gray-700);
+            border-color: transparent;
+        }
+
+        .ui-btn-secondary-filled.ui-btn-gray:hover {
+            background: var(--color-gray-200);
+        }
+
+        /* Purple color modifier for buttons */
+        .ui-btn-purple {
+            --primary-color: var(--color-purple-500);
+            --primary-color-dark: var(--color-purple-600);
+            --primary-shadow-light: var(--color-purple-500-20);
+            --primary-shadow: var(--color-purple-500-30);
+            --primary-shadow-dark: var(--color-purple-500-40);
+        }
+
+        /* Saved indicator */
+        .editable-field-saved-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color-green-600);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .editable-field-saved-indicator svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Segmented Toggle */
+        .segmented-toggle {
+            display: inline-flex;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 100px;
+            padding: 4px;
+            background: white;
+        }
+
+        .segmented-toggle button {
+            padding: 10px 32px;
+            border: none;
+            background: transparent;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .segmented-toggle button.active {
+            background: var(--color-purple-500-15);
+            color: var(--color-purple-600);
+        }
+
+        .segmented-toggle button:hover:not(.active) {
+            color: var(--color-gray-700);
+        }
     </style>
 </head>
 <body class="ui-body">
@@ -879,83 +1115,183 @@
 
         <!-- Account Settings Content -->
         <div class="settings-content" data-tab-content="account">
-            <!-- Email Address -->
+            <!-- Name - Editable Field with 3 states -->
             <div class="setting-item">
-                <h3>Email Address</h3>
-                <p>Update your email address for account notifications and login.</p>
-                <div class="ui-form-field-large">
-                    <label for="email">Email</label>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="#707985" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
-                            <path stroke="#707985" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="#3b82f6" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
-                        </svg>
-                        <input type="email" id="email" placeholder="your.email@example.com" value="learner@example.com">
+                <!-- View State (default) -->
+                <div id="name-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Name</span>
+                            <div class="editable-field-value">Nicole Chalmers</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
                     </div>
                 </div>
-                <div class="button-row">
-                    <button class="ui-btn ui-btn-secondary">Update Email</button>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="name-edit-state" class="editable-field" style="display: none;">
+                    <span class="editable-field-label">Name</span>
+                    <div class="editable-field-input-row">
+                        <input type="text" id="name-input" value="Nicole Chalmers">
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveNameEdit()">Save</button>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="name-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Name
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="name-saved-value" class="editable-field-value">Nicole Chalmers</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showNameEdit()">Edit</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Change Password -->
+            <!-- Username - Editable Field with 3 states -->
             <div class="setting-item">
-                <h3>Change Password</h3>
-                <p>Keep your account secure by using a strong password.</p>
-                <div class="ui-form-field-large">
-                    <label for="current-password">Current Password</label>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
+                <!-- View State (default) -->
+                <div id="username-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Username</span>
+                            <div class="editable-field-value">nicole_codes</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="username-edit-state" class="editable-field" style="display: none;">
+                    <span class="editable-field-label">Username</span>
+                    <div class="editable-field-input-row">
+                        <input type="text" id="username-input" value="nicole_codes">
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveUsernameEdit()">Save</button>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="username-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Username
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="username-saved-value" class="editable-field-value">nicole_codes</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Address - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="email-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Email</span>
+                            <div class="editable-field-value">learner@example.com</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="email-edit-state" class="editable-field" style="display: none;">
+                    <span class="editable-field-label">Email</span>
+                    <div class="editable-field-input-row">
+                        <input type="email" id="email-input" value="learner@example.com">
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="saveEmailEdit()">Save</button>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="email-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Email
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="email-saved-value" class="editable-field-value">learner@example.com</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Password - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="password-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Password</span>
+                            <div class="editable-field-value">••••••••••••</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="password-edit-state" class="editable-field" style="display: none;">
+                    <span class="editable-field-label">Password</span>
+                    <div class="editable-field-password-fields">
                         <input type="password" id="current-password" placeholder="Current password">
-                    </div>
-                </div>
-                <div class="ui-form-field-large">
-                    <label for="new-password">New Password</label>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
                         <input type="password" id="new-password" placeholder="New password">
-                    </div>
-                </div>
-                <div class="ui-form-field-large">
-                    <label for="confirm-password">Confirm New Password</label>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
-                            <path stroke="#3b82f6" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
-                        </svg>
                         <input type="password" id="confirm-password" placeholder="Confirm new password">
                     </div>
+                    <div class="editable-field-button-row">
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
+                        <button class="ui-btn ui-btn-default ui-btn-primary ui-btn-purple" onclick="savePasswordEdit()">Save</button>
+                    </div>
                 </div>
-                <div class="button-row">
-                    <button class="ui-btn ui-btn-secondary">Change Password</button>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="password-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Password
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div class="editable-field-value">••••••••••••</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary-filled ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                    </div>
                 </div>
             </div>
 
@@ -964,7 +1300,10 @@
                 <h3>Two-Factor Authentication</h3>
                 <div class="setting-row">
                     <p>Add an extra layer of security to your account.</p>
-                    <button class="ui-btn ui-btn-secondary">Enable 2FA</button>
+                    <div class="segmented-toggle">
+                        <button onclick="this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Enabled</button>
+                        <button class="active" onclick="this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Disabled</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1131,10 +1470,144 @@
     <!-- Implementation notes modal -->
     <script src="../ui-kit/implementation-notes.js"></script>
 
+    <!-- Variants system -->
+    <script src="../ui-kit/variants.js"></script>
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('collapsed');
+        }
+
+        // Name field edit functionality
+        let originalNameValue = 'Nicole Chalmers';
+
+        function showNameEdit() {
+            document.getElementById('name-view-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = 'none';
+            document.getElementById('name-edit-state').style.display = '';
+            document.getElementById('name-input').focus();
+        }
+
+        function cancelNameEdit() {
+            // Reset input to original value
+            document.getElementById('name-input').value = originalNameValue;
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-view-state').style.display = '';
+        }
+
+        function saveNameEdit() {
+            // Get the new value
+            const newValue = document.getElementById('name-input').value;
+            originalNameValue = newValue;
+
+            // Update the displayed value in view and saved states
+            document.querySelector('#name-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#name-saved-value').textContent = newValue;
+
+            // Show saved state
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = '';
+
+            // After 2 seconds, transition back to view state
+            setTimeout(() => {
+                document.getElementById('name-saved-state').style.display = 'none';
+                document.getElementById('name-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Username field edit functionality
+        let originalUsernameValue = 'nicole_codes';
+
+        function showUsernameEdit() {
+            document.getElementById('username-view-state').style.display = 'none';
+            document.getElementById('username-saved-state').style.display = 'none';
+            document.getElementById('username-edit-state').style.display = '';
+            document.getElementById('username-input').focus();
+        }
+
+        function cancelUsernameEdit() {
+            document.getElementById('username-input').value = originalUsernameValue;
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-view-state').style.display = '';
+        }
+
+        function saveUsernameEdit() {
+            const newValue = document.getElementById('username-input').value;
+            originalUsernameValue = newValue;
+
+            document.querySelector('#username-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#username-saved-value').textContent = newValue;
+
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('username-saved-state').style.display = 'none';
+                document.getElementById('username-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Email field edit functionality
+        let originalEmailValue = 'learner@example.com';
+
+        function showEmailEdit() {
+            document.getElementById('email-view-state').style.display = 'none';
+            document.getElementById('email-saved-state').style.display = 'none';
+            document.getElementById('email-edit-state').style.display = '';
+            document.getElementById('email-input').focus();
+        }
+
+        function cancelEmailEdit() {
+            document.getElementById('email-input').value = originalEmailValue;
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-view-state').style.display = '';
+        }
+
+        function saveEmailEdit() {
+            const newValue = document.getElementById('email-input').value;
+            originalEmailValue = newValue;
+
+            document.querySelector('#email-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#email-saved-value').textContent = newValue;
+
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('email-saved-state').style.display = 'none';
+                document.getElementById('email-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Password field edit functionality
+        function showPasswordEdit() {
+            document.getElementById('password-view-state').style.display = 'none';
+            document.getElementById('password-saved-state').style.display = 'none';
+            document.getElementById('password-edit-state').style.display = '';
+            document.getElementById('current-password').focus();
+        }
+
+        function cancelPasswordEdit() {
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-view-state').style.display = '';
+        }
+
+        function savePasswordEdit() {
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('password-saved-state').style.display = 'none';
+                document.getElementById('password-view-state').style.display = '';
+            }, 2000);
         }
 
         // Tab switching for filter-tabs
