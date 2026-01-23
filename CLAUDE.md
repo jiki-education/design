@@ -72,6 +72,19 @@ The `ui-kit/` folder contains the design system:
 - **When adding new components**: First add them to `ui-kit/components.html` with examples of all states and variations
 - **Document conventions**: Update `ui-kit/README.md` if introducing new patterns or rules
 
+### Colors
+
+Always use colors from the standard tailwind palletes of:
+- blue-xxx
+- emerald-xxx (but call it green-xxx)
+- red-xxx
+- amber-xxx
+- slate-xxx (but call it gray-xxx)
+
+When creating a new file, add all these to the :root first.
+
+The only time to use arbitary colors is in brand colors or sometimes gradiants, Do not use arbitary colors without permission. Ask if you want to use them.
+
 ### Design Philosophy
 
 - Designs are static mockups, not functional applications
