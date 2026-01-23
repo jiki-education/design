@@ -80,6 +80,7 @@ Always use colors from the standard tailwind palletes of:
 - red-xxx
 - amber-xxx
 - slate-xxx (but call it gray-xxx)
+- purple-xxx (for premium features and special states)
 
 When creating a new file, add all these to the :root first.
 
