@@ -196,14 +196,24 @@
     <script>
         // Reset function called before each variant
         const PAGE_VARIANTS_RESET = () => {
+            const formHeader = document.getElementById('form-header');
             const passwordField = document.getElementById('password-field');
             const passwordErrorMessage = document.getElementById('password-error-message');
             const submitBtn = document.getElementById('submit-btn');
+            const signupForm = document.getElementById('signup-form');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            const genericError = document.getElementById('generic-error');
+            const invalidConfirmation = document.getElementById('invalid-confirmation');
 
+            formHeader.style.display = 'block';
             passwordField.classList.remove('ui-form-field-error');
             passwordErrorMessage.style.display = 'none';
             submitBtn.classList.remove('ui-btn-loading');
             submitBtn.textContent = 'Sign Up';
+            signupForm.style.display = 'flex';
+            confirmationMessage.style.display = 'none';
+            genericError.style.display = 'none';
+            invalidConfirmation.style.display = 'none';
         };
 
         const PAGE_VARIANTS = [
@@ -227,6 +237,44 @@
                     submitBtn.classList.add('ui-btn-loading');
                     submitBtn.textContent = 'Signing up...';
                 }
+            },
+            {
+                id: 'confirmation',
+                label: 'Email Confirmation',
+                apply: () => {
+                    const formHeader = document.getElementById('form-header');
+                    const signupForm = document.getElementById('signup-form');
+                    const genericError = document.getElementById('generic-error');
+                    const confirmationMessage = document.getElementById('confirmation-message');
+
+                    formHeader.style.display = 'none';
+                    signupForm.style.display = 'none';
+                    genericError.style.display = 'none';
+                    confirmationMessage.style.display = 'block';
+                }
+            },
+            {
+                id: 'generic-error',
+                label: 'Generic Error',
+                apply: () => {
+                    const genericError = document.getElementById('generic-error');
+                    genericError.style.display = 'flex';
+                }
+            },
+            {
+                id: 'invalid-confirmation',
+                label: 'Invalid Confirmation',
+                apply: () => {
+                    const formHeader = document.getElementById('form-header');
+                    const signupForm = document.getElementById('signup-form');
+                    const genericError = document.getElementById('generic-error');
+                    const invalidConfirmation = document.getElementById('invalid-confirmation');
+
+                    formHeader.style.display = 'none';
+                    signupForm.style.display = 'none';
+                    genericError.style.display = 'none';
+                    invalidConfirmation.style.display = 'block';
+                }
             }
         ];
     </script>
@@ -236,12 +284,25 @@
         <!-- Left Side - Form -->
         <div class="left-side">
             <div class="form-container">
-                <div class="form-header">
+                <div id="form-header" class="form-header">
                     <h1 class="form-title">Sign Up</h1>
                     <p class="form-subtitle">Already got an account? <a href="login.html" class="ui-link">Log in</a>.</p>
                 </div>
 
-                <form style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Generic error banner -->
+                <div id="generic-error" style="display: none; align-items: flex-start; gap: 10px; padding: 12px 14px; background: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px; margin-bottom: 20px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 1px; color: #ef4444;">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="12" cy="16.5" r="1" fill="currentColor"/>
+                    </svg>
+                    <div>
+                        <p style="font-size: 14px; font-weight: 600; color: #dc2626; margin-bottom: 2px;">Something went wrong</p>
+                        <p style="font-size: 14px; color: #ef4444; line-height: 1.4;">We couldn't complete your request. Please try again later.</p>
+                    </div>
+                </div>
+
+                <form id="signup-form" style="display: flex; flex-direction: column; gap: 20px;">
                     <button type="button" class="ui-btn-large ui-btn-tertiary google-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -299,6 +360,38 @@
                         <p>Didn't receive your confirmation email? <a href="resend-confirmation.html" class="ui-link">Resend it.</a></p>
                     </div>
                 </form>
+
+                <!-- Confirmation message shown after signup -->
+                <div id="confirmation-message" style="display: none; text-align: center;">
+                    <div style="width: 72px; height: 72px; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="4" width="20" height="16" rx="2" stroke="#2563eb" stroke-width="2"/>
+                            <path d="M2 7l10 7 10-7" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 style="font-size: 36px; font-weight: 500; color: #1a365d; margin-bottom: 28px; line-height: 1.2;">Check your inbox</h2>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px 28px;">
+                        <p style="font-size: 17px; color: #64748b; line-height: 1.6; text-wrap-style: balance; margin-bottom: 2px;">We've sent a confirmation email to</p>
+                        <p style="font-size: 17px; font-weight: 500; color: #1a365d; margin-bottom: 14px;">user@example.com</p>
+                        <p style="font-size: 15px; color: #64748b; line-height: 1.6; text-wrap-style: balance;">Click the link in the email to activate your account. Didn't receive it? <a href="#" class="ui-link">Resend email</a></p>
+                    </div>
+                </div>
+
+                <!-- Invalid confirmation link message -->
+                <div id="invalid-confirmation" style="display: none; text-align: center;">
+                    <div style="width: 72px; height: 72px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 9l6 6M15 9l-6 6" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h2 style="font-size: 36px; font-weight: 500; color: #1a365d; margin-bottom: 28px; line-height: 1.2;">Link expired</h2>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px 28px;">
+                        <p style="font-size: 17px; color: #64748b; line-height: 1.6; text-wrap-style: balance; margin-bottom: 20px;">This confirmation link is no longer valid. Request a new one to continue.</p>
+                        <a href="#" class="ui-btn-large ui-btn-primary" style="display: inline-flex; width: 100%;">Resend confirmation email</a>
+                        <p style="font-size: 15px; color: #64748b; margin-top: 16px;">Need help? <a href="#" class="ui-link">Contact support</a></p>
+                    </div>
+                </div>
             </div>
         </div>
 
