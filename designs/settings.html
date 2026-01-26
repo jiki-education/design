@@ -892,6 +892,7 @@
             --primary-color-light: var(--color-blue-300);
             --primary-shadow: color-mix(in srgb, var(--color-blue-500) 30%, transparent);
             --primary-shadow-light: color-mix(in srgb, var(--color-blue-500) 20%, transparent);
+            --primary-shadow-lighter: color-mix(in srgb, var(--color-blue-500) 10%, transparent);
             --primary-shadow-dark: color-mix(in srgb, var(--color-blue-500) 40%, transparent);
 
             border: 2px solid;
@@ -935,46 +936,44 @@
                 0 4px 16px var(--primary-shadow-dark);
         }
 
-        .ui-btn-primary:disabled {
-            background: var(--color-gray-200);
-            border-color: var(--color-gray-200);
-            color: var(--color-gray-400);
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
-        .ui-btn-primary:disabled:hover {
-            box-shadow: none;
-        }
-
-        /* Secondary Button */
+        /* Secondary Button (canonical) */
         .ui-btn-secondary {
             background: white;
-            color: var(--color-gray-800);
-            border-color: var(--color-gray-200);
-            box-shadow: 0 2px 8px var(--color-shadow-subtle);
+            color: var(--primary-color);
+            border-color: var(--primary-color-light);
+            box-shadow: 0 2px 8px var(--primary-shadow);
         }
 
         .ui-btn-secondary:hover {
             background: white;
-            border-color: var(--color-blue-500);
+            border-color: var(--primary-color);
             box-shadow:
-                0 0 0 4px rgba(59, 130, 246, 0.1),
-                0 4px 16px rgba(59, 130, 246, 0.2);
+                0 0 0 4px var(--primary-shadow-light),
+                0 4px 16px var(--primary-shadow-dark);
         }
 
-        /* Gray Color Modifier */
-        .ui-btn-gray {
-            --primary-color: var(--color-gray-500);
-            --primary-color-dark: var(--color-gray-600);
-            --primary-color-light: var(--color-gray-300);
-            --primary-shadow: color-mix(in srgb, var(--color-gray-400) 30%, transparent);
-            --primary-shadow-light: color-mix(in srgb, var(--color-gray-500) 20%, transparent);
-            --primary-shadow-dark: color-mix(in srgb, var(--color-gray-500) 40%, transparent);
-        }
-
-        .ui-btn-secondary.ui-btn-gray {
+        /* Tertiary Button (canonical) - white background with slate border */
+        .ui-btn-tertiary {
+            background: white;
             color: var(--color-gray-600);
+            border-color: var(--color-gray-300);
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-gray-400) 30%, transparent);
+        }
+
+        .ui-btn-tertiary:hover {
+            background: white;
+            border-color: var(--color-gray-400);
+            box-shadow:
+                0 0 0 4px color-mix(in srgb, var(--color-gray-500) 10%, transparent),
+                0 4px 16px color-mix(in srgb, var(--color-gray-500) 20%, transparent);
+        }
+
+        /* Disabled Button State (canonical) */
+        .ui-btn:disabled,
+        .ui-btn-disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         /* Saved indicator */
@@ -1181,7 +1180,7 @@
                             <span class="editable-field-label">Name</span>
                             <div class="editable-field-value">Nicole Chalmers</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showNameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showNameEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1203,7 +1202,7 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px;">
-                            <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelNameEdit()">Cancel</button>
                             <button id="name-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Update Name</button>
                         </div>
                     </div>
@@ -1225,7 +1224,7 @@
                             </span>
                             <div id="name-saved-value" class="editable-field-value">Nicole Chalmers</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showNameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showNameEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1239,7 +1238,7 @@
                             <span class="editable-field-label">Username</span>
                             <div class="editable-field-value">nicole_codes</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showUsernameEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1263,7 +1262,7 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px;">
-                            <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelUsernameEdit()">Cancel</button>
                             <button id="username-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Update Username</button>
                         </div>
                     </div>
@@ -1285,7 +1284,7 @@
                             </span>
                             <div id="username-saved-value" class="editable-field-value">nicole_codes</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showUsernameEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showUsernameEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1299,7 +1298,7 @@
                             <span class="editable-field-label">Email</span>
                             <div class="editable-field-value">learner@example.com</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showEmailEdit()">Edit</button>
                     </div>
                 </div>
 
@@ -1321,7 +1320,7 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px;">
-                            <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelEmailEdit()">Cancel</button>
                             <button id="email-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Update</button>
                         </div>
                     </div>
@@ -1343,7 +1342,7 @@
                             </span>
                             <div id="email-saved-value" class="editable-field-value">learner@example.com</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showEmailEdit()">Edit</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showEmailEdit()">Edit</button>
                     </div>
                 </div>
             </div>
@@ -1357,7 +1356,7 @@
                             <span class="editable-field-label">Password</span>
                             <div class="editable-field-value">••••••••••••</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showPasswordEdit()">Change</button>
                     </div>
                 </div>
 
@@ -1421,7 +1420,7 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px;">
-                            <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelPasswordEdit()">Cancel</button>
                             <button id="password-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Update</button>
                         </div>
                     </div>
@@ -1443,7 +1442,7 @@
                             </span>
                             <div class="editable-field-value">••••••••••••</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="showPasswordEdit()">Change</button>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showPasswordEdit()">Change</button>
                     </div>
                 </div>
             </div>
