@@ -79,6 +79,9 @@
                     document.getElementById('name-view-state').style.display = 'none';
                     document.getElementById('name-edit-state').style.display = '';
                     document.getElementById('name-saved-state').style.display = 'none';
+                    // Button state based on whether input differs from original
+                    const input = document.getElementById('name-input');
+                    document.getElementById('name-update-btn').disabled = input.value === 'Nicole Chalmers';
                 }
             },
             {
@@ -932,6 +935,18 @@
                 0 4px 16px var(--primary-shadow-dark);
         }
 
+        .ui-btn-primary:disabled {
+            background: var(--color-gray-200);
+            border-color: var(--color-gray-200);
+            color: var(--color-gray-400);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .ui-btn-primary:disabled:hover {
+            box-shadow: none;
+        }
+
         /* Secondary Button */
         .ui-btn-secondary {
             background: white;
@@ -1189,7 +1204,7 @@
                         </div>
                         <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Update Name</button>
+                            <button id="name-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Update Name</button>
                         </div>
                     </div>
                 </div>
@@ -1249,7 +1264,7 @@
                         </div>
                         <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Update Username</button>
+                            <button id="username-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Update Username</button>
                         </div>
                     </div>
                 </div>
@@ -1307,7 +1322,7 @@
                         </div>
                         <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Update</button>
+                            <button id="email-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Update</button>
                         </div>
                     </div>
                 </div>
@@ -1407,7 +1422,7 @@
                         </div>
                         <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Update</button>
+                            <button id="password-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Update</button>
                         </div>
                     </div>
                 </div>
@@ -1671,16 +1686,27 @@
         // Name field edit functionality
         let originalNameValue = 'Nicole Chalmers';
 
+        function checkNameChanges() {
+            const input = document.getElementById('name-input');
+            const btn = document.getElementById('name-update-btn');
+            btn.disabled = input.value === originalNameValue;
+        }
+
         function showNameEdit() {
             closeAllEdits();
             document.getElementById('name-view-state').style.display = 'none';
             document.getElementById('name-edit-state').style.display = '';
             document.getElementById('name-input').focus();
+            checkNameChanges();
         }
+
+        // Add input listener for name field
+        document.getElementById('name-input').addEventListener('input', checkNameChanges);
 
         function cancelNameEdit() {
             // Reset input to original value
             document.getElementById('name-input').value = originalNameValue;
+            document.getElementById('name-update-btn').disabled = true;
             document.getElementById('name-edit-state').style.display = 'none';
             document.getElementById('name-view-state').style.display = '';
         }
@@ -1708,18 +1734,28 @@
         // Username field edit functionality
         let originalUsernameValue = 'nicole_codes';
 
+        function checkUsernameChanges() {
+            const input = document.getElementById('username-input');
+            const btn = document.getElementById('username-update-btn');
+            btn.disabled = input.value === originalUsernameValue;
+        }
+
         function showUsernameEdit() {
             closeAllEdits();
             document.getElementById('username-view-state').style.display = 'none';
             document.getElementById('username-edit-state').style.display = '';
             document.getElementById('username-input').focus();
+            checkUsernameChanges();
         }
 
         function cancelUsernameEdit() {
             document.getElementById('username-input').value = originalUsernameValue;
+            document.getElementById('username-update-btn').disabled = true;
             document.getElementById('username-edit-state').style.display = 'none';
             document.getElementById('username-view-state').style.display = '';
         }
+
+        document.getElementById('username-input').addEventListener('input', checkUsernameChanges);
 
         function saveUsernameEdit() {
             const newValue = document.getElementById('username-input').value;
@@ -1740,18 +1776,28 @@
         // Email field edit functionality
         let originalEmailValue = 'learner@example.com';
 
+        function checkEmailChanges() {
+            const input = document.getElementById('email-input');
+            const btn = document.getElementById('email-update-btn');
+            btn.disabled = input.value === originalEmailValue;
+        }
+
         function showEmailEdit() {
             closeAllEdits();
             document.getElementById('email-view-state').style.display = 'none';
             document.getElementById('email-edit-state').style.display = '';
             document.getElementById('email-input').focus();
+            checkEmailChanges();
         }
 
         function cancelEmailEdit() {
             document.getElementById('email-input').value = originalEmailValue;
+            document.getElementById('email-update-btn').disabled = true;
             document.getElementById('email-edit-state').style.display = 'none';
             document.getElementById('email-view-state').style.display = '';
         }
+
+        document.getElementById('email-input').addEventListener('input', checkEmailChanges);
 
         function saveEmailEdit() {
             const newValue = document.getElementById('email-input').value;
@@ -1770,20 +1816,35 @@
         }
 
         // Password field edit functionality
+        function checkPasswordChanges() {
+            const current = document.getElementById('current-password').value;
+            const newPass = document.getElementById('new-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            const btn = document.getElementById('password-update-btn');
+            // Enable only when all fields have values
+            btn.disabled = !current || !newPass || !confirm;
+        }
+
         function showPasswordEdit() {
             closeAllEdits();
             document.getElementById('password-view-state').style.display = 'none';
             document.getElementById('password-edit-state').style.display = '';
             document.getElementById('current-password').focus();
+            checkPasswordChanges();
         }
 
         function cancelPasswordEdit() {
             document.getElementById('current-password').value = '';
             document.getElementById('new-password').value = '';
             document.getElementById('confirm-password').value = '';
+            document.getElementById('password-update-btn').disabled = true;
             document.getElementById('password-edit-state').style.display = 'none';
             document.getElementById('password-view-state').style.display = '';
         }
+
+        document.getElementById('current-password').addEventListener('input', checkPasswordChanges);
+        document.getElementById('new-password').addEventListener('input', checkPasswordChanges);
+        document.getElementById('confirm-password').addEventListener('input', checkPasswordChanges);
 
         function savePasswordEdit() {
             document.getElementById('current-password').value = '';
