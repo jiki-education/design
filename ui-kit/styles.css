@@ -101,19 +101,24 @@
     --color-red-500-40: color-mix(in srgb, var(--color-red-500) 40%, transparent);
 
     /* Shadow Colors - Gray */
+    --color-gray-400-30: color-mix(in srgb, var(--color-gray-400) 30%, transparent);
+    --color-gray-500-10: color-mix(in srgb, var(--color-gray-500) 10%, transparent);
+    --color-gray-500-20: color-mix(in srgb, var(--color-gray-500) 20%, transparent);
     --color-gray-900-30: color-mix(in srgb, var(--color-gray-900) 30%, transparent);
+
+    /* Shadow Colors - Purple */
+    --color-purple-500-20: color-mix(in srgb, var(--color-purple-500) 20%, transparent);
+    --color-purple-500-30: color-mix(in srgb, var(--color-purple-500) 30%, transparent);
+    --color-purple-500-40: color-mix(in srgb, var(--color-purple-500) 40%, transparent);
 }
 
 /* ========================================
    BUTTON COMPONENTS
    ======================================== */
 
-/* Button Base Styles - Standard Size */
+/* Button Base Styles */
 .ui-btn {
-    padding: 14px 20px;
     border: 2px solid;
-    border-radius: 12px;
-    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -125,21 +130,23 @@
     text-decoration: none;
 }
 
-/* Button Base Styles - Large Size */
+/* Button Size Variants */
+.ui-btn-small {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.ui-btn-default {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
 .ui-btn-large {
     padding: 16px 20px;
-    border: 2px solid;
     border-radius: 12px;
     font-size: 17px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    text-align: center;
-    text-decoration: none;
 }
 
 /* Primary Button */
@@ -160,7 +167,7 @@
     background: white;
     color: var(--color-blue-500);
     border-color: var(--color-blue-300);
-    box-shadow: 0 2px 8px var(--color-blue-500-20);
+    box-shadow: 0 2px 8px var(--color-blue-500-30);
 }
 
 .ui-btn-secondary:hover {
@@ -169,31 +176,32 @@
     box-shadow: 0 0 0 4px var(--color-blue-500-20), 0 4px 16px var(--color-blue-500-40);
 }
 
-/* Secondary Filled Button - light tinted background, less prominent than Primary */
-.ui-btn-secondary-filled {
-    background: var(--color-blue-500-20);
-    color: var(--color-blue-500);
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.ui-btn-secondary-filled:hover {
-    background: var(--color-blue-500-30);
-    border-color: transparent;
-    box-shadow: none;
-}
-
-/* Tertiary Button */
+/* Tertiary Button - white background with slate border */
 .ui-btn-tertiary {
-    border-color: var(--color-gray-200);
-    color: var(--color-gray-950);
     background: white;
-    box-shadow: 0 2px 8px var(--color-gray-900-20);
+    color: var(--color-gray-600);
+    border-color: var(--color-gray-300);
+    box-shadow: 0 2px 8px var(--color-gray-400-30);
 }
 
 .ui-btn-tertiary:hover {
-    border-color: var(--color-blue-500);
-    box-shadow: 0 0 0 4px var(--color-blue-500-10), 0 4px 16px var(--color-blue-500-20);
+    background: white;
+    border-color: var(--color-gray-400);
+    box-shadow: 0 0 0 4px var(--color-gray-500-10), 0 4px 16px var(--color-gray-500-20);
+}
+
+/* Subtle Button - tinted slate background */
+.ui-btn-subtle {
+    background: var(--color-gray-500-20);
+    color: var(--color-gray-600);
+    border-color: var(--color-gray-300);
+    box-shadow: 0 2px 8px var(--color-gray-500-10);
+}
+
+.ui-btn-subtle:hover {
+    background: var(--color-gray-400-30);
+    border-color: var(--color-gray-400);
+    box-shadow: 0 0 0 4px var(--color-gray-500-10), 0 4px 16px var(--color-gray-500-20);
 }
 
 /* Danger Button */
@@ -201,7 +209,7 @@
     background: white;
     color: var(--color-red-500);
     border-color: var(--color-red-300);
-    box-shadow: 0 2px 8px var(--color-red-500-20);
+    box-shadow: 0 2px 8px var(--color-red-500-30);
 }
 
 .ui-btn-danger:hover {
@@ -231,9 +239,17 @@
 }
 
 /* Secondary button loading state has different spinner colors */
-.ui-btn-secondary.ui-btn-loading::before {
+.ui-btn-secondary.ui-btn-loading::before,
+.ui-btn-danger.ui-btn-loading::before {
     border-color: var(--color-blue-500-30);
     border-top-color: var(--color-blue-500);
+}
+
+/* Tertiary and Subtle button loading states use slate spinner */
+.ui-btn-tertiary.ui-btn-loading::before,
+.ui-btn-subtle.ui-btn-loading::before {
+    border-color: var(--color-gray-400-30);
+    border-top-color: var(--color-gray-600);
 }
 
 /* Danger button loading state has red spinner */
@@ -242,14 +258,28 @@
     border-top-color: var(--color-red-500);
 }
 
-/* Secondary filled button loading state uses colored spinner */
-.ui-btn-secondary-filled.ui-btn-loading::before {
-    border-color: var(--color-blue-500-30);
-    border-top-color: var(--color-blue-500);
-}
-
 @keyframes ui-spin {
     to { transform: rotate(360deg); }
+}
+
+/* Disabled Button State */
+.ui-btn:disabled,
+.ui-btn-disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Purple Color Modifier - for primary buttons */
+.ui-btn-primary.ui-btn-purple {
+    border-color: var(--color-purple-500);
+    background: linear-gradient(135deg, var(--color-purple-500) 0%, var(--color-purple-600) 100%);
+    box-shadow: 0 2px 8px var(--color-purple-500-30);
+}
+
+.ui-btn-primary.ui-btn-purple:hover {
+    border-color: var(--color-purple-600);
+    box-shadow: 0 0 0 4px var(--color-purple-500-20), 0 4px 16px var(--color-purple-500-40);
 }
 
 /* ========================================

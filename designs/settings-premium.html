@@ -560,20 +560,6 @@
             flex-shrink: 0;
         }
 
-        .payment-history-table .ui-btn.ui-btn-secondary {
-            background: var(--color-gray-100);
-            color: var(--color-gray-700);
-            border: none;
-            border-radius: 8px;
-            box-shadow: none;
-        }
-
-        .payment-history-table .ui-btn.ui-btn-secondary:hover {
-            background: var(--color-gray-200);
-            border: none;
-            box-shadow: none;
-        }
-
         /* Premium Upsell Section */
         .premium-upsell {
             background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
@@ -772,24 +758,6 @@
             font-weight: 500;
             color: #7c3aed;
             letter-spacing: -0.2px;
-        }
-
-        /* Cancel Button */
-        .setting-row .cancel-btn {
-            background: var(--color-gray-100);
-            color: var(--color-gray-700);
-            border: none;
-            border-radius: 8px;
-            box-shadow: none;
-            width: auto;
-            max-width: none;
-            min-width: 175px;
-        }
-
-        .cancel-btn:hover {
-            background: var(--color-gray-200);
-            border: none;
-            box-shadow: none;
         }
 
         .premium-upsell-card {
@@ -1214,7 +1182,7 @@
                     </div>
                 </div>
                 <div class="button-row">
-                    <button class="ui-btn ui-btn-secondary">Update Email</button>
+                    <button class="ui-btn ui-btn-default ui-btn-secondary">Update Email</button>
                 </div>
             </div>
 
@@ -1271,7 +1239,7 @@
                     </div>
                 </div>
                 <div class="button-row">
-                    <button class="ui-btn ui-btn-secondary">Change Password</button>
+                    <button class="ui-btn ui-btn-default ui-btn-secondary">Change Password</button>
                 </div>
             </div>
 
@@ -1280,7 +1248,7 @@
                 <h3>Two-Factor Authentication</h3>
                 <div class="setting-row">
                     <p>Add an extra layer of security to your account.</p>
-                    <button class="ui-btn ui-btn-secondary">Enable 2FA</button>
+                    <button class="ui-btn ui-btn-default ui-btn-secondary">Enable 2FA</button>
                 </div>
             </div>
         </div>
@@ -1377,21 +1345,21 @@
                             <td>$3.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Dec 15, 2025</td>
                             <td>$3.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                         <tr>
                             <td>Nov 15, 2025</td>
                             <td>$3.99</td>
                             <td>Recurring</td>
                             <td>Stripe</td>
-                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-tertiary">Download Receipt</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1401,7 +1369,7 @@
                 <h3>Cancel Subscription</h3>
                 <div class="setting-row">
                     <p>If you cancel, you'll lose access to Premium features at the end of your billing period. You can always resubscribe later.</p>
-                    <button class="ui-btn ui-btn-small cancel-btn" onclick="openCancelModal()">Cancel</button>
+                    <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="openCancelModal()">Cancel</button>
                 </div>
             </div>
         </div>
@@ -1453,7 +1421,7 @@
                 <p style="margin-bottom: 8px;">Permanently delete your account and all associated data. This action cannot be undone.</p>
                 <p class="warning-text">⚠️ <strong>Warning:</strong> This will permanently delete your account, all your progress, completed exercises, and personal data. This action is irreversible.</p>
                 <div class="button-row">
-                    <button class="ui-btn ui-btn-danger">Delete Account</button>
+                    <button class="ui-btn ui-btn-default ui-btn-danger">Delete Account</button>
                 </div>
             </div>
         </div>
