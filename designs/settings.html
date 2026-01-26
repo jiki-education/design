@@ -770,44 +770,6 @@
             white-space: nowrap;
         }
 
-        /* Primary Button Component */
-        .ui-btn-primary-purple {
-            --primary-color: var(--color-purple-500);
-            --primary-color-dark: var(--color-purple-600);
-            --primary-color-light: var(--color-purple-300);
-            --primary-shadow: var(--color-purple-500-30);
-            --primary-shadow-light: var(--color-purple-500-20);
-            --primary-shadow-lighter: var(--color-purple-500-15);
-            --primary-shadow-dark: var(--color-purple-500-40);
-
-            border: 2px solid var(--primary-color);
-            color: white;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
-            box-shadow: 0 2px 8px var(--primary-shadow);
-            font-weight: 500;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-align: center;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .ui-btn-primary-purple:hover {
-            border-color: var(--primary-color-dark);
-            box-shadow:
-                0 0 0 4px var(--primary-shadow-light),
-                0 4px 16px var(--primary-shadow-dark);
-        }
-
         /* Editable Field Component */
         .editable-field {
             display: flex;
@@ -1514,7 +1476,7 @@
                             <p class="premium-upsell-note">That's only $0.13 a day</p>
                         </div>
                     </div>
-                    <button class="ui-btn-primary-purple">Upgrade to Premium</button>
+                    <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple">Upgrade to Premium</button>
                 </div>
             </div>
 
