@@ -114,6 +114,7 @@
             --color-gray-800: #1e293b;
             --color-gray-900: #0f172a;
             --color-gray-950: #020617;
+            --color-shadow-subtle: rgba(0, 0, 0, 0.06);
         }
 
         * {
@@ -934,17 +935,17 @@
         /* Secondary Button */
         .ui-btn-secondary {
             background: white;
-            color: var(--primary-color);
-            border-color: var(--primary-color-light);
-            box-shadow: 0 2px 8px var(--primary-shadow);
+            color: var(--color-gray-800);
+            border-color: var(--color-gray-200);
+            box-shadow: 0 2px 8px var(--color-shadow-subtle);
         }
 
         .ui-btn-secondary:hover {
             background: white;
-            border-color: var(--primary-color);
+            border-color: var(--color-blue-500);
             box-shadow:
-                0 0 0 4px var(--primary-shadow-light),
-                0 4px 16px var(--primary-shadow-dark);
+                0 0 0 4px rgba(59, 130, 246, 0.1),
+                0 4px 16px rgba(59, 130, 246, 0.2);
         }
 
         /* Gray Color Modifier */
@@ -1186,9 +1187,9 @@
                                 <input type="text" id="name-input" value="Nicole Chalmers">
                             </div>
                         </div>
-                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelNameEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Save</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Update Name</button>
                         </div>
                     </div>
                 </div>
@@ -1246,9 +1247,9 @@
                                 <input type="text" id="username-input" value="nicole_codes">
                             </div>
                         </div>
-                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelUsernameEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Save</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Update Username</button>
                         </div>
                     </div>
                 </div>
@@ -1304,9 +1305,9 @@
                                 <input type="email" id="email-input" value="learner@example.com">
                             </div>
                         </div>
-                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelEmailEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Save</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Update</button>
                         </div>
                     </div>
                 </div>
@@ -1404,9 +1405,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <div style="display: flex; gap: 12px;">
                             <button class="ui-btn ui-btn-small ui-btn-secondary ui-btn-gray" onclick="cancelPasswordEdit()">Cancel</button>
-                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Save</button>
+                            <button class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Update</button>
                         </div>
                     </div>
                 </div>
