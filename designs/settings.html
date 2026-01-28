@@ -999,6 +999,74 @@
         .segmented-toggle button:hover:not(.active) {
             color: var(--color-gray-700);
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 400px;
+            margin: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h4 {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 12px 0;
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            line-height: 1.4;
+            margin: 0 0 24px 0;
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons .ui-btn {
+            flex: 1;
+            padding: 12px 18px;
+            font-size: 16px;
+            border-radius: 10px;
+            width: auto;
+        }
     </style>
 </head>
 <body class="ui-body">
@@ -1648,11 +1716,23 @@
                             <span class="editable-field-label">Delete Account</span>
                             <div class="editable-field-value">Permanently delete your account and all associated data. This action cannot be undone.</div>
                         </div>
-                        <button class="ui-btn ui-btn-small ui-btn-danger" style="width: 160px; padding: 8px 16px;">Delete account</button>
+                        <button class="ui-btn ui-btn-small ui-btn-danger" style="width: 160px; padding: 8px 16px;" onclick="openDeleteModal()">Delete account</button>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <h4>Check your email</h4>
+            <p>We will send you an email to confirm. Please click the delete link in the email to delete your account.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-tertiary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="ui-btn ui-btn-primary" onclick="window.location.href='account-deleted.html'">Send Email</button>
+            </div>
         </div>
     </div>
 
@@ -1899,6 +1979,22 @@
                     });
                 });
             });
+        });
+
+        // Delete account modal functions
+        function openDeleteModal() {
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
         });
     </script>
 </body>
