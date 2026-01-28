@@ -16,7 +16,7 @@
 
 ### Page Structure
 - **Header**: \`.ui-page-header\` component with h1 icon/title and subtitle
-- **Tabs**: \`.filter-tabs\` component with 5 tab buttons (Projects-style)
+- **Tabs**: \`.filter-tabs\` component with 6 tab buttons (Projects-style)
 
 ### Form Components
 - **Form Fields**: \`.ui-form-field-large\` components with labels and dual-icon inputs
@@ -40,13 +40,14 @@
 
 ### Toggle Switches
 - **Toggle Component**: \`.ui-toggle-switch\` with \`.active\` class for on state
-  - Used in Preferences tab for all toggle settings
+  - Used in Notifications tab for all toggle settings
   - Clickable to toggle state on/off
 
 ### Tab Variants
 - Account tab: Default blue
 - Subscription tab: Default blue
-- Preferences tab: Default blue
+- Notifications tab: Default blue
+- Learning tab: Default blue
 - Privacy tab: Default blue
 - Danger Zone tab: Red variant (color changes when active)
 
@@ -1125,7 +1126,16 @@
                         <path d="M17 16H23" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
-                Preferences
+                Notifications
+            </button>
+            <button class="filter-tab" data-tab="learning">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L2 9L12 15L22 9L12 3Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 15L12 21L22 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                Learning
             </button>
             <button class="filter-tab" data-tab="privacy">
                 <span class="filter-icon">
@@ -1589,6 +1599,9 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="settings-content" data-tab-content="learning" style="display: none;">
             <div class="setting-item">
                 <div class="editable-field">
                     <div class="editable-field-header" >
