@@ -1026,7 +1026,7 @@
             background: white;
             border-radius: 24px;
             padding: 32px;
-            max-width: 400px;
+            max-width: 410px;
             margin: 20px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             transform: scale(0.95);
@@ -1204,14 +1204,6 @@
                     </svg>
                 </span>
                 Learning
-            </button>
-            <button class="filter-tab" data-tab="privacy">
-                <span class="filter-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L4 7V11C4 15.55 7.16 19.74 12 21C16.84 19.74 20 15.55 20 11V7L12 3Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                Privacy
             </button>
             <button class="filter-tab" data-tab="danger">
                 <span class="filter-icon">
@@ -1683,19 +1675,6 @@
             </div>
         </div>
 
-        <div class="settings-content" data-tab-content="privacy" style="display: none;">
-            <div class="setting-item">
-                <div class="editable-field">
-                    <div class="editable-field-header">
-                        <div class="editable-field-label-group">
-                            <span class="editable-field-label">Privacy Settings</span>
-                            <div class="editable-field-value">Privacy preferences will be added here.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="settings-content" data-tab-content="danger" style="display: none;">
             <div class="setting-item">
                 <div class="editable-field">
@@ -1727,11 +1706,22 @@
     <!-- Delete Account Confirmation Modal -->
     <div class="modal-overlay" id="deleteModal">
         <div class="modal-content">
-            <h4>Check your email</h4>
-            <p>We will send you an email to confirm. Please click the delete link in the email to delete your account.</p>
+            <h4>Are you sure?</h4>
+            <p>Do you really want to delete your account? You will lose all your work. This is irreversible.</p>
             <div class="modal-buttons">
-                <button class="ui-btn ui-btn-tertiary" onclick="closeDeleteModal()">Cancel</button>
-                <button class="ui-btn ui-btn-primary" onclick="window.location.href='account-deleted.html'">Send Email</button>
+                <button class="ui-btn ui-btn-primary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="ui-btn ui-btn-danger" onclick="openSecurityCheckModal()">Delete account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Check Modal -->
+    <div class="modal-overlay" id="securityCheckModal">
+        <div class="modal-content">
+            <h4>Security Check</h4>
+            <p>We've sent you an email to confirm this is really you. Please click the button in that email to delete your account.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-primary" onclick="closeSecurityCheckModal()">I understand</button>
             </div>
         </div>
     </div>
@@ -1990,10 +1980,25 @@
             document.getElementById('deleteModal').classList.remove('active');
         }
 
+        function openSecurityCheckModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            document.getElementById('securityCheckModal').classList.add('active');
+        }
+
+        function closeSecurityCheckModal() {
+            document.getElementById('securityCheckModal').classList.remove('active');
+        }
+
         // Close modal when clicking outside
         document.getElementById('deleteModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeDeleteModal();
+            }
+        });
+
+        document.getElementById('securityCheckModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSecurityCheckModal();
             }
         });
     </script>
