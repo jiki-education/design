@@ -1110,6 +1110,7 @@
             max-width: 480px;
             width: 100%;
             margin: 20px;
+            border: 2px solid var(--color-blue-500);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
@@ -1237,44 +1238,9 @@
             color: var(--color-gray-400);
         }
 
-        .avatar-upload-area.uploading {
-            border-color: #93c5fd;
-            background: #eff6ff;
-            pointer-events: none;
-        }
-
-        .avatar-upload-area.uploaded {
-            border-color: var(--color-gray-200);
-            border-style: solid;
-            background: var(--color-gray-50);
-        }
-
-        .avatar-spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid #bfdbfe;
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            margin: 0 auto 8px;
-            animation: avatar-spin 0.8s linear infinite;
-        }
-
-        @keyframes avatar-spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .avatar-check {
-            width: 40px;
-            height: 40px;
-            margin: 0 auto 8px;
-            color: #10b981;
-        }
-
-        .avatar-filename {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--color-gray-700);
-            margin-bottom: 4px;
+        .avatar-preview-wrapper-large {
+            width: 160px;
+            height: 160px;
         }
 
         .avatar-modal-buttons {
@@ -2239,21 +2205,11 @@
         });
     </script>
 
-    <!-- Avatar Change Modal -->
+    <!-- Avatar Change Modal - Step 1: Upload -->
     <div class="avatar-modal-backdrop" id="avatarModal">
         <div class="avatar-modal">
             <h4>Change Profile Photo</h4>
             <p>Upload a new profile image.<br>This will only be visible to you.</p>
-            <div class="avatar-current">
-                <div class="avatar-preview-wrapper">
-                    <img id="avatarPreviewImg" src="../../jiki-strategy/images/profile.png" alt="Current Avatar">
-                </div>
-                <div class="avatar-zoom-controls active" id="avatarZoomControls">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                    <input type="range" class="avatar-zoom-slider" id="avatarZoomSlider" min="1" max="3" step="0.1" value="1">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
-                </div>
-            </div>
             <div class="avatar-upload-area" onclick="document.getElementById('avatarFileInput').click()">
                 <svg class="avatar-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -2266,82 +2222,90 @@
             </div>
             <div class="avatar-modal-buttons">
                 <button class="ui-btn ui-btn-default ui-btn-tertiary" onclick="closeAvatarModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Change Modal - Step 2: Zoom & Save -->
+    <div class="avatar-modal-backdrop" id="avatarModalStep2">
+        <div class="avatar-modal">
+            <h4>Adjust Photo</h4>
+            <p>Zoom and position your photo.</p>
+            <div class="avatar-current">
+                <div class="avatar-preview-wrapper avatar-preview-wrapper-large">
+                    <img id="avatarStep2Img" src="../../jiki-strategy/images/profile.png" alt="Preview">
+                </div>
+                <div class="avatar-zoom-controls active" id="avatarZoomControls">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    <input type="range" class="avatar-zoom-slider" id="avatarZoomSlider" min="1" max="3" step="0.1" value="1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                </div>
+            </div>
+            <div class="avatar-modal-buttons">
+                <button class="ui-btn ui-btn-default ui-btn-tertiary" onclick="avatarBackToStep1()">Back</button>
                 <button class="ui-btn ui-btn-default ui-btn-primary" onclick="saveAvatar()">Save</button>
             </div>
         </div>
     </div>
 
     <script>
-        var originalAvatarSrc = '../../jiki-strategy/images/profile.png';
-        var avatarUploaded = false;
+        var uploadedImageSrc = null;
 
         function openAvatarModal() {
-            originalAvatarSrc = document.getElementById('avatarPreviewImg').src;
-            avatarUploaded = false;
-            resetAvatarUpload();
+            uploadedImageSrc = null;
+            document.getElementById('avatarFileInput').value = '';
             document.getElementById('avatarModal').classList.add('active');
         }
 
         function closeAvatarModal() {
-            document.getElementById('avatarPreviewImg').src = originalAvatarSrc;
-            document.getElementById('avatarPreviewImg').style.transform = 'scale(1)';
-            resetAvatarUpload();
             document.getElementById('avatarModal').classList.remove('active');
+            document.getElementById('avatarModalStep2').classList.remove('active');
         }
 
         document.getElementById('avatarModal').addEventListener('click', function(e) {
             if (e.target === this) closeAvatarModal();
         });
 
-        function resetAvatarUpload() {
-            var area = document.querySelector('.avatar-upload-area');
-            area.className = 'avatar-upload-area';
-            area.onclick = function() { document.getElementById('avatarFileInput').click(); };
-            area.innerHTML = '<svg class="avatar-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><div class="avatar-upload-text">Click to upload a new photo</div><div class="avatar-upload-hint">JPG, PNG or GIF. Max 2MB.</div><input type="file" id="avatarFileInput" accept="image/*" style="display: none;">';
-            document.getElementById('avatarFileInput').addEventListener('change', handleAvatarUpload);
-            document.getElementById('avatarZoomControls').classList.add('active');
-            document.getElementById('avatarZoomSlider').value = 1;
-            document.getElementById('avatarPreviewImg').style.transform = 'scale(1)';
-        }
+        document.getElementById('avatarModalStep2').addEventListener('click', function(e) {
+            if (e.target === this) closeAvatarModal();
+        });
 
         function handleAvatarUpload(e) {
             var file = e.target.files[0];
             if (!file) return;
-            var area = document.querySelector('.avatar-upload-area');
 
-            area.className = 'avatar-upload-area uploading';
-            area.innerHTML = '<div class="avatar-spinner"></div><div class="avatar-upload-text">Uploading...</div><div class="avatar-upload-hint">' + file.name + '</div>';
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                uploadedImageSrc = ev.target.result;
+                document.getElementById('avatarStep2Img').src = uploadedImageSrc;
+                document.getElementById('avatarZoomSlider').value = 1;
+                document.getElementById('avatarStep2Img').style.transform = 'scale(1)';
+                document.getElementById('avatarModal').classList.remove('active');
+                document.getElementById('avatarModalStep2').classList.add('active');
+            };
+            reader.readAsDataURL(file);
+        }
 
-            setTimeout(function() {
-                avatarUploaded = true;
-                area.className = 'avatar-upload-area uploaded';
-                area.innerHTML = '<svg class="avatar-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><div class="avatar-filename">' + file.name + '</div><div class="avatar-upload-hint">Upload complete! <span style="font-weight: 500; color: #475569;">Click Save</span> to update.</div>';
-
-                var reader = new FileReader();
-                reader.onload = function(ev) {
-                    document.getElementById('avatarPreviewImg').src = ev.target.result;
-                    document.getElementById('avatarZoomControls').classList.add('active');
-                    document.getElementById('avatarZoomSlider').value = 1;
-                };
-                reader.readAsDataURL(file);
-            }, 1500);
+        function avatarBackToStep1() {
+            document.getElementById('avatarModalStep2').classList.remove('active');
+            document.getElementById('avatarModal').classList.add('active');
         }
 
         document.getElementById('avatarFileInput').addEventListener('change', handleAvatarUpload);
 
         document.getElementById('avatarZoomSlider').addEventListener('input', function() {
-            document.getElementById('avatarPreviewImg').style.transform = 'scale(' + this.value + ')';
+            document.getElementById('avatarStep2Img').style.transform = 'scale(' + this.value + ')';
         });
 
         function saveAvatar() {
-            var newSrc = document.getElementById('avatarPreviewImg').src;
+            var newSrc = document.getElementById('avatarStep2Img').src;
             var zoomLevel = document.getElementById('avatarZoomSlider').value;
             var profileImg = document.getElementById('profile-photo-img');
             profileImg.src = newSrc;
             profileImg.style.transform = 'scale(' + zoomLevel + ')';
             profileImg.style.transformOrigin = 'center center';
-            document.getElementById('avatarModal').classList.remove('active');
-            avatarUploaded = false;
+            document.getElementById('avatarModalStep2').classList.remove('active');
+            uploadedImageSrc = null;
         }
     </script>
 </body>
