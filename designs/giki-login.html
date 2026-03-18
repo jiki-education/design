@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Giki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <style>
+        :root {
+            --color-blue-500: #1d4ed8;
+            --color-blue-600: #1d4ed8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, .ui-body, .ui-body * {
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        /* Right side - Gradient background */
+        .right-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: white;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        }
+
+
+        .logo-large {
+            font-size: 72px;
+            font-weight: 500;
+            z-index: 1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 30px;
+            font-weight: 500;
+            text-align: center;
+            z-index: 1;
+            line-height: 1.3;
+            text-wrap-style: balance;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 20px;
+            text-align: center;
+            opacity: 0.95;
+            max-width: 500px;
+            line-height: 1.6;
+            z-index: 1;
+            text-wrap-style: balance;
+            margin-bottom: 52px;
+        }
+
+        /* Left side - Form area */
+        .left-side {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 60px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            font-size: 50px;
+            font-weight: 500;
+            color: var(--color-gray-900);
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+        .form-subtitle {
+            font-size: 21px;
+            color: var(--color-gray-500);
+            text-wrap-style: balance;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--color-gray-200);
+        }
+
+        .divider-text {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            font-weight: 500;
+        }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 17px;
+        }
+
+        .footer-links {
+            text-align: center;
+        }
+
+        .footer-links p {
+            font-size: 17px;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        .success-message {
+            background: #ecfdf5;
+            border: 2px solid rgba(21, 128, 61, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            color: #15803d;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-wrap-style: balance;
+        }
+
+        .creators-badge {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .creators-badge .label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .creators-badge .brand {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+        }
+
+        .ui-btn-primary { border-color: transparent; }
+        .ui-btn-primary:hover { border-color: transparent; }
+        .ui-btn-primary.ui-btn-loading { background: var(--color-gray-200); color: var(--color-gray-600); border-color: transparent; box-shadow: none; }
+        .ui-btn-primary.ui-btn-loading::before { border-color: var(--color-blue-200); border-top-color: var(--color-blue-500); }
+        .ui-btn-large { font-size: 19px; }
+        .ui-form-field-large > label { font-size: 17px; }
+        .ui-form-field-large input { font-size: 18px; }
+        .ui-form-field-large .ui-form-field-error-message { font-size: 17px; margin-top: 6px; }
+
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .right-side {
+                min-height: 300px;
+                padding: 40px 30px;
+            }
+
+            .logo-large {
+                font-size: 48px;
+            }
+
+            .tagline {
+                font-size: 24px;
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .left-side {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+
+    <!-- Implementation Notes -->
+    <script>
+        const IMPLEMENTATION_NOTES = `
+### Layout Behavior
+
+- The right-hand side (gradient background) should stay locked in place while the left-hand side (form) scrolls. This is achieved on this page via a sticky RHS using \`position: sticky; top: 0; height: 100vh;\`. The LHS has flexible padding and no fixed height, allowing it to scroll naturally if content grows.
+`;
+    </script>
+
+    <!-- Page Variants Configuration -->
+    <script>
+        // Reset function called before each variant
+        const PAGE_VARIANTS_RESET = () => {
+            const passwordField = document.getElementById('password-field');
+            const submitBtn = document.getElementById('submit-btn');
+            const successMessage = document.getElementById('success-message');
+            const forgotPassword = document.getElementById('forgot-password');
+            const genericError = document.getElementById('generic-error');
+
+            passwordField.classList.remove('ui-form-field-error');
+            document.getElementById('email-field').classList.remove('ui-form-field-error');
+            submitBtn.classList.remove('ui-btn-loading');
+            submitBtn.textContent = 'Log In';
+            if (successMessage) successMessage.style.display = 'none';
+            forgotPassword.style.display = 'block';
+            genericError.style.display = 'none';
+        };
+
+        const PAGE_VARIANTS = [
+            {
+                id: 'password-reset-sent',
+                label: 'Password Reset Sent',
+                apply: () => {
+                    const successMessage = document.getElementById('success-message');
+                    if (successMessage) successMessage.style.display = 'block';
+                }
+            },
+            {
+                id: 'error',
+                label: 'Password Error',
+                apply: () => {
+                    const passwordField = document.getElementById('password-field');
+                    const genericError = document.getElementById('generic-error');
+
+                    passwordField.classList.add('ui-form-field-error');
+                    document.getElementById('email-field').classList.add('ui-form-field-error');
+                    genericError.style.display = 'flex';
+                }
+            },
+            {
+                id: 'processing',
+                label: 'Button Processing',
+                apply: () => {
+                    const submitBtn = document.getElementById('submit-btn');
+                    const forgotPassword = document.getElementById('forgot-password');
+
+                    submitBtn.classList.add('ui-btn-loading');
+                    submitBtn.textContent = 'Logging in...';
+                    forgotPassword.style.display = 'none';
+                }
+            }
+        ];
+    </script>
+</head>
+<body class="ui-body">
+    <div style="display: flex;">
+        <!-- Left Side - Form -->
+        <div class="left-side">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1 class="form-title">Log In</h1>
+                    <p class="form-subtitle">Don't have an account? <a href="signup.html" class="ui-link">Sign up for free.</a></p>
+                </div>
+
+                <!-- Generic error banner -->
+                <div id="generic-error" style="display: none; align-items: flex-start; gap: 10px; padding: 12px 14px; background: var(--color-red-50); border: 1px solid var(--color-red-100); border-radius: 8px; margin-bottom: 20px;">
+                    <div>
+                        <p style="font-size: 18px; font-weight: 600; color: var(--color-red-500); line-height: 1.4;">Invalid password or email address. Please try again.</p>
+                    </div>
+                </div>
+
+                <form style="display: flex; flex-direction: column; gap: 20px;">
+                    <div id="success-message" class="success-message" style="display: none;">
+                        You will receive an email with instructions on how to reset your password in a few minutes.
+                    </div>
+
+                    <div class="ui-form-field-large" id="email-field">
+                        <label for="login-email">Email</label>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path stroke="#949494" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
+                                <path stroke="#949494" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path stroke="#1d4ed8" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
+                                <path stroke="#1d4ed8" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
+                            </svg>
+                            <input type="email" id="login-email" placeholder="Enter your email address" required>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px;">
+                        <div class="ui-form-field-large" id="password-field">
+                            <label for="login-password">Password</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#949494" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#949494" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                    <path stroke="#949494" d="M12 15v4" stroke-width="2"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                    <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
+                                </svg>
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+
+                        <div class="forgot-password" id="forgot-password">
+                            <a href="forgot-password.html" class="ui-link">Forgot your password?</a>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="ui-btn-large ui-btn-primary" style="width: 100%;">Log In</button>
+
+                    <div class="footer-links">
+                        <p>Didn't receive your confirmation email? <a href="resend-confirmation.html" class="ui-link">Resend it.</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side - Visual/Inspiration -->
+        <div class="right-side">
+            <img src="giki-actions-text.png" alt="Giki Actions" style="width: 36%; position: relative; z-index: 1; filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));">
+            <svg style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: calc(21.17% + 35.28px); opacity: 0.2;" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <g fill-rule="evenodd" fill="none">
+                    <g transform="matrix(1.0885884,0,0,1.0949544,-0.05002723,-0.06569726)">
+                        <path transform="translate(-0.05)" d="m 35.46,15.462 c 3.301,3.205 5.356,7.67 5.356,12.616 0,0.756 -0.048,1.5 -0.145,2.233 3.301,-3.205 5.356,-7.67 5.356,-12.617 0,-9.747 -7.955,-17.634 -17.76,-17.634 -1.814,0 -3.555,0.276 -5.211,0.768 6.577,1.993 11.522,7.683 12.404,14.634" fill-rule="nonzero" fill="#baea82"/>
+                        <path transform="translate(-0.05)" d="M 5.44,30.31 C 5.344,29.579 5.295,28.834 5.295,28.078 5.295,23.132 7.351,18.667 10.651,15.462 11.534,8.512 16.48,2.82 23.068,0.828 21.424,0.324 19.671,0.06 17.858,0.06 8.04,0.06 0.096,7.959 0.096,17.694 0.085,22.64 2.14,27.106 5.44,30.311" fill-rule="nonzero" fill="#69dbe1"/>
+                        <path transform="translate(-0.05)" d="m 10.64,15.462 c 3.203,-3.11 7.58,-5.018 12.416,-5.018 4.836,0 9.213,1.92 12.404,5.018 C 34.578,8.512 29.633,2.82 23.056,0.828 16.479,2.821 11.522,8.511 10.639,15.462" fill-rule="nonzero" fill="#6abc82"/>
+                        <path transform="translate(-0.05)" d="m 23.056,34.56 c -1.644,0.505 -3.397,0.769 -5.21,0.769 -4.837,0 -9.214,-1.921 -12.418,-5.018 1.1,8.691 8.572,15.413 17.616,15.413 9.043,0 16.515,-6.722 17.615,-15.413 -3.204,3.109 -7.58,5.018 -12.404,5.018 -1.802,0 -3.555,-0.276 -5.199,-0.769" fill-rule="nonzero" fill="#c74272"/>
+                        <path transform="translate(-0.05)" d="m 35.46,15.462 c 0.097,0.732 0.146,1.476 0.146,2.232 0,7.947 -5.284,14.658 -12.562,16.866 1.644,0.505 3.397,0.769 5.21,0.769 4.837,0 9.213,-1.921 12.405,-5.018 0.097,-0.732 0.145,-1.477 0.145,-2.233 0.012,-4.946 -2.03,-9.411 -5.344,-12.616" fill-rule="nonzero" fill="#fa8b76"/>
+                        <path transform="translate(-0.05)" d="M 23.056,34.56 C 15.79,32.352 10.494,25.641 10.494,17.694 c 0,-0.756 0.049,-1.5 0.145,-2.232 -3.3,3.205 -5.356,7.67 -5.356,12.616 0,0.756 0.049,1.5 0.145,2.233 3.204,3.109 7.581,5.018 12.417,5.018 1.814,0 3.567,-0.276 5.211,-0.769" fill-rule="nonzero" fill="#f89ed2"/>
+                        <path transform="translate(-0.05)" d="m 23.056,34.56 c 7.266,-2.208 12.562,-8.919 12.562,-16.866 0,-0.756 -0.049,-1.5 -0.145,-2.232 -3.204,-3.11 -7.581,-5.018 -12.417,-5.018 -4.836,0 -9.213,1.92 -12.417,5.018 -0.096,0.732 -0.145,1.476 -0.145,2.232 0,7.935 5.296,14.658 12.562,16.866" fill="#5f2b68"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Shared Variants Menu Script -->
+    <script src="../ui-kit/variants.js"></script>
+
+    <!-- Implementation Notes Script -->
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

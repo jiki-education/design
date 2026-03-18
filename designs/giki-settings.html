@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Giki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+## UI Kit Components Used
+
+### Page Structure
+- **Header**: \`.ui-page-header\` component with h1 icon/title and subtitle
+- **Tabs**: \`.filter-tabs\` component with 6 tab buttons (Projects-style)
+
+### Form Components
+- **Form Fields**: \`.ui-form-field-large\` components with labels and dual-icon inputs
+  - Email field uses user icon (grey/blue states)
+  - Password fields use lock icon (grey/blue states)
+  - Icons automatically toggle on focus using UI Kit's nested selectors
+
+### Editable Fields (New Pattern)
+- **View state**: Label + plain text value + "Edit" button on right
+- **Editing state**: Label + input field + "Cancel" and "Save" buttons
+- **Saved state**: Label with green checkmark and "Saved" text + plain text value
+- Use variants menu to switch between states
+
+### Buttons
+- **Secondary Buttons**: \`.ui-btn .ui-btn-secondary\` (standard size: 14px/20px padding, 16px font)
+  - Update Email button
+  - Change Password button
+  - Enable 2FA button
+- **Danger Button**: \`.ui-btn .ui-btn-danger\` (red background for destructive actions)
+  - Delete Account button
+
+### Toggle Switches
+- **Toggle Component**: \`.ui-toggle-switch\` with \`.active\` class for on state
+  - Used in Notifications tab for all toggle settings
+  - Clickable to toggle state on/off
+
+### Tab Variants
+- Account tab: Default blue
+- Subscription tab: Default blue
+- Notifications tab: Default blue
+- Learning tab: Default blue
+- Privacy tab: Default blue
+- Danger Zone tab: Red variant (color changes when active)
+
+## Tab Switching
+- Tab functionality handled by inline JavaScript (Projects-style filter tabs)
+- Uses \`data-tab\` attributes on buttons
+- Corresponding content sections use \`data-tab-content\` attributes
+
+## Custom Styling
+- \`.setting-item\` sections separated by grey border lines
+- Maximum width of 774px for settings content area
+- Buttons placed on separate lines below inputs (not inline)
+- 2FA setting uses row layout (description left, button right)
+        `;
+    </script>
+
+    <script>
+        const PAGE_VARIANTS_RESET = () => {
+            // Reset Name field to view state
+            document.getElementById('name-view-state').style.display = '';
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = 'none';
+        };
+
+        const PAGE_VARIANTS = [
+            {
+                id: 'editing',
+                label: 'Name Editing',
+                apply: () => {
+                    document.getElementById('name-view-state').style.display = 'none';
+                    document.getElementById('name-edit-state').style.display = '';
+                    document.getElementById('name-saved-state').style.display = 'none';
+                    // Button state based on whether input differs from original
+                    const input = document.getElementById('name-input');
+                    document.getElementById('name-update-btn').disabled = input.value === 'Nicole Chalmers';
+                }
+            },
+            {
+                id: 'saved',
+                label: 'Name Saved',
+                apply: () => {
+                    document.getElementById('name-view-state').style.display = 'none';
+                    document.getElementById('name-edit-state').style.display = 'none';
+                    document.getElementById('name-saved-state').style.display = '';
+                }
+            }
+        ];
+    </script>
+    <style>
+        :root {
+            --color-primary-500: #1d4ed8;
+            --color-primary-600: #1d4ed8;
+            --color-blue-500: #1d4ed8;
+            --color-blue-600: #1d4ed8;
+            --color-purple-300: #dab4fe;
+            --color-purple-500: #a855f7;
+            --color-purple-600: #9133ea;
+            --color-purple-500-15: color-mix(in srgb, #a855f7 15%, transparent);
+            --color-purple-500-20: color-mix(in srgb, #a855f7 20%, transparent);
+            --color-purple-500-30: color-mix(in srgb, #a855f7 30%, transparent);
+            --color-purple-500-40: color-mix(in srgb, #a855f7 40%, transparent);
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f1f5f9;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-600: #475569;
+            --color-gray-700: #334155;
+            --color-gray-800: #1e293b;
+            --color-gray-900: #0f172a;
+            --color-gray-950: #020617;
+            --color-shadow-subtle: rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, .ui-body, .ui-body * {
+            font-family: 'Source Sans 3', sans-serif;
+            background: white;
+            color: var(--color-gray-900);
+            display: flex;
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px 20px 32px 20px;
+            border-right: 2px solid var(--color-gray-100);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar.collapsed .logo {
+            font-size: 32px;
+            letter-spacing: 0;
+            text-align: center;
+        }
+
+        .sidebar .logo .full-text {
+            display: inline;
+        }
+
+        .sidebar .logo .collapsed-text {
+            display: none;
+        }
+
+        .sidebar.collapsed .logo .full-text {
+            display: none;
+        }
+
+        .sidebar.collapsed .logo .collapsed-text {
+            display: inline;
+        }
+
+        .sidebar.collapsed .nav-item span:not(.nav-icon) {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-label {
+            display: none;
+        }
+
+        .sidebar.collapsed .logo::after {
+            width: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .sidebar .logo {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: left;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 13px 0;
+        }
+
+        .sidebar .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #2563eb, transparent);
+            border-radius: 2px;
+        }
+
+        .sidebar .nav-section {
+            margin-bottom: 4px;
+        }
+
+        .sidebar .nav-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-left: 12px;
+        }
+
+        .sidebar .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--color-gray-700);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            margin-left: -8px;
+            margin-right: -8px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .sidebar .nav-item:hover {
+            background: var(--color-gray-50);
+            color: var(--color-gray-700);
+            font-weight: 500;
+        }
+
+        .sidebar .nav-item.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(37, 99, 235, 0.06) 100%);
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item.premium {
+            color: #9333ea;
+        }
+
+        .sidebar .nav-item.premium:hover {
+            background: rgba(147, 51, 234, 0.08);
+            color: #9333ea;
+        }
+
+        .sidebar .nav-item.premium .nav-icon {
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 2px rgba(147, 51, 234, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 5px rgba(147, 51, 234, 0.8));
+            }
+        }
+
+        .sidebar .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar .nav-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            margin-top: auto;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--color-gray-500);
+            font-size: 14px;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        .toggle-btn:hover {
+            background: var(--color-gray-50);
+            color: var(--color-gray-700);
+        }
+
+        .toggle-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-btn span {
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar.collapsed .toggle-btn {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .toggle-btn span {
+            display: none;
+        }
+
+        .sidebar.collapsed .toggle-btn svg {
+            transform: rotate(180deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 660px;
+        }
+
+        /* Filter Tabs - Projects style */
+        .filter-tabs {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 26px;
+        }
+
+        .filter-tab {
+            padding: 8px 0;
+            background: transparent;
+            border: none;
+            font-size: 15px;
+            font-weight: 450;
+            color: var(--color-gray-500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Source Sans 3', sans-serif;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .filter-tab:hover {
+            color: var(--color-blue-500);
+        }
+
+        .filter-tab.active {
+            color: var(--color-blue-500);
+        }
+
+        .filter-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-blue-500);
+            border-radius: 2px;
+        }
+
+        /* Danger Zone filter - Red active state */
+        .filter-tab[data-tab="danger"].active {
+            color: var(--color-red-500);
+        }
+
+        .filter-tab[data-tab="danger"].active::after {
+            background: var(--color-red-500);
+        }
+
+        .filter-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Settings content area */
+        .settings-content {
+            max-width: 774px;
+        }
+
+        /* Setting item sections */
+        .setting-item {
+            padding: 24px 0;
+            position: relative;
+        }
+
+        .setting-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 37px;
+            height: 1px;
+            background: var(--color-gray-200);
+        }
+
+        .setting-item:first-child {
+            padding-top: 0;
+        }
+
+        .setting-item:last-child::after {
+            display: none;
+        }
+
+        .setting-item:has(+ .premium-upsell)::after {
+            display: none;
+        }
+
+        .setting-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-gray-800);
+            margin-bottom: 6px;
+            text-wrap-style: balance;
+        }
+
+        .setting-item p {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            text-wrap-style: balance;
+            max-width: 600px;
+        }
+
+        /* Remove text-wrap and max-width for danger zone paragraphs */
+        .settings-content[data-tab-content="danger"] .setting-item p {
+            text-wrap-style: auto;
+            max-width: none;
+        }
+
+        /* Remove text-wrap and max-width for subscription paragraphs */
+        .settings-content[data-tab-content="subscription"] .setting-item p {
+            text-wrap-style: auto;
+            max-width: none;
+        }
+
+        /* Form field styling within settings */
+        .setting-item .ui-form-field-large {
+            margin-bottom: 12px;
+        }
+
+        .setting-item .ui-form-field-large:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Button on new line */
+        .button-row {
+            margin-top: 12px;
+        }
+
+        .button-row .ui-btn {
+            width: 100%;
+            max-width: 210px;
+        }
+
+        /* 2FA row layout */
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .setting-row p {
+            flex: 1;
+            margin: 0;
+            max-width: 400px;
+        }
+
+        .setting-row .ui-btn {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 210px;
+        }
+
+        /* Warning text styling */
+        .warning-text {
+            font-size: 13px;
+            color: var(--color-red-600);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .warning-text strong {
+            font-weight: 600;
+        }
+
+        /* Toggle row layout */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .toggle-row p {
+            margin: 0;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .toggle-row .ui-toggle-switch {
+            flex-shrink: 0;
+        }
+
+        /* Payment History Table */
+        .payment-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-history-table th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            padding: 0 0 12px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+            font-size: 15px;
+        }
+
+        .payment-history-table th:last-child {
+            text-align: right;
+        }
+
+        .payment-history-table td {
+            padding: 16px 0;
+            color: var(--color-gray-700);
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .payment-history-table td:last-child {
+            text-align: right;
+        }
+
+        .payment-history-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .payment-history-table th:nth-child(1),
+        .payment-history-table td:nth-child(1) {
+            width: 25%;
+        }
+
+        .payment-history-table th:nth-child(2),
+        .payment-history-table td:nth-child(2) {
+            width: 15%;
+        }
+
+        .payment-history-table th:nth-child(3),
+        .payment-history-table td:nth-child(3) {
+            width: 20%;
+        }
+
+        .payment-history-table th:nth-child(4),
+        .payment-history-table td:nth-child(4) {
+            width: 15%;
+        }
+
+        .payment-history-table th:nth-child(5),
+        .payment-history-table td:nth-child(5) {
+            width: 25%;
+        }
+
+        .ui-btn.ui-btn-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .ui-btn.ui-btn-small svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .payment-history-table .ui-btn.ui-btn-secondary {
+            background: var(--color-gray-100);
+            color: var(--color-gray-700);
+            border: none;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        .payment-history-table .ui-btn.ui-btn-secondary:hover {
+            background: var(--color-gray-200);
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Premium Upsell Section */
+        .premium-upsell {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 16px;
+            padding: 24px 30px 40px 30px;
+            text-align: center;
+            margin-top: 12px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .premium-upsell::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--color-gray-200);
+        }
+
+        .premium-upsell-headline {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 12px 0;
+        }
+
+        .premium-upsell-headline .highlight {
+            background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .premium-upsell-subtitle {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            margin: 0 0 32px 0;
+        }
+
+        .premium-upsell-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 24px;
+            text-align: left;
+            max-width: 680px;
+            margin: 0 auto 32px auto;
+        }
+
+        .premium-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--color-gray-600);
+            line-height: 1.5;
+        }
+
+        .premium-feature svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .premium-feature strong {
+            color: var(--color-gray-700);
+        }
+
+        .premium-upsell-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .premium-upsell-card-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .premium-upsell-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .premium-upsell-pricing {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 20px;
+            border-left: 1px solid var(--color-gray-200);
+        }
+
+        .premium-upsell-price {
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+            line-height: 1;
+        }
+
+        .premium-upsell-price .amount {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--color-gray-900);
+        }
+
+        .premium-upsell-price .period {
+            font-size: 14px;
+            color: var(--color-gray-500);
+        }
+
+        .premium-upsell-note {
+            font-size: 14px;
+            color: #9333ea;
+            margin: 2px 0 0 0;
+            white-space: nowrap;
+        }
+
+        /* Profile Photo */
+        .profile-photo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 3px solid var(--color-gray-200);
+            margin-top: 4px;
+        }
+
+        .profile-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Editable Field Component */
+        .editable-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .editable-field-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .editable-field-label-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .editable-field-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editable-field-value {
+            font-size: 16px;
+            color: var(--color-gray-700);
+        }
+
+        .editable-field-value a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        .editable-field-value a:hover {
+            color: var(--color-blue-500);
+        }
+
+        /* Editing state */
+        .editable-field-input-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            margin-right: 37px;
+        }
+
+        .editable-field-input-row .ui-btn {
+            flex-shrink: 0;
+        }
+
+        /* Password fields layout */
+        .editable-field-password-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .editable-field-button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* Editable field buttons using UI Kit button system */
+        .editable-field .ui-btn {
+            flex-shrink: 0;
+        }
+
+        /* Consistent width and position for view mode buttons */
+        .editable-field-header .ui-btn {
+            min-width: 100px;
+            margin-right: 37px;
+        }
+
+        .editable-field-header .ui-toggle-switch {
+            margin-right: 37px;
+        }
+
+        /* Button base */
+        .ui-btn {
+            --primary-color: var(--color-blue-500);
+            --primary-color-dark: var(--color-blue-600);
+            --primary-color-light: var(--color-blue-300);
+            --primary-shadow: color-mix(in srgb, var(--color-blue-500) 30%, transparent);
+            --primary-shadow-light: color-mix(in srgb, var(--color-blue-500) 20%, transparent);
+            --primary-shadow-lighter: color-mix(in srgb, var(--color-blue-500) 10%, transparent);
+            --primary-shadow-dark: color-mix(in srgb, var(--color-blue-500) 40%, transparent);
+
+            border: 2px solid;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        /* Button size variants */
+        .ui-btn-small {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .ui-btn-default {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* Primary Button */
+        .ui-btn-primary {
+            border-color: var(--primary-color);
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+            box-shadow: 0 2px 8px var(--primary-shadow);
+        }
+
+        .ui-btn-primary:hover {
+            border-color: var(--primary-color-dark);
+            box-shadow:
+                0 0 0 4px var(--primary-shadow-light),
+                0 4px 16px var(--primary-shadow-dark);
+        }
+
+        /* Secondary Button (canonical) */
+        .ui-btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border-color: var(--primary-color-light);
+            box-shadow: 0 2px 8px var(--primary-shadow);
+        }
+
+        .ui-btn-secondary:hover {
+            background: white;
+            border-color: var(--primary-color);
+            box-shadow:
+                0 0 0 4px var(--primary-shadow-light),
+                0 4px 16px var(--primary-shadow-dark);
+        }
+
+        /* Tertiary Button (canonical) - white background with slate border */
+        .ui-btn-tertiary {
+            background: white;
+            color: var(--color-gray-600);
+            border-color: var(--color-gray-300);
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--color-gray-400) 30%, transparent);
+        }
+
+        .ui-btn-tertiary:hover {
+            background: white;
+            border-color: var(--color-gray-400);
+            box-shadow:
+                0 0 0 4px color-mix(in srgb, var(--color-gray-500) 10%, transparent),
+                0 4px 16px color-mix(in srgb, var(--color-gray-500) 20%, transparent);
+        }
+
+        /* Disabled Button State (canonical) */
+        .ui-btn:disabled,
+        .ui-btn-disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Saved indicator */
+        .editable-field-saved-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color-green-600);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .editable-field-saved-indicator svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Segmented Toggle */
+        .segmented-toggle {
+            display: inline-flex;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 10px;
+            padding: 4px;
+            background: white;
+        }
+
+        .segmented-toggle button {
+            padding: 10px 32px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--color-gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .segmented-toggle button.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--color-blue-600);
+        }
+
+        .segmented-toggle button:hover:not(.active) {
+            color: var(--color-gray-700);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 410px;
+            margin: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h4 {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 12px 0;
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            line-height: 1.4;
+            margin: 0 0 24px 0;
+            text-align: center;
+            text-wrap: balance;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons .ui-btn {
+            flex: 1;
+            padding: 12px 18px;
+            font-size: 16px;
+            border-radius: 10px;
+            width: auto;
+        }
+        /* Avatar Change Modal */
+        .avatar-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-modal-backdrop.active {
+            display: flex;
+        }
+
+        .avatar-modal {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 440px;
+            width: 100%;
+            margin: 20px;
+            border: 2px solid var(--color-blue-500);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .avatar-modal h4 {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 8px 0;
+            text-align: center;
+        }
+
+        .avatar-modal p {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            line-height: 1.4;
+            margin: 0 0 24px 0;
+            text-align: center;
+        }
+
+        .avatar-current {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 16px;
+        }
+
+        .avatar-preview-wrapper {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-gray-200);
+        }
+
+        .avatar-current img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform-origin: center center;
+            transition: transform 0.2s ease;
+        }
+
+        .avatar-zoom-controls {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 240px;
+        }
+
+        .avatar-zoom-controls.active {
+            display: flex;
+        }
+
+        .avatar-zoom-controls svg {
+            width: 24px;
+            height: 24px;
+            color: var(--color-gray-500);
+            flex-shrink: 0;
+        }
+
+        .avatar-zoom-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: var(--color-gray-200);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .avatar-zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .avatar-upload-area {
+            border: 2px dashed var(--color-gray-300);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 24px;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-upload-area:hover {
+            border-color: #c084fc;
+            background: #faf5ff;
+        }
+
+        .avatar-upload-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 8px;
+            color: var(--color-gray-400);
+        }
+
+        .avatar-upload-area:hover .avatar-upload-icon {
+            color: #a855f7;
+        }
+
+        .avatar-upload-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color-gray-600);
+            margin-bottom: 4px;
+        }
+
+        .avatar-upload-hint {
+            font-size: 14px;
+            color: var(--color-gray-400);
+        }
+
+        .avatar-preview-wrapper-large {
+            width: 160px;
+            height: 160px;
+        }
+
+        .avatar-modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .avatar-modal-buttons button {
+            padding: 8px 16px;
+            flex: 1;
+        }
+
+    </style>
+</head>
+<body class="ui-body">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <span class="full-text">JIKI</span>
+            <span class="collapsed-text">J</span>
+        </div>
+
+        <nav>
+            <div class="nav-section">
+                <a href="../../jiki-strategy/theming/dashboard-3.html" class="nav-item">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.5 21V15.5C9.5 14.9477 9.94772 14.5 10.5 14.5H13.5C14.0523 14.5 14.5 14.9477 14.5 15.5V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M3.5 10L12 3L20.5 10V19C20.5 19.8284 19.8284 20.5 19 20.5H5C4.17157 20.5 3.5 19.8284 3.5 19V10Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M3.5 10L12 3L20.5 10V19C20.5 19.8284 19.8284 20.5 19 20.5H5C4.17157 20.5 3.5 19.8284 3.5 19V10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>Learn</span>
+                </a>
+                <a href="../../jiki-strategy/theming/library-v5-breadcrumb-header.html" class="nav-item">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M3 8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H8.67452C9.1637 5 9.40829 5 9.63846 5.05526C9.84254 5.10425 10.0376 5.18506 10.2166 5.29472C10.4184 5.4184 10.5914 5.5914 10.9373 5.93726L11.5627 6.56274C11.9086 6.9086 12.0816 7.0816 12.2834 7.20528C12.4624 7.31494 12.6575 7.39575 12.8615 7.44474C13.0917 7.5 13.3363 7.5 13.8255 7.5H17.8C18.9201 7.5 19.4802 7.5 19.908 7.71799C20.2843 7.90973 20.5903 8.21569 20.782 8.59202C21 9.01984 21 9.5799 21 10.7V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>Library</span>
+                </a>
+                <a href="../../jiki-strategy/theming/projects-page.html" class="nav-item">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>Projects</span>
+                </a>
+                <a href="../../jiki-strategy/theming/achievements-page-v3-sidebar.html" class="nav-item">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.21 13.89L7 23L12 20L17 23L15.79 13.88" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>Achievements</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" fill="currentColor" opacity="0.24"/>
+                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18.7273 14.7273C18.6063 15.0015 18.5702 15.3056 18.6236 15.6005C18.6771 15.8954 18.8177 16.1676 19.0273 16.3818L19.0818 16.4364C19.2509 16.6052 19.385 16.8057 19.4765 17.0265C19.568 17.2472 19.6151 17.4838 19.6151 17.7227C19.6151 17.9617 19.568 18.1983 19.4765 18.419C19.385 18.6397 19.2509 18.8402 19.0818 19.0091C18.913 19.1781 18.7124 19.3122 18.4917 19.4037C18.271 19.4952 18.0344 19.5423 17.7955 19.5423C17.5565 19.5423 17.3199 19.4952 17.0992 19.4037C16.8785 19.3122 16.678 19.1781 16.5091 19.0091L16.4545 18.9545C16.2403 18.745 15.9682 18.6044 15.6733 18.5509C15.3784 18.4974 15.0742 18.5335 14.8 18.6545C14.5311 18.7698 14.3018 18.9611 14.1403 19.205C13.9788 19.4489 13.8921 19.7347 13.8909 20.0273V20.1818C13.8909 20.664 13.6994 21.1265 13.3584 21.4675C13.0174 21.8084 12.5549 22 12.0727 22C11.5905 22 11.1281 21.8084 10.7871 21.4675C10.4461 21.1265 10.2545 20.664 10.2545 20.1818V20.1C10.2475 19.7991 10.1501 19.5073 9.97501 19.2625C9.79991 19.0176 9.55521 18.8312 9.27273 18.7273C8.99853 18.6063 8.69437 18.5702 8.39948 18.6236C8.10459 18.6771 7.83244 18.8177 7.61818 19.0273L7.56364 19.0818C7.39478 19.2509 7.19425 19.385 6.97353 19.4765C6.7528 19.568 6.51621 19.6151 6.27727 19.6151C6.03834 19.6151 5.80174 19.568 5.58102 19.4765C5.36029 19.385 5.15977 19.2509 4.99091 19.0818C4.82186 18.913 4.68775 18.7124 4.59626 18.4917C4.50476 18.271 4.45766 18.0344 4.45766 17.7955C4.45766 17.5565 4.50476 17.3199 4.59626 17.0992C4.68775 16.8785 4.82186 16.678 4.99091 16.5091L5.04545 16.4545C5.25504 16.2403 5.39562 15.9682 5.44909 15.6733C5.50255 15.3784 5.46647 15.0742 5.34545 14.8C5.23017 14.5311 5.03887 14.3018 4.79497 14.1403C4.55107 13.9788 4.26526 13.8921 3.97273 13.8909H3.81818C3.33597 13.8909 2.87351 13.6994 2.53253 13.3584C2.19156 13.0174 2 12.5549 2 12.0727C2 11.5905 2.19156 11.1281 2.53253 10.7871C2.87351 10.4461 3.33597 10.2545 3.81818 10.2545H3.9C4.20093 10.2475 4.49269 10.1501 4.73754 9.97501C4.98239 9.79991 5.16883 9.55521 5.27273 9.27273C5.39374 8.99853 5.42982 8.69437 5.37636 8.39948C5.32289 8.10459 5.18231 7.83244 4.97273 7.61818L4.91818 7.56364C4.74913 7.39478 4.61503 7.19425 4.52353 6.97353C4.43203 6.7528 4.38493 6.51621 4.38493 6.27727C4.38493 6.03834 4.43203 5.80174 4.52353 5.58102C4.61503 5.36029 4.74913 5.15977 4.91818 4.99091C5.08704 4.82186 5.28757 4.68775 5.50829 4.59626C5.72901 4.50476 5.96561 4.45766 6.20455 4.45766C6.44348 4.45766 6.68008 4.50476 6.9008 4.59626C7.12152 4.68775 7.32205 4.82186 7.49091 4.99091L7.54545 5.04545C7.75971 5.25504 8.03186 5.39562 8.32675 5.44909C8.62164 5.50255 8.9258 5.46647 9.2 5.34545H9.27273C9.54161 5.23017 9.77093 5.03887 9.93245 4.79497C10.094 4.55107 10.1807 4.26526 10.1818 3.97273V3.81818C10.1818 3.33597 10.3734 2.87351 10.7144 2.53253C11.0553 2.19156 11.5178 2 12 2C12.4822 2 12.9447 2.19156 13.2856 2.53253C13.6266 2.87351 13.8182 3.33597 13.8182 3.81818V3.9C13.8193 4.19253 13.906 4.47834 14.0676 4.72224C14.2291 4.96614 14.4584 5.15744 14.7273 5.27273C15.0015 5.39374 15.3056 5.42982 15.6005 5.37636C15.8954 5.32289 16.1676 5.18231 16.3818 4.97273L16.4364 4.91818C16.6052 4.74913 16.8057 4.61503 17.0265 4.52353C17.2472 4.43203 17.4838 4.38493 17.7227 4.38493C17.9617 4.38493 18.1983 4.43203 18.419 4.52353C18.6397 4.61503 18.8402 4.74913 19.0091 4.91818C19.1781 5.08704 19.3122 5.28757 19.4037 5.50829C19.4952 5.72901 19.5423 5.96561 19.5423 6.20455C19.5423 6.44348 19.4952 6.68008 19.4037 6.9008C19.3122 7.12152 19.1781 7.32205 19.0091 7.49091L18.9545 7.54545C18.745 7.75971 18.6044 8.03186 18.5509 8.32675C18.4974 8.62164 18.5335 8.9258 18.6545 9.2V9.27273C18.7698 9.54161 18.9611 9.77093 19.205 9.93245C19.4489 10.094 19.7347 10.1807 20.0273 10.1818H20.1818C20.664 10.1818 21.1265 10.3734 21.4675 10.7144C21.8084 11.0553 22 11.5178 22 12C22 12.4822 21.8084 12.9447 21.4675 13.2856C21.1265 13.6266 20.664 13.8182 20.1818 13.8182H20.1C19.8075 13.8193 19.5217 13.906 19.2778 14.0676C19.0339 14.2291 18.8426 14.4584 18.7273 14.7273Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <span>Settings</span>
+                </a>
+                <a href="premium.html" class="nav-item premium">
+                    <span class="nav-icon">⭐</span>
+                    <span>Premium</span>
+                </a>
+            </div>
+        </nav>
+
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Collapse</span>
+        </button>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="ui-page-header">
+            <h1>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" fill="currentColor" opacity="0.24"/>
+                    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.7273 14.7273C18.6063 15.0015 18.5702 15.3056 18.6236 15.6005C18.6771 15.8954 18.8177 16.1676 19.0273 16.3818L19.0818 16.4364C19.2509 16.6052 19.385 16.8057 19.4765 17.0265C19.568 17.2472 19.6151 17.4838 19.6151 17.7227C19.6151 17.9617 19.568 18.1983 19.4765 18.419C19.385 18.6397 19.2509 18.8402 19.0818 19.0091C18.913 19.1781 18.7124 19.3122 18.4917 19.4037C18.271 19.4952 18.0344 19.5423 17.7955 19.5423C17.5565 19.5423 17.3199 19.4952 17.0992 19.4037C16.8785 19.3122 16.678 19.1781 16.5091 19.0091L16.4545 18.9545C16.2403 18.745 15.9682 18.6044 15.6733 18.5509C15.3784 18.4974 15.0742 18.5335 14.8 18.6545C14.5311 18.7698 14.3018 18.9611 14.1403 19.205C13.9788 19.4489 13.8921 19.7347 13.8909 20.0273V20.1818C13.8909 20.664 13.6994 21.1265 13.3584 21.4675C13.0174 21.8084 12.5549 22 12.0727 22C11.5905 22 11.1281 21.8084 10.7871 21.4675C10.4461 21.1265 10.2545 20.664 10.2545 20.1818V20.1C10.2475 19.7991 10.1501 19.5073 9.97501 19.2625C9.79991 19.0176 9.55521 18.8312 9.27273 18.7273C8.99853 18.6063 8.69437 18.5702 8.39948 18.6236C8.10459 18.6771 7.83244 18.8177 7.61818 19.0273L7.56364 19.0818C7.39478 19.2509 7.19425 19.385 6.97353 19.4765C6.7528 19.568 6.51621 19.6151 6.27727 19.6151C6.03834 19.6151 5.80174 19.568 5.58102 19.4765C5.36029 19.385 5.15977 19.2509 4.99091 19.0818C4.82186 18.913 4.68775 18.7124 4.59626 18.4917C4.50476 18.271 4.45766 18.0344 4.45766 17.7955C4.45766 17.5565 4.50476 17.3199 4.59626 17.0992C4.68775 16.8785 4.82186 16.678 4.99091 16.5091L5.04545 16.4545C5.25504 16.2403 5.39562 15.9682 5.44909 15.6733C5.50255 15.3784 5.46647 15.0742 5.34545 14.8C5.23017 14.5311 5.03887 14.3018 4.79497 14.1403C4.55107 13.9788 4.26526 13.8921 3.97273 13.8909H3.81818C3.33597 13.8909 2.87351 13.6994 2.53253 13.3584C2.19156 13.0174 2 12.5549 2 12.0727C2 11.5905 2.19156 11.1281 2.53253 10.7871C2.87351 10.4461 3.33597 10.2545 3.81818 10.2545H3.9C4.20093 10.2475 4.49269 10.1501 4.73754 9.97501C4.98239 9.79991 5.16883 9.55521 5.27273 9.27273C5.39374 8.99853 5.42982 8.69437 5.37636 8.39948C5.32289 8.10459 5.18231 7.83244 4.97273 7.61818L4.91818 7.56364C4.74913 7.39478 4.61503 7.19425 4.52353 6.97353C4.43203 6.7528 4.38493 6.51621 4.38493 6.27727C4.38493 6.03834 4.43203 5.80174 4.52353 5.58102C4.61503 5.36029 4.74913 5.15977 4.91818 4.99091C5.08704 4.82186 5.28757 4.68775 5.50829 4.59626C5.72901 4.50476 5.96561 4.45766 6.20455 4.45766C6.44348 4.45766 6.68008 4.50476 6.9008 4.59626C7.12152 4.68775 7.32205 4.82186 7.49091 4.99091L7.54545 5.04545C7.75971 5.25504 8.03186 5.39562 8.32675 5.44909C8.62164 5.50255 8.9258 5.46647 9.2 5.34545H9.27273C9.54161 5.23017 9.77093 5.03887 9.93245 4.79497C10.094 4.55107 10.1807 4.26526 10.1818 3.97273V3.81818C10.1818 3.33597 10.3734 2.87351 10.7144 2.53253C11.0553 2.19156 11.5178 2 12 2C12.4822 2 12.9447 2.19156 13.2856 2.53253C13.6266 2.87351 13.8182 3.33597 13.8182 3.81818V3.9C13.8193 4.19253 13.906 4.47834 14.0676 4.72224C14.2291 4.96614 14.4584 5.15744 14.7273 5.27273C15.0015 5.39374 15.3056 5.42982 15.6005 5.37636C15.8954 5.32289 16.1676 5.18231 16.3818 4.97273L16.4364 4.91818C16.6052 4.74913 16.8057 4.61503 17.0265 4.52353C17.2472 4.43203 17.4838 4.38493 17.7227 4.38493C17.9617 4.38493 18.1983 4.43203 18.419 4.52353C18.6397 4.61503 18.8402 4.74913 19.0091 4.91818C19.1781 5.08704 19.3122 5.28757 19.4037 5.50829C19.4952 5.72901 19.5423 5.96561 19.5423 6.20455C19.5423 6.44348 19.4952 6.68008 19.4037 6.9008C19.3122 7.12152 19.1781 7.32205 19.0091 7.49091L18.9545 7.54545C18.745 7.75971 18.6044 8.03186 18.5509 8.32675C18.4974 8.62164 18.5335 8.9258 18.6545 9.2V9.27273C18.7698 9.54161 18.9611 9.77093 19.205 9.93245C19.4489 10.094 19.7347 10.1807 20.0273 10.1818H20.1818C20.664 10.1818 21.1265 10.3734 21.4675 10.7144C21.8084 11.0553 22 11.5178 22 12C22 12.4822 21.8084 12.9447 21.4675 13.2856C21.1265 13.6266 20.664 13.8182 20.1818 13.8182H20.1C19.8075 13.8193 19.5217 13.906 19.2778 14.0676C19.0339 14.2291 18.8426 14.4584 18.7273 14.7273Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Settings
+            </h1>
+            <p>Manage your account and preferences.</p>
+        </header>
+
+        <!-- Page Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-tab="account">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M4 20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                Account
+            </button>
+            <button class="filter-tab" data-tab="subscription">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M2 10H22" stroke="currentColor" stroke-width="2.5"/>
+                    </svg>
+                </span>
+                Subscription
+            </button>
+            <button class="filter-tab" data-tab="preferences">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 21V14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 10V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 21V12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 21V16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 12V3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M1 14H7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 8H15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 16H23" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                Notifications
+            </button>
+            <button class="filter-tab" data-tab="learning">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L2 9L12 15L22 9L12 3Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 15L12 21L22 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                Learning
+            </button>
+            <button class="filter-tab" data-tab="danger">
+                <span class="filter-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 21H22L12 2Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 9V13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </span>
+                Danger Zone
+            </button>
+        </div>
+
+        <!-- Account Settings Content -->
+        <div class="settings-content" data-tab-content="account">
+            <!-- Profile Photo -->
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Profile Photo</span>
+                            <div class="profile-photo-preview" onclick="openAvatarModal()" style="cursor: pointer;">
+                                <img id="profile-photo-img" src="../../jiki-strategy/images/profile.png" alt="Profile photo">
+                            </div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="openAvatarModal()">Change</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Name - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="name-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Name</span>
+                            <div class="editable-field-value">Nicole Chalmers</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showNameEdit()">Edit</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="name-edit-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
+                        <div class="ui-form-field-large">
+                            <label for="name-input">Name</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <circle cx="12" cy="8" r="4" stroke="#707985" stroke-width="2"/>
+                                    <path stroke="#707985" d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <circle cx="12" cy="8" r="4" stroke="#3b82f6" stroke-width="2"/>
+                                    <path stroke="#3b82f6" d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <input type="text" id="name-input" value="Nicole Chalmers">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelNameEdit()">Cancel</button>
+                            <button id="name-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveNameEdit()">Update Name</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="name-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Name
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="name-saved-value" class="editable-field-value">Nicole Chalmers</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showNameEdit()">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Username - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="username-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Username</span>
+                            <div class="editable-field-value">nicole_codes</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showUsernameEdit()">Edit</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="username-edit-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
+                        <div class="ui-form-field-large">
+                            <label for="username-input">Username</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <circle cx="12" cy="12" r="4" stroke="#707985" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#707985" stroke-width="2"/>
+                                    <path stroke="#707985" d="M16 12v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V12" stroke-width="2"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <circle cx="12" cy="12" r="4" stroke="#3b82f6" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#3b82f6" stroke-width="2"/>
+                                    <path stroke="#3b82f6" d="M16 12v1.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V12" stroke-width="2"/>
+                                </svg>
+                                <input type="text" id="username-input" value="nicole_codes">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelUsernameEdit()">Cancel</button>
+                            <button id="username-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveUsernameEdit()">Update Username</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="username-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Username
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="username-saved-value" class="editable-field-value">nicole_codes</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showUsernameEdit()">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Address - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="email-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Email</span>
+                            <div class="editable-field-value">learner@example.com</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showEmailEdit()">Edit</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="email-edit-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
+                        <div class="ui-form-field-large">
+                            <label for="email-input">Email</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#707985" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
+                                    <path stroke="#707985" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#3b82f6" d="M7 12c0 1.3261 0.52678 2.5979 1.46447 3.5355C9.40215 16.4732 10.6739 17 12 17c1.3261 0 2.5979 -0.5268 3.5355 -1.4645C16.4732 14.5979 17 13.3261 17 12c0 -1.3261 -0.5268 -2.59785 -1.4645 -3.53553C14.5979 7.52678 13.3261 7 12 7c-1.3261 0 -2.59785 0.52678 -3.53553 1.46447C7.52678 9.40215 7 10.6739 7 12Z" stroke-width="2"></path>
+                                    <path stroke="#3b82f6" d="M19.7782 19.7782C17.7153 21.8411 14.9174 23 12 23c-2.91738 0 -5.71527 -1.1589 -7.77817 -3.2218S1 14.9174 1 12c0 -2.91738 1.15893 -5.71527 3.22183 -7.77817S9.08262 1 12 1c2.9174 0 5.7153 1.15893 7.7782 3.22183S23 9.08262 23 12c0 1.753 -0.4184 3.4629 -1.2 4.9961C19.1313 16.8911 17 14.6944 17 12" stroke-width="2"></path>
+                                </svg>
+                                <input type="email" id="email-input" value="learner@example.com">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelEmailEdit()">Cancel</button>
+                            <button id="email-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="saveEmailEdit()">Update</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="email-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Email
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div id="email-saved-value" class="editable-field-value">learner@example.com</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showEmailEdit()">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Password - Editable Field with 3 states -->
+            <div class="setting-item">
+                <!-- View State (default) -->
+                <div id="password-view-state" class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Password</span>
+                            <div class="editable-field-value">••••••••••••</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showPasswordEdit()">Change</button>
+                    </div>
+                </div>
+
+                <!-- Edit State (hidden by default) -->
+                <div id="password-edit-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-input-row" style="flex-direction: column; align-items: stretch;">
+                        <div class="editable-field-password-fields">
+                            <div class="ui-form-field-large">
+                                <label for="current-password">Current password</label>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <input type="password" id="current-password" placeholder="Enter current password">
+                                </div>
+                            </div>
+                            <div class="ui-form-field-large">
+                                <label for="new-password">New password</label>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <input type="password" id="new-password" placeholder="Enter new password">
+                                </div>
+                            </div>
+                            <div class="ui-form-field-large">
+                                <label for="confirm-password">Confirm new password</label>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#ebefff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#737b87" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                        <path fill="#d7e0ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                        <path stroke="#1b5fd4" d="M12 15v4" stroke-width="2"></path>
+                                    </svg>
+                                    <input type="password" id="confirm-password" placeholder="Confirm new password">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="ui-btn ui-btn-small ui-btn-secondary" onclick="cancelPasswordEdit()">Cancel</button>
+                            <button id="password-update-btn" class="ui-btn ui-btn-small ui-btn-primary" onclick="savePasswordEdit()">Update</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved State (hidden by default) -->
+                <div id="password-saved-state" class="editable-field" style="display: none;">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">
+                                Password
+                                <span class="editable-field-saved-indicator">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Saved
+                                </span>
+                            </span>
+                            <div class="editable-field-value">••••••••••••</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-tertiary" onclick="showPasswordEdit()">Change</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Placeholder content for other tabs -->
+        <div class="settings-content" data-tab-content="subscription" style="display: none;">
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-label-group">
+                        <span class="editable-field-label">Current Plan</span>
+                        <div class="editable-field-value">You are on the <strong>Free</strong> plan. This gives you all the content plus Giki AI to help you out for one exercise per month.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-upsell">
+                <h2 class="premium-upsell-headline">Unlock a <span class="highlight">better</span> way to learn</h2>
+                <p class="premium-upsell-subtitle">You're currently on the Free plan. Upgrade to Premium to unlock:</p>
+
+                <div class="premium-upsell-features">
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Unlimited AI help:</strong> Get personalised guidance from Giki whenever you're stuck
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Unlimited content:</strong> Access all exercises, projects, and learning paths
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Certificates:</strong> Earn shareable certificates when you complete courses
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#9333ea" fill-opacity="0.15"/>
+                            <path d="M8 12L11 15L16 9" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div>
+                            <strong>Ad-free:</strong> Enjoy a distraction-free learning experience
+                        </div>
+                    </div>
+                </div>
+
+                <div class="premium-upsell-card">
+                    <div class="premium-upsell-card-info">
+                        <h3 class="premium-upsell-title">Giki Premium</h3>
+                        <div class="premium-upsell-pricing">
+                            <div class="premium-upsell-price">
+                                <span class="amount">$3.99</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="premium-upsell-note">That's only $0.13 a day</p>
+                        </div>
+                    </div>
+                    <button class="ui-btn ui-btn-small ui-btn-primary ui-btn-purple">Upgrade to Premium</button>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-label-group">
+                        <span class="editable-field-label">Payment History</span>
+                        <div class="editable-field-value">View and download receipts for your past payments.</div>
+                    </div>
+                </div>
+                <table class="payment-history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Method</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jan 15, 2026</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dec 15, 2025</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td>Nov 15, 2025</td>
+                            <td>$9.99</td>
+                            <td>Recurring</td>
+                            <td>Stripe</td>
+                            <td><button class="ui-btn ui-btn-small ui-btn-secondary">Download Receipt</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="settings-content" data-tab-content="preferences" style="display: none;">
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header" >
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Daily Reminders</span>
+                            <div class="editable-field-value">Get a daily reminder to practice coding.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header" >
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Achievement Notifications</span>
+                            <div class="editable-field-value">Receive notifications when you unlock new skills or achievements.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header" >
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Weekly Progress Report</span>
+                            <div class="editable-field-value">Get a weekly email summary of your learning progress.</div>
+                        </div>
+                        <div class="ui-toggle-switch" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header" >
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Product Updates</span>
+                            <div class="editable-field-value">Stay informed about new features and improvements.</div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="settings-content" data-tab-content="learning" style="display: none;">
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header" >
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Study Streaks</span>
+                            <div class="editable-field-value">Enable streaks on my account. <a href="#">Learn more</a></div>
+                        </div>
+                        <div class="ui-toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-content" data-tab-content="danger" style="display: none;">
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Session Management</span>
+                            <div class="editable-field-value">Manage your active sessions across all devices.</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-danger" style="width: 160px; padding: 8px 16px;">Log out</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
+                            <span class="editable-field-label">Delete Account</span>
+                            <div class="editable-field-value">Permanently delete your account and all associated data. This action cannot be undone.</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-danger" style="width: 160px; padding: 8px 16px;" onclick="openDeleteModal()">Delete account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+            <p>Do you really want to delete your account? You will lose all your work. This is irreversible.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-primary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="ui-btn ui-btn-danger" onclick="openSecurityCheckModal()">Delete account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Check Modal -->
+    <div class="modal-overlay" id="securityCheckModal">
+        <div class="modal-content">
+            <h4>Security Check</h4>
+            <p>We've sent you an email to confirm this is really you. Please click the button in that email to delete your account.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-primary" onclick="closeSecurityCheckModal()">I understand</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation notes modal -->
+    <script src="../ui-kit/implementation-notes.js"></script>
+
+    <!-- Variants system -->
+    <script src="../ui-kit/variants.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+
+        // Close all edit states and return to view
+        function closeAllEdits() {
+            // Name
+            document.getElementById('name-input').value = originalNameValue;
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = 'none';
+            document.getElementById('name-view-state').style.display = '';
+
+            // Username
+            document.getElementById('username-input').value = originalUsernameValue;
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-saved-state').style.display = 'none';
+            document.getElementById('username-view-state').style.display = '';
+
+            // Email
+            document.getElementById('email-input').value = originalEmailValue;
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-saved-state').style.display = 'none';
+            document.getElementById('email-view-state').style.display = '';
+
+            // Password
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-saved-state').style.display = 'none';
+            document.getElementById('password-view-state').style.display = '';
+        }
+
+        // Name field edit functionality
+        let originalNameValue = 'Nicole Chalmers';
+
+        function checkNameChanges() {
+            const input = document.getElementById('name-input');
+            const btn = document.getElementById('name-update-btn');
+            btn.disabled = input.value === originalNameValue;
+        }
+
+        function showNameEdit() {
+            closeAllEdits();
+            document.getElementById('name-view-state').style.display = 'none';
+            document.getElementById('name-edit-state').style.display = '';
+            document.getElementById('name-input').focus();
+            checkNameChanges();
+        }
+
+        // Add input listener for name field
+        document.getElementById('name-input').addEventListener('input', checkNameChanges);
+
+        function cancelNameEdit() {
+            // Reset input to original value
+            document.getElementById('name-input').value = originalNameValue;
+            document.getElementById('name-update-btn').disabled = true;
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-view-state').style.display = '';
+        }
+
+        function saveNameEdit() {
+            // Get the new value
+            const newValue = document.getElementById('name-input').value;
+            originalNameValue = newValue;
+
+            // Update the displayed value in view and saved states
+            document.querySelector('#name-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#name-saved-value').textContent = newValue;
+
+            // Show saved state
+            document.getElementById('name-edit-state').style.display = 'none';
+            document.getElementById('name-saved-state').style.display = '';
+
+            // After 2 seconds, transition back to view state
+            setTimeout(() => {
+                document.getElementById('name-saved-state').style.display = 'none';
+                document.getElementById('name-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Username field edit functionality
+        let originalUsernameValue = 'nicole_codes';
+
+        function checkUsernameChanges() {
+            const input = document.getElementById('username-input');
+            const btn = document.getElementById('username-update-btn');
+            btn.disabled = input.value === originalUsernameValue;
+        }
+
+        function showUsernameEdit() {
+            closeAllEdits();
+            document.getElementById('username-view-state').style.display = 'none';
+            document.getElementById('username-edit-state').style.display = '';
+            document.getElementById('username-input').focus();
+            checkUsernameChanges();
+        }
+
+        function cancelUsernameEdit() {
+            document.getElementById('username-input').value = originalUsernameValue;
+            document.getElementById('username-update-btn').disabled = true;
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-view-state').style.display = '';
+        }
+
+        document.getElementById('username-input').addEventListener('input', checkUsernameChanges);
+
+        function saveUsernameEdit() {
+            const newValue = document.getElementById('username-input').value;
+            originalUsernameValue = newValue;
+
+            document.querySelector('#username-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#username-saved-value').textContent = newValue;
+
+            document.getElementById('username-edit-state').style.display = 'none';
+            document.getElementById('username-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('username-saved-state').style.display = 'none';
+                document.getElementById('username-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Email field edit functionality
+        let originalEmailValue = 'learner@example.com';
+
+        function checkEmailChanges() {
+            const input = document.getElementById('email-input');
+            const btn = document.getElementById('email-update-btn');
+            btn.disabled = input.value === originalEmailValue;
+        }
+
+        function showEmailEdit() {
+            closeAllEdits();
+            document.getElementById('email-view-state').style.display = 'none';
+            document.getElementById('email-edit-state').style.display = '';
+            document.getElementById('email-input').focus();
+            checkEmailChanges();
+        }
+
+        function cancelEmailEdit() {
+            document.getElementById('email-input').value = originalEmailValue;
+            document.getElementById('email-update-btn').disabled = true;
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-view-state').style.display = '';
+        }
+
+        document.getElementById('email-input').addEventListener('input', checkEmailChanges);
+
+        function saveEmailEdit() {
+            const newValue = document.getElementById('email-input').value;
+            originalEmailValue = newValue;
+
+            document.querySelector('#email-view-state .editable-field-value').textContent = newValue;
+            document.querySelector('#email-saved-value').textContent = newValue;
+
+            document.getElementById('email-edit-state').style.display = 'none';
+            document.getElementById('email-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('email-saved-state').style.display = 'none';
+                document.getElementById('email-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Password field edit functionality
+        function checkPasswordChanges() {
+            const current = document.getElementById('current-password').value;
+            const newPass = document.getElementById('new-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            const btn = document.getElementById('password-update-btn');
+            // Enable only when all fields have values
+            btn.disabled = !current || !newPass || !confirm;
+        }
+
+        function showPasswordEdit() {
+            closeAllEdits();
+            document.getElementById('password-view-state').style.display = 'none';
+            document.getElementById('password-edit-state').style.display = '';
+            document.getElementById('current-password').focus();
+            checkPasswordChanges();
+        }
+
+        function cancelPasswordEdit() {
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            document.getElementById('password-update-btn').disabled = true;
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-view-state').style.display = '';
+        }
+
+        document.getElementById('current-password').addEventListener('input', checkPasswordChanges);
+        document.getElementById('new-password').addEventListener('input', checkPasswordChanges);
+        document.getElementById('confirm-password').addEventListener('input', checkPasswordChanges);
+
+        function savePasswordEdit() {
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+
+            document.getElementById('password-edit-state').style.display = 'none';
+            document.getElementById('password-saved-state').style.display = '';
+
+            setTimeout(() => {
+                document.getElementById('password-saved-state').style.display = 'none';
+                document.getElementById('password-view-state').style.display = '';
+            }, 2000);
+        }
+
+        // Tab switching for filter-tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTabs = document.querySelectorAll('.filter-tab');
+
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+
+                    // Remove active class from all tabs
+                    filterTabs.forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+
+                    // Show/hide corresponding content sections
+                    const allContent = document.querySelectorAll('[data-tab-content]');
+                    allContent.forEach(content => {
+                        if (content.getAttribute('data-tab-content') === tabId) {
+                            content.style.display = '';
+                        } else {
+                            content.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+
+        // Delete account modal functions
+        function openDeleteModal() {
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        function openSecurityCheckModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            document.getElementById('securityCheckModal').classList.add('active');
+        }
+
+        function closeSecurityCheckModal() {
+            document.getElementById('securityCheckModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
+        });
+
+        document.getElementById('securityCheckModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSecurityCheckModal();
+            }
+        });
+    </script>
+
+    <!-- Avatar Change Modal - Step 1: Upload -->
+    <div class="avatar-modal-backdrop" id="avatarModal">
+        <div class="avatar-modal">
+            <h4>Change Profile Photo</h4>
+            <p>Upload a new profile image.<br>This will only be visible to you.</p>
+            <div class="avatar-upload-area" onclick="document.getElementById('avatarFileInput').click()">
+                <svg class="avatar-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <div class="avatar-upload-text">Click to upload a new photo</div>
+                <div class="avatar-upload-hint">JPG, PNG or GIF. Max 2MB.</div>
+                <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+            </div>
+            <div class="avatar-modal-buttons">
+                <button class="ui-btn ui-btn-default ui-btn-tertiary" onclick="closeAvatarModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Change Modal - Step 2: Zoom & Save -->
+    <div class="avatar-modal-backdrop" id="avatarModalStep2">
+        <div class="avatar-modal">
+            <h4>Adjust Photo</h4>
+            <p>Zoom and position your photo.</p>
+            <div class="avatar-current">
+                <div class="avatar-preview-wrapper avatar-preview-wrapper-large">
+                    <img id="avatarStep2Img" src="../../jiki-strategy/images/profile.png" alt="Preview">
+                </div>
+                <div class="avatar-zoom-controls active" id="avatarZoomControls">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    <input type="range" class="avatar-zoom-slider" id="avatarZoomSlider" min="1" max="3" step="0.1" value="1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                </div>
+            </div>
+            <div class="avatar-modal-buttons">
+                <button class="ui-btn ui-btn-default ui-btn-tertiary" onclick="avatarBackToStep1()">Back</button>
+                <button class="ui-btn ui-btn-default ui-btn-primary" onclick="saveAvatar()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var uploadedImageSrc = null;
+
+        function openAvatarModal() {
+            uploadedImageSrc = null;
+            document.getElementById('avatarFileInput').value = '';
+            document.getElementById('avatarModal').classList.add('active');
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').classList.remove('active');
+            document.getElementById('avatarModalStep2').classList.remove('active');
+        }
+
+        document.getElementById('avatarModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAvatarModal();
+        });
+
+        document.getElementById('avatarModalStep2').addEventListener('click', function(e) {
+            if (e.target === this) closeAvatarModal();
+        });
+
+        function handleAvatarUpload(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                uploadedImageSrc = ev.target.result;
+                document.getElementById('avatarStep2Img').src = uploadedImageSrc;
+                document.getElementById('avatarZoomSlider').value = 1;
+                document.getElementById('avatarStep2Img').style.transform = 'scale(1)';
+                document.getElementById('avatarModal').classList.remove('active');
+                document.getElementById('avatarModalStep2').classList.add('active');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function avatarBackToStep1() {
+            document.getElementById('avatarModalStep2').classList.remove('active');
+            document.getElementById('avatarModal').classList.add('active');
+        }
+
+        document.getElementById('avatarFileInput').addEventListener('change', handleAvatarUpload);
+
+        document.getElementById('avatarZoomSlider').addEventListener('input', function() {
+            document.getElementById('avatarStep2Img').style.transform = 'scale(' + this.value + ')';
+        });
+
+        function saveAvatar() {
+            var newSrc = document.getElementById('avatarStep2Img').src;
+            var zoomLevel = document.getElementById('avatarZoomSlider').value;
+            var profileImg = document.getElementById('profile-photo-img');
+            profileImg.src = newSrc;
+            profileImg.style.transform = 'scale(' + zoomLevel + ')';
+            profileImg.style.transformOrigin = 'center center';
+            document.getElementById('avatarModalStep2').classList.remove('active');
+            uploadedImageSrc = null;
+        }
+    </script>
+</body>
+</html>
