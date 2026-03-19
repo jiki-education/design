@@ -885,7 +885,10 @@
             background: white;
             border-radius: 24px;
             padding: 32px;
-            max-width: 410px;
+            max-width: 480px;
+            font-family: 'Source Sans 3', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             margin: 20px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             transform: scale(0.95);
@@ -927,6 +930,129 @@
             border-radius: 12px;
             width: auto;
         }
+        /* 2FA Modal Content */
+        .twofa-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .twofa-scan-title {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            color: #64748b !important;
+            text-align: center;
+            text-wrap-style: balance;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .twofa-tooltip-trigger {
+            position: relative;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            cursor: help;
+            transition: color 0.2s ease;
+        }
+
+        .twofa-tooltip-trigger:hover { color: var(--color-gray-900); }
+
+        .twofa-tooltip-trigger::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-gray-900);
+            color: white;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Source Sans 3', sans-serif;
+            padding: 8px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .twofa-tooltip-trigger::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--color-gray-900);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .twofa-tooltip-trigger:hover::after,
+        .twofa-tooltip-trigger:hover::before { opacity: 1; }
+
+        .twofa-qr-wrapper {
+            background: var(--color-gray-100);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--color-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -20px;
+        }
+
+        .twofa-qr-code {
+            width: 240px;
+            height: 240px;
+        }
+
+        .twofa-code-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .twofa-code-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-blue-500) !important;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .twofa-digit-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .twofa-digit-input {
+            width: 52px;
+            height: 60px;
+            border: 2px solid var(--color-gray-200);
+            border-radius: 12px;
+            background: var(--color-gray-100);
+            font-size: 22px;
+            font-weight: 600;
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--color-gray-900);
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .twofa-digit-input:focus {
+            border-color: var(--color-blue-500);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+        }
+
         /* Avatar Change Modal */
         .avatar-modal-backdrop {
             position: fixed;
@@ -1640,11 +1766,36 @@
     <!-- 2FA Modal -->
     <div class="modal-overlay" id="2faModal">
         <div class="modal-content">
-            <h4 id="2fa-modal-title">Enable Two-Factor Authentication?</h4>
-            <p id="2fa-modal-body">Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
-            <div class="modal-buttons">
-                <button class="ui-btn ui-btn-secondary" onclick="close2FAModal()">Cancel</button>
-                <button class="ui-btn ui-btn-primary" id="2fa-confirm-btn" onclick="confirm2FA()">Enable</button>
+            <div class="twofa-form" id="2fa-setup-content">
+                <h4 style="font-size: 26px; font-weight: 500; color: var(--color-gray-900); text-align: center; line-height: 1.2; margin: 0; margin-bottom: -5px;">Two Factor Authentication</h4>
+                <p class="twofa-scan-title">Scan the QR code with your authenticator app to secure your account then enter the code below.</p>
+                <div class="twofa-qr-wrapper">
+                    <img src="qr-code.jpg" alt="QR Code" class="twofa-qr-code">
+                </div>
+                <div class="twofa-code-section">
+                    <p class="twofa-code-label">Enter the 6-digit code from your app</p>
+                    <p style="font-size: 17px; color: var(--color-gray-400); text-align: center; margin: 0; margin-top: -30px;">Use Google Authenticator, 1Password, Authy, or a similar app.</p>
+                    <div class="twofa-digit-inputs">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="twofa-digit-input" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="modal-buttons" style="width: 100%; margin-top: 15px;">
+                    <button class="ui-btn ui-btn-secondary" onclick="close2FAModal()">Cancel</button>
+                    <button class="ui-btn ui-btn-primary" onclick="confirm2FA()">Confirm</button>
+                </div>
+            </div>
+            <div id="2fa-disable-content" style="display: none;">
+                <h4 id="2fa-modal-title">Disable Two-Factor Authentication?</h4>
+                <p id="2fa-modal-body">This will remove the extra layer of security from your account.</p>
+                <div class="modal-buttons">
+                    <button class="ui-btn ui-btn-secondary" onclick="close2FAModal()">Cancel</button>
+                    <button class="ui-btn ui-btn-danger" id="2fa-confirm-btn" onclick="confirm2FA()">Disable</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1911,19 +2062,12 @@
 
         function open2FAModal(action) {
             twoFAAction = action;
-            const title = document.getElementById('2fa-modal-title');
-            const body = document.getElementById('2fa-modal-body');
-            const btn = document.getElementById('2fa-confirm-btn');
             if (action === 'enable') {
-                title.textContent = 'Enable Two-Factor Authentication?';
-                body.textContent = 'Lorem ipsum dolor sit amet consectetur adipiscing elit.';
-                btn.textContent = 'Enable';
-                btn.className = 'ui-btn ui-btn-primary';
+                document.getElementById('2fa-setup-content').style.display = '';
+                document.getElementById('2fa-disable-content').style.display = 'none';
             } else {
-                title.textContent = 'Disable Two-Factor Authentication?';
-                body.textContent = 'Lorem ipsum dolor sit amet consectetur adipiscing elit.';
-                btn.textContent = 'Disable';
-                btn.className = 'ui-btn ui-btn-danger';
+                document.getElementById('2fa-setup-content').style.display = 'none';
+                document.getElementById('2fa-disable-content').style.display = '';
             }
             document.getElementById('2faModal').classList.add('active');
         }
@@ -1934,7 +2078,9 @@
 
         function confirm2FA() {
             if (twoFAAction === 'enable') {
-                window.location.href = 'giki-two-factor-auth.html';
+                document.getElementById('2fa-enabled-state').style.display = '';
+                document.getElementById('2fa-disabled-state').style.display = 'none';
+                close2FAModal();
             } else {
                 document.getElementById('2fa-enabled-state').style.display = 'none';
                 document.getElementById('2fa-disabled-state').style.display = '';
