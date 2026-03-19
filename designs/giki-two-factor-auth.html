@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Factor Auth - Giki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <style>
+        :root {
+            --color-blue-50: #eff6ff;
+            --color-blue-100: #dbeafe;
+            --color-blue-200: #bfdbfe;
+            --color-blue-300: #93c5fd;
+            --color-blue-400: #60a5fa;
+            --color-blue-500: #1d4ed8;
+            --color-blue-600: #1d4ed8;
+            --color-blue-700: #1d40b0;
+            --color-green-50: #f0fdf4;
+            --color-green-100: #dcfce7;
+            --color-green-500: #22c55e;
+            --color-green-600: #16a34a;
+            --color-red-50: #fef2f2;
+            --color-red-100: #fee2e2;
+            --color-red-300: #fca5a5;
+            --color-red-500: #ef4444;
+            --color-red-600: #dc2626;
+            --color-amber-50: #fffbeb;
+            --color-amber-400: #fbbf24;
+            --color-amber-500: #f59e0b;
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f1f5f9;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-600: #475569;
+            --color-gray-700: #334155;
+            --color-gray-800: #1e293b;
+            --color-gray-900: #0f172a;
+            --color-purple-500: #a855f7;
+            --color-purple-600: #9333ea;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, .ui-body, .ui-body * {
+            font-family: 'Source Sans 3', sans-serif;
+        }
+
+        /* Right side - Gradient background */
+        .right-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: white;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        }
+
+        /* Left side */
+        .left-side {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 60px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .scan-title {
+            font-size: 19px;
+            font-weight: 500;
+            color: #64748b;
+            text-align: center;
+            text-wrap-style: balance;
+            line-height: 1.4;
+        }
+
+        .tooltip-trigger {
+            position: relative;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            cursor: help;
+        }
+
+        .tooltip-trigger::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-gray-900);
+            color: white;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 8px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .tooltip-trigger::before {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--color-gray-900);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .tooltip-trigger:hover::after,
+        .tooltip-trigger:hover::before {
+            opacity: 1;
+        }
+
+        .qr-wrapper {
+            background: var(--color-gray-100);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--color-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* QR code SVG placeholder */
+        .qr-code {
+            width: 240px;
+            height: 240px;
+        }
+
+        .helper-text {
+            font-size: 17px;
+            color: var(--color-gray-600);
+            text-align: center;
+            text-wrap-style: balance;
+            line-height: 1.5;
+        }
+
+        .code-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .code-label {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--color-blue-500);
+            text-align: center;
+        }
+
+        .digit-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .digit-input {
+            width: 56px;
+            height: 64px;
+            border: 2px solid var(--color-gray-200);
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--color-gray-900);
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .digit-input:focus {
+            border-color: var(--color-blue-500);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+        }
+
+        .digit-input.filled {
+            border-color: var(--color-gray-300);
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 19px;
+            font-weight: 600;
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--color-blue-500);
+            background: white;
+            border: 2px solid var(--color-blue-500);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .cancel-btn:hover {
+            background: var(--color-blue-50);
+        }
+
+        /* Match signup button overrides */
+        .ui-btn-primary { border-color: transparent; }
+        .ui-btn-primary:hover { border-color: transparent; }
+        .ui-btn-large { font-size: 19px; }
+        .ui-form-field-large > label { font-size: 17px; }
+        .ui-form-field-large input { font-size: 18px; }
+
+        @media (max-width: 968px) {
+            .right-side {
+                min-height: 300px;
+                padding: 40px 30px;
+            }
+
+            .left-side {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <div style="display: flex;">
+        <!-- Left Side - 2FA Form -->
+        <div class="left-side">
+            <div class="form-container">
+
+                <h2 style="font-size: 36px; font-weight: 500; color: var(--color-gray-900); text-align: center; line-height: 1.2;">Two Factor Authentication</h2>
+                <p class="scan-title">Scan the QR code with <span class="tooltip-trigger" data-tooltip="Google Authenticator, 1Password, Authy, or a similar app." style="display: inline-flex; align-items: center; gap: 3px; vertical-align: middle;">your authenticator app</span> to secure your account then enter the code below.</p>
+
+                <!-- QR Code -->
+                <div class="qr-wrapper">
+                    <img src="qr-code.jpg" alt="QR Code" class="qr-code">
+                </div>
+
+
+                <div class="code-section">
+                    <p class="code-label">Enter the 6-digit code from your app</p>
+                    <div class="digit-inputs">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                        <input type="text" maxlength="1" class="digit-input" inputmode="numeric">
+                    </div>
+                </div>
+
+                <button class="cancel-btn" onclick="window.location.href='giki-login.html'">Cancel and sign in again</button>
+
+            </div>
+        </div>
+
+        <!-- Right Side - Visual (copied from giki-login) -->
+        <div class="right-side">
+            <img src="giki-actions-text.png" alt="Giki Actions" style="width: 36%; position: relative; z-index: 1; filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));">
+            <svg style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: calc(21.17% + 35.28px); opacity: 0.2;" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <g fill-rule="evenodd" fill="none">
+                    <g transform="matrix(1.0885884,0,0,1.0949544,-0.05002723,-0.06569726)">
+                        <path transform="translate(-0.05)" d="m 35.46,15.462 c 3.301,3.205 5.356,7.67 5.356,12.616 0,0.756 -0.048,1.5 -0.145,2.233 3.301,-3.205 5.356,-7.67 5.356,-12.617 0,-9.747 -7.955,-17.634 -17.76,-17.634 -1.814,0 -3.555,0.276 -5.211,0.768 6.577,1.993 11.522,7.683 12.404,14.634" fill-rule="nonzero" fill="#baea82"/>
+                        <path transform="translate(-0.05)" d="M 5.44,30.31 C 5.344,29.579 5.295,28.834 5.295,28.078 5.295,23.132 7.351,18.667 10.651,15.462 11.534,8.512 16.48,2.82 23.068,0.828 21.424,0.324 19.671,0.06 17.858,0.06 8.04,0.06 0.096,7.959 0.096,17.694 0.085,22.64 2.14,27.106 5.44,30.311" fill-rule="nonzero" fill="#69dbe1"/>
+                        <path transform="translate(-0.05)" d="m 10.64,15.462 c 3.203,-3.11 7.58,-5.018 12.416,-5.018 4.836,0 9.213,1.92 12.404,5.018 C 34.578,8.512 29.633,2.82 23.056,0.828 16.479,2.821 11.522,8.511 10.639,15.462" fill-rule="nonzero" fill="#6abc82"/>
+                        <path transform="translate(-0.05)" d="m 23.056,34.56 c -1.644,0.505 -3.397,0.769 -5.21,0.769 -4.837,0 -9.214,-1.921 -12.418,-5.018 1.1,8.691 8.572,15.413 17.616,15.413 9.043,0 16.515,-6.722 17.615,-15.413 -3.204,3.109 -7.58,5.018 -12.404,5.018 -1.802,0 -3.555,-0.276 -5.199,-0.769" fill-rule="nonzero" fill="#c74272"/>
+                        <path transform="translate(-0.05)" d="m 35.46,15.462 c 0.097,0.732 0.146,1.476 0.146,2.232 0,7.947 -5.284,14.658 -12.562,16.866 1.644,0.505 3.397,0.769 5.21,0.769 4.837,0 9.213,-1.921 12.405,-5.018 0.097,-0.732 0.145,-1.477 0.145,-2.233 0.012,-4.946 -2.03,-9.411 -5.344,-12.616" fill-rule="nonzero" fill="#fa8b76"/>
+                        <path transform="translate(-0.05)" d="M 23.056,34.56 C 15.79,32.352 10.494,25.641 10.494,17.694 c 0,-0.756 0.049,-1.5 0.145,-2.232 -3.3,3.205 -5.356,7.67 -5.356,12.616 0,0.756 0.049,1.5 0.145,2.233 3.204,3.109 7.581,5.018 12.417,5.018 1.814,0 3.567,-0.276 5.211,-0.769" fill-rule="nonzero" fill="#f89ed2"/>
+                        <path transform="translate(-0.05)" d="m 23.056,34.56 c 7.266,-2.208 12.562,-8.919 12.562,-16.866 0,-0.756 -0.049,-1.5 -0.145,-2.232 -3.204,-3.11 -7.581,-5.018 -12.417,-5.018 -4.836,0 -9.213,1.92 -12.417,5.018 -0.096,0.732 -0.145,1.476 -0.145,2.232 0,7.935 5.296,14.658 12.562,16.866" fill="#5f2b68"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
