@@ -204,15 +204,6 @@
         }
     </style>
 
-    <!-- Implementation Notes -->
-    <script>
-        const IMPLEMENTATION_NOTES = `
-### Layout Behavior
-
-- The right-hand side (gradient background) should stay locked in place while the left-hand side (form) scrolls. This is achieved on this page via a sticky RHS using \`position: sticky; top: 0; height: 100vh;\`. The LHS has flexible padding and no fixed height, allowing it to scroll naturally if content grows.
-`;
-    </script>
-
     <!-- Page Variants Configuration -->
     <script>
         // Reset function called before each variant
@@ -361,7 +352,5 @@
     <!-- Shared Variants Menu Script -->
     <script src="../ui-kit/variants.js"></script>
 
-    <!-- Implementation Notes Script -->
-    <script src="../ui-kit/implementation-notes.js"></script>
 </body>
 </html>
