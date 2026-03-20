@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rate Limit Error - Jiki</title>
+    <title>Connection Error - Jiki</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -55,7 +55,6 @@
             max-width: 520px;
         }
 
-
         .robot-container {
             position: relative;
             width: 200px;
@@ -76,11 +75,11 @@
         }
 
         .robot-eye {
-            fill: oklch(54.6% 0.245 262.881);
+            fill: #3b82f6;
         }
 
-        .robot-eye.tired {
-            fill: #94a3b8;
+        .robot-eye.off {
+            fill: #cbd5e1;
         }
 
         .robot-antenna {
@@ -89,78 +88,33 @@
             stroke-linecap: round;
         }
 
-        /* Tired breathing animation */
-        .robot-chest {
-            animation: breathe 3s ease-in-out infinite;
-            transform-origin: center;
+        .spark {
+            fill: oklch(54.6% 0.245 262.881);
+            animation: spark 0.8s ease-in-out infinite;
         }
 
-        @keyframes breathe {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(1.02); }
+        .spark:nth-child(2) {
+            animation-delay: 0.2s;
         }
 
-        /* Drooping head animation */
-        .robot-head-group {
-            animation: droop 4s ease-in-out infinite;
-            transform-origin: center bottom;
+        .spark:nth-child(3) {
+            animation-delay: 0.4s;
         }
 
-        @keyframes droop {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(3deg); }
+        @keyframes spark {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Blinking tired eyes */
-        .eye-lid {
-            fill: #cbd5e1;
-            animation: blink 4s ease-in-out infinite;
-            transform-origin: center;
+        .cable {
+            stroke: #64748b;
+            stroke-width: 4;
+            stroke-linecap: round;
+            fill: none;
         }
 
-        @keyframes blink {
-            0%, 45%, 55%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.1); }
-        }
-
-        /* Z's floating animation */
-        .zzz {
-            font-family: 'Source Sans 3', sans-serif;
-            font-weight: 700;
-            fill: var(--color-gray-400);
-            opacity: 0;
-        }
-
-        .zzz-1 {
-            animation: float-z 3s ease-in-out infinite;
-        }
-
-        .zzz-2 {
-            animation: float-z 3s ease-in-out infinite 0.5s;
-        }
-
-        .zzz-3 {
-            animation: float-z 3s ease-in-out infinite 1s;
-        }
-
-        @keyframes float-z {
-            0% { opacity: 0; transform: translate(0, 0) scale(0.8); }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.7; }
-            100% { opacity: 0; transform: translate(15px, -25px) scale(1.2); }
-        }
-
-        /* Sweat drop */
-        .sweat {
-            fill: #93c5fd;
-            animation: sweat-drop 2.5s ease-in-out infinite;
-        }
-
-        @keyframes sweat-drop {
-            0%, 100% { opacity: 0; transform: translateY(0); }
-            20% { opacity: 1; }
-            80% { opacity: 1; transform: translateY(8px); }
-            90% { opacity: 0; transform: translateY(12px); }
+        .cable-end {
+            fill: #475569;
         }
 
         .title {
@@ -189,35 +143,17 @@
             justify-content: center;
         }
 
-        .timer-ring {
-            width: 48px;
-            height: 48px;
-            position: relative;
-            margin-left: -48px;
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--color-gray-200);
+            border-top-color: var(--color-blue-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .timer-ring svg {
-            transform: rotate(-90deg);
-        }
-
-        .timer-ring .bg {
-            stroke: var(--color-gray-200);
-        }
-
-        .timer-ring .progress {
-            stroke: var(--color-blue-500);
-            stroke-linecap: round;
-            transition: stroke-dashoffset 1s linear;
-        }
-
-        .timer-number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--color-gray-700);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .status-text {
@@ -227,10 +163,23 @@
             text-align: center;
         }
 
-        .status-subtext {
-            font-size: 16px;
-            color: var(--color-gray-500);
-            margin-top: 4px;
+        .dots {
+            display: inline-block;
+            width: 20px;
+            text-align: left;
+        }
+
+        .dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: ''; }
         }
 
         .help-text {
@@ -246,6 +195,16 @@
 
         .help-text strong {
             color: var(--color-gray-700);
+        }
+
+        .help-text a {
+            color: oklch(55.5% 0.163 48.998);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -280,106 +239,65 @@
 
         <div class="robot-container">
             <svg class="robot" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g class="robot-head-group">
-                    <!-- Antenna -->
-                    <line class="robot-antenna" x1="100" y1="45" x2="100" y2="25"/>
-                    <circle cx="100" cy="20" r="6" fill="#94a3b8"/>
+                <!-- Antenna -->
+                <line class="robot-antenna" x1="100" y1="45" x2="100" y2="25"/>
+                <circle cx="100" cy="20" r="6" fill="#94a3b8"/>
 
-                    <!-- Robot head -->
-                    <rect class="robot-body" x="55" y="45" width="90" height="70" rx="12"/>
+                <!-- Sparks around antenna -->
+                <circle class="spark" cx="85" cy="15" r="3"/>
+                <circle class="spark" cx="115" cy="18" r="2.5"/>
+                <circle class="spark" cx="108" cy="8" r="2"/>
 
-                    <!-- Tired eyes with half-closed lids -->
-                    <circle class="robot-eye tired" cx="80" cy="75" r="10"/>
-                    <circle class="robot-eye tired" cx="120" cy="75" r="10"/>
+                <!-- Robot head -->
+                <rect class="robot-body" x="55" y="45" width="90" height="70" rx="12"/>
 
-                    <!-- Droopy eyelids -->
-                    <ellipse class="eye-lid" cx="80" cy="70" rx="12" ry="8"/>
-                    <ellipse class="eye-lid" cx="120" cy="70" rx="12" ry="8"/>
+                <!-- Eyes -->
+                <circle class="robot-eye off" cx="80" cy="75" r="10"/>
+                <circle class="robot-eye" cx="120" cy="75" r="10">
+                    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                </circle>
 
-                    <!-- Tired mouth - slight frown -->
-                    <path d="M85 95 Q100 90 115 95" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" fill="none"/>
-
-                    <!-- Sweat drop -->
-                    <path class="sweat" d="M140 55 Q145 60 140 68 Q135 60 140 55" />
-
-                    <!-- Z's floating up -->
-                    <text class="zzz zzz-1" x="145" y="45" font-size="14">z</text>
-                    <text class="zzz zzz-2" x="155" y="35" font-size="12">z</text>
-                    <text class="zzz zzz-3" x="163" y="25" font-size="10">z</text>
-                </g>
+                <!-- Mouth - grimacing expression -->
+                <rect x="85" y="93" width="30" height="9" rx="2" fill="white" stroke="#94a3b8" stroke-width="2"/>
+                <line x1="92" y1="93" x2="92" y2="102" stroke="#94a3b8" stroke-width="1.5"/>
+                <line x1="100" y1="93" x2="100" y2="102" stroke="#94a3b8" stroke-width="1.5"/>
+                <line x1="108" y1="93" x2="108" y2="102" stroke="#94a3b8" stroke-width="1.5"/>
 
                 <!-- Robot body -->
-                <g class="robot-chest">
-                    <rect class="robot-body" x="60" y="120" width="80" height="50" rx="8"/>
+                <rect class="robot-body" x="60" y="120" width="80" height="50" rx="8"/>
 
-                    <!-- Chest indicator light - pulsing amber for warning -->
-                    <circle cx="100" cy="140" r="6" fill="#c084fc">
-                        <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
-                    </circle>
-                </g>
+                <!-- Chest indicator light -->
+                <circle cx="100" cy="140" r="6" fill="#c084fc">
+                    <animate attributeName="opacity" values="1;0.4;1" dur="1s" repeatCount="indefinite"/>
+                </circle>
 
-                <!-- Arms hanging down tiredly -->
-                <rect class="robot-body" x="35" y="128" width="20" height="35" rx="6" transform="rotate(5 45 128)"/>
-                <rect class="robot-body" x="145" y="128" width="20" height="35" rx="6" transform="rotate(-5 155 128)"/>
+                <!-- Arms -->
+                <rect class="robot-body" x="35" y="125" width="20" height="35" rx="6"/>
+                <rect class="robot-body" x="145" y="125" width="20" height="35" rx="6"/>
+
+                <!-- Disconnected cable -->
+                <path class="cable" d="M165 145 Q185 145 190 160 Q195 180 175 185"/>
+                <rect class="cable-end" x="170" y="182" width="12" height="8" rx="2"/>
+                <circle cx="173" cy="186" r="2" fill="#94a3b8"/>
+                <circle cx="179" cy="186" r="2" fill="#94a3b8"/>
             </svg>
         </div>
 
-        <h1 class="title">You've moved too fast</h1>
+        <h1 class="title">Whoops! Lost connection</h1>
         <p class="subtitle">
-            You've sent too many requests to our servers and so we're putting you on pause for a few seconds.<br>Please wait and you'll be automatically reconnected.
+            Jiki got a little tangled up and dropped the connection.
+            Don't worry though - we're working on getting things plugged back in!
         </p>
 
         <div class="status-card">
-            <div class="timer-ring">
-                <svg width="48" height="48" viewBox="0 0 48 48">
-                    <circle class="bg" cx="24" cy="24" r="20" fill="none" stroke-width="4"/>
-                    <circle class="progress" id="progress-ring" cx="24" cy="24" r="20" fill="none" stroke-width="4"
-                        stroke-dasharray="125.6" stroke-dashoffset="0"/>
-                </svg>
-                <span class="timer-number" id="timer">15</span>
-            </div>
-            <div>
-                <div class="status-text">Reconnecting in <span id="timer-text">15</span> seconds</div>
-                <div class="status-subtext">This page will automatically refresh</div>
-            </div>
+            <div class="spinner"></div>
+            <span class="status-text">Reconnecting<span class="dots"></span></span>
         </div>
 
         <p class="help-text">
-            ⚠️ Opening new tabs or making additional requests will extend your wait time.
+            Just sit tight - this usually fixes itself in a few moments.<br>
+            If the problem persists, <a href="#">check our status page</a>.
         </p>
     </div>
-
-    <script>
-        // Timer countdown functionality
-        const totalTime = 15;
-        let timeLeft = totalTime;
-        const circumference = 125.6; // 2 * PI * radius (20)
-
-        const timerEl = document.getElementById('timer');
-        const timerTextEl = document.getElementById('timer-text');
-        const progressRing = document.getElementById('progress-ring');
-
-        function updateTimer() {
-            timeLeft--;
-
-            if (timeLeft >= 0) {
-                timerEl.textContent = timeLeft;
-                timerTextEl.textContent = timeLeft;
-
-                // Update progress ring
-                const offset = circumference * (1 - timeLeft / totalTime);
-                progressRing.style.strokeDashoffset = offset;
-            }
-
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                // Simulate reconnection
-                document.querySelector('.status-text').textContent = 'Reconnecting...';
-                document.querySelector('.status-subtext').textContent = 'Almost there!';
-            }
-        }
-
-        const timerInterval = setInterval(updateTimer, 1000);
-    </script>
 </body>
 </html>
