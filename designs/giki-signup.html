@@ -58,7 +58,6 @@
             text-align: center;
             z-index: 1;
             line-height: 1.3;
-            text-wrap-style: balance;
             margin-bottom: 20px;
         }
 
@@ -69,7 +68,6 @@
             max-width: 500px;
             line-height: 1.6;
             z-index: 1;
-            text-wrap-style: balance;
             margin-bottom: 52px;
         }
 
@@ -97,14 +95,14 @@
             font-size: 50px;
             font-weight: 500;
             color: var(--color-gray-900);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             margin-top: 5px;
+            line-height: 1.3;
         }
 
         .form-subtitle {
             font-size: 21px;
             color: var(--color-gray-500);
-            text-wrap-style: balance;
         }
 
         .google-btn {
@@ -152,7 +150,6 @@
         .footer-links p {
             font-size: 17px;
             color: var(--color-gray-600);
-            text-wrap-style: balance;
         }
 
         .creators-badge {
@@ -207,6 +204,7 @@
         // Reset function called before each variant
         const PAGE_VARIANTS_RESET = () => {
             const formHeader = document.getElementById('form-header');
+            const joinOrgHeader = document.getElementById('join-org-header');
             const passwordField = document.getElementById('password-field');
             const passwordErrorMessage = document.getElementById('password-error-message');
             const submitBtn = document.getElementById('submit-btn');
@@ -214,8 +212,10 @@
             const confirmationMessage = document.getElementById('confirmation-message');
             const genericError = document.getElementById('generic-error');
             const invalidConfirmation = document.getElementById('invalid-confirmation');
+            const emailInput = document.getElementById('signup-email');
 
             formHeader.style.display = 'block';
+            joinOrgHeader.style.display = 'none';
             passwordField.classList.remove('ui-form-field-error');
             passwordErrorMessage.style.display = 'none';
             submitBtn.classList.remove('ui-btn-loading');
@@ -224,6 +224,12 @@
             confirmationMessage.style.display = 'none';
             genericError.style.display = 'none';
             invalidConfirmation.style.display = 'none';
+            emailInput.value = '';
+            emailInput.readOnly = false;
+            document.getElementById('email-invite-hint').style.display = 'none';
+            document.getElementById('create-org-form').style.display = 'none';
+            document.getElementById('email-field').style.display = '';
+            document.getElementById('password-field').style.display = '';
         };
 
         const PAGE_VARIANTS = [
@@ -285,6 +291,35 @@
                     genericError.style.display = 'none';
                     invalidConfirmation.style.display = 'block';
                 }
+            },
+            {
+                id: 'create-organisation',
+                label: 'Create Organisation',
+                apply: () => {
+                    document.getElementById('form-header').style.display = 'none';
+                    document.getElementById('signup-form').style.display = 'none';
+                    document.getElementById('create-org-form').style.display = 'block';
+                }
+            },
+            {
+                id: 'join-organisation',
+                label: 'Join Organisation',
+                apply: () => {
+                    const formHeader = document.getElementById('form-header');
+                    const joinOrgHeader = document.getElementById('join-org-header');
+                    const submitBtn = document.getElementById('submit-btn');
+                    const emailInput = document.getElementById('signup-email');
+                    const emailHint = document.getElementById('email-invite-hint');
+
+                    formHeader.style.display = 'none';
+                    joinOrgHeader.style.display = 'block';
+                    submitBtn.textContent = 'Create account and join';
+                    emailInput.value = 'user@acmecorp.com';
+                    emailInput.readOnly = true;
+                    emailHint.style.display = 'block';
+                    document.getElementById('email-field').style.display = 'none';
+                    document.getElementById('password-field').style.display = 'none';
+                }
             }
         ];
     </script>
@@ -299,6 +334,55 @@
                     <p class="form-subtitle">Already got an account? <a href="login.html" class="ui-link">Log in</a>.</p>
                 </div>
 
+                <!-- Join Organisation header — shown when arriving via invite link -->
+                <div id="join-org-header" style="display: none; margin-bottom: 40px;">
+                    <h1 class="form-title">You've been invited to Giki</h1>
+                    <p class="form-subtitle" style="margin-bottom: 28px;">Confirm and accept your invite below.</p>
+                    <p style="font-size: 17px; font-weight: 600; color: var(--color-gray-700); margin-bottom: 8px;">Your company</p>
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--color-blue-50); border: 1.5px solid var(--color-blue-200); border-radius: 14px;">
+                        <div style="width: 52px; height: 52px; background: var(--color-blue-600); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <span style="font-size: 22px; font-weight: 700; color: white; letter-spacing: -0.5px;">A</span>
+                        </div>
+                        <div>
+                            <p style="font-size: 19px; font-weight: 600; color: var(--color-gray-900); margin-bottom: 2px;">Acme Corp</p>
+                            <p style="font-size: 16px; color: var(--color-gray-500);">Invited by Sarah Johnson</p>
+                        </div>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 10px; margin-top: 14px; cursor: pointer;">
+                        <input type="checkbox" id="org-confirm-checkbox" style="display: none;" onchange="document.getElementById('org-confirm-box').style.background = this.checked ? '#a3e635' : 'white'; document.getElementById('org-confirm-box').style.borderWidth = this.checked ? '3px' : '2px'; document.getElementById('org-confirm-box').style.borderColor = this.checked ? '#bef264' : 'var(--color-gray-200)'; document.getElementById('org-confirm-label').style.fontWeight = this.checked ? '600' : '400'; document.getElementById('org-confirm-tick').style.display = this.checked ? 'block' : 'none';">
+                        <div id="org-confirm-box" onclick="document.getElementById('org-confirm-checkbox').click()" style="width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--color-gray-200); background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background 0.15s, border-color 0.15s;">
+                            <svg id="org-confirm-tick" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <span id="org-confirm-label" style="font-size: 17px; color: var(--color-gray-600);">I confirm I work at this organisation</span>
+                    </label>
+                </div>
+
+                <!-- Create Organisation form — shown as a post-signup step -->
+                <div id="create-org-form" style="display: none;">
+                    <div class="form-header">
+                        <h1 class="form-title">Create your organisation</h1>
+                        <p class="form-subtitle">Set up your organisation so your team can track their actions together.</p>
+                    </div>
+                    <form style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="ui-form-field-large">
+                            <label for="org-name">Organisation name</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#94a3b8" d="M3 21h18M3 7v14M21 7v14M6 11h2m-2 4h2m8-4h2m-2 4h2M6 7V4h12v3M9 21v-4h6v4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#2563eb" d="M3 21h18M3 7v14M21 7v14M6 11h2m-2 4h2m8-4h2m-2 4h2M6 7V4h12v3M9 21v-4h6v4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <input type="text" id="org-name" placeholder="e.g. Acme Corp" value="Acme Corp">
+                            </div>
+                        </div>
+                        <button type="submit" class="ui-btn-large ui-btn-primary submit-btn">Continue</button>
+                        <div class="footer-links">
+                            <p>You can update this later in your settings.</p>
+                        </div>
+                    </form>
+                </div>
+
                 <!-- Generic error banner -->
                 <div id="generic-error" style="display: none; align-items: flex-start; gap: 10px; padding: 12px 14px; background: var(--color-red-50); border: 1px solid var(--color-red-100); border-radius: 8px; margin-bottom: 20px;">
                     <div>
@@ -307,7 +391,7 @@
                 </div>
 
                 <form id="signup-form" style="display: flex; flex-direction: column; gap: 20px;">
-                    <div class="ui-form-field-large">
+                    <div class="ui-form-field-large" id="email-field">
                         <label for="signup-email">Email</label>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
@@ -320,6 +404,7 @@
                             </svg>
                             <input type="email" id="signup-email" placeholder="Enter your email address" required>
                         </div>
+                        <p id="email-invite-hint" style="display: none; font-size: 15px; color: var(--color-gray-400); margin-top: 6px;">This is the email your invite was sent to.</p>
                     </div>
 
                     <div class="ui-form-field-large" id="password-field" style="margin-bottom: 8px;">
@@ -357,11 +442,11 @@
                             <path d="M2 7l10 7 10-7" stroke="var(--color-blue-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <h2 style="font-size: 38px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 28px; line-height: 1.2;">Check your inbox</h2>
+                    <h2 style="font-size: 38px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 28px; line-height: 1.3;">Check your inbox</h2>
                     <div style="background: var(--color-gray-50); border: 1px solid var(--color-gray-200); border-radius: 12px; padding: 24px 28px;">
-                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6; text-wrap-style: balance; margin-bottom: 2px;">We've sent a confirmation email to</p>
+                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6; margin-bottom: 2px;">We've sent a confirmation email to</p>
                         <p style="font-size: 19px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 14px;">user@example.com</p>
-                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6; text-wrap-style: balance;">Click the link in the email to activate your account. Didn't receive it? <a href="#" class="ui-link" style="text-decoration: none;">Resend email</a></p>
+                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6;">Click the link in the email to activate your account. Didn't receive it? <a href="#" class="ui-link" style="text-decoration: none;">Resend email</a></p>
                     </div>
                 </div>
 
@@ -373,10 +458,10 @@
                             <path d="M9 9l6 6M15 9l-6 6" stroke="var(--color-red-600)" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <h2 style="font-size: 38px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 28px; line-height: 1.2;">Link expired</h2>
+                    <h2 style="font-size: 38px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 28px; line-height: 1.3;">Link expired</h2>
                     <div style="background: var(--color-gray-50); border: 1px solid var(--color-gray-200); border-radius: 12px; padding: 24px 28px;">
                         <p style="font-size: 19px; font-weight: 500; color: var(--color-gray-900); margin-bottom: 2px;">This confirmation link is no longer valid.</p>
-                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6; text-wrap-style: balance; margin-bottom: 14px;">Request a new one to continue.</p>
+                        <p style="font-size: 19px; color: var(--color-gray-500); line-height: 1.6; margin-bottom: 14px;">Request a new one to continue.</p>
                         <a href="#" class="ui-btn-large ui-btn-primary" style="display: inline-flex; width: 100%; justify-content: center; text-decoration: none;">Resend confirmation email</a>
                     </div>
                     <p style="font-size: 17px; color: var(--color-gray-500); margin-top: 16px;">Need help? <a href="#" class="ui-link">Contact support</a></p>
