@@ -1730,6 +1730,18 @@
                 <div class="editable-field">
                     <div class="editable-field-header">
                         <div class="editable-field-label-group">
+                            <span class="editable-field-label">Delete Company</span>
+                            <div class="editable-field-value">Permanently delete your company and all associated data.<br>This cannot be undone.</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-danger" style="width: 160px; white-space: nowrap;" onclick="openDeleteCompanyModal()">Delete company</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="editable-field">
+                    <div class="editable-field-header">
+                        <div class="editable-field-label-group">
                             <span class="editable-field-label">Delete Account</span>
                             <div class="editable-field-value">Lorem ipsum dolor sit amet consectetur adipiscing elit.</div>
                         </div>
@@ -1738,6 +1750,29 @@
                 </div>
             </div>
         </div>
+        </div>
+    </div>
+
+    <!-- Delete Company Confirmation Modal -->
+    <div class="modal-overlay" id="deleteCompanyModal">
+        <div class="modal-content">
+            <h4>Are you sure?</h4>
+            <p>Do you really want to delete your company? You will lose all your work. This is irreversible.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-secondary" onclick="closeDeleteCompanyModal()">Cancel</button>
+                <button class="ui-btn ui-btn-primary" onclick="openCompanySecurityCheckModal()">Delete company</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Security Check Modal -->
+    <div class="modal-overlay" id="companySecurityCheckModal">
+        <div class="modal-content">
+            <h4>Security Check</h4>
+            <p style="text-wrap: unset;">We've sent you an email to confirm this is really you. Please click the button in that email to delete your company.</p>
+            <div class="modal-buttons">
+                <button class="ui-btn ui-btn-primary" onclick="closeCompanySecurityCheckModal()">I understand</button>
+            </div>
         </div>
     </div>
 
@@ -1757,7 +1792,7 @@
     <div class="modal-overlay" id="securityCheckModal">
         <div class="modal-content">
             <h4>Security Check</h4>
-            <p>We've sent you an email to confirm this is really you. Please click the button in that email to delete your account.</p>
+            <p style="text-wrap: unset;">We've sent you an email to confirm this is really you. Please click the button in that email to delete your account.</p>
             <div class="modal-buttons">
                 <button class="ui-btn ui-btn-primary" onclick="closeSecurityCheckModal()">I understand</button>
             </div>
@@ -2041,6 +2076,31 @@
         });
 
         // Delete account modal functions
+        function openDeleteCompanyModal() {
+            document.getElementById('deleteCompanyModal').classList.add('active');
+        }
+
+        function closeDeleteCompanyModal() {
+            document.getElementById('deleteCompanyModal').classList.remove('active');
+        }
+
+        function openCompanySecurityCheckModal() {
+            document.getElementById('deleteCompanyModal').classList.remove('active');
+            document.getElementById('companySecurityCheckModal').classList.add('active');
+        }
+
+        function closeCompanySecurityCheckModal() {
+            document.getElementById('companySecurityCheckModal').classList.remove('active');
+        }
+
+        document.getElementById('deleteCompanyModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDeleteCompanyModal();
+        });
+
+        document.getElementById('companySecurityCheckModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCompanySecurityCheckModal();
+        });
+
         function openDeleteModal() {
             document.getElementById('deleteModal').classList.add('active');
         }
