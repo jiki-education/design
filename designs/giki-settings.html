@@ -15,6 +15,11 @@
             document.getElementById('name-view-state').style.display = '';
             document.getElementById('name-edit-state').style.display = 'none';
             document.getElementById('name-saved-state').style.display = 'none';
+
+            // Reset 2FA to disabled state
+            document.getElementById('2fa-disabled-state').style.display = '';
+            document.getElementById('2fa-enabled-state').style.display = 'none';
+            document.getElementById('2fa-description').textContent = 'Secure your account with two-factor authentication.';
         };
 
         const PAGE_VARIANTS = [
@@ -37,6 +42,15 @@
                     document.getElementById('name-view-state').style.display = 'none';
                     document.getElementById('name-edit-state').style.display = 'none';
                     document.getElementById('name-saved-state').style.display = '';
+                }
+            },
+            {
+                id: '2fa-enabled',
+                label: '2FA Enabled',
+                apply: () => {
+                    document.getElementById('2fa-disabled-state').style.display = 'none';
+                    document.getElementById('2fa-enabled-state').style.display = '';
+                    document.getElementById('2fa-description').textContent = 'Two-factor authentication is enabled for your account.';
                 }
             }
         ];
@@ -1592,7 +1606,7 @@
                     <div class="editable-field-header">
                         <div class="editable-field-label-group">
                             <span class="editable-field-label">Two-Factor Authentication</span>
-                            <div class="editable-field-value" id="2fa-description">Lorem ipsum dolor sit amet consectetur.</div>
+                            <div class="editable-field-value" id="2fa-description">Secure your account with two-factor authentication.</div>
                         </div>
                         <!-- Disabled state -->
                         <div id="2fa-disabled-state">
@@ -1600,7 +1614,7 @@
                         </div>
                         <!-- Enabled state -->
                         <div id="2fa-enabled-state" style="display: none;">
-                            <button class="ui-btn ui-btn-small ui-btn-danger" onclick="open2FAModal('disable')">Disable</button>
+                            <button class="ui-btn ui-btn-small ui-btn-danger" style="border-color: var(--color-red-500); color: var(--color-red-500);" onclick="open2FAModal('disable')">Disable</button>
                         </div>
                     </div>
                 </div>
@@ -1792,10 +1806,40 @@
             </div>
             <div id="2fa-disable-content" style="display: none;">
                 <h4 id="2fa-modal-title">Disable Two-Factor Authentication?</h4>
-                <p id="2fa-modal-body">This will remove the extra layer of security from your account.</p>
+                <p id="2fa-modal-body">This will remove the extra layer of security from your account. Enter your password and a verification code to confirm.</p>
+                <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; width: 100%;">
+                    <div class="ui-form-field-large">
+                        <label for="2fa-disable-password">Password</label>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <rect x="3" y="11" width="18" height="11" rx="2" stroke="#64748b" stroke-width="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <rect x="3" y="11" width="18" height="11" rx="2" stroke="#3b82f6" stroke-width="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <input type="password" id="2fa-disable-password" placeholder="Enter your password">
+                        </div>
+                    </div>
+                    <div class="ui-form-field-large">
+                        <label for="2fa-disable-code">Verification Code</label>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path d="M9 12l2 2 4-4" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="#64748b" stroke-width="2"/>
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path d="M9 12l2 2 4-4" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="#3b82f6" stroke-width="2"/>
+                            </svg>
+                            <input type="text" id="2fa-disable-code" placeholder="6-digit code from your app" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
                 <div class="modal-buttons">
                     <button class="ui-btn ui-btn-secondary" onclick="close2FAModal()">Cancel</button>
-                    <button class="ui-btn ui-btn-danger" id="2fa-confirm-btn" onclick="confirm2FA()">Disable</button>
+                    <button class="ui-btn ui-btn-danger" id="2fa-confirm-btn" style="border-color: var(--color-red-500); color: var(--color-red-500);" onclick="confirm2FA()">Disable</button>
                 </div>
             </div>
         </div>
@@ -2080,10 +2124,12 @@ function openDeleteModal() {
             if (twoFAAction === 'enable') {
                 document.getElementById('2fa-enabled-state').style.display = '';
                 document.getElementById('2fa-disabled-state').style.display = 'none';
+                document.getElementById('2fa-description').textContent = 'Two-factor authentication is enabled for your account.';
                 close2FAModal();
             } else {
                 document.getElementById('2fa-enabled-state').style.display = 'none';
                 document.getElementById('2fa-disabled-state').style.display = '';
+                document.getElementById('2fa-description').textContent = 'Secure your account with two-factor authentication.';
                 close2FAModal();
             }
         }
