@@ -58,9 +58,10 @@
     <style>
         :root {
             --color-primary-500: oklch(54.6% 0.245 262.881);
-            --color-primary-600: oklch(54.6% 0.245 262.881);
+            --color-primary-600: oklch(47.3% 0.257 262.881);
             --color-blue-500: oklch(54.6% 0.245 262.881);
-            --color-blue-600: oklch(54.6% 0.245 262.881);
+            --color-blue-600: oklch(47.3% 0.257 262.881);
+            --color-blue-500-15: color-mix(in srgb, oklch(54.6% 0.245 262.881) 15%, transparent);
             --color-purple-300: #d8b4fe;
             --color-purple-500: #a855f7;
             --color-purple-600: #9333ea;
@@ -865,7 +866,7 @@
         }
 
         .segmented-toggle button.active {
-            background: rgba(59, 130, 246, 0.15);
+            background: var(--color-blue-500-15);
             color: var(--color-blue-600);
         }
 
