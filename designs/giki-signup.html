@@ -228,11 +228,22 @@
             emailInput.readOnly = false;
             document.getElementById('email-invite-hint').style.display = 'none';
             document.getElementById('create-org-form').style.display = 'none';
+            document.getElementById('webinar-code-form').style.display = 'none';
             document.getElementById('email-field').style.display = '';
             document.getElementById('password-field').style.display = '';
         };
 
         const PAGE_VARIANTS = [
+            {
+                id: 'webinar-code',
+                label: 'Webinar Code',
+                apply: () => {
+                    document.getElementById('form-header').style.display = 'none';
+                    document.getElementById('signup-form').style.display = 'none';
+                    document.getElementById('generic-error').style.display = 'none';
+                    document.getElementById('webinar-code-form').style.display = 'block';
+                }
+            },
             {
                 id: 'error',
                 label: 'Password Error',
@@ -355,6 +366,34 @@
                         </div>
                         <span id="org-confirm-label" style="font-size: 17px; color: var(--color-gray-600);">I confirm I work at this organisation</span>
                     </label>
+                </div>
+
+                <!-- Webinar code screen — shown before signup -->
+                <div id="webinar-code-form" style="display: none;">
+                    <div class="form-header">
+                        <h1 class="form-title">Enter your webinar invite code</h1>
+                        <p class="form-subtitle">You'll have received this in your webinar confirmation email.</p>
+                    </div>
+                    <form style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="ui-form-field-large">
+                            <label for="webinar-code">Webinar code</label>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#94a3b8" d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                    <path stroke="#2563eb" d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="8" y1="12" x2="16" y2="12" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <input type="text" id="webinar-code" placeholder="e.g. GIKI-2026" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="ui-btn-large ui-btn-primary submit-btn">Continue</button>
+                        <div class="footer-links">
+                            <p>Can't find your code? Send us an email at <a href="mailto:info@gikiactions.com" class="ui-link">info@gikiactions.com</a></p>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Create Organisation form — shown as a post-signup step -->
