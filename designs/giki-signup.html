@@ -226,7 +226,6 @@
             invalidConfirmation.style.display = 'none';
             emailInput.value = '';
             emailInput.readOnly = false;
-            document.getElementById('email-invite-hint').style.display = 'none';
             document.getElementById('create-org-form').style.display = 'none';
             document.getElementById('webinar-code-form').style.display = 'none';
             document.getElementById('webinar-confirmation').style.display = 'none';
@@ -336,14 +335,11 @@
                     const joinOrgHeader = document.getElementById('join-org-header');
                     const submitBtn = document.getElementById('submit-btn');
                     const emailInput = document.getElementById('signup-email');
-                    const emailHint = document.getElementById('email-invite-hint');
 
                     formHeader.style.display = 'none';
                     joinOrgHeader.style.display = 'block';
                     submitBtn.textContent = 'Accept invite and join Giki';
                     emailInput.value = 'user@acmecorp.com';
-                    emailInput.readOnly = true;
-                    emailHint.style.display = 'block';
                     document.getElementById('footer-default').style.display = 'none';
                     document.getElementById('footer-join-org').style.display = 'block';
                 }
@@ -543,7 +539,6 @@
                             </svg>
                             <input type="email" id="signup-email" placeholder="Enter your email address" required>
                         </div>
-                        <p id="email-invite-hint" style="display: none; font-size: 15px; color: var(--color-gray-400); margin-top: 6px;">This is the email your invite was sent to.</p>
                     </div>
 
                     <div class="ui-form-field-large" id="password-field">
