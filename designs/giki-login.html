@@ -239,8 +239,12 @@
                     const passwordField = document.getElementById('password-field');
                     const genericError = document.getElementById('generic-error');
 
-                    passwordField.classList.add('ui-form-field-error');
-                    document.getElementById('email-field').classList.add('ui-form-field-error');
+                    const emailField = document.getElementById('email-field');
+                    [passwordField, emailField].forEach(f => {
+                        f.classList.remove('ui-form-field-error');
+                        void f.offsetWidth;
+                        f.classList.add('ui-form-field-error');
+                    });
                     genericError.style.display = 'flex';
                 }
             },

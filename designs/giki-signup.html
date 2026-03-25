@@ -265,6 +265,8 @@
                     const passwordField = document.getElementById('password-field');
                     const passwordErrorMessage = document.getElementById('password-error-message');
 
+                    passwordField.classList.remove('ui-form-field-error');
+                    void passwordField.offsetWidth;
                     passwordField.classList.add('ui-form-field-error');
                     passwordErrorMessage.style.display = 'block';
                 }
@@ -342,8 +344,6 @@
                     emailInput.value = 'user@acmecorp.com';
                     emailInput.readOnly = true;
                     emailHint.style.display = 'block';
-                    document.getElementById('email-field').style.display = 'none';
-                    document.getElementById('password-field').style.display = 'none';
                     document.getElementById('footer-default').style.display = 'none';
                     document.getElementById('footer-join-org').style.display = 'block';
                 }
@@ -363,7 +363,7 @@
 
                 <!-- Join Organisation header — shown when arriving via invite link -->
                 <div id="join-org-header" style="display: none; margin-bottom: 20px;">
-                    <h1 class="form-title">You've been invited to Giki</h1>
+                    <h1 class="form-title" style="font-size: 46px; line-height: 1.2;">You've been invited to <strong>Acme Corp</strong> on Giki</h1>
                     <p class="form-subtitle" style="margin-bottom: 28px;">Confirm and accept your invite below.</p>
                     <p style="font-size: 17px; font-weight: 600; color: var(--color-gray-700); margin-bottom: 8px;">Your company</p>
                     <div style="display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--color-blue-50); border: 1.5px solid var(--color-blue-200); border-radius: 14px;">
