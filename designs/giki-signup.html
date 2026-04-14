@@ -233,6 +233,9 @@
             document.getElementById('password-field').style.display = '';
             document.getElementById('footer-default').style.display = '';
             document.getElementById('footer-join-org').style.display = 'none';
+            document.getElementById('confirm-password-field').style.display = 'none';
+            document.getElementById('workshop-signup-header').style.display = 'none';
+            submitBtn.textContent = 'Sign Up';
         };
 
         const PAGE_VARIANTS = [
@@ -245,6 +248,17 @@
                     document.getElementById('generic-error').style.display = 'none';
                     document.getElementById('webinar-code-form').style.display = 'none';
                     document.getElementById('webinar-confirmation').style.display = 'block';
+                }
+            },
+            {
+                id: 'workshop-signup',
+                label: 'Workshop Sign Up',
+                apply: () => {
+                    document.getElementById('form-header').style.display = 'none';
+                    document.getElementById('workshop-signup-header').style.display = 'block';
+                    document.getElementById('confirm-password-field').style.display = '';
+                    document.getElementById('submit-btn').textContent = 'Create account';
+                    document.getElementById('footer-default').style.display = 'none';
                 }
             },
             {
@@ -371,6 +385,12 @@
                             <p style="font-size: 16px; color: var(--color-gray-500);">Invited by Sarah Johnson</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Workshop sign up header — shown when signing up via workshop invite -->
+                <div id="workshop-signup-header" style="display: none; margin-bottom: 24px;">
+                    <h1 class="form-title" style="font-size: 44px; line-height: 1.2;">Sign up for the Workshop</h1>
+                    <p class="form-subtitle">Create your account to secure your place.</p>
                 </div>
 
                 <!-- Workshop confirmation page — holding page before live workshop -->
@@ -562,6 +582,25 @@
                             <input type="password" id="signup-password" placeholder="Enter your password" required>
                         </div>
                         <div id="password-error-message" class="ui-form-field-error-message" style="display: none;">Password must be at least 8 characters</div>
+                    </div>
+
+                    <div class="ui-form-field-large" id="confirm-password-field" style="display: none;">
+                        <label for="signup-confirm-password">Confirm password</label>
+                        <div>
+                            <svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path fill="#eff6ff" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                <path stroke="#94a3b8" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                <path stroke="#94a3b8" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                <path stroke="#94a3b8" d="M12 15v4" stroke-width="2"></path>
+                            </svg>
+                            <svg fill="none" viewBox="0 0 24 24" width="18" height="18">
+                                <path fill="#dbeafe" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                <path stroke="#2563eb" d="M21 11 3 11l0 12 18 0 0 -12Z" stroke-width="2"></path>
+                                <path stroke="#2563eb" d="M7 11V6c0 -2.76142 2.23858 -5 5 -5 2.7614 0 5 2.23858 5 5v5" stroke-width="2"></path>
+                                <path stroke="#2563eb" d="M12 15v4" stroke-width="2"></path>
+                            </svg>
+                            <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                        </div>
                     </div>
 
                     <button type="submit" id="submit-btn" class="ui-btn-large ui-btn-primary submit-btn">Sign Up</button>
