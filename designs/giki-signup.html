@@ -235,6 +235,9 @@
             document.getElementById('footer-join-org').style.display = 'none';
             document.getElementById('confirm-password-field').style.display = 'none';
             document.getElementById('workshop-signup-header').style.display = 'none';
+            document.getElementById('join-link-inactive').style.display = '';
+            document.getElementById('join-link-active').style.display = 'none';
+            document.getElementById('add-to-calendar').style.display = '';
             submitBtn.textContent = 'Sign Up';
         };
 
@@ -248,6 +251,20 @@
                     document.getElementById('generic-error').style.display = 'none';
                     document.getElementById('webinar-code-form').style.display = 'none';
                     document.getElementById('webinar-confirmation').style.display = 'block';
+                }
+            },
+            {
+                id: 'workshop-live',
+                label: 'Workshop Live',
+                apply: () => {
+                    document.getElementById('form-header').style.display = 'none';
+                    document.getElementById('signup-form').style.display = 'none';
+                    document.getElementById('generic-error').style.display = 'none';
+                    document.getElementById('webinar-code-form').style.display = 'none';
+                    document.getElementById('webinar-confirmation').style.display = 'block';
+                    document.getElementById('join-link-inactive').style.display = 'none';
+                    document.getElementById('join-link-active').style.display = '';
+                    document.getElementById('add-to-calendar').style.display = 'none';
                 }
             },
             {
@@ -424,7 +441,7 @@
                                     </div>
                                 </div>
                                 <!-- Add to Calendar dropdown -->
-                                <div style="position: relative; flex-shrink: 0;">
+                                <div id="add-to-calendar" style="position: relative; flex-shrink: 0;">
                                     <button onclick="var d=document.getElementById('cal-dropdown');d.style.display=d.style.display==='block'?'none':'block'" style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border: 1.5px solid var(--color-gray-200); border-radius: 8px; background: white; font-size: 15px; font-weight: 600; color: var(--color-gray-600); cursor: pointer; font-family: inherit; white-space: nowrap;">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                                         Add to calendar
@@ -448,8 +465,16 @@
                             </div>
 
                             <!-- Join link — inactive until webinar starts -->
-                            <div style="background: var(--color-gray-100); border-radius: 10px; padding: 12px 16px; text-align: center;">
+                            <div id="join-link-inactive" style="background: var(--color-gray-100); border-radius: 10px; padding: 12px 16px; text-align: center;">
                                 <span style="font-size: 17px; color: var(--color-gray-500); font-weight: 500;">A Join link will become active here 10 minutes before the workshop</span>
+                            </div>
+
+                            <!-- Join link — active when workshop is live -->
+                            <div id="join-link-active" style="display: none; border-radius: 10px; overflow: hidden;">
+                                <a href="#" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 16px; background: var(--color-blue-600); text-decoration: none;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                                    <span style="font-size: 17px; font-weight: 600; color: white;">Join the workshop now</span>
+                                </a>
                             </div>
                         </div>
 
@@ -466,9 +491,6 @@
                         </div>
 
                     </div>
-
-                    <!-- Get started CTA -->
-                    <p style="font-size: 17px; color: var(--color-gray-500); text-align: center; text-wrap-style: balance;">Don't want to wait for the workshop? <a href="giki-login.html" class="ui-link">Get started now</a></p>
 
                 </div>
 
