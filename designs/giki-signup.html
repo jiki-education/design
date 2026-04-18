@@ -152,6 +152,15 @@
             color: var(--color-gray-600);
         }
 
+        .legal-link {
+            color: var(--color-gray-500);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .legal-link:hover {
+            color: var(--color-blue-600);
+        }
+
         .creators-badge {
             text-align: center;
             z-index: 1;
@@ -627,7 +636,9 @@
 
                     <button type="submit" id="submit-btn" class="ui-btn-large ui-btn-primary submit-btn">Sign Up</button>
 
-                    <div id="footer-default" class="footer-links">
+                    <p style="font-size: 17px; color: var(--color-gray-600); text-align: center; line-height: 1.5;">By clicking Sign Up, you are agreeing to our <a href="#" class="legal-link">Privacy Policy</a>,<a href="#" class="legal-link">Terms and</a><br><a href="#" class="legal-link">Conditions</a> and <a href="#" class="legal-link">Giki Actions Terms</a>.</p>
+
+                    <div id="footer-default" class="footer-links" style="margin-top: 10px;">
                         <p>Didn't receive your confirmation email? <a href="resend-confirmation.html" class="ui-link">Resend it.</a></p>
                     </div>
                     <div id="footer-join-org" class="footer-links" style="display: none;">
