@@ -27,7 +27,9 @@
       "Bash(sed -i '' 's/#4b6cb7/#2563eb/g' /Users/nicole/Documents/giki-playground/designs/dashboard-normal.html)",
       "Bash(sed -i '' 's/#1d40b0/#1e40af/g' /Users/nicole/Documents/giki-playground/designs/dashboard-normal.html)",
       "Bash(sed -i '' 's/color: #555;/color: #64748b;/g' /Users/nicole/Documents/giki-playground/designs/dashboard-normal.html)",
-      "Bash(sed -i '' 's/#fafbfc/#f8fafc/g' /Users/nicole/Documents/giki-playground/designs/dashboard-normal.html)"
+      "Bash(sed -i '' 's/#fafbfc/#f8fafc/g' /Users/nicole/Documents/giki-playground/designs/dashboard-normal.html)",
+      "Bash(git:*)",
+      "Bash(perl -i -pe 's/rgba\\\\\\(0,\\\\s*0,\\\\s*0,\\\\s*\\(0\\\\.[0-9]+\\)\\\\\\)/oklch\\(39.8% 0.195 277.366 \\\\/ $1\\)/g' onboarding-questions.html dashboard-normal.html onboarding.html section-resources.html action-finder-page.html)"
     ],
     "deny": [],
     "ask": []
