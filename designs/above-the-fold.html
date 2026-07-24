@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Above the Fold - Ideas</title>
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <style>
+        :root {
+            --color-amber-400: oklch(82.8% 0.189 84.429);
+            --color-amber-500: oklch(76.9% 0.188 70.08);
+        }
+
+        body {
+            background: var(--color-gray-100);
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            max-width: 1100px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+            text-wrap-style: balance;
+        }
+
+        .page-header p {
+            color: var(--color-gray-600);
+            font-size: 1rem;
+        }
+
+        .idea {
+            max-width: 1100px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .idea-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .idea-label h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-gray-800);
+        }
+
+        .idea-label span {
+            font-size: 0.85rem;
+            color: var(--color-gray-500);
+        }
+
+        .hero {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: #0b1220;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 4rem 3rem;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: color-mix(in srgb, var(--color-purple-500) 20%, transparent);
+            border: 1px solid color-mix(in srgb, var(--color-purple-400) 40%, transparent);
+            color: var(--color-purple-300);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-wrap-style: balance;
+            max-width: 700px;
+        }
+
+        .hero h3 .highlight {
+            color: var(--color-purple-400);
+        }
+
+        .hero p.sub {
+            font-size: 1.25rem;
+            color: var(--color-gray-300);
+            max-width: 620px;
+            margin-bottom: 2rem;
+            text-wrap-style: balance;
+        }
+
+        .hero p.sub strong {
+            color: #fff;
+        }
+
+        .pills {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .pill {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+        .pill-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: var(--color-green-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pill-check svg {
+            width: 14px;
+            height: 14px;
+            stroke: #fff;
+            stroke-width: 3;
+        }
+
+        .cta-row {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--color-purple-600);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1.1rem 2.25rem;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-purple-400) 50%, transparent), 0 8px 24px color-mix(in srgb, var(--color-purple-500) 40%, transparent);
+        }
+
+        .cta-secondary {
+            color: var(--color-gray-300);
+            font-size: 0.95rem;
+        }
+
+        .cta-secondary strong {
+            color: #fff;
+        }
+
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .avatars {
+            display: flex;
+        }
+
+        .avatars .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 2px solid #0b1220;
+            margin-left: -10px;
+        }
+
+        .avatars .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .social-proof-text {
+            color: var(--color-gray-300);
+            font-size: 0.9rem;
+        }
+
+        .social-proof-text strong {
+            color: #fff;
+        }
+
+        .streak-card {
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            backdrop-filter: blur(6px);
+            color: #fff;
+            width: 200px;
+        }
+
+        .streak-card .streak-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--color-amber-400);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .streak-card .streak-days {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .streak-card .streak-sub {
+            font-size: 0.8rem;
+            color: var(--color-gray-400);
+        }
+
+        .split-hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .code-window {
+            background: #060a12;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-window-bar {
+            display: flex;
+            gap: 0.4rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .code-window-bar span {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--color-gray-600);
+        }
+
+        .code-window-body {
+            padding: 1.25rem;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--color-gray-300);
+        }
+
+        .code-window-body .kw { color: #c184fc; }
+        .code-window-body .str { color: #84fab0; }
+        .code-window-body .com { color: var(--color-gray-500); }
+
+        .path-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .path-tab {
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--color-gray-300);
+        }
+
+        .path-tab.active {
+            background: var(--color-purple-600);
+            border-color: var(--color-purple-500);
+            color: #fff;
+        }
+
+        .lang-callout {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: color-mix(in srgb, var(--color-blue-500) 16%, transparent);
+            border: 1px solid color-mix(in srgb, var(--color-blue-400) 40%, transparent);
+            color: var(--color-blue-300);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.6rem 1.1rem;
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+        }
+
+        .lang-callout .flags {
+            display: flex;
+            gap: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .lang-switcher svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--color-blue-300);
+        }
+
+        .lang-switcher .caret {
+            width: 10px;
+            height: 10px;
+            stroke: var(--color-gray-400);
+            margin-left: 0.25rem;
+        }
+
+        .lang-rotator {
+            display: inline-flex;
+            flex-direction: column;
+            height: 1.2em;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+
+        .lang-rotator span {
+            color: var(--color-purple-400);
+        }
+
+        .lang-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .lang-strip-label {
+            font-size: 0.85rem;
+            color: var(--color-gray-400);
+            margin-right: 0.25rem;
+        }
+
+        .lang-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--color-gray-200);
+        }
+
+        .variant-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .variant-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .variant-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.9rem;
+        }
+
+        /* Check variant: outline circle */
+        .pill-check-outline {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            border: 2px solid var(--color-green-400);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pill-check-outline svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--color-green-400);
+            stroke-width: 3;
+        }
+
+        /* Check variant: plain emoji */
+        .pill-emoji {
+            font-size: 1.1rem;
+        }
+
+        /* Check variant: dot separated text, no icon */
+        .dot-list {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+        .dot-list .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: var(--color-gray-500);
+        }
+
+        /* Check variant: bordered badge/chip */
+        .pill-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .pill-badge svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--color-green-400);
+            stroke-width: 3;
+        }
+
+        /* Button variant: outline */
+        .cta-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: transparent;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1.05rem 2.25rem;
+            border-radius: 12px;
+            border: 2px solid var(--color-purple-400);
+        }
+
+        /* Button variant: gradient */
+        .cta-gradient {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, var(--color-purple-500), var(--color-blue-500));
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1.1rem 2.25rem;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--color-purple-500) 35%, transparent);
+        }
+
+        /* Button variant: pill with arrow */
+        .cta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--color-purple-600);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1.1rem 1.75rem 1.1rem 2.25rem;
+            border-radius: 999px;
+            border: none;
+        }
+
+        .cta-pill svg {
+            width: 18px;
+            height: 18px;
+            stroke: #fff;
+            stroke-width: 2.5;
+        }
+
+        /* Button variant: ghost link */
+        .cta-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.15rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid var(--color-purple-400);
+        }
+
+        /* Button variant: two-tone split (primary + secondary side by side) */
+        .cta-split {
+            display: inline-flex;
+        }
+
+        .cta-split .primary-half {
+            background: var(--color-purple-600);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 1.05rem 1.75rem;
+            border-radius: 12px 0 0 12px;
+            border: none;
+        }
+
+        .cta-split .secondary-half {
+            background: color-mix(in srgb, var(--color-purple-600) 60%, black);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 1.05rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            border-left: 1px solid rgba(255,255,255,0.15);
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <div class="page-header">
+        <h1>Above the Fold — Ideas</h1>
+        <p>Exploratory concepts for the landing page hero. Not final — for discussion only.</p>
+    </div>
+
+    <!-- Idea 1: Outcome-led with quantified promise -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>1. Outcome-first headline</h2>
+            <span>Leads with a concrete, quantified promise instead of the process ("learn by doing")</span>
+        </div>
+        <div class="hero">
+            <div class="hero-eyebrow">🚀 Free forever plan</div>
+            <h3>Ship your first real project in <span class="highlight">7 days</span></h3>
+            <p class="sub">No lectures, no theory dumps. Just guided, hands-on projects that teach you to code the way working developers actually learn.</p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Start Building Free 🚀</button>
+                <span class="cta-secondary">Join <strong>12,400+</strong> learners already coding</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 2: Social proof reinforced hero -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>2. Social proof reinforced</h2>
+            <span>Adds a floating streak card and avatar stack to build trust and show the product is alive/active</span>
+        </div>
+        <div class="hero">
+            <div class="streak-card">
+                <div class="streak-top">🔥 Current streak</div>
+                <div class="streak-days">14 days</div>
+                <div class="streak-sub">Keep it going — you're on fire</div>
+            </div>
+            <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
+            <p class="sub">Learn the skills you need to create awesome things, be productive, and <strong>stay relevant in 2026.</strong></p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+            </div>
+            <div class="social-proof">
+                <div class="avatars">
+                    <img class="avatar" src="https://i.pravatar.cc/64?img=12">
+                    <img class="avatar" src="https://i.pravatar.cc/64?img=32">
+                    <img class="avatar" src="https://i.pravatar.cc/64?img=45">
+                    <img class="avatar" src="https://i.pravatar.cc/64?img=8">
+                </div>
+                <div class="social-proof-text"><strong>4.9/5</strong> from 2,300+ students</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 3: Split layout with live code preview -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>3. Split layout with live code preview</h2>
+            <span>Pairs the pitch with a visual of the actual product (code editor) so visitors see what "doing" looks like</span>
+        </div>
+        <div class="hero">
+            <div class="split-hero">
+                <div>
+                    <div class="hero-eyebrow">🚀 Free forever plan</div>
+                    <h3 style="font-size: 2.4rem;">Learn to code by <span class="highlight">doing</span>, from day one</h3>
+                    <p class="sub" style="font-size: 1.05rem;">Real exercises, instant feedback, and a path built to keep you relevant in 2026.</p>
+                    <div class="cta-row">
+                        <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+                    </div>
+                </div>
+                <div class="code-window">
+                    <div class="code-window-bar"><span></span><span></span><span></span></div>
+                    <div class="code-window-body">
+                        <div><span class="com">// your first exercise</span></div>
+                        <div><span class="kw">function</span> greet(name) {</div>
+                        <div>&nbsp;&nbsp;<span class="kw">return</span> <span class="str">`Hello, ${name}!`</span>;</div>
+                        <div>}</div>
+                        <div>&nbsp;</div>
+                        <div><span class="com">✓ Test passed — nice work!</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 4: Persona-tabbed hero -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>4. Persona-tabbed hero</h2>
+            <span>Turns the audience pills into active tabs that swap the subheading copy — lets each visitor see themselves reflected</span>
+        </div>
+        <div class="hero">
+            <div class="hero-eyebrow">🚀 Free forever plan</div>
+            <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
+            <div class="path-tabs">
+                <div class="path-tab active">👋 Beginners</div>
+                <div class="path-tab">💻 Junior devs</div>
+                <div class="path-tab">✨ Vibe-coders</div>
+            </div>
+            <p class="sub">Never written a line of code? Start from zero with guided projects designed to make the basics click fast — no overwhelm, no jargon.</p>
+            <div class="cta-row">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 5: Minimal, confident, no eyebrow/badges -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>5. Stripped-back minimal</h2>
+            <span>Removes eyebrow badge and audience pills entirely — bets that a shorter, punchier hero converts better than a busier one</span>
+        </div>
+        <div class="hero" style="text-align: center; padding: 5rem 3rem;">
+            <h3 style="max-width: 100%; margin: 0 auto 1.5rem;">Stop watching tutorials.<br><span class="highlight">Start shipping code.</span></h3>
+            <p class="sub" style="max-width: 100%; margin: 0 auto 2.5rem;">The fastest way to go from zero to job-ready in 2026 — built for beginners, junior devs, and vibe-coders alike.</p>
+            <div class="cta-row" style="justify-content: center;">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 6: i18n callout badge + language strip -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>6. i18n callout badge</h2>
+            <span>Adds a top badge and a footer strip of supported languages to make multi-language support obvious without disrupting the core headline</span>
+        </div>
+        <div class="hero">
+            <div class="lang-switcher">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg>
+                English
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="lang-callout">
+                <span class="flags">🇪🇸 🇫🇷 🇩🇪 🇧🇷</span>
+                Now available in 12 languages
+            </div>
+            <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
+            <p class="sub">Learn the skills you need to create awesome things, be productive, and <strong>stay relevant in 2026.</strong></p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+            </div>
+            <div class="lang-strip">
+                <span class="lang-strip-label">Learn in:</span>
+                <span class="lang-chip">🇬🇧 English</span>
+                <span class="lang-chip">🇪🇸 Español</span>
+                <span class="lang-chip">🇫🇷 Français</span>
+                <span class="lang-chip">🇩🇪 Deutsch</span>
+                <span class="lang-chip">🇧🇷 Português</span>
+                <span class="lang-chip">🇯🇵 日本語</span>
+                <span class="lang-chip">+6 more</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 7: Rotating-word headline for i18n -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>7. "Learn in [language]" rotating headline</h2>
+            <span>Puts i18n front and center in the headline itself by rotating through supported languages, rather than tucking it into a badge</span>
+        </div>
+        <div class="hero">
+            <div class="hero-eyebrow">🌍 Available in 12 languages</div>
+            <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
+            <p class="sub">Whichever language you think in, Jiki teaches in it — full courses, feedback, and support in <strong>12 languages</strong> and counting.</p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+                <span class="cta-secondary">Currently viewing in <strong>English</strong> — <span style="text-decoration: underline;">change language</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 8: Full i18n promotion as a dedicated feature block -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>8. i18n as a headline feature</h2>
+            <span>Goes further than a badge — dedicates real hero space to promoting multi-language support as a core differentiator, not a footnote</span>
+        </div>
+        <div class="hero">
+            <div class="hero-eyebrow">🌍 New: study in your own language</div>
+            <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
+            <p class="sub">Learn the skills you need to create awesome things, be productive, and <strong>stay relevant in 2026</strong> — now taught fully in Spanish, French, German, Portuguese, and 8 more languages.</p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+            </div>
+            <div class="lang-strip">
+                <span class="lang-strip-label">🌍 Taught natively in:</span>
+                <span class="lang-chip">🇬🇧 English</span>
+                <span class="lang-chip">🇪🇸 Español</span>
+                <span class="lang-chip">🇫🇷 Français</span>
+                <span class="lang-chip">🇩🇪 Deutsch</span>
+                <span class="lang-chip">🇧🇷 Português</span>
+                <span class="lang-chip">🇯🇵 日本語</span>
+                <span class="lang-chip">🇮🇹 Italiano</span>
+                <span class="lang-chip">🇰🇷 한국어</span>
+                <span class="lang-chip">+4 more</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 9: Single localized language, detected from visitor location -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>9. Auto-localized, single language</h2>
+            <span>Instead of listing every supported language, detects the visitor's location and shows the page fully in their language — the multilingual capability is felt, not advertised as a list</span>
+        </div>
+        <div class="hero">
+            <div class="lang-switcher">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg>
+                🇪🇸 Español
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Aprende a programar haciendo, <span class="highlight">desde el día uno</span></h3>
+            <p class="sub">Aprende las habilidades que necesitas para crear cosas increíbles, ser productivo y <strong>seguir siendo relevante en 2026.</strong></p>
+            <div class="pills">
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Principiantes</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Devs junior</div>
+                <div class="pill"><span class="pill-check"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+            </div>
+            <div class="cta-row">
+                <button class="cta-primary">Regístrate (¡es gratis!) 🚀</button>
+                <span class="cta-secondary">Detectado desde tu ubicación — <span style="text-decoration: underline;">cambiar idioma</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 10: Check-list style variants -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>10. Check-list style variants</h2>
+            <span>Alternatives to the filled-green-circle checkmark for the "Beginners / Junior devs / Vibe-coders" row</span>
+        </div>
+        <div class="hero">
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">Outline circle</div>
+                    <div class="pills">
+                        <div class="pill"><span class="pill-check-outline"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Beginners</div>
+                        <div class="pill"><span class="pill-check-outline"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Junior devs</div>
+                        <div class="pill"><span class="pill-check-outline"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Vibe-coders</div>
+                    </div>
+                </div>
+            </div>
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">Emoji checkmark</div>
+                    <div class="pills">
+                        <div class="pill"><span class="pill-emoji">✅</span>Beginners</div>
+                        <div class="pill"><span class="pill-emoji">✅</span>Junior devs</div>
+                        <div class="pill"><span class="pill-emoji">✅</span>Vibe-coders</div>
+                    </div>
+                </div>
+            </div>
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">No icon — dot-separated list</div>
+                    <div class="dot-list">
+                        <span>Beginners</span><span class="dot"></span><span>Junior devs</span><span class="dot"></span><span>Vibe-coders</span>
+                    </div>
+                </div>
+            </div>
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">Bordered badge/chip</div>
+                    <div class="pills">
+                        <div class="pill-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Beginners</div>
+                        <div class="pill-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Junior devs</div>
+                        <div class="pill-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Vibe-coders</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 11: CTA button style variants -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>11. CTA button style variants</h2>
+            <span>Alternatives to the solid purple "Sign Up (it's free!)" button</span>
+        </div>
+        <div class="hero">
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">Solid (current)</div>
+                    <button class="cta-primary">Sign Up (it's free!) 🚀</button>
+                </div>
+                <div>
+                    <div class="variant-name">Outline</div>
+                    <button class="cta-outline">Sign Up (it's free!) 🚀</button>
+                </div>
+                <div>
+                    <div class="variant-name">Gradient</div>
+                    <button class="cta-gradient">Sign Up (it's free!) 🚀</button>
+                </div>
+            </div>
+            <div class="variant-row">
+                <div>
+                    <div class="variant-name">Pill with arrow</div>
+                    <button class="cta-pill">Sign Up (it's free!)<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div>
+                    <div class="variant-name">Ghost / underline link</div>
+                    <button class="cta-ghost">Sign Up (it's free!) →</button>
+                </div>
+                <div>
+                    <div class="variant-name">Split two-tone</div>
+                    <div class="cta-split">
+                        <button class="primary-half">Sign Up (it's free!)</button>
+                        <button class="secondary-half">🚀</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+- This is an ideas/exploration page — not a final design. Each hero variant is a static mockup for discussion.
+- Colors follow the UI Kit palette (purple-500/600 for CTA, green-500 for checkmarks, gray/amber/blue for accents).
+- Avatar images in Idea 2 are placeholder pravatar.cc URLs — replace with real or illustrated avatars before implementation.
+- Ideas 6-9 explore surfacing i18n support in different ways:
+  - 6: top-corner language switcher + callout badge + footer language strip, English shown by default.
+  - 7: headline rotates through supported languages, e.g. "Learn to code in Spanish" — in production this word would cycle via JS/CSS animation and ideally auto-detect the visitor's locale.
+  - 8: leans in fully — i18n promoted as a headline feature with a longer list of taught languages in the footer strip.
+  - 9: opposite approach — no list of languages at all. Detects the visitor's location/browser locale and renders the whole hero in that one language (Spanish shown here), with a small switcher to override. Feels more like "this product is for me" than "this product supports many languages."
+- Ideas 10 & 11 are component-level swatches (not full hero mockups) exploring alternative treatments of the checkmark row and CTA button, for picking a direction independent of the headline/copy ideas above.
+        `;
+    </script>
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
