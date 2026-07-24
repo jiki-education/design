@@ -568,7 +568,6 @@
             <span>Leads with a concrete, quantified promise instead of the process ("learn by doing")</span>
         </div>
         <div class="hero">
-            <div class="hero-eyebrow">🚀 Free forever plan</div>
             <h3>Ship your first real project in <span class="highlight">7 days</span></h3>
             <p class="sub">No lectures, no theory dumps. Just guided, hands-on projects that teach you to code the way working developers actually learn.</p>
             <div class="pills">
@@ -587,13 +586,13 @@
     <div class="idea">
         <div class="idea-label">
             <h2>2. Social proof reinforced</h2>
-            <span>Adds a floating streak card and avatar stack to build trust and show the product is alive/active</span>
+            <span>Adds a floating i18n promo card (this is a lead-gen page for prospective students, so it promotes a benefit rather than showing existing-user activity like a streak) and an avatar stack to build trust</span>
         </div>
         <div class="hero">
             <div class="streak-card">
-                <div class="streak-top">🔥 Current streak</div>
-                <div class="streak-days">14 days</div>
-                <div class="streak-sub">Keep it going — you're on fire</div>
+                <div class="streak-top">🇪🇸 Available now</div>
+                <div class="streak-days">En Español</div>
+                <div class="streak-sub">Learn Jiki fully in your language</div>
             </div>
             <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
             <p class="sub">Learn the skills you need to create awesome things, be productive, and <strong>stay relevant in 2026.</strong></p>
@@ -626,8 +625,7 @@
         <div class="hero">
             <div class="split-hero">
                 <div>
-                    <div class="hero-eyebrow">🚀 Free forever plan</div>
-                    <h3 style="font-size: 2.4rem;">Learn to code by <span class="highlight">doing</span>, from day one</h3>
+                            <h3 style="font-size: 2.4rem;">Learn to code by <span class="highlight">doing</span>, from day one</h3>
                     <p class="sub" style="font-size: 1.05rem;">Real exercises, instant feedback, and a path built to keep you relevant in 2026.</p>
                     <div class="cta-row">
                         <button class="cta-primary">Sign Up (it's free!) 🚀</button>
@@ -655,7 +653,6 @@
             <span>Turns the audience pills into active tabs that swap the subheading copy — lets each visitor see themselves reflected</span>
         </div>
         <div class="hero">
-            <div class="hero-eyebrow">🚀 Free forever plan</div>
             <h3>Learn to code by doing, from <span class="highlight">day one</span></h3>
             <div class="path-tabs">
                 <div class="path-tab active">👋 Beginners</div>
@@ -900,6 +897,7 @@
 - This is an ideas/exploration page — not a final design. Each hero variant is a static mockup for discussion.
 - Colors follow the UI Kit palette (purple-500/600 for CTA, green-500 for checkmarks, gray/amber/blue for accents).
 - Avatar images in Idea 2 are placeholder pravatar.cc URLs — replace with real or illustrated avatars before implementation.
+- Idea 2's floating card was originally a "current streak" stat, but this is a lead-gen landing page for prospective students, not a logged-in dashboard — no one has a streak yet. Swapped it for an i18n promo card — showing the visitor's own detected language ("En Español") rather than a language count, since prospects care whether their language is supported, not how many total languages exist.
 - Ideas 6-9 explore surfacing i18n support in different ways:
   - 6: top-corner language switcher + callout badge + footer language strip, English shown by default.
   - 7: headline rotates through supported languages, e.g. "Learn to code in Spanish" — in production this word would cycle via JS/CSS animation and ideally auto-detect the visitor's locale.

@@ -88,6 +88,9 @@
         display: flex;
         flex-direction: column;
         gap: 32px;
+        /* break out of the container by 30px each side so the cards, timeline
+           and heading all share the same, wider width */
+        margin-inline: -30px;
         @media (min-width: 768px) {
             gap: 40px;
         }
@@ -98,9 +101,6 @@
         font-weight: 600;
         text-align: center;
         white-space: nowrap;
-        /* the one-line heading is a touch wider than the container; negative inline
-           margin gives it room so text-align:center can actually centre it */
-        margin-inline: -30px;
         @media (min-width: 768px) {
             font-size: 32px;
         }
@@ -113,8 +113,6 @@
         gap: 16px;
         /* extra room above the cards so the peeking Jiki doesn't hit the heading */
         margin-top: 40px;
-        /* break out of the container by 30px each side so the two cards are 30px wider */
-        margin-inline: -30px;
         @media (min-width: 768px) {
             flex-direction: row;
             gap: 24px;
@@ -242,24 +240,14 @@
     .StrandsSection_timeline__nA61b {
         margin-top: 8px;
     }
-    .StrandsSection_timelineRow__cP3e {
-        display: grid;
-        grid-template-columns: 108px 1fr;
-        align-items: center;
-        gap: 12px;
-        @media (min-width: 640px) {
-            grid-template-columns: 132px 1fr;
-        }
-    }
     .StrandsSection_timelineRow__cP3e + .StrandsSection_timelineRow__cP3e {
         margin-top: 14px;
     }
     .StrandsSection_timelineIcon__b3Ct8 {
         flex-shrink: 0;
-        justify-self: end;
-        width: 18px;
-        height: 18px;
-        color: var(--color-purple-600);
+        width: 16px;
+        height: 16px;
+        margin-inline-end: 8px;
     }
     .StrandsSection_timelineTrack__vD82m {
         position: relative;
@@ -301,13 +289,7 @@
         color: var(--color-purple-900);
     }
     .StrandsSection_timelineAxis__w3Xy8 {
-        display: grid;
-        grid-template-columns: 108px 1fr;
-        gap: 12px;
         margin-top: 10px;
-        @media (min-width: 640px) {
-            grid-template-columns: 132px 1fr;
-        }
     }
     .StrandsSection_timelineAxisTicks__e6Bp4 {
         position: relative;
@@ -347,12 +329,12 @@
     gap: 6px;
     padding-block: 8px;
     padding-inline: 12px;
-    margin-inline-start: 4px;
-    font-size: 14px;
+    margin-inline-start: 12px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--color-gray-700);
     background: none;
-    border: 1px solid var(--color-gray-200);
+    border: 2px solid var(--color-gray-200);
     border-radius: 8px;
     white-space: nowrap;
     transition: all .15s ease;
@@ -399,15 +381,6 @@
         Testimonials
        </a>
       </div>
-      <button aria-label="Change language, current language English" class="Header_langSwitcher__p6Vt3" type="button">
-       <span class="Header_langFlag__k2Wq8" aria-hidden="true">
-        🇬🇧
-       </span>
-       English
-       <svg class="Header_langChevron__j8Ln4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <polyline points="6 9 12 15 18 9"></polyline>
-       </svg>
-      </button>
       <div class="external_authButtons__SPDBD">
        <a class="ui-btn ui-btn-small ui-btn-secondary" href="/auth/login">
         Login
@@ -415,6 +388,15 @@
        <a class="ui-btn ui-btn-small ui-btn-primary" href="/auth/signup">
         Sign Up For Free
        </a>
+       <button aria-label="Change language, current language English" class="Header_langSwitcher__p6Vt3" type="button">
+        <span class="Header_langFlag__k2Wq8" aria-hidden="true">
+         🇬🇧
+        </span>
+        English
+        <svg class="Header_langChevron__j8Ln4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+         <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+       </button>
       </div>
       <div class="external_mobileMenu__39b0E">
        <button aria-expanded="false" aria-label="Open menu" class="external_menuToggle__ECw4p" type="button">
@@ -437,7 +419,7 @@
          </span>
         </h1>
         <p class="Hero_tagline__daHoJ" data-tagline="true">
-         Learn the skills you need to create awesome things, be productive, and
+         Have fun learning the skills you need to create awesome things, be productive, and
          <strong>
           stay relevant in 2026.
          </strong>
