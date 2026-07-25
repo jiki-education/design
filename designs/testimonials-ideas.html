@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Do Our Students Think? - Ideas</title>
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <style>
+        body {
+            background: var(--color-gray-100);
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            max-width: 1200px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+            text-wrap-style: balance;
+        }
+
+        .page-header p {
+            color: var(--color-gray-600);
+            font-size: 1rem;
+        }
+
+        .idea {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .idea-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .idea-label h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-gray-800);
+        }
+
+        .idea-label span {
+            font-size: 0.85rem;
+            color: var(--color-gray-500);
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--color-gray-900);
+            margin-bottom: 0.75rem;
+            text-wrap-style: balance;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--color-gray-600);
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ---------- Idea 1: Scrolling marquee rows ---------- */
+
+        .marquee-panel {
+            background: #0b1220;
+            border-radius: 20px;
+            padding: 3.5rem 0;
+            overflow: hidden;
+        }
+
+        .marquee-panel .section-heading,
+        .marquee-panel .section-sub {
+            color: #fff;
+            padding: 0 2rem;
+        }
+
+        .marquee-panel .section-sub {
+            color: var(--color-gray-400);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 1.25rem;
+            width: max-content;
+            animation: marquee-scroll 32s linear infinite;
+        }
+
+        .marquee-track.reverse {
+            animation-direction: reverse;
+            animation-duration: 38s;
+        }
+
+        .marquee-row {
+            margin-bottom: 1.25rem;
+        }
+
+        .marquee-row:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        .testimonial-chip {
+            flex-shrink: 0;
+            width: 320px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .testimonial-chip .stars {
+            color: var(--color-amber-400, #f5b400);
+            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-chip p {
+            color: var(--color-gray-200);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0.9rem;
+            text-wrap-style: balance;
+        }
+
+        .chip-author {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .chip-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .chip-author span {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* ---------- Idea 2: Tilted scattered cards ---------- */
+
+        .scatter-panel {
+            background: linear-gradient(160deg, var(--color-blue-50), var(--color-purple-50));
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem;
+        }
+
+        .scatter-grid {
+            max-width: 980px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem 1.5rem;
+        }
+
+        .scatter-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(30, 41, 59, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: default;
+        }
+
+        .scatter-card:nth-child(1) { transform: rotate(-3deg); }
+        .scatter-card:nth-child(2) { transform: rotate(2deg) translateY(1.25rem); }
+        .scatter-card:nth-child(3) { transform: rotate(-1.5deg); }
+        .scatter-card:nth-child(4) { transform: rotate(1.5deg); }
+        .scatter-card:nth-child(5) { transform: rotate(-2deg) translateY(1.25rem); }
+        .scatter-card:nth-child(6) { transform: rotate(3deg); }
+
+        .scatter-card:hover {
+            transform: rotate(0deg) translateY(-6px) scale(1.03) !important;
+            box-shadow: 0 18px 40px rgba(30, 41, 59, 0.16);
+        }
+
+        .scatter-card .stars {
+            color: #f5b400;
+            font-size: 0.9rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .scatter-card p {
+            color: var(--color-gray-700);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-wrap-style: balance;
+        }
+
+        /* ---------- Idea 3: Confetti-burst spotlight carousel ---------- */
+
+        .spotlight-panel {
+            position: relative;
+            background: linear-gradient(135deg, var(--color-purple-600), var(--color-blue-600));
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            overflow: hidden;
+        }
+
+        .spotlight-panel .section-heading,
+        .spotlight-panel .section-sub {
+            color: #fff;
+        }
+
+        .spotlight-panel .section-sub {
+            color: rgba(255,255,255,0.75);
+        }
+
+        .confetti {
+            position: absolute;
+            border-radius: 3px;
+            opacity: 0.7;
+            animation: confetti-float 6s ease-in-out infinite;
+        }
+
+        @keyframes confetti-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(180deg); }
+        }
+
+        .spotlight-card {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.98);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .spotlight-quote-mark {
+            font-size: 3.5rem;
+            line-height: 1;
+            color: var(--color-purple-300);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .spotlight-card p.quote {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin-bottom: 1.5rem;
+            text-wrap-style: balance;
+        }
+
+        .spotlight-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .spotlight-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--color-purple-400), var(--color-blue-400));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .spotlight-author-info {
+            text-align: left;
+        }
+
+        .spotlight-author-info strong {
+            display: block;
+            color: var(--color-gray-900);
+            font-size: 0.95rem;
+        }
+
+        .spotlight-author-info span {
+            color: var(--color-gray-500);
+            font-size: 0.85rem;
+        }
+
+        .spotlight-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .spotlight-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-gray-300);
+        }
+
+        .spotlight-dot.active {
+            background: var(--color-purple-500);
+            width: 22px;
+            border-radius: 999px;
+            transition: width 0.2s ease;
+        }
+
+        /* ---------- Idea 4: Sticker wall with bouncy hover ---------- */
+
+        .sticker-panel {
+            background: var(--color-amber-50, #fffbeb);
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem;
+        }
+
+        .sticker-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .sticker-card {
+            width: 260px;
+            background: #fff;
+            border: 3px solid var(--color-gray-900);
+            border-radius: 18px;
+            padding: 1.25rem 1.4rem;
+            box-shadow: 5px 5px 0 var(--color-gray-900);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .sticker-card:nth-child(2n) {
+            margin-top: 1.5rem;
+        }
+
+        .sticker-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--color-gray-900);
+        }
+
+        .sticker-emoji {
+            font-size: 1.5rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            animation: sticker-wobble 3s ease-in-out infinite;
+        }
+
+        .sticker-card:nth-child(2) .sticker-emoji { animation-delay: 0.4s; }
+        .sticker-card:nth-child(3) .sticker-emoji { animation-delay: 0.8s; }
+        .sticker-card:nth-child(4) .sticker-emoji { animation-delay: 1.2s; }
+
+        @keyframes sticker-wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+        }
+
+        .sticker-card p {
+            color: var(--color-gray-800);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.9rem;
+            font-weight: 500;
+            text-wrap-style: balance;
+        }
+
+        .sticker-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--color-gray-900);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-track,
+            .confetti,
+            .sticker-emoji {
+                animation: none !important;
+            }
+        }
+
+        /* ---------- Idea 5: Photo marquee with location ---------- */
+
+        .photo-chip {
+            flex-shrink: 0;
+            width: 300px;
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 14px;
+            padding: 1.25rem 1.4rem;
+            box-shadow: 0 4px 14px rgba(30, 41, 59, 0.06);
+        }
+
+        .photo-chip .stars {
+            color: #f5b400;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .photo-chip p {
+            color: var(--color-gray-700);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-wrap-style: balance;
+        }
+
+        .photo-author {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .photo-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .photo-author-info strong {
+            display: block;
+            color: var(--color-gray-900);
+            font-size: 0.9rem;
+        }
+
+        .photo-author-info .location {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--color-gray-500);
+            font-size: 0.8rem;
+        }
+
+        .photo-author-info .location svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+        }
+
+        .photo-marquee-panel {
+            background: var(--color-blue-50);
+            border-radius: 20px;
+            padding: 3.5rem 0;
+            overflow: hidden;
+        }
+
+        .photo-marquee-panel .section-heading,
+        .photo-marquee-panel .section-sub {
+            padding: 0 2rem;
+        }
+
+        .photo-marquee-track {
+            display: flex;
+            gap: 1.25rem;
+            width: max-content;
+            animation: marquee-scroll 40s linear infinite;
+        }
+
+        .photo-marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* ---------- Idea 6: World map pins ---------- */
+
+        .map-panel {
+            position: relative;
+            background: var(--color-gray-900);
+            border-radius: 20px;
+            padding: 3.5rem 2rem calc(4.5rem + 40px);
+            overflow: hidden;
+        }
+
+        .map-panel .section-heading,
+        .map-panel .section-sub {
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .map-panel .section-sub {
+            color: var(--color-gray-400);
+        }
+
+        .map-dots {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.14) 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            mask-image: radial-gradient(ellipse 60% 70% at 50% 60%, #000 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 60%, #000 40%, transparent 80%);
+        }
+
+        .map-image-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .map-pins {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            height: 340px;
+            margin: 0 auto;
+        }
+
+        .map-pin {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: pin-bob 3.5s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .map-pin:hover {
+            z-index: 10;
+            animation-play-state: paused;
+        }
+
+        .map-pin img {
+            width: 52px;
+            height: 52px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 3px solid var(--color-purple-400);
+            box-shadow: 0 0 0 6px rgba(168, 85, 247, 0.18);
+        }
+
+        .map-pin img,
+        .map-pin-label {
+            transition: opacity 0.4s ease;
+        }
+
+        .map-pin.is-swapping img,
+        .map-pin.is-swapping .map-pin-label {
+            opacity: 0;
+        }
+
+        .map-pin-label {
+            margin-top: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 999px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.75rem;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .map-pin-label strong {
+            font-weight: 700;
+        }
+
+        .map-pin-quote {
+            position: absolute;
+            top: 88px;
+            left: 50%;
+            width: 230px;
+            background: #fff;
+            border: 2px solid var(--color-purple-200);
+            border-radius: 16px;
+            padding: 1rem calc(1.1rem - 5px);
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--color-gray-700);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.12), 0 0 24px rgba(168, 85, 247, 0.25);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translate(-50%, 4px);
+            text-wrap-style: balance;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .map-pin-quote::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-top: 2px solid var(--color-purple-200);
+            border-left: 2px solid var(--color-purple-200);
+            box-shadow: -2px -2px 8px rgba(168, 85, 247, 0.2);
+        }
+
+        .map-pin-quote-text {
+            margin-bottom: 0.6rem;
+        }
+
+        .map-pin-quote-text strong {
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .map-pin-status {
+            display: inline-flex;
+            align-self: center;
+            background: none;
+            color: var(--color-gray-400);
+            border-radius: 999px;
+            padding: 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .map-pin:hover .map-pin-quote {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @keyframes pin-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .map-footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--color-gray-400);
+            font-size: 0.9rem;
+            margin-top: calc(2.5rem + 30px);
+        }
+
+        .map-footer-link {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* ---------- Idea 7: Floating bubble cluster ---------- */
+
+        .bubble-panel {
+            position: relative;
+            background: linear-gradient(160deg, var(--color-green-50), var(--color-blue-50));
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4.5rem;
+            overflow: hidden;
+        }
+
+        .bubble-field {
+            position: relative;
+            max-width: 1000px;
+            height: 380px;
+            margin: 0 auto;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 190px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 12px 28px rgba(30, 41, 59, 0.1);
+            text-align: center;
+            animation: bubble-float 5s ease-in-out infinite;
+        }
+
+        .bubble img {
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            object-fit: cover;
+            margin-bottom: 0.6rem;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 3px var(--color-green-300);
+        }
+
+        .bubble strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--color-gray-900);
+        }
+
+        .bubble .location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            color: var(--color-gray-500);
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bubble .location svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .bubble p {
+            font-size: 0.78rem;
+            color: var(--color-gray-600);
+            line-height: 1.4;
+            text-wrap-style: balance;
+        }
+
+        @keyframes bubble-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(1deg); }
+        }
+
+        /* ---------- Idea 8: Flip cards (hover reveals flag + status) ---------- */
+
+        .flip-panel {
+            background: var(--color-purple-50);
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem;
+        }
+
+        .flip-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .flip-card {
+            perspective: 1200px;
+            height: 240px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flip-front {
+            background: #fff;
+            box-shadow: 0 6px 18px rgba(30, 41, 59, 0.08);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.6rem;
+        }
+
+        .flip-front img {
+            width: 64px;
+            height: 64px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 3px solid var(--color-purple-200);
+        }
+
+        .flip-front strong {
+            display: block;
+            color: var(--color-gray-900);
+            font-size: 0.95rem;
+        }
+
+        .flip-front .stars {
+            color: #f5b400;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        .flip-front .hint {
+            color: var(--color-gray-400);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.3rem;
+        }
+
+        .flip-back {
+            background: linear-gradient(150deg, var(--color-purple-600), var(--color-blue-600));
+            color: #fff;
+            transform: rotateY(180deg);
+            justify-content: center;
+            text-align: center;
+            gap: 0.75rem;
+        }
+
+        .flip-back .flag {
+            font-size: 2.25rem;
+            line-height: 1;
+        }
+
+        .flip-back .flip-location {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .flip-back .flip-status {
+            display: inline-flex;
+            align-self: center;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .flip-back p {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.4;
+            text-wrap-style: balance;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .photo-marquee-track,
+            .map-pin,
+            .bubble {
+                animation: none !important;
+            }
+
+            .flip-card-inner {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <div class="page-header">
+        <h1>What Do Our Students Think? — Ideas</h1>
+        <p>Concepts for the testimonials section that lean into playful motion instead of a static grid of quote cards — the first four use initials-only avatars, ideas 5–7 add profile photos and student locations, and idea 8 hides the flag/location/status behind a hover flip.</p>
+    </div>
+
+    <!-- Idea 1: Scrolling marquee rows -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>1. Infinite scrolling marquee</h2>
+            <span>Two rows of quote chips drifting in opposite directions, pause on hover</span>
+        </div>
+        <div class="marquee-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+
+            <div class="marquee-row">
+                <div class="marquee-track">
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I went from not understanding loops at all to actually enjoying debugging. Jiki explains things like a patient friend."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
+                            <span>Maya K.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
+                            <span>James T.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
+                            <span>Ade O.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-amber-500, #d97706);">SP</div>
+                            <span>Sara P.</span>
+                        </div>
+                    </div>
+                    <!-- duplicate set for seamless loop -->
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I went from not understanding loops at all to actually enjoying debugging. Jiki explains things like a patient friend."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
+                            <span>Maya K.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
+                            <span>James T.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
+                            <span>Ade O.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-amber-500, #d97706);">SP</div>
+                            <span>Sara P.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="marquee-row">
+                <div class="marquee-track reverse">
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"Coming from zero coding background, I never felt lost. Every concept builds on the last."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
+                            <span>Ravi N.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I've tried three other platforms. This is the only one where I actually finished a course."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
+                            <span>Lucy F.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The certificate felt earned, not handed out. I was proud to post it on LinkedIn."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
+                            <span>Dan W.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"My 12 year old is now teaching me things. That's how good the pacing is."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-amber-600, #b45309);">HC</div>
+                            <span>Hana C.</span>
+                        </div>
+                    </div>
+                    <!-- duplicate set for seamless loop -->
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"Coming from zero coding background, I never felt lost. Every concept builds on the last."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
+                            <span>Ravi N.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"I've tried three other platforms. This is the only one where I actually finished a course."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
+                            <span>Lucy F.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"The certificate felt earned, not handed out. I was proud to post it on LinkedIn."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
+                            <span>Dan W.</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-chip">
+                        <div class="stars">★★★★★</div>
+                        <p>"My 12 year old is now teaching me things. That's how good the pacing is."</p>
+                        <div class="chip-author">
+                            <div class="chip-avatar" style="background: var(--color-amber-600, #b45309);">HC</div>
+                            <span>Hana C.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 2: Tilted scattered cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>2. Scattered polaroid cards</h2>
+            <span>Slightly rotated cards that straighten and lift on hover, like a corkboard of notes</span>
+        </div>
+        <div class="scatter-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+            <div class="scatter-grid">
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
+                        <span style="color: var(--color-gray-800);">Maya K.</span>
+                    </div>
+                </div>
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The bite-sized exercises kept me coming back every day."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
+                        <span style="color: var(--color-gray-800);">James T.</span>
+                    </div>
+                </div>
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I finally understand recursion. Didn't think that sentence would ever be true."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
+                        <span style="color: var(--color-gray-800);">Ade O.</span>
+                    </div>
+                </div>
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Coming from zero coding background, I never felt lost."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
+                        <span style="color: var(--color-gray-800);">Ravi N.</span>
+                    </div>
+                </div>
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I've tried three other platforms. This is the only one I actually finished."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
+                        <span style="color: var(--color-gray-800);">Lucy F.</span>
+                    </div>
+                </div>
+                <div class="scatter-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The certificate felt earned, not handed out."</p>
+                    <div class="chip-author">
+                        <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
+                        <span style="color: var(--color-gray-800);">Dan W.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 3: Confetti spotlight carousel -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>3. Confetti spotlight carousel</h2>
+            <span>One big featured quote at a time, floating confetti dots behind it, dot pagination below</span>
+        </div>
+        <div class="spotlight-panel">
+            <div class="confetti" style="top: 12%; left: 8%; width: 12px; height: 12px; background: var(--color-amber-300, #fcd34d);"></div>
+            <div class="confetti" style="top: 22%; left: 88%; width: 10px; height: 10px; background: var(--color-green-300); animation-delay: 1s;"></div>
+            <div class="confetti" style="top: 70%; left: 12%; width: 14px; height: 14px; background: var(--color-blue-200); animation-delay: 2s;"></div>
+            <div class="confetti" style="top: 78%; left: 82%; width: 10px; height: 10px; background: var(--color-amber-300, #fcd34d); animation-delay: 0.5s;"></div>
+            <div class="confetti" style="top: 15%; left: 50%; width: 8px; height: 8px; background: #fff; animation-delay: 1.5s;"></div>
+            <div class="confetti" style="top: 85%; left: 45%; width: 12px; height: 12px; background: var(--color-green-300); animation-delay: 2.5s;"></div>
+
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+
+            <div class="spotlight-card">
+                <div class="spotlight-quote-mark">"</div>
+                <p class="quote">I finally understand recursion. Genuinely didn't think that sentence would ever be true — Jiki broke it down in a way three other courses couldn't.</p>
+                <div class="spotlight-author">
+                    <div class="spotlight-avatar">AO</div>
+                    <div class="spotlight-author-info">
+                        <strong>Ade O.</strong>
+                        <span>Beta student, 4 courses completed</span>
+                    </div>
+                </div>
+                <div class="spotlight-dots">
+                    <div class="spotlight-dot active"></div>
+                    <div class="spotlight-dot"></div>
+                    <div class="spotlight-dot"></div>
+                    <div class="spotlight-dot"></div>
+                    <div class="spotlight-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 4: Sticker wall -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>4. Sticker wall</h2>
+            <span>Bold outlined cards with a hard drop-shadow and wobbling emoji, punchy and playful</span>
+        </div>
+        <div class="sticker-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+            <div class="sticker-grid">
+                <div class="sticker-card">
+                    <span class="sticker-emoji">🎉</span>
+                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
+                    <span class="sticker-tag">Maya K. · 5★</span>
+                </div>
+                <div class="sticker-card">
+                    <span class="sticker-emoji">🔥</span>
+                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
+                    <span class="sticker-tag">James T. · 5★</span>
+                </div>
+                <div class="sticker-card">
+                    <span class="sticker-emoji">🤯</span>
+                    <p>"I finally understand recursion. Didn't think that sentence would ever be true."</p>
+                    <span class="sticker-tag">Ade O. · 5★</span>
+                </div>
+                <div class="sticker-card">
+                    <span class="sticker-emoji">💪</span>
+                    <p>"Coming from zero coding background, I never felt lost once."</p>
+                    <span class="sticker-tag">Ravi N. · 5★</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 5: Photo marquee with location -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>5. Photo marquee with location</h2>
+            <span>Same scrolling-marquee motion as Idea 1, but each chip carries a real profile photo and a city/country</span>
+        </div>
+        <div class="photo-marquee-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+            <div class="photo-marquee-track">
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
+                        <div class="photo-author-info">
+                            <strong>Maya K.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Manchester, UK
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
+                        <div class="photo-author-info">
+                            <strong>James T.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Austin, USA
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
+                        <div class="photo-author-info">
+                            <strong>Ade O.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Lagos, Nigeria
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
+                        <div class="photo-author-info">
+                            <strong>Sara P.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Sydney, Australia
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- duplicate set for seamless loop -->
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
+                        <div class="photo-author-info">
+                            <strong>Maya K.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Manchester, UK
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
+                        <div class="photo-author-info">
+                            <strong>James T.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Austin, USA
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
+                        <div class="photo-author-info">
+                            <strong>Ade O.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Lagos, Nigeria
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="photo-chip">
+                    <div class="stars">★★★★★</div>
+                    <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
+                    <div class="photo-author">
+                        <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
+                        <div class="photo-author-info">
+                            <strong>Sara P.</strong>
+                            <span class="location">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                Sydney, Australia
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 6: World map pins -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>6. World map pins</h2>
+            <span>Student photos sit as pins on a dotted world map, gently bobbing; hover a pin to reveal their status badge and quote</span>
+        </div>
+        <div class="map-panel">
+            <div class="map-dots"></div>
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Loved by students in 40+ countries. Hover a photo to read their story.</p>
+            <div class="map-pins" id="map-pins">
+                <img class="map-image-overlay" src="assets/world-map.svg" alt="">
+                <div class="map-pin" data-pin="0" style="top: 10%; left: 18%; animation-delay: 0s;">
+                    <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                    <div class="map-pin-label"><strong>Fred</strong> · 🇬🇧 Manchester, UK</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"As someone with <strong>no previous coding experience</strong>, I've been blown away with the <strong>quality of this course</strong>."</span>
+                        <span class="map-pin-status">Total Beginner</span>
+                    </div>
+                </div>
+                <div class="map-pin" data-pin="1" style="top: 30%; left: 38%; animation-delay: 0.6s;">
+                    <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                    <div class="map-pin-label"><strong>Shaun</strong> · 🇳🇬 Lagos, Nigeria</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some."</span>
+                        <span class="map-pin-status">Absolute Beginner</span>
+                    </div>
+                </div>
+                <div class="map-pin" data-pin="2" style="top: 8%; left: 62%; animation-delay: 1.2s;">
+                    <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                    <div class="map-pin-label"><strong>Lucas</strong> · 🇯🇵 Tokyo, Japan</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"Learning while actually coding <strong>has made it pretty fun</strong>. It's <strong>such a pleasure</strong> to be part of it!"</span>
+                        <span class="map-pin-status">Total Beginner</span>
+                    </div>
+                </div>
+                <div class="map-pin" data-pin="3" style="top: 42%; left: 8%; animation-delay: 1.8s;">
+                    <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                    <div class="map-pin-label"><strong>Nolan</strong> · 🇺🇸 Austin, USA</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"Programming <strong>always felt overwhelming</strong>. The course provided an <strong>excellent, guided path to self-sufficiency</strong>."</span>
+                        <span class="map-pin-status">Beginner</span>
+                    </div>
+                </div>
+                <div class="map-pin" data-pin="4" style="top: 50%; left: 82%; animation-delay: 2.4s;">
+                    <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                    <div class="map-pin-label"><strong>RedRobio</strong> · 🇦🇺 Sydney, Australia</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"This course has pushed me past what I thought were personal limitations, and <strong>increased my confidence and motivation</strong>."</span>
+                        <span class="map-pin-status">Junior Developer</span>
+                    </div>
+                </div>
+                <div class="map-pin" data-pin="5" style="top: 62%; left: 46%; animation-delay: 3s;">
+                    <img src="assets/avatars/avatar-placeholder-2.png" alt="Matt">
+                    <div class="map-pin-label"><strong>Matt</strong> · 🇧🇷 São Paulo, Brazil</div>
+                    <div class="map-pin-quote">
+                        <span class="map-pin-quote-text">"The teaching style — <strong>full of effective analogies</strong> — really clicked with me. Fantastic mentors, teaching, community."</span>
+                        <span class="map-pin-status">Python Dev</span>
+                    </div>
+                </div>
+            </div>
+            <p class="map-footer">These are some extracts from what our beta users said. <a href="/testimonials" class="map-footer-link">Read the full versions here!</a></p>
+        </div>
+    </div>
+
+    <!-- Idea 7: Floating bubble cluster -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>7. Floating bubble cluster</h2>
+            <span>Small photo cards bob up and down at staggered speeds, each tagged with a location pin</span>
+        </div>
+        <div class="bubble-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">These are some extracts from what our beta users said.</p>
+            <div class="bubble-field">
+                <div class="bubble" style="top: 0%; left: 4%; animation-delay: 0s;">
+                    <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
+                    <strong>Maya K.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Manchester, UK
+                    </span>
+                    <p>"Loops finally clicked, and now I actually enjoy debugging."</p>
+                </div>
+                <div class="bubble" style="top: 18%; left: 32%; animation-delay: 0.8s;">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
+                    <strong>James T.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Austin, USA
+                    </span>
+                    <p>"Bite-sized exercises kept me coming back every day."</p>
+                </div>
+                <div class="bubble" style="top: 2%; left: 62%; animation-delay: 1.6s;">
+                    <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
+                    <strong>Ade O.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Lagos, Nigeria
+                    </span>
+                    <p>"Finally understand recursion. Didn't think that day would come."</p>
+                </div>
+                <div class="bubble" style="top: 24%; left: 88%; animation-delay: 2.4s;">
+                    <img src="https://i.pravatar.cc/100?img=15" alt="Kenji M.">
+                    <strong>Kenji M.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Tokyo, Japan
+                    </span>
+                    <p>"Learned more in a month than a semester of school."</p>
+                </div>
+                <div class="bubble" style="top: 52%; left: 16%; animation-delay: 1.2s;">
+                    <img src="https://i.pravatar.cc/100?img=44" alt="Lucy F.">
+                    <strong>Lucy F.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        São Paulo, Brazil
+                    </span>
+                    <p>"The only platform where I actually finished a course."</p>
+                </div>
+                <div class="bubble" style="top: 58%; left: 46%; animation-delay: 2s;">
+                    <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
+                    <strong>Sara P.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Sydney, Australia
+                    </span>
+                    <p>"Instant feedback made every mistake a lesson, not a dead end."</p>
+                </div>
+                <div class="bubble" style="top: 46%; left: 76%; animation-delay: 0.4s;">
+                    <img src="https://i.pravatar.cc/100?img=64" alt="Hana C.">
+                    <strong>Hana C.</strong>
+                    <span class="location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        Seoul, South Korea
+                    </span>
+                    <p>"My 12 year old is now teaching me things I learned on Jiki."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 8: Flip cards revealing flag + status -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>8. Flip cards</h2>
+            <span>Front shows photo, name and rating; hovering flips the card 180° to reveal a flag, location, and skill-level badge</span>
+        </div>
+        <div class="flip-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Hover a card to see where they're from and where they started.</p>
+            <div class="flip-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
+                            <strong>Maya K.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇬🇧</div>
+                            <div class="flip-location">Manchester, UK</div>
+                            <span class="flip-status">Total Beginner</span>
+                            <p>"Loops finally clicked, and now I actually enjoy debugging."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
+                            <strong>James T.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇺🇸</div>
+                            <div class="flip-location">Austin, USA</div>
+                            <span class="flip-status">Intermediate Dev</span>
+                            <p>"Bite-sized exercises kept me coming back every day."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
+                            <strong>Ade O.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇳🇬</div>
+                            <div class="flip-location">Lagos, Nigeria</div>
+                            <span class="flip-status">Beginner</span>
+                            <p>"Finally understand recursion. Didn't think that day would come."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=15" alt="Kenji M.">
+                            <strong>Kenji M.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇯🇵</div>
+                            <div class="flip-location">Tokyo, Japan</div>
+                            <span class="flip-status">Intermediate Dev</span>
+                            <p>"Learned more in a month than a semester of school."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=44" alt="Lucy F.">
+                            <strong>Lucy F.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇧🇷</div>
+                            <div class="flip-location">São Paulo, Brazil</div>
+                            <span class="flip-status">Total Beginner</span>
+                            <p>"The only platform where I actually finished a course."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
+                            <strong>Sara P.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇦🇺</div>
+                            <div class="flip-location">Sydney, Australia</div>
+                            <span class="flip-status">Beginner</span>
+                            <p>"Instant feedback made every mistake a lesson, not a dead end."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=64" alt="Hana C.">
+                            <strong>Hana C.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇰🇷</div>
+                            <div class="flip-location">Seoul, South Korea</div>
+                            <span class="flip-status">Total Beginner</span>
+                            <p>"My 12 year old is now teaching me things I learned on Jiki."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-face flip-front">
+                            <img src="https://i.pravatar.cc/100?img=68" alt="Dan W.">
+                            <strong>Dan W.</strong>
+                            <div class="stars">★★★★★</div>
+                            <span class="hint">Hover to reveal</span>
+                        </div>
+                        <div class="flip-face flip-back">
+                            <div class="flag">🇨🇦</div>
+                            <div class="flip-location">Toronto, Canada</div>
+                            <span class="flip-status">Intermediate Dev</span>
+                            <p>"The certificate felt earned, not handed out."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Idea 6: rotate the 6 visible map pins through the full pool of real
+        // jiki.io testimonials, so the visible set keeps changing over time.
+        // Names, photos, statuses and quotes are the real testimonials from
+        // designs/jiki-landing.html; locations/flags are still placeholders
+        // (the source page has no location data).
+        (function () {
+            var TESTIMONIALS = [
+                { name: 'Oleksandra', photo: 'oleksandra.90dd2b03', status: 'Coding Newbie', quote: '"Seeing how much effort, thought, and even love is put into this course, it\'s such a pleasure to be a student here."' },
+                { name: 'Fred', photo: 'fred.b3853af3', status: 'Total Beginner', quote: '"As someone with <strong>no previous coding experience</strong>, I\'ve been blown away with the <strong>quality of this course</strong>."' },
+                { name: 'Shaun', photo: 'shaun.9e697bd5', status: 'Absolute Beginner', quote: '"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some."' },
+                { name: 'Lucas', photo: 'lukas.21b8d43d', status: 'Total Beginner', quote: '"Learning while actually coding <strong>has made it pretty fun</strong>. It\'s <strong>such a pleasure</strong> to be part of it!"' },
+                { name: 'Nolan', photo: 'giantlemur.4a13c7e2', status: 'Beginner', quote: '"Programming <strong>always felt overwhelming</strong>. The course provided an <strong>excellent, guided path to self-sufficiency</strong>."' },
+                { name: 'RedRobio', photo: 'redrobio.dc23bb65', status: 'Junior Developer', quote: '"This course has pushed me past what I thought were personal limitations, and <strong>increased my confidence and motivation</strong>."' },
+                { name: 'Matt', photo: 'assets/avatars/avatar-placeholder-2.png', status: 'Python Dev', quote: '"The teaching style — <strong>full of effective analogies</strong> — really clicked with me. Fantastic mentors, teaching, community."' },
+                { name: 'Abhinav', photo: 'abhinav.958afa66', status: 'Beginner', quote: '"The course provided me an opportunity to <strong>learn from a bonafide master</strong>. <strong>Thank you for making it accessible</strong>."' },
+                { name: 'Laura', photo: 'laura.2d859ba1', status: 'Was in Tutorial Hell', quote: '"This course <strong>does the best job in teaching you the fundamentals</strong>, and <strong>made it fun!</strong>"' },
+                { name: 'Kazzybits', photo: 'kazzybits.20f30eff', status: 'Beginner', quote: '"<strong>How I think about thinking, and about problem solving in general, has changed dramatically</strong>."' },
+                { name: 'Vignesh', photo: 'vignesh.e39fdf21', status: 'Intermediate Dev', quote: '"The clarity and structure <strong>made everything click like never before</strong>, building concepts step-by-step."' },
+                { name: 'Rick', photo: 'ricksn.7570e19d', status: 'Beginner', quote: '"It turned out to be <strong>my greatest discovery of the year!</strong> 100% recommended!"' },
+                { name: 'Robert', photo: 'rob.8efc906e', status: 'Junior Developer', quote: '"<strong>It instills some basic tenets of the coder\'s mindset</strong> that will be invaluable on your journey."' },
+                { name: 'Karen', photo: 'assets/avatars/avatar-placeholder-4.png', status: 'Beginner', quote: '"I have next to no coding experience yet have found this course to be <strong>so intelligently scaffolded</strong>."' },
+                { name: 'Kcash', photo: 'kcash.3dd695be', status: 'Intermediate Dev', quote: '"This course gives you the <strong>tools to think through the process</strong> before even writing a single line of code."' },
+                { name: 'Cpt Drac', photo: 'drac.21d7ae5c', status: 'Total Beginner', quote: '"I\'ve <strong>learned an unbelievable amount</strong> in a few short weeks — <strong>solving problems I would never have thought possible!</strong>"' },
+                { name: 'JJ', photo: 'jj.1c9be5ff', status: 'Junior Developer', quote: '"From the <strong>fun and sleek interface</strong> to the live classes and labs, it all comes together to make <strong>a superb learning experience</strong>."' },
+                { name: 'Nanouss01', photo: 'nanouss01.7ccbd901', status: 'Beginner', quote: '"Enrolling in this programming course was one of the <strong>best decisions I\'ve ever made</strong>."' },
+                { name: 'Thom', photo: 'thom.6047132d', status: 'Beginner', quote: '"You will not believe <strong>how fantastic this course is</strong>! <strong>Jeremy is a master teacher.</strong>"' },
+                { name: 'Chris', photo: 'sharpiemath.421c3f65', status: 'Serial Beginner', quote: '"After years of trying, suddenly, <strong>coding feels possible.</strong>"' }
+            ];
+
+            var LOCATIONS = [
+                '🇬🇧 Manchester, UK',
+                '🇳🇬 Lagos, Nigeria',
+                '🇯🇵 Tokyo, Japan',
+                '🇺🇸 Austin, USA',
+                '🇦🇺 Sydney, Australia',
+                '🇧🇷 São Paulo, Brazil'
+            ];
+
+            var POSITIONS = [
+                { top: '10%', left: '18%' },
+                { top: '30%', left: '38%' },
+                { top: '8%', left: '62%' },
+                { top: '42%', left: '8%' },
+                { top: '50%', left: '82%' },
+                { top: '62%', left: '46%' },
+                { top: '4%', left: '40%' },
+                { top: '58%', left: '14%' },
+                { top: '20%', left: '86%' },
+                { top: '38%', left: '58%' },
+                { top: '66%', left: '68%' }
+            ];
+
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) return;
+
+            var pins = document.querySelectorAll('#map-pins .map-pin');
+            var pointer = pins.length;
+
+            // track which POSITIONS index each pin currently occupies
+            var occupied = Array.prototype.map.call(pins, function (_, i) { return i; });
+
+            function pickFreePosition(excludeIndex) {
+                var candidates = POSITIONS.map(function (_, idx) { return idx; })
+                    .filter(function (idx) { return occupied.indexOf(idx) === -1 || idx === excludeIndex; });
+                return candidates[Math.floor(Math.random() * candidates.length)];
+            }
+
+            function applyTestimonial(pin, testimonial, location) {
+                var isLocalPlaceholder = testimonial.photo.indexOf('assets/') === 0;
+                pin.querySelector('img').src = isLocalPlaceholder
+                    ? testimonial.photo
+                    : 'https://assets.jiki.io/_next/static/media/' + testimonial.photo + '.webp';
+                pin.querySelector('img').alt = testimonial.name;
+                pin.querySelector('.map-pin-label').innerHTML = '<strong>' + testimonial.name + '</strong> · ' + location;
+                pin.querySelector('.map-pin-status').textContent = testimonial.status;
+                pin.querySelector('.map-pin-quote-text').innerHTML = testimonial.quote;
+            }
+
+            var pinCursor = 0;
+
+            setInterval(function () {
+                var i = pinCursor % pins.length;
+                var pin = pins[i];
+                pinCursor++;
+
+                // skip pins currently being hovered so an open tooltip doesn't change under the cursor
+                if (pin.matches(':hover')) return;
+
+                pin.classList.add('is-swapping');
+                setTimeout(function () {
+                    var testimonial = TESTIMONIALS[pointer % TESTIMONIALS.length];
+                    var location = LOCATIONS[pointer % LOCATIONS.length];
+                    applyTestimonial(pin, testimonial, location);
+
+                    var newPosIndex = pickFreePosition(occupied[i]);
+                    occupied[i] = newPosIndex;
+                    pin.style.top = POSITIONS[newPosIndex].top;
+                    pin.style.left = POSITIONS[newPosIndex].left;
+
+                    pin.classList.remove('is-swapping');
+                    pointer++;
+                }, 400);
+            }, 1400);
+        })();
+    </script>
+
+    <script src="../ui-kit/implementation-notes.js"></script>
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+- Concept exploration for the "What do our students think?" testimonials section on the Jiki landing page.
+- **Idea 1 — Marquee**: two rows of quote chips auto-scroll in opposite directions via CSS keyframe animation on a duplicated track (content is doubled to create a seamless loop). Pauses on hover so text stays readable.
+- **Idea 2 — Scattered cards**: each card has a fixed small rotation (nth-child) that resets to 0deg with a lift on hover.
+- **Idea 3 — Spotlight carousel**: single featured quote with floating confetti dots (looping translateY + rotate keyframe) behind the card; dot pagination implies auto-rotation between testimonials.
+- **Idea 4 — Sticker wall**: hard-edged cards with an offset box-shadow "sticker" look; emoji wobble on a slow infinite keyframe, each staggered with animation-delay.
+- **Idea 5 — Photo marquee with location**: same scrolling mechanic as Idea 1, upgraded with a real profile photo and a city/country line (pin icon + text) under each name.
+- **Idea 6 — World map pins**: profile photos sit as pins over a dotted background (CSS radial-gradient dot grid masked to an ellipse) plus a real world-map SVG (\`designs/assets/world-map.svg\`) layered on top at 20% opacity, scoped to the \`.map-pins\` area so it starts below the subheading rather than spanning the whole panel. Each pin always shows a bolded name + flag emoji + city/country in a pill below the photo; pins bob on a staggered keyframe and reveal the student's quote plus a status tag in a tooltip on hover. The tooltip card is styled to match the landing page's testimonial quote cards — white background, 16px radius, \`box-shadow: 0 0 20px rgba(0,0,0,0.12)\`, a 2px purple-200 border, a soft purple glow (\`0 0 24px rgba(168,85,247,0.25)\`), 230px wide with 5px less left/right padding than the default card padding (net of a +20px width and +10px/-15px padding pass). The quote sits first; the status now reads as a subtle sentence-case tag at the bottom (no background/pill, no uppercase transform, \`color: var(--color-gray-400)\`) rather than a bold colored pill, so it doesn't compete with the quote. The caret is a rotated 14px square (\`::before\` with \`transform: rotate(45deg)\`) sharing the same white fill, purple-200 border, and glow as the card, so it reads as one continuous bordered shape pointing from the top of the card up to the name/location pill (not the photo). The card is centered under the pin (\`left: 50%; transform: translate(-50%, ...)\`). Hovered pins get \`z-index: 10\` (base pins sit at \`z-index: 1\`) and their bob animation pauses, so the active tooltip always renders above neighboring photos/pills instead of being clipped underneath them. A footer line below the pin field ("These are some extracts from what our beta users said. Read the full versions here!") mirrors the real subheading copy from the landing page's testimonials section, with the same underlined-link treatment (\`.map-footer-link\`) pointing at \`/testimonials\`.
+- **Idea 6 data note**: names, photos, status labels, and quotes for all 6 visible pins — plus the full rotating pool — are pulled directly from the 21 real testimonials on \`designs/jiki-landing.html\` (quotes trimmed for length), including the same \`<strong>\` emphasis the landing page's testimonial copy uses (\`.map-pin-quote-text strong\` bolds and darkens those phrases, same as \`TestimonialsSection_words__29ncI strong\` on the landing page). The source page has no location data, so cities/countries and flag emoji are still illustrative placeholders, reused cyclically across the pool — swap for real student locations when available. Two students (Matt, Karen) have no real photo on the source page and fall back there to a generic github icon; here they use two of four abstract face illustrations supplied by the designer (\`designs/assets/avatars/avatar-placeholder-1..4.png\`, cropped from the provided reference sheet) instead, picked arbitrarily per person. \`applyTestimonial()\` in the rotation script checks whether \`testimonial.photo\` starts with \`assets/\` (a local placeholder) vs. a bare jiki.io CDN filename, so both sources resolve to a valid \`<img src>\`.
+- **Idea 6 rotation**: a small inline script cycles the 6 visible pins through the full testimonial pool (21 real students) one pin at a time, every 1.4 seconds — that pin fades out, swaps its photo/name/status/quote, jumps to a new spot chosen from an 11-position pool (avoiding spots the other 5 pins currently occupy), and fades back in there before the next pin in round-robin order takes its turn. A pin mid-hover is skipped for its turn so its open tooltip doesn't change under the cursor. Disabled entirely under \`prefers-reduced-motion: reduce\`. This is a lightweight demo of the "always show a changing subset in new places" concept — the real implementation would likely drive this from an API/CMS rather than a hardcoded array.
+- **Idea 7 — Floating bubble cluster**: small photo+quote cards scattered absolutely within a field, each bobbing/rotating slightly on its own staggered animation-delay for an "ambient" playful feel.
+- **Idea 8 — Flip cards**: CSS 3D flip (\`perspective\` + \`rotateY(180deg)\` + \`backface-visibility: hidden\`) triggered on \`:hover\`. Front shows photo/name/rating; back reveals a flag emoji, city/country, and a skill-level badge (Total Beginner / Beginner / Intermediate Dev). Falls back to an instant (non-animated) flip under \`prefers-reduced-motion\`. Note: hover-only reveal means this pattern needs a tap/click equivalent for touch devices when implemented.
+- All animations respect \`prefers-reduced-motion\` and pause/simplify accordingly.
+- Photos use https://i.pravatar.cc placeholder URLs for mockup purposes only — swap in real student photos when implemented. Star ratings, avatars, and colors are placeholder too.
+        `;
+    </script>
+</body>
+</html>
