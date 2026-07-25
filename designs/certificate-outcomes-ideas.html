@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What You Walk Away With - Certificate Section Ideas</title>
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Six concepts for the "Get a verified certificate" section on the landing page.
+
+The brief: make the **outcomes** exciting and concrete, not just the certificate.
+Every idea leads with three payoffs:
+
+1. **A verified certificate** — shareable on LinkedIn / a resume
+2. **A diverse portfolio** — real projects (games, animations, tools), not toy exercises
+3. **True understanding** — you know *why* the code works, not just how to copy it
+
+## Colours
+
+All from the standard palette (\`blue\`, \`purple\`, \`green\`, \`amber\`, \`gray\`).
+Purple is used for the "premium / celebrate" moments, matching the existing
+Jiki bootcamp section styling.
+
+## Assets
+
+The certificate and LinkedIn images are pulled from the live site
+(\`assets.jiki.io\`) so the mockups match the real artwork.
+
+## Notes for whoever picks one
+
+- Ideas 1, 3 and 6 keep the certificate image large and hero-like.
+- Ideas 2 and 4 give equal billing to all three outcomes.
+- Idea 5 is the most compact — good if the page is getting long.
+        `;
+    </script>
+    <style>
+        :root {
+            /* blue */
+            --color-blue-50: #eff6ff;
+            --color-blue-100: #dbeafe;
+            --color-blue-200: #bfdbfe;
+            --color-blue-500: #3b82f6;
+            --color-blue-600: #2563eb;
+            --color-blue-700: #1d4ed8;
+            --color-blue-950: #172554;
+            /* green (emerald) */
+            --color-green-50: #ecfdf5;
+            --color-green-100: #d1fae5;
+            --color-green-200: #a7f3d0;
+            --color-green-500: #10b981;
+            --color-green-600: #059669;
+            --color-green-700: #047857;
+            /* red */
+            --color-red-50: #fef2f2;
+            --color-red-500: #ef4444;
+            --color-red-600: #dc2626;
+            /* amber */
+            --color-amber-50: #fffbeb;
+            --color-amber-100: #fef3c7;
+            --color-amber-200: #fde68a;
+            --color-amber-500: #f59e0b;
+            --color-amber-600: #d97706;
+            --color-amber-700: #b45309;
+            /* gray (slate) */
+            --color-gray-50: #f8fafc;
+            --color-gray-100: #f1f5f9;
+            --color-gray-200: #e2e8f0;
+            --color-gray-300: #cbd5e1;
+            --color-gray-400: #94a3b8;
+            --color-gray-500: #64748b;
+            --color-gray-600: #475569;
+            --color-gray-700: #334155;
+            --color-gray-800: #1e293b;
+            --color-gray-900: #0f172a;
+            --color-gray-950: #020617;
+            /* purple */
+            --color-purple-50: #faf5ff;
+            --color-purple-100: #f3e8ff;
+            --color-purple-200: #e9d5ff;
+            --color-purple-300: #d8b4fe;
+            --color-purple-500: #a855f7;
+            --color-purple-600: #9333ea;
+            --color-purple-700: #7e22ce;
+            --color-purple-900: #581c87;
+        }
+
+        body {
+            background: var(--color-gray-100);
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            max-width: 1200px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+            text-wrap-style: balance;
+        }
+
+        .page-header p {
+            color: var(--color-gray-600);
+            font-size: 1rem;
+            max-width: 780px;
+            text-wrap-style: balance;
+        }
+
+        .idea {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .idea-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .idea-label h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-gray-800);
+        }
+
+        .idea-label span {
+            font-size: 0.85rem;
+            color: var(--color-gray-500);
+        }
+
+        .bubble {
+            display: inline-block;
+            border-radius: 50px;
+            padding: 5px 16px;
+            font-size: 12px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            background: var(--color-purple-600);
+            margin-bottom: 1rem;
+        }
+
+        .section-heading {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--color-gray-900);
+            line-height: 1.15;
+            margin-bottom: 0.85rem;
+            text-wrap-style: balance;
+        }
+
+        .section-sub {
+            color: var(--color-gray-600);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            text-wrap-style: balance;
+        }
+
+        /* ---------- Idea 1: Three outcomes + certificate hero ---------- */
+
+        .panel-1 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+        }
+
+        .head-1 {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 2.75rem;
+        }
+
+        .outcomes-1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .outcome-1 {
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            padding: 1.75rem 1.5rem;
+            background: var(--color-gray-50);
+        }
+
+        .outcome-1 .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .outcome-1 h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.4rem;
+        }
+
+        .outcome-1 p {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        .cert-hero-1 {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 3rem;
+            align-items: center;
+            border-top: 1px solid var(--color-gray-200);
+            padding-top: 3rem;
+        }
+
+        .cert-hero-1 img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.25);
+        }
+
+        .cert-hero-1 h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--color-gray-900);
+            margin-bottom: 0.75rem;
+            text-wrap-style: balance;
+        }
+
+        .cert-hero-1 p {
+            color: var(--color-gray-600);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            text-wrap-style: balance;
+        }
+
+        .linkedin-note {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-blue-700);
+            background: var(--color-blue-50);
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            width: fit-content;
+        }
+
+        /* ---------- Idea 2: Numbered "you'll walk away with" list ---------- */
+
+        .panel-2 {
+            background: linear-gradient(135deg, var(--color-gray-950), var(--color-purple-900));
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+        }
+
+        .head-2 {
+            max-width: 620px;
+            margin-bottom: 2.5rem;
+        }
+
+        .head-2 .section-heading { color: #fff; }
+        .head-2 .section-sub { color: var(--color-gray-300); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .list-2 {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .item-2 {
+            display: flex;
+            gap: 1.1rem;
+        }
+
+        .item-2 .num {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-2 h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
+
+        .item-2 p {
+            color: var(--color-gray-400);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            text-wrap-style: balance;
+        }
+
+        .cert-frame-2 img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .cert-caption-2 {
+            text-align: center;
+            color: var(--color-purple-200);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* ---------- Idea 3: Certificate left, stacked outcome rows right ---------- */
+
+        .panel-3 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .cert-stack-3 {
+            position: relative;
+        }
+
+        .cert-stack-3 img {
+            width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.25);
+            position: relative;
+            z-index: 2;
+        }
+
+        .cert-stack-3::before,
+        .cert-stack-3::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .cert-stack-3::before { transform: rotate(-4deg) translateY(8px); z-index: 0; }
+        .cert-stack-3::after { transform: rotate(2.5deg) translateY(4px); z-index: 1; }
+
+        .rows-3 {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1.75rem;
+        }
+
+        .row-3 {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1.1rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .row-3 .tick {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .row-3 h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .row-3 p {
+            font-size: 0.9rem;
+            color: var(--color-gray-600);
+            line-height: 1.5;
+            text-wrap-style: balance;
+        }
+
+        /* ---------- Idea 4: Portfolio-first — project tiles + certificate ---------- */
+
+        .panel-4 {
+            background: var(--color-gray-50);
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+        }
+
+        .head-4 {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .projects-4 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.9rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .project-4 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 14px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .project-4 .thumb {
+            height: 74px;
+            border-radius: 10px;
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+        }
+
+        .project-4 .name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-gray-800);
+            margin-bottom: 0.15rem;
+        }
+
+        .project-4 .type {
+            font-size: 0.75rem;
+            color: var(--color-gray-500);
+        }
+
+        .split-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .card-4 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            padding: 1.75rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .card-4 .badge {
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .card-4 h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.4rem;
+        }
+
+        .card-4 p {
+            font-size: 0.92rem;
+            color: var(--color-gray-600);
+            line-height: 1.55;
+            text-wrap-style: balance;
+        }
+
+        /* ---------- Idea 5: Compact three-column strip ---------- */
+
+        .panel-5 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .head-5 {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        .head-5 .copy { max-width: 560px; }
+
+        .cols-5 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .col-5 {
+            padding-left: 1.25rem;
+            border-left: 3px solid var(--color-gray-200);
+        }
+
+        .col-5 .eyebrow {
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .col-5 h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+            text-wrap-style: balance;
+        }
+
+        .col-5 p {
+            font-size: 0.92rem;
+            color: var(--color-gray-600);
+            line-height: 1.6;
+            text-wrap-style: balance;
+        }
+
+        /* ---------- Idea 6: Trophy shelf — celebratory, centred ---------- */
+
+        .panel-6 {
+            background: linear-gradient(160deg, var(--color-purple-50), var(--color-blue-50) 55%, #fff);
+            border: 1px solid var(--color-purple-100);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+            text-align: center;
+        }
+
+        .cert-6 {
+            width: 62%;
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            border-radius: 6px;
+            box-shadow: 0 18px 50px rgba(88,28,135,0.28);
+        }
+
+        .pills-6 {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .pill-6 {
+            background: #fff;
+            border: 1px solid var(--color-purple-200);
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-purple-700);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .outcomes-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .outcome-6 {
+            background: rgba(255,255,255,0.75);
+            border: 1px solid var(--color-purple-100);
+            border-radius: 16px;
+            padding: 1.6rem 1.4rem;
+        }
+
+        .outcome-6 h3 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .outcome-6 p {
+            font-size: 0.9rem;
+            color: var(--color-gray-600);
+            line-height: 1.55;
+            text-wrap-style: balance;
+        }
+    </style>
+</head>
+<body class="ui-body">
+
+    <div class="page-header">
+        <h1>"Get a verified certificate" — section ideas</h1>
+        <p>Six concepts for the outcomes section of the Jiki landing page. Each one makes the three payoffs explicit: an official <strong>verified certificate</strong>, a <strong>diverse portfolio</strong> of real projects, and a <strong>true understanding</strong> of how code actually works.</p>
+    </div>
+
+    <!-- Idea 1: Three outcome cards, then the certificate as a hero moment -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>1. Three outcomes, then the certificate</h2>
+            <span>Leads with what you gain; the certificate gets its own hero row underneath</span>
+        </div>
+        <div class="panel-1">
+            <div class="head-1">
+                <div class="bubble">Celebrate your new skills!</div>
+                <h2 class="section-heading">Finish the course with more than a certificate</h2>
+                <p class="section-sub">By the end, you'll have proof of what you've learnt, a body of work to show for it, and — most importantly — you'll actually understand how it all fits together.</p>
+            </div>
+
+            <div class="outcomes-1">
+                <div class="outcome-1">
+                    <div class="icon" style="background: var(--color-purple-600);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    </div>
+                    <h3>A verified certificate</h3>
+                    <p>An official, verifiable certificate for your resume and the Certifications section of your LinkedIn profile.</p>
+                </div>
+                <div class="outcome-1">
+                    <div class="icon" style="background: var(--color-blue-600);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
+                    <h3>A diverse portfolio</h3>
+                    <p>Games, animations, simulations and tools — dozens of real projects you built yourself, from day one of the course.</p>
+                </div>
+                <div class="outcome-1">
+                    <div class="icon" style="background: var(--color-green-600);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2a4.5 4.5 0 0 0-4.4 5.5A4.5 4.5 0 0 0 4 15.5a4.5 4.5 0 0 0 5.5 4.4V2Z"/><path d="M14.5 2a4.5 4.5 0 0 1 4.4 5.5A4.5 4.5 0 0 1 20 15.5a4.5 4.5 0 0 1-5.5 4.4V2Z"/></svg>
+                    </div>
+                    <h3>A true understanding</h3>
+                    <p>You'll know <em>why</em> your code works, not just how to copy it — the mental model that makes every future language easier.</p>
+                </div>
+            </div>
+
+            <div class="cert-hero-1">
+                <div>
+                    <h3>Get a verified certificate</h3>
+                    <p>At the end of the course, we'll issue you an official certificate recognising your completion of the course. Know that when you get it, it will be because you <strong>earned</strong> it.</p>
+                    <div class="linkedin-note">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM2.4 21h5.16V9.5H2.4V21Zm7.9-11.5H15v1.57h.07c.63-1.14 2.17-2.34 4.46-2.34 4.77 0 5.65 3.02 5.65 6.95V21h-5.16v-5.67c0-1.35-.03-3.09-1.94-3.09-1.95 0-2.25 1.47-2.25 2.99V21H10.3V9.5Z"/></svg>
+                        Share your certificate in your network
+                    </div>
+                </div>
+                <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 2: Dark panel, numbered list of what you walk away with -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>2. "What you walk away with" — numbered, dark</h2>
+            <span>Equal billing for all three outcomes; certificate sits alongside as evidence</span>
+        </div>
+        <div class="panel-2">
+            <div class="head-2">
+                <div class="bubble">The end of the course</div>
+                <h2 class="section-heading">What you'll walk away with</h2>
+                <p class="section-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
+            </div>
+            <div class="grid-2">
+                <div class="list-2">
+                    <div class="item-2">
+                        <div class="num">01</div>
+                        <div>
+                            <h3>A verified certificate</h3>
+                            <p>Official and verifiable. Add it to your resume and the Certifications section of your LinkedIn profile — and know you earned it.</p>
+                        </div>
+                    </div>
+                    <div class="item-2">
+                        <div class="num">02</div>
+                        <div>
+                            <h3>A diverse portfolio of real projects</h3>
+                            <p>Space invaders, flappy bird, a maze solver, data visualisations, animations. Dozens of finished projects, all built by you, all yours to show off.</p>
+                        </div>
+                    </div>
+                    <div class="item-2">
+                        <div class="num">03</div>
+                        <div>
+                            <h3>A true understanding of how it all works</h3>
+                            <p>Not memorised syntax. You'll be able to read unfamiliar code, reason about what it's doing, and pick up any new language far faster.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-frame-2">
+                    <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+                    <div class="cert-caption-2">Your certificate, issued at the end of the course</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 3: Stacked certificate image on the left, tick rows on the right -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>3. Stacked certificate + tick rows</h2>
+            <span>Certificate as a physical stack of achievements; outcomes as ticked-off rows</span>
+        </div>
+        <div class="panel-3">
+            <div class="cert-stack-3">
+                <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+            </div>
+            <div>
+                <div class="bubble">Celebrate your new skills!</div>
+                <h2 class="section-heading">Get a verified certificate</h2>
+                <p class="section-sub">At the end of the course we'll issue you an official certificate — but the certificate is only part of what you take away.</p>
+                <div class="rows-3">
+                    <div class="row-3" style="background: var(--color-purple-50); border-color: var(--color-purple-200);">
+                        <div class="tick" style="background: var(--color-purple-600);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div>
+                            <h3>A certificate worth showing</h3>
+                            <p>Verifiable, and ready for your resume or LinkedIn Certifications section.</p>
+                        </div>
+                    </div>
+                    <div class="row-3" style="background: var(--color-blue-50); border-color: var(--color-blue-200);">
+                        <div class="tick" style="background: var(--color-blue-600);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div>
+                            <h3>A diverse portfolio</h3>
+                            <p>Games, animations, tools and simulations — real projects you built from day one.</p>
+                        </div>
+                    </div>
+                    <div class="row-3" style="background: var(--color-green-50); border-color: var(--color-green-200);">
+                        <div class="tick" style="background: var(--color-green-600);">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div>
+                            <h3>A true understanding</h3>
+                            <p>You'll know exactly why your code works — and be able to read anyone else's.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 4: Portfolio-first — show the projects, then certificate + understanding -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>4. Portfolio-first</h2>
+            <span>Shows the actual projects up front, with certificate and understanding as two cards below</span>
+        </div>
+        <div class="panel-4">
+            <div class="head-4">
+                <div class="bubble">Celebrate your new skills!</div>
+                <h2 class="section-heading">You won't just learn to code. You'll have the proof.</h2>
+                <p class="section-sub">Every project you build is yours to keep, show off, and put in front of an employer.</p>
+            </div>
+
+            <div class="projects-4">
+                <div class="project-4">
+                    <div class="thumb" style="background: var(--color-blue-100);">👾</div>
+                    <div class="name">Space Invaders</div>
+                    <div class="type">Game</div>
+                </div>
+                <div class="project-4">
+                    <div class="thumb" style="background: var(--color-amber-100);">🐤</div>
+                    <div class="name">Flappy Bird</div>
+                    <div class="type">Game</div>
+                </div>
+                <div class="project-4">
+                    <div class="thumb" style="background: var(--color-green-100);">🧩</div>
+                    <div class="name">Maze Solver</div>
+                    <div class="type">Algorithm</div>
+                </div>
+                <div class="project-4">
+                    <div class="thumb" style="background: var(--color-purple-100);">🎨</div>
+                    <div class="name">Animations</div>
+                    <div class="type">Creative</div>
+                </div>
+                <div class="project-4">
+                    <div class="thumb" style="background: var(--color-gray-200);">📊</div>
+                    <div class="name">Data Viz</div>
+                    <div class="type">Tool</div>
+                </div>
+            </div>
+
+            <div class="split-4">
+                <div class="card-4">
+                    <div class="badge" style="background: var(--color-purple-600);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    </div>
+                    <div>
+                        <h3>And a verified certificate</h3>
+                        <p>At the end of the course we'll issue you an official certificate recognising your completion — ready for your resume and LinkedIn.</p>
+                    </div>
+                </div>
+                <div class="card-4">
+                    <div class="badge" style="background: var(--color-green-600);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3Z"/><path d="M9 21h6"/></svg>
+                    </div>
+                    <div>
+                        <h3>And you'll know how it all works</h3>
+                        <p>We teach the mental model, not the syntax. You'll understand what's happening under the hood in any language you touch next.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 5: Compact three-column strip -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>5. Compact three-column strip</h2>
+            <span>The tightest version — no certificate image, good if the page is getting long</span>
+        </div>
+        <div class="panel-5">
+            <div class="head-5">
+                <div class="copy">
+                    <div class="bubble">Celebrate your new skills!</div>
+                    <h2 class="section-heading" style="font-size: 2rem;">Three things you'll have at the end</h2>
+                </div>
+                <p class="section-sub" style="max-width: 340px;">Not a vague sense that you "did a course" — real, tangible outcomes you can point at.</p>
+            </div>
+            <div class="cols-5">
+                <div class="col-5" style="border-left-color: var(--color-purple-500);">
+                    <div class="eyebrow" style="color: var(--color-purple-700);">Proof</div>
+                    <h3>A verified certificate</h3>
+                    <p>Official and verifiable, issued when you complete the course. Add it to your resume and the Certifications section of your LinkedIn profile. You'll have earned it.</p>
+                </div>
+                <div class="col-5" style="border-left-color: var(--color-blue-500);">
+                    <div class="eyebrow" style="color: var(--color-blue-700);">Evidence</div>
+                    <h3>A diverse portfolio</h3>
+                    <p>Games, animations, simulations, tools and algorithms — dozens of finished projects, built by you, starting from day one of the course.</p>
+                </div>
+                <div class="col-5" style="border-left-color: var(--color-green-500);">
+                    <div class="eyebrow" style="color: var(--color-green-700);">Skill</div>
+                    <h3>A true understanding</h3>
+                    <p>You'll know why every line works, be able to read code you've never seen, and pick up your next language in a fraction of the time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 6: Celebratory centred layout with certificate hero and skill pills -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>6. Celebratory centred</h2>
+            <span>Certificate front and centre, skill pills for the "understanding", outcomes underneath</span>
+        </div>
+        <div class="panel-6">
+            <div class="bubble">Celebrate your new skills! 🎉</div>
+            <h2 class="section-heading" style="max-width: 720px; margin-inline: auto;">Get a verified certificate — and the skills to back it up</h2>
+            <p class="section-sub" style="max-width: 620px; margin: 0 auto 2.5rem;">At the end of the course we'll issue you an official certificate. But the real prize is everything you'll be able to do with it.</p>
+
+            <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate" class="cert-6">
+
+            <div class="pills-6">
+                <div class="pill-6">✓ Functions &amp; recursion</div>
+                <div class="pill-6">✓ Data structures</div>
+                <div class="pill-6">✓ Debugging</div>
+                <div class="pill-6">✓ Algorithms</div>
+                <div class="pill-6">✓ Objects &amp; classes</div>
+                <div class="pill-6">✓ Reading unfamiliar code</div>
+            </div>
+
+            <div class="outcomes-6">
+                <div class="outcome-6">
+                    <h3>🏆 Certified</h3>
+                    <p>A verifiable certificate for your resume and the Certifications section of your LinkedIn profile.</p>
+                </div>
+                <div class="outcome-6">
+                    <h3>💼 A portfolio</h3>
+                    <p>Dozens of finished projects — games, animations, tools — all built by you and yours to show off.</p>
+                </div>
+                <div class="outcome-6">
+                    <h3>🧠 Real understanding</h3>
+                    <p>You'll know how and why code works, so the next language you learn takes weeks, not months.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

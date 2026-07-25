@@ -863,10 +863,1148 @@
             text-wrap-style: balance;
         }
 
+        /* ---------- Idea 9: Refined star-badge cards ---------- */
+
+        .badge-panel {
+            background: var(--color-gray-50);
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4.5rem;
+        }
+
+        .badge-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .badge-card {
+            position: relative;
+            background: #fff;
+            border-radius: 20px;
+            padding: 1.5rem 1.5rem 3rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-quote-mark {
+            display: inline-block;
+            color: var(--color-gray-300);
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .badge-quote-mark-end {
+            transform: scaleX(-1);
+            margin-inline-start: 4px;
+        }
+
+        .badge-quote-text {
+            font-size: 0.95rem;
+            line-height: 1.55;
+            color: var(--color-gray-700);
+        }
+
+        .badge-quote-text strong {
+            color: var(--color-gray-900);
+            font-weight: 600;
+        }
+
+        .badge-pill {
+            position: absolute;
+            bottom: -20px;
+            inset-inline-end: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            background: #fff;
+            border-radius: 20px;
+            padding: 0.75rem 1.25rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-pill img {
+            position: absolute;
+            top: -14px;
+            inset-inline-end: -14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px var(--color-gray-200);
+        }
+
+        .badge-stars {
+            color: #f5b400;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .badge-pill strong {
+            font-size: 0.9rem;
+            color: var(--color-gray-900);
+        }
+
+        .badge-pill span {
+            font-size: 0.78rem;
+            color: var(--color-gray-500);
+        }
+
+        /* B: accent-colored top edge tied to skill level */
+        .badge-card-accent {
+            border-top: 4px solid var(--color-blue-400);
+        }
+
+        /* C: dark inverted card */
+        .badge-card-dark {
+            background: var(--color-gray-900);
+        }
+
+        .badge-card-dark .badge-quote-mark {
+            color: var(--color-gray-600);
+        }
+
+        .badge-card-dark .badge-quote-text {
+            color: var(--color-gray-300);
+        }
+
+        .badge-card-dark .badge-quote-text strong {
+            color: #fff;
+        }
+
+        .badge-card-dark .badge-pill {
+            background: var(--color-gray-800, #1f2937);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .badge-card-dark .badge-pill strong {
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .badge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- Idea 10: Sticky note wall ---------- */
+
+        .sticky-panel {
+            background-color: #fff;
+            background-image: radial-gradient(var(--color-gray-200) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem;
+        }
+
+        .sticky-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem 1.5rem;
+        }
+
+        .sticky-note {
+            position: relative;
+            border-radius: 4px;
+            padding: 1.5rem 1.25rem 1.25rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .sticky-note:hover {
+            transform: rotate(0deg) scale(1.04) !important;
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .sticky-yellow { background: var(--color-purple-100); }
+        .sticky-pink { background: var(--color-purple-200); }
+        .sticky-blue { background: var(--color-blue-100); }
+        .sticky-green { background: var(--color-blue-50); }
+
+        .sticky-tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 60px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .sticky-note p {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: var(--color-gray-800, #1f2937);
+            margin-bottom: 1rem;
+        }
+
+        .sticky-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .sticky-footer img {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+
+        .sticky-footer div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sticky-footer strong {
+            font-size: 0.85rem;
+            color: var(--color-gray-900);
+        }
+
+        .sticky-footer span {
+            font-size: 0.75rem;
+            color: var(--color-gray-600);
+        }
+
+        @media (max-width: 900px) {
+            .sticky-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ---------- Idea 12: Sticky note wall, 3-wide, real testimonials ---------- */
+
+        .sticky-panel-wide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sticky-grid-3 {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            grid-template-columns: repeat(2, max-content);
+            justify-content: center;
+            gap: 2.5rem 70px;
+        }
+
+        .sticky-grid-3 .sticky-note {
+            max-width: 360px;
+        }
+
+        .sticky-grid-3 .sticky-note p {
+            font-size: 1.05rem;
+        }
+
+        .sticky-grid-3 .sticky-footer img {
+            width: 52px;
+            height: 52px;
+        }
+
+        .sticky-shape {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: sticky-shape-float 7s ease-in-out infinite;
+        }
+
+        .sticky-shape-circle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+
+        .sticky-shape-small {
+            width: 22px;
+            height: 22px;
+        }
+
+        .sticky-shape-blob {
+            width: 60px;
+            height: 46px;
+            border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%;
+        }
+
+        .sticky-shape-triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 34px solid;
+        }
+
+        .sticky-shape-star {
+            font-size: 2rem;
+            line-height: 1;
+            animation-name: sticky-shape-spin;
+        }
+
+        @keyframes sticky-shape-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(12deg); }
+        }
+
+        @keyframes sticky-shape-spin {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(12deg); }
+        }
+
+        @media (max-width: 900px) {
+            .sticky-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sticky-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-shape {
+                display: none;
+            }
+        }
+
+        /* ---------- Idea 11: Chat bubble stream ---------- */
+
+        .chat-panel {
+            background: linear-gradient(160deg, var(--color-purple-600), var(--color-blue-600));
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem;
+        }
+
+        .chat-stream {
+            max-width: 640px;
+            margin: 2rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .chat-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.6rem;
+        }
+
+        .chat-row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            flex-shrink: 0;
+        }
+
+        .chat-bubble {
+            max-width: 420px;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .chat-bubble strong {
+            display: block;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+            opacity: 0.85;
+        }
+
+        .chat-flag {
+            font-size: 0.85rem;
+        }
+
+        .chat-bubble p {
+            margin: 0;
+        }
+
+        .chat-bubble-left {
+            background: #fff;
+            color: var(--color-gray-800, #1f2937);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble-right {
+            background: var(--color-amber-300, #fcd34d);
+            color: var(--color-gray-900);
+            border-bottom-right-radius: 4px;
+        }
+
+        /* ---------- Idea 13: Color-block confetti cards ---------- */
+
+        .colorblock-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .colorblock-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            padding: 2.25rem 1.75rem 1.75rem;
+            color: #fff;
+            transform: rotate(var(--tilt, 0deg));
+            transition: transform 0.25s ease;
+        }
+
+        .colorblock-card:hover {
+            transform: rotate(0deg) scale(1.03);
+        }
+
+        .colorblock-card::before {
+            content: "\201C";
+            position: absolute;
+            top: -1.5rem;
+            left: 0.75rem;
+            font-size: 7rem;
+            font-family: Georgia, serif;
+            font-weight: 700;
+            opacity: 0.2;
+            line-height: 1;
+        }
+
+        .colorblock-purple { background: linear-gradient(135deg, var(--color-purple-600), var(--color-purple-400)); }
+        .colorblock-blue { background: linear-gradient(135deg, var(--color-blue-600), var(--color-blue-400)); }
+        .colorblock-green { background: linear-gradient(135deg, var(--color-green-600, #059669), var(--color-green-500)); }
+        .colorblock-red { background: linear-gradient(135deg, var(--color-red-600, #dc2626), var(--color-red-400)); }
+
+        .colorblock-quote {
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1.75rem;
+            text-wrap: balance;
+        }
+
+        .colorblock-footer {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .colorblock-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .colorblock-footer strong {
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .colorblock-footer span {
+            font-size: 0.8rem;
+            opacity: 0.85;
+        }
+
+        @media (max-width: 900px) {
+            .colorblock-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .colorblock-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 14: Rainbow ticket marquee ---------- */
+
+        .ticket-panel {
+            background: var(--color-gray-900);
+            border-radius: 20px;
+            padding: 3.5rem 0;
+            overflow: hidden;
+        }
+
+        .ticket-panel .section-heading,
+        .ticket-panel .section-sub {
+            color: #fff;
+            padding: 0 2rem;
+        }
+
+        .ticket-panel .section-sub {
+            color: var(--color-gray-400);
+        }
+
+        .ticket-track {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+            padding: 0.5rem 2rem;
+            animation: ticket-scroll 34s linear infinite;
+        }
+
+        .ticket-track:hover {
+            animation-play-state: paused;
+        }
+
+        .ticket {
+            position: relative;
+            flex: 0 0 270px;
+            border-radius: 14px;
+            padding: 1.5rem 1.25rem;
+            color: #fff;
+            background-image: radial-gradient(circle at 0 50%, var(--color-gray-900) 12px, transparent 13px),
+                radial-gradient(circle at 100% 50%, var(--color-gray-900) 12px, transparent 13px);
+        }
+
+        .ticket-purple { background-color: var(--color-purple-500); }
+        .ticket-blue { background-color: var(--color-blue-500); }
+        .ticket-green { background-color: var(--color-green-600, #059669); }
+        .ticket-red { background-color: var(--color-red-500); }
+
+        .ticket-stub {
+            border-left: 2px dashed rgba(255, 255, 255, 0.5);
+            margin-left: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        .ticket p {
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin-bottom: 1rem;
+        }
+
+        .ticket-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .ticket-footer img {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .ticket-footer strong {
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        .ticket-footer span {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        @keyframes ticket-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ---------- Idea 15: Neo-brutalist cards ---------- */
+
+        .brutalist-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .brutalist-card {
+            position: relative;
+            background: #fff;
+            border: 3px solid var(--color-gray-900);
+            border-radius: 12px;
+            padding: 1.75rem 1.5rem;
+            box-shadow: 8px 8px 0 var(--accent, var(--color-purple-500));
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .brutalist-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--accent, var(--color-purple-500));
+        }
+
+        .brutalist-purple { --accent: var(--color-purple-500); }
+        .brutalist-blue { --accent: var(--color-blue-500); }
+        .brutalist-green { --accent: var(--color-green-500); }
+        .brutalist-red { --accent: var(--color-red-500); }
+
+        .brutalist-badge {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            background: var(--accent, var(--color-purple-500));
+            color: #fff;
+            border: 3px solid var(--color-gray-900);
+            border-radius: 999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .brutalist-quote {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--color-gray-800);
+            margin-bottom: 1.5rem;
+            text-wrap: balance;
+        }
+
+        .brutalist-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brutalist-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-gray-900);
+        }
+
+        .brutalist-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-900);
+        }
+
+        .brutalist-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-500);
+        }
+
+        @media (max-width: 900px) {
+            .brutalist-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .brutalist-grid { grid-template-columns: 1fr; }
+        }
+
+        .brutalist-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 980px;
+            gap: 3.5rem 3rem;
+        }
+
+        .brutalist-grid-2 .brutalist-card {
+            padding: 2.25rem 2rem;
+        }
+
+        .brutalist-grid-2 .brutalist-quote {
+            font-size: 1.2rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .brutalist-grid-2 .brutalist-footer img {
+            width: 56px;
+            height: 56px;
+        }
+
+        .brutalist-grid-2 .brutalist-footer strong {
+            font-size: 1.05rem;
+        }
+
+        .brutalist-grid-2 .brutalist-footer span {
+            font-size: 0.88rem;
+        }
+
+        .brutalist-grid-2 .brutalist-badge {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .brutalist-grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 16: Stacked shadow duo cards ---------- */
+
+        .stackshadow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 12px 12px 0;
+        }
+
+        .stackshadow-card {
+            position: relative;
+        }
+
+        .stackshadow-card::before {
+            content: "";
+            position: absolute;
+            inset: 12px -12px -12px 12px;
+            background: var(--accent, var(--color-purple-300));
+            border: 3px solid var(--color-gray-900);
+            border-radius: 16px;
+            z-index: 0;
+        }
+
+        .stackshadow-inner {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border: 4px solid var(--color-gray-900);
+            border-radius: 16px;
+            padding: 1.75rem 1.5rem;
+        }
+
+        .stackshadow-purple { --accent: var(--color-purple-300); }
+        .stackshadow-blue { --accent: var(--color-blue-300); }
+        .stackshadow-green { --accent: var(--color-green-300); }
+        .stackshadow-red { --accent: var(--color-red-300); }
+
+        .stackshadow-quote {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--color-gray-800);
+            margin-bottom: 1.5rem;
+            text-wrap: balance;
+        }
+
+        .stackshadow-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stackshadow-footer img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-gray-900);
+        }
+
+        .stackshadow-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-900);
+        }
+
+        .stackshadow-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-500);
+        }
+
+        @media (max-width: 900px) {
+            .stackshadow-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .stackshadow-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 20: Glass duo cards ---------- */
+
+        .glass-panel {
+            background: linear-gradient(135deg, var(--color-purple-600), var(--color-blue-600));
+            border-radius: 20px;
+            padding: 3.5rem 2rem;
+        }
+
+        .glass-panel .section-heading,
+        .glass-panel .section-sub {
+            color: #fff;
+        }
+
+        .glass-panel .section-sub {
+            color: var(--color-blue-100);
+        }
+
+        .glass-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 18px;
+            padding: 2rem 1.75rem;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .glass-quote {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            text-wrap: pretty;
+        }
+
+        .glass-quote strong {
+            color: var(--color-amber-200, #fde68a);
+        }
+
+        .glass-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .glass-footer img {
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .glass-footer span {
+            font-size: 0.8rem;
+            color: var(--color-blue-100);
+        }
+
+        @media (max-width: 700px) {
+            .glass-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 21: Ribbon-tab duo cards ---------- */
+
+        .ribbon-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 2rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .ribbon-card {
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem 1.75rem 1.75rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-inline-start: 6px solid var(--accent, var(--color-purple-500));
+        }
+
+        .ribbon-purple { --accent: var(--color-purple-500); }
+        .ribbon-blue { --accent: var(--color-blue-500); }
+        .ribbon-green { --accent: var(--color-green-500); }
+        .ribbon-red { --accent: var(--color-red-500); }
+
+        .ribbon-badge {
+            position: absolute;
+            top: 0;
+            right: 1.75rem;
+            background: var(--accent, var(--color-purple-500));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 0.4rem 0.9rem 0.5rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .ribbon-quote {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--color-gray-800);
+            margin-top: 0.75rem;
+            margin-bottom: 1.5rem;
+            text-wrap: pretty;
+        }
+
+        .ribbon-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .ribbon-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            object-fit: cover;
+        }
+
+        .ribbon-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-900);
+        }
+
+        .ribbon-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-500);
+        }
+
+        @media (max-width: 700px) {
+            .ribbon-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 22: Gradient-border duo cards ---------- */
+
+        .gradborder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 2rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .gradborder-card {
+            border-radius: 18px;
+            border: 3px solid transparent;
+            padding: 2rem 1.75rem;
+            background-image:
+                linear-gradient(#fff, #fff),
+                linear-gradient(135deg, var(--accent-from, var(--color-purple-400)), var(--accent-to, var(--color-blue-400)));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .gradborder-purple { --accent-from: var(--color-purple-400); --accent-to: var(--color-blue-400); }
+        .gradborder-blue { --accent-from: var(--color-blue-400); --accent-to: var(--color-green-500); }
+        .gradborder-green { --accent-from: var(--color-green-500); --accent-to: var(--color-amber-400, #fbbf24); }
+        .gradborder-red { --accent-from: var(--color-red-400); --accent-to: var(--color-purple-400); }
+
+        .gradborder-quote {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--color-gray-800);
+            margin-bottom: 1.5rem;
+            text-wrap: pretty;
+        }
+
+        .gradborder-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .gradborder-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            object-fit: cover;
+        }
+
+        .gradborder-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-900);
+        }
+
+        .gradborder-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-500);
+        }
+
+        @media (max-width: 700px) {
+            .gradborder-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 23: Dark neon duo cards ---------- */
+
+        .neon-panel {
+            background: #0b0f1a;
+            border-radius: 20px;
+            padding: 3.5rem 2rem;
+        }
+
+        .neon-panel .section-heading,
+        .neon-panel .section-sub {
+            color: #fff;
+        }
+
+        .neon-panel .section-sub {
+            color: var(--color-gray-400);
+        }
+
+        .neon-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .neon-card {
+            position: relative;
+            background: #12172a;
+            border: 1px solid var(--accent, var(--color-purple-500));
+            border-radius: 16px;
+            padding: 2rem 1.75rem;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 0 24px -4px var(--accent, var(--color-purple-500));
+        }
+
+        .neon-purple { --accent: var(--color-purple-500); }
+        .neon-blue { --accent: var(--color-blue-500); }
+        .neon-green { --accent: var(--color-green-500); }
+        .neon-red { --accent: var(--color-red-500); }
+
+        .neon-quote {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--color-gray-200, #e5e7eb);
+            margin-bottom: 1.5rem;
+            text-wrap: pretty;
+        }
+
+        .neon-quote strong {
+            color: var(--accent, var(--color-purple-400));
+        }
+
+        .neon-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .neon-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 2px solid var(--accent, var(--color-purple-500));
+        }
+
+        .neon-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .neon-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-400);
+        }
+
+        @media (max-width: 700px) {
+            .neon-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ---------- Idea 24: Torn-paper duo cards ---------- */
+
+        .paper-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem 2.5rem;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .paper-card {
+            position: relative;
+            background: #fffdf7;
+            padding: 2rem 1.75rem 2.5rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            clip-path: polygon(
+                0 0, 100% 0, 100% 94%,
+                96% 96%, 92% 93%, 88% 97%, 84% 94%, 80% 98%,
+                76% 94%, 72% 97%, 68% 93%, 64% 96%, 60% 94%,
+                56% 98%, 52% 94%, 48% 97%, 44% 93%, 40% 96%,
+                36% 94%, 32% 98%, 28% 94%, 24% 97%, 20% 93%,
+                16% 96%, 12% 94%, 8% 97%, 4% 93%, 0 96%
+            );
+        }
+
+        .paper-tape {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 70px;
+            height: 24px;
+            background: rgba(255, 224, 130, 0.75);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .paper-quote {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--color-gray-800);
+            margin-bottom: 1.5rem;
+            text-wrap: pretty;
+        }
+
+        .paper-quote strong {
+            color: var(--accent, var(--color-purple-600));
+        }
+
+        .paper-purple { --accent: var(--color-purple-600); }
+        .paper-blue { --accent: var(--color-blue-600); }
+        .paper-green { --accent: var(--color-green-600, #059669); }
+        .paper-red { --accent: var(--color-red-600, #dc2626); }
+
+        .paper-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .paper-footer img {
+            width: 46px;
+            height: 46px;
+            border-radius: 999px;
+            object-fit: cover;
+        }
+
+        .paper-footer strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-900);
+        }
+
+        .paper-footer span {
+            font-size: 0.8rem;
+            color: var(--color-gray-500);
+        }
+
+        @media (max-width: 700px) {
+            .paper-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-track,
+            .confetti,
+            .sticker-emoji {
+                animation: none !important;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .photo-marquee-track,
             .map-pin,
-            .bubble {
+            .bubble,
+            .sticky-shape,
+            .ticket-track {
                 animation: none !important;
             }
 
@@ -879,420 +2017,7 @@
 <body class="ui-body">
     <div class="page-header">
         <h1>What Do Our Students Think? — Ideas</h1>
-        <p>Concepts for the testimonials section that lean into playful motion instead of a static grid of quote cards — the first four use initials-only avatars, ideas 5–7 add profile photos and student locations, and idea 8 hides the flag/location/status behind a hover flip.</p>
-    </div>
-
-    <!-- Idea 1: Scrolling marquee rows -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>1. Infinite scrolling marquee</h2>
-            <span>Two rows of quote chips drifting in opposite directions, pause on hover</span>
-        </div>
-        <div class="marquee-panel">
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-
-            <div class="marquee-row">
-                <div class="marquee-track">
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I went from not understanding loops at all to actually enjoying debugging. Jiki explains things like a patient friend."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
-                            <span>Maya K.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
-                            <span>James T.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
-                            <span>Ade O.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-amber-500, #d97706);">SP</div>
-                            <span>Sara P.</span>
-                        </div>
-                    </div>
-                    <!-- duplicate set for seamless loop -->
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I went from not understanding loops at all to actually enjoying debugging. Jiki explains things like a patient friend."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
-                            <span>Maya K.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
-                            <span>James T.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
-                            <span>Ade O.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-amber-500, #d97706);">SP</div>
-                            <span>Sara P.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="marquee-row">
-                <div class="marquee-track reverse">
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"Coming from zero coding background, I never felt lost. Every concept builds on the last."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
-                            <span>Ravi N.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I've tried three other platforms. This is the only one where I actually finished a course."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
-                            <span>Lucy F.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The certificate felt earned, not handed out. I was proud to post it on LinkedIn."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
-                            <span>Dan W.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"My 12 year old is now teaching me things. That's how good the pacing is."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-amber-600, #b45309);">HC</div>
-                            <span>Hana C.</span>
-                        </div>
-                    </div>
-                    <!-- duplicate set for seamless loop -->
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"Coming from zero coding background, I never felt lost. Every concept builds on the last."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
-                            <span>Ravi N.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"I've tried three other platforms. This is the only one where I actually finished a course."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
-                            <span>Lucy F.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"The certificate felt earned, not handed out. I was proud to post it on LinkedIn."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
-                            <span>Dan W.</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-chip">
-                        <div class="stars">★★★★★</div>
-                        <p>"My 12 year old is now teaching me things. That's how good the pacing is."</p>
-                        <div class="chip-author">
-                            <div class="chip-avatar" style="background: var(--color-amber-600, #b45309);">HC</div>
-                            <span>Hana C.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Idea 2: Tilted scattered cards -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>2. Scattered polaroid cards</h2>
-            <span>Slightly rotated cards that straighten and lift on hover, like a corkboard of notes</span>
-        </div>
-        <div class="scatter-panel">
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-            <div class="scatter-grid">
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-purple-500);">MK</div>
-                        <span style="color: var(--color-gray-800);">Maya K.</span>
-                    </div>
-                </div>
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The bite-sized exercises kept me coming back every day."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-blue-500);">JT</div>
-                        <span style="color: var(--color-gray-800);">James T.</span>
-                    </div>
-                </div>
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"I finally understand recursion. Didn't think that sentence would ever be true."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-green-500);">AO</div>
-                        <span style="color: var(--color-gray-800);">Ade O.</span>
-                    </div>
-                </div>
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Coming from zero coding background, I never felt lost."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-blue-600);">RN</div>
-                        <span style="color: var(--color-gray-800);">Ravi N.</span>
-                    </div>
-                </div>
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"I've tried three other platforms. This is the only one I actually finished."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-green-600);">LF</div>
-                        <span style="color: var(--color-gray-800);">Lucy F.</span>
-                    </div>
-                </div>
-                <div class="scatter-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The certificate felt earned, not handed out."</p>
-                    <div class="chip-author">
-                        <div class="chip-avatar" style="background: var(--color-purple-600);">DW</div>
-                        <span style="color: var(--color-gray-800);">Dan W.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Idea 3: Confetti spotlight carousel -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>3. Confetti spotlight carousel</h2>
-            <span>One big featured quote at a time, floating confetti dots behind it, dot pagination below</span>
-        </div>
-        <div class="spotlight-panel">
-            <div class="confetti" style="top: 12%; left: 8%; width: 12px; height: 12px; background: var(--color-amber-300, #fcd34d);"></div>
-            <div class="confetti" style="top: 22%; left: 88%; width: 10px; height: 10px; background: var(--color-green-300); animation-delay: 1s;"></div>
-            <div class="confetti" style="top: 70%; left: 12%; width: 14px; height: 14px; background: var(--color-blue-200); animation-delay: 2s;"></div>
-            <div class="confetti" style="top: 78%; left: 82%; width: 10px; height: 10px; background: var(--color-amber-300, #fcd34d); animation-delay: 0.5s;"></div>
-            <div class="confetti" style="top: 15%; left: 50%; width: 8px; height: 8px; background: #fff; animation-delay: 1.5s;"></div>
-            <div class="confetti" style="top: 85%; left: 45%; width: 12px; height: 12px; background: var(--color-green-300); animation-delay: 2.5s;"></div>
-
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-
-            <div class="spotlight-card">
-                <div class="spotlight-quote-mark">"</div>
-                <p class="quote">I finally understand recursion. Genuinely didn't think that sentence would ever be true — Jiki broke it down in a way three other courses couldn't.</p>
-                <div class="spotlight-author">
-                    <div class="spotlight-avatar">AO</div>
-                    <div class="spotlight-author-info">
-                        <strong>Ade O.</strong>
-                        <span>Beta student, 4 courses completed</span>
-                    </div>
-                </div>
-                <div class="spotlight-dots">
-                    <div class="spotlight-dot active"></div>
-                    <div class="spotlight-dot"></div>
-                    <div class="spotlight-dot"></div>
-                    <div class="spotlight-dot"></div>
-                    <div class="spotlight-dot"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Idea 4: Sticker wall -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>4. Sticker wall</h2>
-            <span>Bold outlined cards with a hard drop-shadow and wobbling emoji, punchy and playful</span>
-        </div>
-        <div class="sticker-panel">
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-            <div class="sticker-grid">
-                <div class="sticker-card">
-                    <span class="sticker-emoji">🎉</span>
-                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
-                    <span class="sticker-tag">Maya K. · 5★</span>
-                </div>
-                <div class="sticker-card">
-                    <span class="sticker-emoji">🔥</span>
-                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
-                    <span class="sticker-tag">James T. · 5★</span>
-                </div>
-                <div class="sticker-card">
-                    <span class="sticker-emoji">🤯</span>
-                    <p>"I finally understand recursion. Didn't think that sentence would ever be true."</p>
-                    <span class="sticker-tag">Ade O. · 5★</span>
-                </div>
-                <div class="sticker-card">
-                    <span class="sticker-emoji">💪</span>
-                    <p>"Coming from zero coding background, I never felt lost once."</p>
-                    <span class="sticker-tag">Ravi N. · 5★</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Idea 5: Photo marquee with location -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>5. Photo marquee with location</h2>
-            <span>Same scrolling-marquee motion as Idea 1, but each chip carries a real profile photo and a city/country</span>
-        </div>
-        <div class="photo-marquee-panel">
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-            <div class="photo-marquee-track">
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
-                        <div class="photo-author-info">
-                            <strong>Maya K.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Manchester, UK
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
-                        <div class="photo-author-info">
-                            <strong>James T.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Austin, USA
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
-                        <div class="photo-author-info">
-                            <strong>Ade O.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Lagos, Nigeria
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
-                        <div class="photo-author-info">
-                            <strong>Sara P.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Sydney, Australia
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- duplicate set for seamless loop -->
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"I went from not understanding loops at all to actually enjoying debugging."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
-                        <div class="photo-author-info">
-                            <strong>Maya K.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Manchester, UK
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"The bite-sized exercises kept me coming back every day. Best habit I built this year."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
-                        <div class="photo-author-info">
-                            <strong>James T.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Austin, USA
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"I finally understand recursion. Genuinely didn't think that sentence would ever be true."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
-                        <div class="photo-author-info">
-                            <strong>Ade O.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Lagos, Nigeria
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="photo-chip">
-                    <div class="stars">★★★★★</div>
-                    <p>"The instant feedback loop is addictive — you can see exactly why your code broke."</p>
-                    <div class="photo-author">
-                        <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
-                        <div class="photo-author-info">
-                            <strong>Sara P.</strong>
-                            <span class="location">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                                Sydney, Australia
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <p>Concepts for the testimonials section that lean into playful motion instead of a static grid of quote cards — the first four use initials-only avatars, ideas 5–7 add profile photos and student locations, idea 8 hides the flag/location/status behind a hover flip, idea 9 refines the actual jiki-landing.html quote card style with an accent-edged and a dark variant, ideas 10–11 go for fun and lively over star ratings — a pinned sticky-note wall and a group-chat bubble stream — and idea 12 widens the sticky-note wall to 3 columns using the real names, quotes, and photos from jiki-landing.html's 21 testimonials, on a white dotted background with purple/blue note colors.</p>
     </div>
 
     <!-- Idea 6: World map pins -->
@@ -1311,7 +2036,7 @@
                     <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
                     <div class="map-pin-label"><strong>Fred</strong> · 🇬🇧 Manchester, UK</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"As someone with <strong>no previous coding experience</strong>, I've been blown away with the <strong>quality of this course</strong>."</span>
+                        <span class="map-pin-quote-text">"As someone with <strong>no previous coding experience</strong> — I've been blown away with the <strong>quality of this course</strong>. I've <strong>come so far</strong> in the past weeks."</span>
                         <span class="map-pin-status">Total Beginner</span>
                     </div>
                 </div>
@@ -1319,7 +2044,7 @@
                     <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
                     <div class="map-pin-label"><strong>Shaun</strong> · 🇳🇬 Lagos, Nigeria</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some."</span>
+                        <span class="map-pin-quote-text">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"</span>
                         <span class="map-pin-status">Absolute Beginner</span>
                     </div>
                 </div>
@@ -1327,7 +2052,7 @@
                     <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
                     <div class="map-pin-label"><strong>Lucas</strong> · 🇯🇵 Tokyo, Japan</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"Learning while actually coding <strong>has made it pretty fun</strong>. It's <strong>such a pleasure</strong> to be part of it!"</span>
+                        <span class="map-pin-quote-text">"From the moment I bought the course, I realized it would <strong>be different from anything I had ever experienced</strong>. Learning while actually coding <strong>has made it pretty fun</strong>."</span>
                         <span class="map-pin-status">Total Beginner</span>
                     </div>
                 </div>
@@ -1335,7 +2060,7 @@
                     <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
                     <div class="map-pin-label"><strong>Nolan</strong> · 🇺🇸 Austin, USA</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"Programming <strong>always felt overwhelming</strong>. The course provided an <strong>excellent, guided path to self-sufficiency</strong>."</span>
+                        <span class="map-pin-quote-text">"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. The course has provided an <strong>excellent, guided path to self-sufficiency</strong>."</span>
                         <span class="map-pin-status">Beginner</span>
                     </div>
                 </div>
@@ -1343,7 +2068,7 @@
                     <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
                     <div class="map-pin-label"><strong>RedRobio</strong> · 🇦🇺 Sydney, Australia</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"This course has pushed me past what I thought were personal limitations, and <strong>increased my confidence and motivation</strong>."</span>
+                        <span class="map-pin-quote-text">"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>."</span>
                         <span class="map-pin-status">Junior Developer</span>
                     </div>
                 </div>
@@ -1351,89 +2076,12 @@
                     <img src="assets/avatars/avatar-placeholder-2.png" alt="Matt">
                     <div class="map-pin-label"><strong>Matt</strong> · 🇧🇷 São Paulo, Brazil</div>
                     <div class="map-pin-quote">
-                        <span class="map-pin-quote-text">"The teaching style — <strong>full of effective analogies</strong> — really clicked with me. Fantastic mentors, teaching, community."</span>
+                        <span class="map-pin-quote-text">"I'd been <strong>struggling with self-paced learning</strong>, so I signed up for the structure and accountability. The teaching style — <strong>full of effective analogies</strong> — really clicked with me."</span>
                         <span class="map-pin-status">Python Dev</span>
                     </div>
                 </div>
             </div>
             <p class="map-footer">These are some extracts from what our beta users said. <a href="/testimonials" class="map-footer-link">Read the full versions here!</a></p>
-        </div>
-    </div>
-
-    <!-- Idea 7: Floating bubble cluster -->
-    <div class="idea">
-        <div class="idea-label">
-            <h2>7. Floating bubble cluster</h2>
-            <span>Small photo cards bob up and down at staggered speeds, each tagged with a location pin</span>
-        </div>
-        <div class="bubble-panel">
-            <h2 class="section-heading">What do our students think?</h2>
-            <p class="section-sub">These are some extracts from what our beta users said.</p>
-            <div class="bubble-field">
-                <div class="bubble" style="top: 0%; left: 4%; animation-delay: 0s;">
-                    <img src="https://i.pravatar.cc/100?img=32" alt="Maya K.">
-                    <strong>Maya K.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Manchester, UK
-                    </span>
-                    <p>"Loops finally clicked, and now I actually enjoy debugging."</p>
-                </div>
-                <div class="bubble" style="top: 18%; left: 32%; animation-delay: 0.8s;">
-                    <img src="https://i.pravatar.cc/100?img=12" alt="James T.">
-                    <strong>James T.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Austin, USA
-                    </span>
-                    <p>"Bite-sized exercises kept me coming back every day."</p>
-                </div>
-                <div class="bubble" style="top: 2%; left: 62%; animation-delay: 1.6s;">
-                    <img src="https://i.pravatar.cc/100?img=51" alt="Ade O.">
-                    <strong>Ade O.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Lagos, Nigeria
-                    </span>
-                    <p>"Finally understand recursion. Didn't think that day would come."</p>
-                </div>
-                <div class="bubble" style="top: 24%; left: 88%; animation-delay: 2.4s;">
-                    <img src="https://i.pravatar.cc/100?img=15" alt="Kenji M.">
-                    <strong>Kenji M.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Tokyo, Japan
-                    </span>
-                    <p>"Learned more in a month than a semester of school."</p>
-                </div>
-                <div class="bubble" style="top: 52%; left: 16%; animation-delay: 1.2s;">
-                    <img src="https://i.pravatar.cc/100?img=44" alt="Lucy F.">
-                    <strong>Lucy F.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        São Paulo, Brazil
-                    </span>
-                    <p>"The only platform where I actually finished a course."</p>
-                </div>
-                <div class="bubble" style="top: 58%; left: 46%; animation-delay: 2s;">
-                    <img src="https://i.pravatar.cc/100?img=47" alt="Sara P.">
-                    <strong>Sara P.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Sydney, Australia
-                    </span>
-                    <p>"Instant feedback made every mistake a lesson, not a dead end."</p>
-                </div>
-                <div class="bubble" style="top: 46%; left: 76%; animation-delay: 0.4s;">
-                    <img src="https://i.pravatar.cc/100?img=64" alt="Hana C.">
-                    <strong>Hana C.</strong>
-                    <span class="location">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                        Seoul, South Korea
-                    </span>
-                    <p>"My 12 year old is now teaching me things I learned on Jiki."</p>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1579,6 +2227,680 @@
         </div>
     </div>
 
+    <!-- Idea 12: Sticky note wall, 3-wide, real testimonials -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>12. Sticky note wall — 3-wide, real testimonials</h2>
+            <span>Same pinned sticky-note treatment as idea 10, but a wider 3-column grid using the real names, quotes, statuses, and photos from the 21 testimonials on jiki-landing.html, on a white dotted background with purple/blue note colors from the Tailwind palette</span>
+        </div>
+        <div class="sticky-panel sticky-panel-wide">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, pinned straight to the wall.</p>
+            <div class="sticky-grid sticky-grid-3">
+                <div class="sticky-note sticky-yellow" style="transform: rotate(-3deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece."</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>Coding Newbie · 🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky-note sticky-pink" style="transform: rotate(2deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"As someone with <strong>no previous coding experience</strong> — I've been blown away with the <strong>quality of this course</strong>. I've <strong>come so far</strong> in the past weeks."</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                        <div>
+                            <strong>Fred</strong>
+                            <span>Total Beginner · 🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky-note sticky-blue" style="transform: rotate(-2deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>Absolute Beginner · 🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky-note sticky-green" style="transform: rotate(4deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"From the moment I bought the course, I realized it would <strong>be different from anything I had ever experienced</strong>. Learning while actually coding <strong>has made it pretty fun</strong>."</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                        <div>
+                            <strong>Lucas</strong>
+                            <span>Total Beginner · 🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky-note sticky-yellow" style="transform: rotate(3deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. The course has provided an <strong>excellent, guided path to self-sufficiency</strong>."</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                        <div>
+                            <strong>Nolan Lounsbery</strong>
+                            <span>Beginner · 🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sticky-note sticky-pink" style="transform: rotate(-4deg);">
+                    <span class="sticky-tape"></span>
+                    <p>"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>."</p>
+                    <div class="sticky-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                        <div>
+                            <strong>@RedRobio</strong>
+                            <span>Junior Developer · 🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 13: Color-block confetti cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>13. Color-block confetti cards</h2>
+            <span>Bold, saturated gradient cards with an oversized quote mark watermark, a slight alternating tilt that straightens on hover, and real names/quotes/photos from jiki-landing.html</span>
+        </div>
+        <div class="sticky-panel-wide">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students — loud and proud.</p>
+            <div class="colorblock-grid">
+                <div class="colorblock-card colorblock-purple" style="--tilt: -2deg;">
+                    <p class="colorblock-quote">Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece.</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>Coding Newbie · 🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="colorblock-card colorblock-blue" style="--tilt: 2deg;">
+                    <p class="colorblock-quote">As someone with no previous coding experience — I've been blown away with the quality of this course. I've come so far in the past weeks.</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                        <div>
+                            <strong>Fred</strong>
+                            <span>Total Beginner · 🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="colorblock-card colorblock-green" style="--tilt: -1.5deg;">
+                    <p class="colorblock-quote">I was brand new to coding and this course exceeded my wildest expectations and then some. It will be one of the best choices you will ever make!</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>Absolute Beginner · 🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="colorblock-card colorblock-red" style="--tilt: 1.5deg;">
+                    <p class="colorblock-quote">This course has pushed me past what I thought were personal limitations, and in doing so, has increased my confidence and motivation.</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                        <div>
+                            <strong>@RedRobio</strong>
+                            <span>Junior Developer · 🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="colorblock-card colorblock-blue" style="--tilt: -2deg;">
+                    <p class="colorblock-quote">From the moment I bought the course, I realized it would be different from anything I had ever experienced. Learning while actually coding has made it pretty fun.</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                        <div>
+                            <strong>Lucas</strong>
+                            <span>Total Beginner · 🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="colorblock-card colorblock-purple" style="--tilt: 2deg;">
+                    <p class="colorblock-quote">Getting into programming always felt overwhelming. I often quit before I really got started. The course has provided an excellent, guided path to self-sufficiency.</p>
+                    <div class="colorblock-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                        <div>
+                            <strong>Nolan Lounsbery</strong>
+                            <span>Beginner · 🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 17: Neo-brutalist cards, 2-up -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>17. Neo-brutalist cards, 2-up</h2>
+            <span>Same neo-brutalist treatment as idea 15, but 2 cards per row instead of 3 — wider cards, more breathing room per quote</span>
+        </div>
+        <div class="sticky-panel-wide">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, no gradients required.</p>
+            <div class="brutalist-grid brutalist-grid-2">
+                <div class="brutalist-card brutalist-purple">
+                    <span class="brutalist-badge">Coding Newbie</span>
+                    <p class="brutalist-quote">"Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-blue">
+                    <span class="brutalist-badge">Total Beginner</span>
+                    <p class="brutalist-quote">"As someone with <strong>no previous coding experience</strong> — I've been blown away with the <strong>quality of this course</strong>. I've <strong>come so far</strong> in the past weeks."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                        <div>
+                            <strong>Fred</strong>
+                            <span>🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-green">
+                    <span class="brutalist-badge">Absolute Beginner</span>
+                    <p class="brutalist-quote">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-red">
+                    <span class="brutalist-badge">Total Beginner</span>
+                    <p class="brutalist-quote">"From the moment I bought the course, I realized it would <strong>be different from anything I had ever experienced</strong>. Learning while actually coding <strong>has made it pretty fun</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                        <div>
+                            <strong>Lucas</strong>
+                            <span>🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-purple">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. The course has provided an <strong>excellent, guided path to self-sufficiency</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                        <div>
+                            <strong>Nolan Lounsbery</strong>
+                            <span>🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-blue">
+                    <span class="brutalist-badge">Junior Developer</span>
+                    <p class="brutalist-quote">"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                        <div>
+                            <strong>@RedRobio</strong>
+                            <span>🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-green">
+                    <span class="brutalist-badge">Python Dev</span>
+                    <p class="brutalist-quote">"I'd been <strong>struggling with self-paced learning</strong>, so I signed up for the structure and accountability. The teaching style — <strong>full of effective analogies</strong> — really clicked with me."</p>
+                    <div class="brutalist-footer">
+                        <img src="assets/avatars/avatar-placeholder-2.png" alt="Matt">
+                        <div>
+                            <strong>Matt</strong>
+                            <span>🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-red">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"The course provided me an opportunity to <strong>learn from a bonafide master</strong>. <strong>Thank you for making it accessible</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="@abhinav">
+                        <div>
+                            <strong>@abhinav</strong>
+                            <span>🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-purple">
+                    <span class="brutalist-badge">Was in Tutorial Hell</span>
+                    <p class="brutalist-quote">"This course <strong>does the best job in teaching you the fundamentals</strong>, and <strong>made it fun!</strong>"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura">
+                        <div>
+                            <strong>Laura</strong>
+                            <span>🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-blue">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"<strong>How I think about thinking, and about problem solving in general, has changed dramatically</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/kazzybits.20f30eff.webp" alt="@Kazzybits">
+                        <div>
+                            <strong>@Kazzybits</strong>
+                            <span>🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-green">
+                    <span class="brutalist-badge">Intermediate Dev</span>
+                    <p class="brutalist-quote">"I joined this course with some coding experience, but the clarity and structure <strong>made everything click like never before</strong>, building concepts step-by-step."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/vignesh.e39fdf21.webp" alt="Vignesh">
+                        <div>
+                            <strong>Vignesh</strong>
+                            <span>🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-red">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"I had no expectations when I stumbled upon Jiki, but it turned out to be <strong>my greatest discovery of the year!</strong> I had no experience whatsoever — 100% recommended!"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/ricksn.7570e19d.webp" alt="Rick">
+                        <div>
+                            <strong>Rick</strong>
+                            <span>🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-purple">
+                    <span class="brutalist-badge">Junior Developer</span>
+                    <p class="brutalist-quote">"<strong>It instills some basic tenets of the coder's mindset</strong> that will be invaluable on your journey."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/rob.8efc906e.webp" alt="Robert">
+                        <div>
+                            <strong>Robert</strong>
+                            <span>🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-blue">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"I have next to no coding experience yet have found this course to be <strong>so intelligently scaffolded</strong>, with concepts clearly explained and logically built one after the other."</p>
+                    <div class="brutalist-footer">
+                        <img src="assets/avatars/avatar-placeholder-4.png" alt="Karen">
+                        <div>
+                            <strong>Karen</strong>
+                            <span>🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-green">
+                    <span class="brutalist-badge">Intermediate Dev</span>
+                    <p class="brutalist-quote">"This course gives you the <strong>tools to think through the process</strong> before even writing a single line of code, which makes the actual coding part easier."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/kcash.3dd695be.webp" alt="@kcash">
+                        <div>
+                            <strong>@kcash</strong>
+                            <span>🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-red">
+                    <span class="brutalist-badge">Total Beginner</span>
+                    <p class="brutalist-quote">"I've <strong>learned an unbelievable amount</strong> in a few short weeks — <strong>solving problems I would never have thought possible!</strong>"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/drac.21d7ae5c.webp" alt="Cpt Drac">
+                        <div>
+                            <strong>Cpt Drac</strong>
+                            <span>🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-purple">
+                    <span class="brutalist-badge">Junior Developer</span>
+                    <p class="brutalist-quote">"Jeremy and the mentors have created an amazing resource like no other. From the <strong>fun and sleek interface</strong> to the live classes and labs, it all comes together to make <strong>a superb learning experience</strong>."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/jj.1c9be5ff.webp" alt="@JJ">
+                        <div>
+                            <strong>@JJ</strong>
+                            <span>🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-blue">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"Enrolling in this programming course was one of the <strong>best decisions I've ever made</strong>. The curriculum is well-structured, and the team is supportive and truly invested in helping students succeed."</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/nanouss01.7ccbd901.webp" alt="@nanouss01">
+                        <div>
+                            <strong>@nanouss01</strong>
+                            <span>🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-green">
+                    <span class="brutalist-badge">Beginner</span>
+                    <p class="brutalist-quote">"You will not believe <strong>how fantastic this course is</strong>! You learn to write code by writing code to solve problems that match — and push — your abilities. <strong>Jeremy is a master teacher.</strong>"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                        <div>
+                            <strong>Thom Chittom</strong>
+                            <span>🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brutalist-card brutalist-red">
+                    <span class="brutalist-badge">Serial Beginner</span>
+                    <p class="brutalist-quote">"For nearly a decade, I've repeatedly started online coding courses but always got stuck. Now, after years of trying, suddenly, <strong>coding feels possible.</strong>"</p>
+                    <div class="brutalist-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/sharpiemath.421c3f65.webp" alt="Chris">
+                        <div>
+                            <strong>Chris</strong>
+                            <span>🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 20: Glass duo cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>20. Glass duo cards</h2>
+            <span>Frosted-glass cards (backdrop-filter blur, translucent white fill) floating on a purple-to-blue gradient panel, 2 per row with room for full-length quotes — real names, quotes, statuses, and photos from jiki-landing.html</span>
+        </div>
+        <div class="glass-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, told in full.</p>
+            <div class="glass-grid">
+                <div class="glass-card">
+                    <p class="glass-quote">"Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece. I really enjoy it."</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>Coding Newbie · 🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <p class="glass-quote">"As someone with <strong>no previous coding experience</strong> — I've been blown away with the <strong>quality of this course</strong>. I've <strong>come so far</strong> in the past weeks and reflecting on what I've achieved and <strong>how much I've learned has been phenomenal</strong>."</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                        <div>
+                            <strong>Fred</strong>
+                            <span>Total Beginner · 🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <p class="glass-quote">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. In my humble opinion, it will be <strong>one of the best choices you will ever make!</strong>"</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>Absolute Beginner · 🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <p class="glass-quote">"From the moment I bought the course, I realized it would <strong>be different from anything I had ever experienced</strong>. Learning while actually coding <strong>has made it pretty fun</strong>. It's <strong>such a pleasure</strong> to be part of it!"</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                        <div>
+                            <strong>Lucas</strong>
+                            <span>Total Beginner · 🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <p class="glass-quote">"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. However, the course has provided an <strong>excellent, guided path to self-sufficiency</strong>."</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                        <div>
+                            <strong>Nolan Lounsbery</strong>
+                            <span>Beginner · 🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <p class="glass-quote">"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>. Know that when you get the certificate, it will be because you EARNED it!"</p>
+                    <div class="glass-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                        <div>
+                            <strong>@RedRobio</strong>
+                            <span>Junior Developer · 🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 21: Ribbon-tab duo cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>21. Ribbon-tab duo cards</h2>
+            <span>White cards with a thick colored left-edge tab and a folded status ribbon in the top corner, 2 per row — real names, quotes, statuses, and photos from jiki-landing.html</span>
+        </div>
+        <div class="sticky-panel-wide">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, tabbed and filed.</p>
+            <div class="ribbon-grid">
+                <div class="ribbon-card ribbon-purple">
+                    <span class="ribbon-badge">Coding Newbie</span>
+                    <p class="ribbon-quote">"Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece."</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ribbon-card ribbon-blue">
+                    <span class="ribbon-badge">Total Beginner</span>
+                    <p class="ribbon-quote">"As someone with <strong>no previous coding experience</strong> — I've been blown away with the <strong>quality of this course</strong>. My journey has been from a complete coding novice to someone confident tackling complex logic problems!"</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/fred.b3853af3.webp" alt="Fred">
+                        <div>
+                            <strong>Fred</strong>
+                            <span>🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ribbon-card ribbon-green">
+                    <span class="ribbon-badge">Absolute Beginner</span>
+                    <p class="ribbon-quote">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ribbon-card ribbon-red">
+                    <span class="ribbon-badge">Junior Developer</span>
+                    <p class="ribbon-quote">"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>."</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/redrobio.dc23bb65.webp" alt="@RedRobio">
+                        <div>
+                            <strong>@RedRobio</strong>
+                            <span>🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ribbon-card ribbon-blue">
+                    <span class="ribbon-badge">Total Beginner</span>
+                    <p class="ribbon-quote">"From the moment I bought the course, I realized it would <strong>be different from anything I had ever experienced</strong>. Learning while actually coding <strong>has made it pretty fun</strong>."</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lucas">
+                        <div>
+                            <strong>Lucas</strong>
+                            <span>🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ribbon-card ribbon-purple">
+                    <span class="ribbon-badge">Beginner</span>
+                    <p class="ribbon-quote">"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. The course has provided an <strong>excellent, guided path to self-sufficiency</strong>."</p>
+                    <div class="ribbon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/giantlemur.4a13c7e2.webp" alt="Nolan Lounsbery">
+                        <div>
+                            <strong>Nolan Lounsbery</strong>
+                            <span>🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 23: Dark neon duo cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>23. Dark neon duo cards</h2>
+            <span>Near-black cards on a dark panel, each with a thin neon accent border and matching outer glow that cycles purple/blue/green/red, 2 per row — real names, quotes, statuses, and photos from jiki-landing.html</span>
+        </div>
+        <div class="neon-panel">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, glowing in the dark.</p>
+            <div class="neon-grid">
+                <div class="neon-card neon-purple">
+                    <p class="neon-quote">"This course hasn't just taught basic structures and logic, but <strong>it instills some basic tenets of the coder's mindset</strong> that will be invaluable on your journey."</p>
+                    <div class="neon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/rob.8efc906e.webp" alt="Robert">
+                        <div>
+                            <strong>Robert</strong>
+                            <span>Junior Developer · 🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="neon-card neon-blue">
+                    <p class="neon-quote">"I have next to no coding experience yet have found this course to be <strong>so intelligently scaffolded</strong>, with concepts clearly explained and logically built one after the other."</p>
+                    <div class="neon-footer">
+                        <img src="assets/avatars/avatar-placeholder-4.png" alt="Karen">
+                        <div>
+                            <strong>Karen</strong>
+                            <span>Beginner · 🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="neon-card neon-green">
+                    <p class="neon-quote">"This course gives you the <strong>tools to think through the process</strong> before even writing a single line of code, which makes the actual coding part easier."</p>
+                    <div class="neon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/kcash.3dd695be.webp" alt="@kcash">
+                        <div>
+                            <strong>@kcash</strong>
+                            <span>Intermediate Dev · 🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="neon-card neon-red">
+                    <p class="neon-quote">"It is Jeremy's knack of breaking things down into the smallest possible steps that has really helped things click for me. I've <strong>learned an unbelievable amount</strong> in a few short weeks!"</p>
+                    <div class="neon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/drac.21d7ae5c.webp" alt="Cpt Drac">
+                        <div>
+                            <strong>Cpt Drac</strong>
+                            <span>Total Beginner · 🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="neon-card neon-purple">
+                    <p class="neon-quote">"Jeremy and the mentors have created an amazing resource like no other. From the <strong>fun and sleek interface</strong> to the live classes and labs, it all comes together to make <strong>a superb learning experience</strong>."</p>
+                    <div class="neon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/jj.1c9be5ff.webp" alt="@JJ">
+                        <div>
+                            <strong>@JJ</strong>
+                            <span>Junior Developer · 🇦🇺 Sydney, Australia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="neon-card neon-blue">
+                    <p class="neon-quote">"Enrolling in this programming course was one of the <strong>best decisions I've ever made</strong>. The curriculum is well-structured, and the team is supportive and truly invested in helping students succeed."</p>
+                    <div class="neon-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/nanouss01.7ccbd901.webp" alt="@nanouss01">
+                        <div>
+                            <strong>@nanouss01</strong>
+                            <span>Beginner · 🇧🇷 São Paulo, Brazil</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 24: Torn-paper duo cards -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>24. Torn-paper duo cards</h2>
+            <span>Off-white paper cards with a jagged torn bottom edge (CSS clip-path) and a strip of washi tape at the top, 2 per row — real names, quotes, statuses, and photos from jiki-landing.html</span>
+        </div>
+        <div class="sticky-panel-wide">
+            <h2 class="section-heading">What do our students think?</h2>
+            <p class="section-sub">Real feedback from real students, torn straight from the notebook.</p>
+            <div class="paper-grid">
+                <div class="paper-card paper-purple">
+                    <span class="paper-tape"></span>
+                    <p class="paper-quote">"You will not believe <strong>how fantastic this course is</strong>! You learn to write code by writing code to solve problems that match — and push — your abilities. <strong>Jeremy is a master teacher.</strong>"</p>
+                    <div class="paper-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                        <div>
+                            <strong>Thom Chittom</strong>
+                            <span>Beginner · 🇬🇧 Manchester, UK</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-card paper-blue">
+                    <span class="paper-tape"></span>
+                    <p class="paper-quote">"For nearly a decade, I've repeatedly started online coding courses but always got stuck. Now, after years of trying, suddenly, <strong>coding feels possible.</strong>"</p>
+                    <div class="paper-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/sharpiemath.421c3f65.webp" alt="Chris">
+                        <div>
+                            <strong>Chris</strong>
+                            <span>Serial Beginner · 🇳🇬 Lagos, Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-card paper-green">
+                    <span class="paper-tape"></span>
+                    <p class="paper-quote">"Seeing how much effort, thought, and even love is put into this course, it's such a pleasure to be a student here. Every explanation, each exercise turn this course into a masterpiece."</p>
+                    <div class="paper-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra">
+                        <div>
+                            <strong>Oleksandra</strong>
+                            <span>Coding Newbie · 🇯🇵 Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="paper-card paper-red">
+                    <span class="paper-tape"></span>
+                    <p class="paper-quote">"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"</p>
+                    <div class="paper-footer">
+                        <img src="https://assets.jiki.io/_next/static/media/shaun.9e697bd5.webp" alt="Shaun">
+                        <div>
+                            <strong>Shaun</strong>
+                            <span>Absolute Beginner · 🇺🇸 Austin, USA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Idea 6: rotate the 6 visible map pins through the full pool of real
         // jiki.io testimonials, so the visible set keeps changing over time.
@@ -1589,24 +2911,24 @@
             var TESTIMONIALS = [
                 { name: 'Oleksandra', photo: 'oleksandra.90dd2b03', status: 'Coding Newbie', quote: '"Seeing how much effort, thought, and even love is put into this course, it\'s such a pleasure to be a student here."' },
                 { name: 'Fred', photo: 'fred.b3853af3', status: 'Total Beginner', quote: '"As someone with <strong>no previous coding experience</strong>, I\'ve been blown away with the <strong>quality of this course</strong>."' },
-                { name: 'Shaun', photo: 'shaun.9e697bd5', status: 'Absolute Beginner', quote: '"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some."' },
+                { name: 'Shaun', photo: 'shaun.9e697bd5', status: 'Absolute Beginner', quote: '"I was brand new to coding and this course <strong>exceeded my wildest expectations</strong> and then some. It will be <strong>one of the best choices you will ever make!</strong>"' },
                 { name: 'Lucas', photo: 'lukas.21b8d43d', status: 'Total Beginner', quote: '"Learning while actually coding <strong>has made it pretty fun</strong>. It\'s <strong>such a pleasure</strong> to be part of it!"' },
-                { name: 'Nolan', photo: 'giantlemur.4a13c7e2', status: 'Beginner', quote: '"Programming <strong>always felt overwhelming</strong>. The course provided an <strong>excellent, guided path to self-sufficiency</strong>."' },
-                { name: 'RedRobio', photo: 'redrobio.dc23bb65', status: 'Junior Developer', quote: '"This course has pushed me past what I thought were personal limitations, and <strong>increased my confidence and motivation</strong>."' },
-                { name: 'Matt', photo: 'assets/avatars/avatar-placeholder-2.png', status: 'Python Dev', quote: '"The teaching style — <strong>full of effective analogies</strong> — really clicked with me. Fantastic mentors, teaching, community."' },
+                { name: 'Nolan', photo: 'giantlemur.4a13c7e2', status: 'Beginner', quote: '"Getting into <strong>programming always felt overwhelming</strong>. I often quit before I really got started. The course has provided an <strong>excellent, guided path to self-sufficiency</strong>."' },
+                { name: 'RedRobio', photo: 'redrobio.dc23bb65', status: 'Junior Developer', quote: '"This course has pushed me past what I thought were personal limitations, and in doing so, has <strong>increased my confidence and motivation</strong>."' },
+                { name: 'Matt', photo: 'assets/avatars/avatar-placeholder-2.png', status: 'Python Dev', quote: '"I\'d been <strong>struggling with self-paced learning</strong>, so I signed up for the structure and accountability. The teaching style — <strong>full of effective analogies</strong> — really clicked with me."' },
                 { name: 'Abhinav', photo: 'abhinav.958afa66', status: 'Beginner', quote: '"The course provided me an opportunity to <strong>learn from a bonafide master</strong>. <strong>Thank you for making it accessible</strong>."' },
                 { name: 'Laura', photo: 'laura.2d859ba1', status: 'Was in Tutorial Hell', quote: '"This course <strong>does the best job in teaching you the fundamentals</strong>, and <strong>made it fun!</strong>"' },
                 { name: 'Kazzybits', photo: 'kazzybits.20f30eff', status: 'Beginner', quote: '"<strong>How I think about thinking, and about problem solving in general, has changed dramatically</strong>."' },
-                { name: 'Vignesh', photo: 'vignesh.e39fdf21', status: 'Intermediate Dev', quote: '"The clarity and structure <strong>made everything click like never before</strong>, building concepts step-by-step."' },
-                { name: 'Rick', photo: 'ricksn.7570e19d', status: 'Beginner', quote: '"It turned out to be <strong>my greatest discovery of the year!</strong> 100% recommended!"' },
+                { name: 'Vignesh', photo: 'vignesh.e39fdf21', status: 'Intermediate Dev', quote: '"I joined this course with some coding experience, but the clarity and structure <strong>made everything click like never before</strong>, building concepts step-by-step."' },
+                { name: 'Rick', photo: 'ricksn.7570e19d', status: 'Beginner', quote: '"I had no expectations when I stumbled upon Jiki, but it turned out to be <strong>my greatest discovery of the year!</strong> I had no experience whatsoever — 100% recommended!"' },
                 { name: 'Robert', photo: 'rob.8efc906e', status: 'Junior Developer', quote: '"<strong>It instills some basic tenets of the coder\'s mindset</strong> that will be invaluable on your journey."' },
-                { name: 'Karen', photo: 'assets/avatars/avatar-placeholder-4.png', status: 'Beginner', quote: '"I have next to no coding experience yet have found this course to be <strong>so intelligently scaffolded</strong>."' },
-                { name: 'Kcash', photo: 'kcash.3dd695be', status: 'Intermediate Dev', quote: '"This course gives you the <strong>tools to think through the process</strong> before even writing a single line of code."' },
+                { name: 'Karen', photo: 'assets/avatars/avatar-placeholder-4.png', status: 'Beginner', quote: '"I have next to no coding experience yet have found this course to be <strong>so intelligently scaffolded</strong>, with concepts clearly explained and logically built one after the other."' },
+                { name: 'Kcash', photo: 'kcash.3dd695be', status: 'Intermediate Dev', quote: '"This course gives you the <strong>tools to think through the process</strong> before even writing a single line of code, which makes the actual coding part easier."' },
                 { name: 'Cpt Drac', photo: 'drac.21d7ae5c', status: 'Total Beginner', quote: '"I\'ve <strong>learned an unbelievable amount</strong> in a few short weeks — <strong>solving problems I would never have thought possible!</strong>"' },
-                { name: 'JJ', photo: 'jj.1c9be5ff', status: 'Junior Developer', quote: '"From the <strong>fun and sleek interface</strong> to the live classes and labs, it all comes together to make <strong>a superb learning experience</strong>."' },
+                { name: 'JJ', photo: 'jj.1c9be5ff', status: 'Junior Developer', quote: '"Jeremy and the mentors have created an amazing resource like no other. From the <strong>fun and sleek interface</strong> to the live classes and labs, it all comes together to make <strong>a superb learning experience</strong>."' },
                 { name: 'Nanouss01', photo: 'nanouss01.7ccbd901', status: 'Beginner', quote: '"Enrolling in this programming course was one of the <strong>best decisions I\'ve ever made</strong>."' },
-                { name: 'Thom', photo: 'thom.6047132d', status: 'Beginner', quote: '"You will not believe <strong>how fantastic this course is</strong>! <strong>Jeremy is a master teacher.</strong>"' },
-                { name: 'Chris', photo: 'sharpiemath.421c3f65', status: 'Serial Beginner', quote: '"After years of trying, suddenly, <strong>coding feels possible.</strong>"' }
+                { name: 'Thom', photo: 'thom.6047132d', status: 'Beginner', quote: '"You will not believe <strong>how fantastic this course is</strong>! You learn to write code by writing code to solve problems that match — and push — your abilities. <strong>Jeremy is a master teacher.</strong>"' },
+                { name: 'Chris', photo: 'sharpiemath.421c3f65', status: 'Serial Beginner', quote: '"For nearly a decade, I\'ve repeatedly started online coding courses but always got stuck. Now, after years of trying, suddenly, <strong>coding feels possible.</strong>"' }
             ];
 
             var LOCATIONS = [
