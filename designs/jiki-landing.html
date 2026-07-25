@@ -193,15 +193,16 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 60px;
+        gap: 95px;
         margin-top: -50px;
         margin-bottom: 60px;
         border-radius: var(--radius-16);
-        border: 5px solid transparent;
+        border: 3px solid transparent;
         background:
-            linear-gradient(90deg, var(--color-purple-30) 50%, var(--color-blue-50) 50%) padding-box,
+            linear-gradient(#fff, #fff) padding-box,
             linear-gradient(90deg, var(--color-purple-300), var(--color-blue-300)) border-box;
-        padding: 52px 50px;
+        padding: 52px 60px;
+        box-shadow: 0 12px 40px rgba(126, 34, 206, 0.18);
         .StrandsSection_squiggle__n3Kp7 {
             position: absolute;
             bottom: 40px;
@@ -222,10 +223,10 @@
         @media (min-width: 768px) {
             flex-direction: row;
             align-items: flex-start;
-            gap: 80px;
-            width: calc(100% + 250px);
-            margin-inline-start: -125px;
-            margin-inline-end: -125px;
+            gap: 180px;
+            width: calc(100% + 410px);
+            margin-inline-start: -205px;
+            margin-inline-end: -205px;
             &::before {
                 content: "";
                 position: absolute;
@@ -256,8 +257,11 @@
         z-index: 1;
         flex: 1 1 0;
         @media (min-width: 768px) {
-            max-width: calc(50% - 30px);
+            max-width: calc(50% - 90px);
         }
+    }
+    .StrandsSection_splitText__k3Rp8 {
+        max-width: 100%;
     }
     .StrandsSection_splitEyebrow__t7Bn2 {
         font-size: 15px;
@@ -297,7 +301,7 @@
         margin-bottom: 0;
     }
     .StrandsSection_splitBody__z5Lc1 {
-        font-size: 16px;
+        font-size: 18px;
         line-height: 160%;
         color: var(--color-gray-600);
         margin-bottom: 24px;
@@ -311,7 +315,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--color-gray-700);
         }
         svg {
@@ -384,7 +388,7 @@
     .TrackCardsSection_intro__p6Vd1 {
         font-size: 18px;
         line-height: 160%;
-        font-weight: 300;
+        font-weight: 500;
         color: var(--color-gray-700);
         max-width: 760px;
         margin-bottom: 24px;
@@ -417,7 +421,7 @@
         color: var(--color-gray-900);
     }
     .TrackCardsSection_detail__jk72 {
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 400;
         color: var(--color-gray-600);
     }
@@ -1072,7 +1076,7 @@
            <span class="StrandsSection_headingPrefix__t2Rm9">Learn to</span> <span class="StrandsSection_highlight__x7Ln4">code</span>
           </h3>
           <p class="StrandsSection_splitBody__z5Lc1">
-           You'll master the concepts, logic and mindset behind every program ever written.
+           You'll master the <strong>concepts, logic</strong> and <strong>mindset</strong> behind every program ever written.
           </p>
           <ul class="StrandsSection_checklist__x8Fj3">
            <li>
@@ -1106,7 +1110,7 @@
            <span class="StrandsSection_headingPrefix__t2Rm9">Learn to</span> <span class="StrandsSection_highlight__x7Ln4">build</span>
           </h3>
           <p class="StrandsSection_splitBody__z5Lc1">
-           You'll build real projects from day one, learning technologies like databases, authentication, APIs, deployments.
+           You'll <strong>build real projects</strong> from day one, <strong>learning technologies</strong> like databases, authentication, APIs, deployments.
           </p>
           <ul class="StrandsSection_checklist__x8Fj3">
            <li>
