@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Jeremy — section ideas</title>
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Five concepts for the **"Hi there, I'm Jeremy"** section on the landing page.
+The brief: make it feel welcoming, and build **trust and credibility** — with a
+photo of Jeremy, and a testimonial underneath that credits his teaching.
+
+## What FE needs
+
+- **A real photo of Jeremy.** These mockups use his 20px Exercism avatar
+  scaled up, so it looks soft. Ship needs a **proper headshot, min 800px wide**,
+  ideally warm/candid rather than a corporate portrait. Serve as WebP with a
+  2x version for retina.
+- **Testimonial quotes** are pulled from the existing testimonials section on
+  the landing page — same data source, no new content model needed. The two
+  used here are the ones that name Jeremy directly (@JJ and Thom Chittom).
+- All five concepts are **static** — no JS, no carousel. Concept 4 has a
+  hover lift on the photo strip only.
+- Concept 5 is a **mash-up of 1 and 4** — Idea 1's layout and chips, Idea 2's
+  polaroid photo treatment, Idea 4's horizontal quote line.
+
+## The "2M+ taught" badge
+
+The last block on the page is a **swatch set** — eight treatments of the badge
+(A–H) on an identical polaroid, so only the badge is being compared. A–D overlay
+the photo corner; E–H sit outside it. G uses four of the **real student avatars** already served from
+\`assets.jiki.io\` (the same ones behind the testimonials wall), so no new
+assets are needed — swap for a curated set if you'd rather pick specific faces.
+
+## Structure
+
+Each concept is one full-width band. The text content (the "Hi there" heading,
+the two paragraphs) is **identical across all five** — only the layout,
+photo treatment and testimonial placement change.
+
+## Credibility devices used
+
+- **Photo** — the single biggest trust signal; a face makes the copy feel
+  like a person, not a brand.
+- **Credential chips** (2M learners / 20 years / Exercism founder) — turns the
+  claims in the paragraph into scannable proof.
+- **Signature** in Caveat — reinforces "a real person wrote this".
+- **Testimonial crediting his teaching** — third-party proof directly under
+  his own claim, which is where it does the most work.
+
+## Colours
+
+Standard palette only (\`blue\`, \`purple\`, \`green\`, \`amber\`, \`gray\`). The
+warm cream backgrounds (\`#fffdf8\` / \`#fdf6ec\`) are reused from the existing
+"Look what you'll make" band on the landing page, so the section sits in the
+same family.
+        `;
+    </script>
+    <style>
+        :root {
+            --color-blue-50:#eff6ff; --color-blue-100:#dbeafe; --color-blue-200:#bfdbfe; --color-blue-300:#93c5fd; --color-blue-400:#60a5fa; --color-blue-500:#3b82f6; --color-blue-600:#2563eb; --color-blue-700:#1d4ed8; --color-blue-800:#1e40af; --color-blue-900:#1e3a8a;
+            --color-green-50:#ecfdf5; --color-green-100:#d1fae5; --color-green-200:#a7f3d0; --color-green-300:#6ee7b7; --color-green-400:#34d399; --color-green-500:#10b981; --color-green-600:#059669; --color-green-700:#047857; --color-green-800:#065f46; --color-green-900:#064e3b;
+            --color-red-50:#fef2f2; --color-red-100:#fee2e2; --color-red-200:#fecaca; --color-red-300:#fca5a5; --color-red-400:#f87171; --color-red-500:#ef4444; --color-red-600:#dc2626; --color-red-700:#b91c1c; --color-red-800:#991b1b; --color-red-900:#7f1d1d;
+            --color-amber-50:#fffbeb; --color-amber-100:#fef3c7; --color-amber-200:#fde68a; --color-amber-300:#fcd34d; --color-amber-400:#fbbf24; --color-amber-500:#f59e0b; --color-amber-600:#d97706; --color-amber-700:#b45309; --color-amber-800:#92400e; --color-amber-900:#78350f;
+            --color-gray-50:#f8fafc; --color-gray-100:#f1f5f9; --color-gray-200:#e2e8f0; --color-gray-300:#cbd5e1; --color-gray-400:#94a3b8; --color-gray-500:#64748b; --color-gray-600:#475569; --color-gray-700:#334155; --color-gray-800:#1e293b; --color-gray-900:#0f172a;
+            --color-purple-50:#faf5ff; --color-purple-100:#f3e8ff; --color-purple-200:#e9d5ff; --color-purple-300:#d8b4fe; --color-purple-400:#c084fc; --color-purple-500:#a855f7; --color-purple-600:#9333ea; --color-purple-700:#7e22ce; --color-purple-800:#6b21a8; --color-purple-900:#581c87;
+        }
+
+        body { background: var(--color-gray-100); }
+
+        /* page furniture — shared across every concept block on this page */
+        .page-head { max-width: 820px; margin-inline: auto; padding: 56px 32px 8px; text-align: center; }
+        .idea-label { max-width: 1120px; margin-inline: auto; padding: 56px 32px 16px; }
+        .idea-label h2 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--color-purple-600); margin-bottom: 6px; }
+        .idea-label p { font-size: 16px; color: var(--color-gray-500); line-height: 1.55; max-width: 720px; text-wrap-style: balance; }
+        .band { padding: 72px 32px; }
+        .band-cream { background: radial-gradient(90% 60% at 15% 0%, rgba(168,85,247,.13) 0%, rgba(168,85,247,0) 60%), radial-gradient(80% 70% at 90% 100%, rgba(59,130,246,.13) 0%, rgba(59,130,246,0) 60%), linear-gradient(180deg,#fffdf8 0%,#fdf6ec 100%); }
+        .band-white { background: #fff; }
+        .band-gray { background: var(--color-gray-50); }
+        .inner { max-width: 1120px; margin-inline: auto; }
+
+        /* shared body copy treatment — same in every concept */
+        .jw-h { font-size: 34px; font-weight: 300; line-height: 1.25; color: var(--color-gray-800); margin-bottom: 20px; text-wrap-style: balance; }
+        .jw-h strong { font-weight: 600; }
+        .jw-p { font-size: 17px; font-weight: 300; line-height: 1.65; color: var(--color-gray-700); margin-bottom: 16px; text-wrap-style: balance; }
+        .jw-sig { font-family: 'Caveat', cursive; font-size: 34px; color: var(--color-gray-700); transform: rotate(-2deg); display: inline-block; }
+
+        /* credential chips */
+        .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+        .chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; background: #fff; border: 1px solid var(--color-gray-200); color: var(--color-gray-700); box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+        .chip svg { width: 15px; height: 15px; flex: none; }
+
+        /* testimonial card */
+        .quote-card { background: #fff; border: 1px solid var(--color-gray-200); border-radius: 14px; padding: 24px 26px; box-shadow: 0 10px 30px -14px rgba(15,23,42,.25); }
+        .quote-card p { font-size: 17px; line-height: 1.6; color: var(--color-gray-700); font-weight: 300; margin-bottom: 16px; text-wrap-style: balance; }
+        .quote-card p strong { font-weight: 600; color: var(--color-gray-800); }
+        .quote-who { display: flex; align-items: center; gap: 10px; }
+        .quote-who img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+        .quote-who strong { display: block; font-size: 14px; font-weight: 600; color: var(--color-gray-800); }
+        .quote-who span { display: block; font-size: 12.5px; color: var(--color-gray-500); }
+        .quote-mark { font-family: Georgia, serif; font-size: 54px; line-height: 0; color: var(--color-purple-200); display: block; height: 22px; }
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="page-head">
+    <h1 style="font-size:32px;font-weight:700;color:var(--color-gray-800);margin-bottom:10px;text-wrap-style:balance;">Meet Jeremy — section ideas</h1>
+    <p style="font-size:17px;color:var(--color-gray-500);line-height:1.6;text-wrap-style:balance;">Five ways to make the "Hi there, I'm Jeremy" section feel welcoming and credible — with a photo and a testimonial that credits his teaching. Copy is identical in every concept; only the layout changes.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- IDEA 1 — Portrait beside the copy, quote sits directly under -->
+<!-- The safest, most conventional option. Photo carries warmth,  -->
+<!-- chips carry proof, quote closes the loop.                    -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Idea 1 — Portrait &amp; proof</h2>
+    <p>Photo on the left in a soft rounded frame, copy on the right. Credential chips turn his claims into scannable proof, and the testimonial sits directly beneath the whole block so it reads as a reply to what he just said.</p>
+</div>
+<section class="band band-cream">
+    <div class="inner">
+        <div style="display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:start;margin-bottom:40px;">
+            <div>
+                <div style="position:relative;">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;box-shadow:0 20px 45px -18px rgba(15,23,42,.4);">
+                    <!-- small badge overlapping the photo corner: instant credibility marker -->
+                    <div style="position:absolute;right:-14px;bottom:-14px;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 8px 24px -8px rgba(15,23,42,.3);text-align:center;">
+                        <div style="font-size:20px;font-weight:700;color:var(--color-purple-600);line-height:1;">2M+</div>
+                        <div style="font-size:11px;font-weight:600;color:var(--color-gray-500);text-transform:uppercase;letter-spacing:.05em;">taught</div>
+                    </div>
+                </div>
+                <p style="font-family:'Caveat',cursive;font-size:24px;color:var(--color-gray-500);transform:rotate(-1.5deg);text-align:center;margin-bottom:0;padding-top:26px;">that's me 👋</p>
+            </div>
+            <div>
+                <h3 class="jw-h">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <div class="chips">
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-purple-500)"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.97 5.97 0 00-.75-2.906A3 3 0 0119 15v3h-3zM4.75 12.094A5.97 5.97 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>2M+ people taught</span>
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-blue-500)"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>20 years building software</span>
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-green-500)"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>Founder of Exercism</span>
+                </div>
+                <p class="jw-p">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                <p class="jw-p">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+                <span class="jw-sig">— Jeremy</span>
+            </div>
+        </div>
+        <!-- Testimonial spans the full width beneath, so it reads as the "and here's what people say" beat -->
+        <div class="quote-card" style="max-width:760px;margin-inline:auto;text-align:center;">
+            <span class="quote-mark">“</span>
+            <p style="font-size:19px;">You will not believe <strong>how fantastic this course is</strong>! You learn to write code by writing code to solve problems that match — and push — your abilities. <strong>Jeremy is a master teacher.</strong></p>
+            <div class="quote-who" style="justify-content:center;">
+                <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                <div style="text-align:left;"><strong>Thom Chittom</strong><span>Beginner</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- IDEA 2 — Polaroid + handwritten feel, quote pinned alongside -->
+<!-- Matches the polaroid/sticky-note language already used       -->
+<!-- elsewhere on the landing page. Warmest of the set.            -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Idea 2 — Polaroid &amp; sticky note</h2>
+    <p>Reuses the polaroid and sticky-note treatments already on the landing page. Feels handmade and personal rather than corporate — the testimonial is a taped-up note next to the photo, as if pinned to a board.</p>
+</div>
+<section class="band band-white">
+    <div class="inner">
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:center;">
+            <div>
+                <h3 class="jw-h">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <p class="jw-p">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                <p class="jw-p" style="margin-bottom:27px;">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+                <span class="jw-sig">— Jeremy</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:34px;">
+                <!-- polaroid print, same recipe as the "Look what you'll make" band -->
+                <div style="position:relative;transform:rotate(-2.5deg);border-radius:2px;padding:5% 5% 22%;background:radial-gradient(120% 100% at 50% 0%,#faf8f3 40%,#ece5d9 100%);box-shadow:0 1px 2px rgba(30,20,10,.28),0 14px 28px -10px rgba(30,20,10,.28);">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:contrast(.94) saturate(.96) sepia(.05);">
+                    <span style="position:absolute;left:0;right:0;bottom:20px;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:rgba(42,49,66,.88);transform:rotate(1deg);">Jeremy, your teacher</span>
+                </div>
+                <!-- sticky note testimonial, same recipe as the testimonials wall -->
+                <div style="position:relative;transform:rotate(2deg);background:var(--color-purple-50);border:1px solid var(--color-purple-100);border-radius:3px;padding:26px 22px 20px;box-shadow:0 10px 26px -12px rgba(15,23,42,.3);">
+                    <span style="position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-3deg);width:86px;height:22px;background:rgba(255,255,255,.65);border:1px solid rgba(15,23,42,.06);"></span>
+                    <p style="font-size:15.5px;line-height:1.6;font-weight:300;color:var(--color-gray-700);margin-bottom:14px;text-wrap-style:balance;">"Jeremy and the mentors have created an amazing resource like no other… it all comes together to make <strong style="font-weight:600;">a superb learning experience</strong>."</p>
+                    <div class="quote-who">
+                        <img src="https://assets.jiki.io/_next/static/media/jj.1c9be5ff.webp" alt="@JJ">
+                        <div><strong>@JJ</strong><span>Junior Developer</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- IDEA 3 — "A letter from Jeremy"                              -->
+<!-- Centred, intimate, one-to-one. Round photo at the top, quote -->
+<!-- pair underneath as social proof.                             -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Idea 3 — A letter from Jeremy</h2>
+    <p>Centred and intimate — reads like a personal note rather than an about-us block. Round photo above the copy, then <em>two</em> testimonials side by side underneath, which makes the praise feel like a pattern rather than a one-off.</p>
+</div>
+<section class="band band-gray">
+    <div class="inner" style="max-width:820px;">
+        <div style="text-align:center;margin-bottom:32px;">
+            <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker" style="width:132px;height:132px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 14px 34px -12px rgba(15,23,42,.4);margin-bottom:14px;">
+            <div style="font-size:14px;font-weight:600;color:var(--color-gray-500);">Jeremy Walker · Founder, Jiki &amp; Exercism</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--color-gray-200);border-radius:18px;padding:44px 48px;box-shadow:0 14px 40px -20px rgba(15,23,42,.28);margin-bottom:36px;">
+            <h3 class="jw-h" style="font-size:30px;text-align:center;">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+            <p class="jw-p">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+            <p class="jw-p">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+            <div style="text-align:right;"><span class="jw-sig">— Jeremy</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="quote-card">
+                <p style="font-size:15.5px;"><strong>Jeremy is a master teacher.</strong> You learn to write code by writing code to solve problems that match — and push — your abilities.</p>
+                <div class="quote-who">
+                    <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                    <div><strong>Thom Chittom</strong><span>Beginner</span></div>
+                </div>
+            </div>
+            <div class="quote-card">
+                <p style="font-size:15.5px;">Jeremy and the mentors have created an amazing resource like no other — <strong>a superb learning experience</strong>.</p>
+                <div class="quote-who">
+                    <img src="https://assets.jiki.io/_next/static/media/jj.1c9be5ff.webp" alt="@JJ">
+                    <div><strong>@JJ</strong><span>Junior Developer</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- IDEA 4 — Photo strip: him teaching, not just posing          -->
+<!-- Shows him in the act of teaching (live Q&A stills), which is -->
+<!-- the credibility claim being made. Quote runs beneath.        -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Idea 4 — Him actually teaching</h2>
+    <p>Instead of one posed portrait, a strip of three images showing Jeremy mid-teach (headshot plus live Q&amp;A stills already in the repo). Proof by demonstration — you can see the thing he's claiming. The testimonial runs full-width underneath as a quiet closing line.</p>
+</div>
+<section class="band band-cream" style="padding-bottom:88px;">
+    <div class="inner">
+        <div style="max-width:760px;margin-bottom:40px;">
+            <h3 class="jw-h">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+            <p class="jw-p">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+            <p class="jw-p" style="margin-bottom:20px;">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+            <span class="jw-sig">— Jeremy</span>
+        </div>
+        <style>
+            /* only reused styles get a class — the photo strip cards are identical */
+            .strip-card { position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 14px 34px -16px rgba(15,23,42,.4); transition: transform .25s ease, box-shadow .25s ease; }
+            .strip-card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px -16px rgba(15,23,42,.45); }
+            .strip-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+            .strip-card span { position: absolute; left: 0; right: 0; bottom: 0; padding: 42px 16px 14px; background: linear-gradient(180deg,rgba(15,23,42,0) 0%,rgba(15,23,42,.72) 100%); color: #fff; font-size: 14px; font-weight: 600; }
+        </style>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:44px;">
+            <div class="strip-card"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"><span>That's me 👋</span></div>
+            <div class="strip-card"><img src="assets/live-qa-session.png" alt="Jeremy hosting a live Jiki Q&amp;A session"><span>Live Q&amp;A, every week</span></div>
+            <div class="strip-card"><img src="assets/live-qa-session-2.png" alt="Jeremy answering a student question"><span>Answering your questions</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:26px;justify-content:center;border-top:1px solid rgba(15,23,42,.08);padding-top:36px;">
+            <span class="quote-mark" style="height:auto;font-size:64px;">“</span>
+            <p style="font-size:20px;font-weight:300;line-height:1.55;color:var(--color-gray-700);max-width:640px;margin-bottom:0;text-wrap-style:balance;">You learn to write code by writing code to solve problems that match — and push — your abilities. <strong style="font-weight:600;">Jeremy is a master teacher.</strong></p>
+            <div class="quote-who" style="flex:none;">
+                <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                <div><strong>Thom Chittom</strong><span>Beginner</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- IDEA 5 — Idea 1's layout, polaroid photo, Idea 4's quote line -->
+<!-- Portrait + credential chips as in Idea 1, but the photo gets  -->
+<!-- the polaroid treatment and the testimonial is the horizontal  -->
+<!-- rule-and-quote line rather than a card.                       -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Idea 5 — Portrait &amp; proof, polaroid edition</h2>
+    <p>Idea 1's layout — photo left, copy and credential chips right — but the photo becomes a polaroid print, and the testimonial is the quiet full-width quote line from Idea 4 instead of a boxed card. Warmer than Idea 1, calmer than Idea 2.</p>
+</div>
+<section class="band band-white" style="padding-bottom:88px;">
+    <div class="inner">
+        <div style="display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start;margin-bottom:44px;">
+            <div>
+            <!-- polaroid print, same recipe as Idea 2 and the "Look what you'll make" band -->
+            <div style="position:relative;transform:rotate(-2.5deg);border-radius:2px;padding:5% 5% 22%;background:radial-gradient(120% 100% at 50% 0%,#faf8f3 40%,#ece5d9 100%);box-shadow:0 1px 2px rgba(30,20,10,.28),0 16px 32px -10px rgba(30,20,10,.28);">
+                <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:contrast(.94) saturate(.96) sepia(.05);">
+                <span style="position:absolute;left:0;right:0;bottom:27px;text-align:center;font-family:'Caveat',cursive;font-weight:700;font-size:27px;color:rgba(42,49,66,.88);transform:rotate(1deg);">that's me 👋</span>
+            </div>
+            <!-- swatch G: stacked learner faces + the count, sat under the print -->
+            <div style="display:flex;justify-content:center;align-items:center;gap:12px;padding-top:22px;">
+                <div style="display:flex;">
+                    <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;">
+                    <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                    <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                    <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                </div>
+                <span style="font-size:13.5px;font-weight:600;color:var(--color-gray-600);text-align:left;line-height:1.3;">taught <strong style="color:var(--color-gray-800);">2 million+</strong><br>learners</span>
+            </div>
+            </div>
+            <div>
+                <h3 class="jw-h">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <div class="chips">
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-purple-500)"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.97 5.97 0 00-.75-2.906A3 3 0 0119 15v3h-3zM4.75 12.094A5.97 5.97 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>2M+ people taught</span>
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-blue-500)"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>20 years building software</span>
+                    <span class="chip"><svg viewBox="0 0 20 20" fill="var(--color-green-500)"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>Founder of Exercism</span>
+                </div>
+                <p class="jw-p">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                <p class="jw-p" style="margin-bottom:20px;">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+                <span class="jw-sig">— Jeremy</span>
+            </div>
+        </div>
+        <!-- Idea 4's testimonial treatment: a rule, then a horizontal quote line -->
+        <div style="display:flex;align-items:center;gap:26px;justify-content:center;border-top:1px solid rgba(15,23,42,.08);padding-top:36px;">
+            <span class="quote-mark" style="height:auto;font-size:64px;">“</span>
+            <p style="font-size:20px;font-weight:300;line-height:1.55;color:var(--color-gray-700);max-width:640px;margin-bottom:0;text-wrap-style:balance;">You learn to write code by writing code to solve problems that match — and push — your abilities. <strong style="font-weight:600;">Jeremy is a master teacher.</strong></p>
+            <div class="quote-who" style="flex:none;">
+                <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+                <div><strong>Thom Chittom</strong><span>Beginner</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SWATCHES — alternatives to the "2M+ taught" corner badge     -->
+<!-- Same polaroid underneath every time, so only the badge       -->
+<!-- treatment is being compared.                                 -->
+<!-- ============================================================ -->
+<div class="idea-label">
+    <h2>Swatches — the "2M+ taught" badge</h2>
+    <p>Eight alternatives to the white corner badge, all shown on the same polaroid so only the badge changes. A–D sit on the photo corner; E–H sit under or beside it, which reads calmer and never covers his face.</p>
+</div>
+<section class="band band-gray" style="padding-bottom:88px;">
+    <div class="inner">
+        <style>
+            /* the polaroid is repeated eight times — this one earns a class */
+            .swatch { text-align: center; }
+            .swatch-label { font-size: 13px; font-weight: 600; color: var(--color-gray-500); margin-bottom: 16px; }
+            .swatch-note { font-size: 12.5px; color: var(--color-gray-400); line-height: 1.45; padding-top: 14px; text-wrap-style: balance; }
+            .polaroid { position: relative; transform: rotate(-2.5deg); border-radius: 2px; padding: 5% 5% 22%; background: radial-gradient(120% 100% at 50% 0%,#faf8f3 40%,#ece5d9 100%); box-shadow: 0 1px 2px rgba(30,20,10,.28), 0 16px 32px -10px rgba(30,20,10,.28); }
+            .polaroid img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; filter: contrast(.94) saturate(.96) sepia(.05); }
+            .polaroid > .cap { position: absolute; left: 0; right: 0; bottom: 27px; text-align: center; font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px; color: rgba(42,49,66,.88); transform: rotate(1deg); }
+        </style>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:44px 32px;">
+
+            <!-- A — the current one, for comparison -->
+            <div class="swatch">
+                <div class="swatch-label">A · Current — white card</div>
+                <div class="polaroid">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                    <div style="position:absolute;right:-16px;top:-16px;transform:rotate(4deg);background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 8px 24px -8px rgba(15,23,42,.3);text-align:center;">
+                        <div style="font-size:20px;font-weight:700;color:var(--color-purple-600);line-height:1;">2M+</div>
+                        <div style="font-size:11px;font-weight:600;color:var(--color-gray-500);text-transform:uppercase;letter-spacing:.05em;">taught</div>
+                    </div>
+                </div>
+                <p class="swatch-note">Clean but generic — reads like a UI chip stuck on a photo.</p>
+            </div>
+
+            <!-- B — solid purple disc, "stamped" -->
+            <div class="swatch">
+                <div class="swatch-label">B · Purple disc</div>
+                <div class="polaroid">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                    <div style="position:absolute;right:-18px;top:-18px;width:88px;height:88px;border-radius:50%;background:var(--color-purple-600);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 10px 26px -8px rgba(88,28,135,.55);transform:rotate(-6deg);">
+                        <div style="font-size:24px;font-weight:800;line-height:1;">2M+</div>
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.9;">taught</div>
+                    </div>
+                </div>
+                <p class="swatch-note">Bold and confident. Strongest at a glance, but competes with the photo.</p>
+            </div>
+
+            <!-- C — handwritten note in Caveat with an arrow, no chrome at all -->
+            <div class="swatch">
+                <div class="swatch-label">C · Handwritten &amp; arrow</div>
+                <div class="polaroid">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                    <div style="position:absolute;right:-70px;top:6px;width:150px;text-align:left;transform:rotate(-5deg);">
+                        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:30px;line-height:1;color:var(--color-purple-600);">2M+ taught</div>
+                        <svg viewBox="0 0 80 40" style="width:70px;height:34px;color:var(--color-purple-400);" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M74 6C60 30 36 36 10 30"/><path d="M10 30l12-6M10 30l7 11"/></svg>
+                    </div>
+                </div>
+                <p class="swatch-note">Warmest option — matches the Caveat callouts used across the landing page.</p>
+            </div>
+
+            <!-- D — postage-stamp / sticker with a scalloped edge -->
+            <div class="swatch">
+                <div class="swatch-label">D · Postage stamp</div>
+                <div class="polaroid">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                    <div style="position:absolute;right:-14px;top:-14px;transform:rotate(6deg);padding:9px 13px;text-align:center;background:var(--color-amber-50);color:var(--color-amber-800);box-shadow:0 8px 22px -8px rgba(15,23,42,.35);border:2px dashed var(--color-amber-300);border-radius:4px;">
+                        <div style="font-size:19px;font-weight:800;line-height:1;">2M+</div>
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">taught</div>
+                    </div>
+                </div>
+                <p class="swatch-note">Playful, scrapbook feel. Amber is off-palette for the section though.</p>
+            </div>
+
+            <!-- E — caption bar under the print, no overlap -->
+            <div class="swatch">
+                <div class="swatch-label">E · Under the print</div>
+                <div class="polaroid" style="margin-bottom:18px;">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                </div>
+                <div style="display:inline-flex;align-items:baseline;gap:8px;padding:10px 18px;border-radius:100px;background:var(--color-purple-50);border:1px solid var(--color-purple-100);">
+                    <strong style="font-size:19px;font-weight:800;color:var(--color-purple-700);">2M+</strong>
+                    <span style="font-size:13px;font-weight:600;color:var(--color-purple-700);">people taught</span>
+                </div>
+                <p class="swatch-note">Never covers his face. Safest choice, and the easiest to make responsive.</p>
+            </div>
+
+            <!-- F — stacked stat block beneath, with a second number for rhythm -->
+            <div class="swatch">
+                <div class="swatch-label">F · Two-stat block</div>
+                <div class="polaroid" style="margin-bottom:18px;">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                </div>
+                <div style="display:flex;justify-content:center;gap:0;">
+                    <div style="padding:0 20px;">
+                        <div style="font-size:24px;font-weight:800;color:var(--color-gray-800);line-height:1.1;">2M+</div>
+                        <div style="font-size:12px;font-weight:600;color:var(--color-gray-500);">taught</div>
+                    </div>
+                    <div style="width:1px;background:var(--color-gray-200);"></div>
+                    <div style="padding:0 20px;">
+                        <div style="font-size:24px;font-weight:800;color:var(--color-gray-800);line-height:1.1;">20</div>
+                        <div style="font-size:12px;font-weight:600;color:var(--color-gray-500);">years</div>
+                    </div>
+                </div>
+                <p class="swatch-note">Two numbers beat one — a pair reads as a track record, not a single boast.</p>
+            </div>
+
+            <!-- G — faces + count, proof that the number is people -->
+            <div class="swatch">
+                <div class="swatch-label">G · Faces + count</div>
+                <div class="polaroid" style="margin-bottom:18px;">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                </div>
+                <div style="display:inline-flex;align-items:center;gap:12px;">
+                    <div style="display:flex;">
+                        <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;">
+                        <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                        <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                        <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-11px;">
+                    </div>
+                    <span style="font-size:13.5px;font-weight:600;color:var(--color-gray-600);text-align:left;line-height:1.3;">taught <strong style="color:var(--color-gray-800);">2 million+</strong><br>learners</span>
+                </div>
+                <p class="swatch-note">Turns an abstract number into people. Best trust signal of the eight.</p>
+            </div>
+
+            <!-- H — vertical ribbon down the side of the print -->
+            <div class="swatch">
+                <div class="swatch-label">H · Side ribbon</div>
+                <div class="polaroid">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                    <span class="cap">that's me 👋</span>
+                    <div style="position:absolute;right:-13px;top:24px;bottom:64px;width:38px;background:linear-gradient(180deg,var(--color-purple-600) 0%,var(--color-blue-600) 100%);border-radius:6px;box-shadow:0 8px 22px -8px rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;">
+                        <span style="writing-mode:vertical-rl;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;">2M+ taught</span>
+                    </div>
+                </div>
+                <p class="swatch-note">Graphic and tidy — but vertical type is harder to read and doesn't translate well.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

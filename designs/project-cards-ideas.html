@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Cards - Jiki</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Static visual mockup only — every card is hand-written markup. No props, no state, no data.
+
+## Content type
+
+Projects sit alongside Challenges and Exercises. Challenge tiles are square, icon-led and sit
+three-across. **Project cards are landscape, banner-led, full width of the content column and
+stacked one per row** — they must read as more substantial than a Challenge tile.
+
+## Card anatomy (top to bottom)
+
+1. **Banner** — full-bleed, 3:1, no inset, flat pale purple placeholder (\`--color-purple-100\`).
+   Rounded top corners come from \`overflow: hidden\` on the card, so they always match the card radius.
+2. **Meta row** — \`PROJECT\` pill + three icon/value pairs (steps, time, difficulty). Values only,
+   no uppercase field-name labels. 12px, \`--color-gray-500\`, 14px gap. The difficulty icon is the
+   same on every card; only the value changes.
+3. **Title** — 22px / 500. Deliberately larger than a Challenge tile title.
+4. **One-line description** — \`--color-gray-600\`.
+5. **Tag pills** — uppercase, pale purple, pill radius. Same pill style as Challenge and video cards.
+6. **Footer** — hairline top border, progress bar + "N of M steps complete" on the left,
+   action button on the right, vertically centred against the bar.
+
+## Three directions
+
+- **A — banner-led** (the original brief): full-bleed 3:1 banner, meta row, title, description, tag
+  pills, progress footer.
+- **B — journey-path row**: reuses the Coding Fundamentals path card — coloured 2px border, square
+  icon left, outlined type pill, tick/lock top-right. Closest to what's already shipping.
+- **C — Challenges tile, gone landscape**: the Challenges grid tile stretched full width — hairline
+  border, pale blue illustration disc, status chip top-right, uppercase type line under the title.
+
+B and C both drop the banner, so they slot into the existing UI without new artwork.
+
+## Variants
+
+- **Not started** — no footer band, no top border. Button sits directly under the tag row, right-aligned.
+- **In progress** — full footer. Bar at 3 of 8.
+- **Complete** — no bar, no step count. "Completed" left, "Review project" right. Green tick in the
+  banner's top-right.
+- **Coming soon** — desaturated banner, grey diagonal ribbon top-right, no footer at all.
+
+Ribbon is grey. Tick is green. Pills are uppercase.
+
+## Responsive
+
+Below the tablet breakpoint (768px) the meta row wraps to two lines and the footer stacks, with the
+button going full-width beneath the bar.
+
+## Note for the developer
+
+- **Tag pills** follow the real Challenge/video pill (\`.BootcampSection_tag__bpCnD\` in
+  \`jiki-landing.html\`): 12px, weight 600, uppercase, \`4px 12px\` padding. That one uses the brand
+  purple \`#7029f5\` on a 13%-alpha tint; this mockup uses the \`--color-purple-100/700\` tokens.
+  Use whichever the app already ships.
+- **Title scale** — the Challenge tile title is 15px / weight 300. This card's title is 22px / 500,
+  so a Project reads clearly heavier in the same column, as intended.
+- **Ribbon and journey-path tick** have no design-repo source — they live in the app. The tick here
+  follows the repo-wide idiom (\`--color-green-500\` circle, \`M5 13l4 4L19 7\` path) used by
+  \`above-the-fold.html\`. **Re-point the ribbon at the real component when implementing.**
+- **Card shell** borrows \`projects.html\`'s treatment: 3px border, 20px radius,
+  \`0 4px 12px rgba(0,0,0,.08)\`.
+        `;
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--color-gray-50);
+            color: var(--color-gray-900);
+            padding: 48px 24px 80px;
+        }
+
+        /* the content column a Project card is designed to fill */
+        .page {
+            max-width: 820px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .page-header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; text-wrap-style: balance; }
+        .page-header p { font-size: 15px; color: var(--color-gray-600); text-wrap-style: balance; }
+
+        .variant-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: var(--color-gray-400);
+            margin-bottom: 10px;
+        }
+
+        /* ── Project card ─────────────────────────────────────────────────────
+           Border / radius / shadow deliberately match the existing project card
+           treatment so Projects and Challenges read as one system. */
+        .project-card {
+            position: relative;
+            background: white;
+            border: 3px solid var(--color-gray-200);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 1. Banner — full-bleed, 3:1, flat pale purple placeholder */
+        .project-banner {
+            position: relative;
+            aspect-ratio: 3 / 1;
+            background: var(--color-purple-100);
+        }
+
+        /* generous vertical padding — a Project must never look denser than a Challenge tile */
+        .project-body {
+            padding: 28px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* 2. Meta row */
+        .project-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        /* forces the meta row onto two lines below the tablet breakpoint; inert on desktop */
+        .project-meta .meta-break {
+            display: none;
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        .project-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-meta .meta-item svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            stroke: var(--color-gray-400);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Pills — uppercase, pale purple, pill radius. Shared by the type pill and the tag pills.
+           Size, padding and weight follow the real Challenge/video tag pill
+           (.BootcampSection_tag__bpCnD in jiki-landing.html): 12px / 600 / 4px 12px. */
+        .pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: var(--color-purple-100);
+            color: var(--color-purple-700);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* 3 + 4. Title and description */
+        .project-title {
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--color-gray-900);
+            text-wrap-style: balance;
+        }
+
+        .project-description {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        /* 5. Tag pills — sentence case, normal letter spacing (the PROJECT type pill stays uppercase) */
+        .project-tags .pill {
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* 6. Footer */
+        .project-footer {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-gray-200);
+        }
+
+        .project-footer .footer-main { flex: 1; min-width: 0; }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--color-gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar .progress-fill {
+            height: 100%;
+            background: var(--color-purple-500);
+            border-radius: 10px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        /* Not started — button sits directly under the tags, no footer band or border */
+        .project-action-inline {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Complete — green tick in the banner's top-right */
+        .banner-tick {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-green-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .banner-tick svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .footer-completed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--color-green-700);
+        }
+
+        .footer-completed svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--color-green-600);
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Coming soon — desaturated banner + grey diagonal ribbon */
+        .project-banner-muted {
+            background: var(--color-gray-100);
+            filter: saturate(0.2);
+        }
+
+        .project-ribbon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 130px;
+            height: 130px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .project-ribbon span {
+            position: absolute;
+            top: 30px;
+            right: -46px;
+            width: 190px;
+            padding: 5px 0;
+            background: var(--color-gray-400);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            text-align: center;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ── Responsive: below the tablet breakpoint ───────────────────────── */
+        @media (max-width: 768px) {
+            body { padding: 32px 16px 64px; }
+
+            .project-body { padding: 24px 20px 24px; }
+
+            /* meta row wraps to two lines: pill + steps, then time + difficulty.
+               The zero-height break span forces the split; it makes its own flex line,
+               so row-gap is halved to keep the two lines 12px apart. */
+            .project-meta { column-gap: 14px; row-gap: 6px; }
+            .project-meta .meta-break { display: block; }
+
+            /* footer stacks, button full-width beneath the bar */
+            .project-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .project-footer .ui-btn { width: 100%; }
+            .project-action-inline .ui-btn { width: 100%; }
+        }
+
+        /* ══════════════════════════════════════════════════════════════════════
+           DIRECTION B — built from the journey-path row
+           (Coding Fundamentals page: coloured 2px border, square icon on the
+           left, type pill above the title, tick or lock in the top-right)
+           ══════════════════════════════════════════════════════════════════ */
+        .journey-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: white;
+            border: 2px solid var(--color-purple-500);
+            border-radius: 14px;
+            padding: 24px 28px;
+        }
+
+        .journey-card .journey-icon {
+            width: 96px;
+            height: 96px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--color-purple-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .journey-card .journey-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--color-purple-600);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .journey-card .journey-main {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* the outlined type pill from the journey path — white fill, coloured hairline */
+        .type-pill {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid var(--color-purple-200);
+            color: var(--color-purple-600);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .type-pill svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--color-purple-600);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .journey-card .journey-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            text-wrap-style: balance;
+        }
+
+        .journey-card .journey-description {
+            font-size: 16px;
+            color: var(--color-gray-600);
+            line-height: 1.5;
+            text-wrap-style: balance;
+        }
+
+        /* the journey path's own meta line, kept lighter than direction A's */
+        .journey-card .journey-meta {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 14px;
+            row-gap: 6px;
+            font-size: 13px;
+            color: var(--color-gray-500);
+        }
+
+        .journey-card .journey-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .journey-card .journey-progress .progress-bar {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .journey-card .journey-progress .progress-label { white-space: nowrap; }
+
+        .journey-card .journey-action { flex-shrink: 0; }
+
+        /* status marker, top-right — green tick when complete, grey lock when locked */
+        .journey-marker {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .journey-marker svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .journey-marker-complete { background: var(--color-green-500); }
+        .journey-marker-complete svg { stroke: white; }
+
+        .journey-marker-locked { background: var(--color-gray-100); }
+        .journey-marker-locked svg { stroke: var(--color-gray-400); stroke-width: 2; }
+
+        /* complete — green border and the faintest green wash, as on the journey path */
+        .journey-card-complete {
+            border-color: var(--color-green-500);
+            background: var(--color-green-50);
+        }
+
+        .journey-card-complete .journey-icon { background: var(--color-green-100); }
+        .journey-card-complete .journey-icon svg { stroke: var(--color-green-700); }
+        .journey-card-complete .type-pill { border-color: var(--color-green-200); color: var(--color-green-700); }
+        .journey-card-complete .type-pill svg { stroke: var(--color-green-700); }
+
+        /* locked — greyed right back, no border colour, muted type */
+        .journey-card-locked {
+            border-color: var(--color-gray-200);
+            background: var(--color-gray-50);
+        }
+
+        .journey-card-locked .journey-icon { background: var(--color-gray-100); }
+        .journey-card-locked .journey-icon svg { stroke: var(--color-gray-400); }
+        .journey-card-locked .type-pill { border-color: var(--color-gray-200); color: var(--color-gray-400); }
+        .journey-card-locked .type-pill svg { stroke: var(--color-gray-400); }
+        .journey-card-locked .journey-title { color: var(--color-gray-400); }
+        .journey-card-locked .journey-description { color: var(--color-gray-400); }
+        .journey-card-locked .journey-meta { color: var(--color-gray-400); }
+
+        /* ══════════════════════════════════════════════════════════════════════
+           DIRECTION C — built from the Challenges grid tile
+           (white card, hairline border, status chip top-right, illustration in a
+           pale blue disc, title with an uppercase type line beneath it) — but
+           landscape and full width, so a Project still outranks a Challenge
+           ══════════════════════════════════════════════════════════════════ */
+        .tile-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            padding: 28px 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .tile-card .tile-illustration {
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: var(--color-blue-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tile-card .tile-illustration svg {
+            width: 72px;
+            height: 72px;
+            stroke: var(--color-blue-400);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .tile-card .tile-main {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tile-card .tile-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            text-wrap-style: balance;
+        }
+
+        /* the uppercase type line that sits under a Challenge tile's title */
+        .tile-type {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--color-gray-400);
+        }
+
+        .tile-card .tile-description {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        .tile-card .tile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 14px;
+            row-gap: 6px;
+            font-size: 13px;
+            color: var(--color-gray-500);
+        }
+
+        .tile-card .tile-footer {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .tile-card .tile-footer .progress-bar { flex: 1; margin-bottom: 0; }
+        .tile-card .tile-footer .progress-label { white-space: nowrap; }
+
+        /* the square-ish status chip in the tile's top-right */
+        .status-chip {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 4px 12px;
+            border-radius: 8px;
+            background: var(--color-gray-100);
+            color: var(--color-gray-500);
+            font-size: 14px;
+        }
+
+        .status-chip-progress { background: var(--color-purple-100); color: var(--color-purple-700); }
+        .status-chip-complete { background: var(--color-green-100); color: var(--color-green-800); }
+
+        .tile-card-locked .tile-illustration { background: var(--color-gray-100); }
+        .tile-card-locked .tile-illustration svg { stroke: var(--color-gray-300); }
+        .tile-card-locked .tile-title { color: var(--color-gray-400); }
+        .tile-card-locked .tile-description { color: var(--color-gray-400); }
+        .tile-card-locked .tile-meta { color: var(--color-gray-400); }
+
+        /* ══════════════════════════════════════════════════════════════════════
+           DIRECTION D — square, illustration-led
+           Sits in a grid rather than stacked. The illustration does the work the
+           banner did in direction A, but cropped square so it can share a row.
+           ══════════════════════════════════════════════════════════════════ */
+        .square-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .square-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        /* the illustration crops to a wide band at the top of the square */
+        .square-card .square-image {
+            aspect-ratio: 16 / 9;
+            background: var(--color-gray-50);
+            overflow: hidden;
+        }
+
+        .square-card .square-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* the buildings sit right of centre in the source art */
+            object-position: 72% 50%;
+            display: block;
+        }
+
+        .square-card .square-body {
+            flex: 1;
+            padding: 20px 22px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .square-card .square-title {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--color-gray-900);
+            text-wrap-style: balance;
+        }
+
+        .square-card .square-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        .square-card .square-meta {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 10px;
+            row-gap: 4px;
+            font-size: 13px;
+            color: var(--color-gray-500);
+        }
+
+        /* footer pinned to the bottom so every card in a row lines up */
+        .square-card .square-footer {
+            margin-bottom: 0;
+            padding-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .square-card .square-footer-spacer { flex: 1; }
+
+        .square-card .square-footer .ui-btn { width: 100%; }
+
+        .square-card .square-image-muted img { filter: saturate(0.15) opacity(0.65); }
+
+        .square-card-locked .square-title { color: var(--color-gray-400); }
+        .square-card-locked .square-description { color: var(--color-gray-400); }
+        .square-card-locked .square-meta { color: var(--color-gray-400); }
+
+        /* status marker over the illustration, as on the journey path */
+        .square-card .journey-marker { top: 12px; right: 12px; }
+
+        /* ══════════════════════════════════════════════════════════════════════
+           DIRECTION E — true 1:1 tile, three across
+           The Challenges grid layout exactly: square card, illustration, centred
+           title with the uppercase type line under it. Description and meta are
+           dropped — they don't fit a square without crowding it.
+           ══════════════════════════════════════════════════════════════════ */
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .square-tile {
+            position: relative;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .square-tile .tile-art {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            background: var(--color-gray-50);
+        }
+
+        .square-tile .tile-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 72% 50%;
+            display: block;
+        }
+
+        .square-tile .tile-caption {
+            flex-shrink: 0;
+            padding: 14px 16px 18px;
+            text-align: center;
+        }
+
+        .square-tile .tile-caption .square-tile-title {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--color-gray-900);
+            margin-bottom: 4px;
+            text-wrap-style: balance;
+        }
+
+        /* the hairline progress bar sits on the seam between art and caption */
+        .square-tile .tile-seam-progress {
+            flex-shrink: 0;
+            height: 4px;
+            background: var(--color-gray-200);
+        }
+
+        .square-tile .tile-seam-progress div {
+            height: 100%;
+            background: var(--color-purple-500);
+        }
+
+        .square-tile-locked .tile-art img { filter: saturate(0.15) opacity(0.6); }
+        .square-tile-locked .square-tile-title { color: var(--color-gray-400); }
+
+        /* ══════════════════════════════════════════════════════════════════════
+           DIRECTION F — the artwork is being built
+           Three ways to make a still illustration read as something the learner
+           is creating. All use the same flat PNG — the motion is CSS only, so
+           there's no extra artwork to commission.
+           ══════════════════════════════════════════════════════════════════ */
+        .motion-card .tile-art {
+            position: relative;
+            background: white;
+        }
+
+        /* the unbuilt state: drained of colour, sitting underneath */
+        .motion-card .art-ghost {
+            position: absolute;
+            inset: 0;
+        }
+
+        .motion-card .art-ghost img { filter: grayscale(1) opacity(0.28); }
+
+        /* the built state: full colour, revealed left-to-right */
+        .motion-card .art-built {
+            position: absolute;
+            inset: 0;
+        }
+
+        /* ── F1: builds up to the learner's actual progress, once, on load ── */
+        .motion-build .art-built {
+            clip-path: inset(0 100% 0 0);
+            animation: buildToProgress 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+        }
+
+        @keyframes buildToProgress {
+            to { clip-path: inset(0 62.5% 0 0); }
+        }
+
+        /* the working edge — a soft line that settles where progress stops */
+        .motion-build .art-edge {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            background: var(--color-purple-500);
+            opacity: 0;
+            animation: edgeToProgress 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards,
+                       edgePulse 2s ease-in-out 1.9s infinite;
+        }
+
+        @keyframes edgeToProgress {
+            from { left: 0; opacity: 1; }
+            to { left: 37.5%; opacity: 1; }
+        }
+
+        @keyframes edgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--color-purple-500-40); }
+            50% { box-shadow: 0 0 12px 2px var(--color-purple-500-40); }
+        }
+
+        /* ── F2: the town builds itself over and over — for "not started" ── */
+        .motion-loop .art-built {
+            animation: buildLoop 5s ease-in-out infinite;
+        }
+
+        @keyframes buildLoop {
+            0% { clip-path: inset(0 100% 0 0); }
+            55% { clip-path: inset(0 0 0 0); }
+            85% { clip-path: inset(0 0 0 0); }
+            100% { clip-path: inset(0 100% 0 0); }
+        }
+
+        /* ── F3: finished and alive — a slow drift over the completed artwork ── */
+        .motion-drift .tile-art img {
+            animation: slowDrift 18s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowDrift {
+            from { transform: scale(1.06) translate(1.5%, 0.5%); }
+            to { transform: scale(1.14) translate(-1.5%, -1%); }
+        }
+
+        /* a light sweep across the artwork, like a pass of the trowel */
+        .motion-sweep::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+            transform: translateX(-100%);
+            animation: artSweep 4.5s ease-in-out 1.4s infinite;
+        }
+
+        @keyframes artSweep {
+            0% { transform: translateX(-100%); }
+            40%, 100% { transform: translateX(100%); }
+        }
+
+        /* the caption counter that ticks alongside the build */
+        .motion-card .tile-caption .motion-status {
+            font-size: 12px;
+            color: var(--color-purple-600);
+            font-weight: 500;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .motion-build .art-built { animation: none; clip-path: inset(0 62.5% 0 0); }
+            .motion-build .art-edge { animation: none; opacity: 1; left: 37.5%; }
+            .motion-loop .art-built { animation: none; clip-path: inset(0 0 0 0); }
+            .motion-drift .tile-art img { animation: none; }
+            .motion-sweep::after { animation: none; opacity: 0; }
+        }
+
+        /* section heading between the three directions */
+        .direction-header {
+            border-top: 1px solid var(--color-gray-200);
+            padding-top: 32px;
+        }
+
+        .direction-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-wrap-style: balance;
+        }
+
+        .direction-header p {
+            font-size: 14px;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        @media (max-width: 768px) {
+            .square-grid { grid-template-columns: 1fr; }
+            .tile-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .journey-card,
+            .tile-card {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+
+            .journey-card .journey-icon,
+            .tile-card .tile-illustration { align-self: flex-start; }
+
+            .journey-card .journey-progress,
+            .tile-card .tile-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .journey-card .ui-btn,
+            .tile-card .ui-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <div class="page">
+        <div class="page-header">
+            <h1>Project cards</h1>
+            <p>Projects are longer, multi-step builds. Landscape, banner-led, full width of the content column and stacked one per row — never in the Challenge grid.</p>
+        </div>
+
+        <div class="direction-header" style="border-top:none;padding-top:0">
+            <h2>Direction A — banner-led</h2>
+            <p>The original brief: a full-bleed 3:1 banner, then meta, title, description, tags and a progress footer.</p>
+        </div>
+
+        <!-- ══ IN PROGRESS ══ full footer, bar at 3 of 8 ══ -->
+        <div>
+            <div class="variant-label">In progress</div>
+            <div class="project-card">
+                <div class="project-banner"></div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="pill">Project</span>
+                        <span class="meta-item">
+                            <!-- steps -->
+                            <svg viewBox="0 0 24 24"><path d="M3 17h5v4H3zM9.5 10h5v11h-5zM16 3h5v18h-5z"/></svg>
+                            8 steps
+                        </span>
+                        <span class="meta-break"></span>
+                        <span class="meta-item">
+                            <!-- estimated time -->
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            6 hours
+                        </span>
+                        <span class="meta-item">
+                            <!-- difficulty (same icon on every card) -->
+                            <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z"/></svg>
+                            Beginner
+                        </span>
+                    </div>
+                    <div class="project-title">Build your personal homepage</div>
+                    <div class="project-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="project-tags">
+                        <span class="pill">Agentic coding</span>
+                        <span class="pill">Git and GitHub</span>
+                        <span class="pill">HTML/CSS/JavaScript basics</span>
+                    </div>
+                    <div class="project-footer">
+                        <div class="footer-main">
+                            <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+                            <div class="progress-label">3 of 8 steps complete</div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-primary">Continue building</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ NOT STARTED ══ no footer band, no top border, button right-aligned under tags ══ -->
+        <div>
+            <div class="variant-label">Not started</div>
+            <div class="project-card">
+                <div class="project-banner"></div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="pill">Project</span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M3 17h5v4H3zM9.5 10h5v11h-5zM16 3h5v18h-5z"/></svg>
+                            8 steps
+                        </span>
+                        <span class="meta-break"></span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            6 hours
+                        </span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z"/></svg>
+                            Beginner
+                        </span>
+                    </div>
+                    <div class="project-title">Build your personal homepage</div>
+                    <div class="project-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="project-tags">
+                        <span class="pill">Agentic coding</span>
+                        <span class="pill">Git and GitHub</span>
+                        <span class="pill">HTML/CSS/JavaScript basics</span>
+                    </div>
+                    <div class="project-action-inline">
+                        <button class="ui-btn ui-btn-default ui-btn-primary">Start project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ COMPLETE ══ green tick in banner, no bar, no step count ══ -->
+        <div>
+            <div class="variant-label">Complete</div>
+            <div class="project-card">
+                <div class="project-banner">
+                    <div class="banner-tick">
+                        <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="pill">Project</span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M3 17h5v4H3zM9.5 10h5v11h-5zM16 3h5v18h-5z"/></svg>
+                            8 steps
+                        </span>
+                        <span class="meta-break"></span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            6 hours
+                        </span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z"/></svg>
+                            Beginner
+                        </span>
+                    </div>
+                    <div class="project-title">Build your personal homepage</div>
+                    <div class="project-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="project-tags">
+                        <span class="pill">Agentic coding</span>
+                        <span class="pill">Git and GitHub</span>
+                        <span class="pill">HTML/CSS/JavaScript basics</span>
+                    </div>
+                    <div class="project-footer">
+                        <div class="footer-main">
+                            <div class="footer-completed">
+                                <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                                Completed
+                            </div>
+                        </div>
+                        <button class="ui-btn ui-btn-default ui-btn-secondary">Review project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ COMING SOON ══ desaturated banner, grey ribbon, no footer ══ -->
+        <div>
+            <div class="variant-label">Coming soon</div>
+            <div class="project-card">
+                <div class="project-banner project-banner-muted">
+                    <div class="project-ribbon"><span>Coming soon</span></div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="pill">Project</span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M3 17h5v4H3zM9.5 10h5v11h-5zM16 3h5v18h-5z"/></svg>
+                            12 steps
+                        </span>
+                        <span class="meta-break"></span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            15 hours
+                        </span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z"/></svg>
+                            Intermediate
+                        </span>
+                    </div>
+                    <div class="project-title">Build a nutrition platform</div>
+                    <div class="project-description">Build a platform that calculates recipes from the ingredients you already have.</div>
+                    <div class="project-tags">
+                        <span class="pill">Agentic coding</span>
+                        <span class="pill">Next.js</span>
+                        <span class="pill">React</span>
+                        <span class="pill">Databases</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ COMING SOON ══ -->
+        <div>
+            <div class="variant-label">Coming soon</div>
+            <div class="project-card">
+                <div class="project-banner project-banner-muted">
+                    <div class="project-ribbon"><span>Coming soon</span></div>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="pill">Project</span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M3 17h5v4H3zM9.5 10h5v11h-5zM16 3h5v18h-5z"/></svg>
+                            20 steps
+                        </span>
+                        <span class="meta-break"></span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            30 hours
+                        </span>
+                        <span class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.8 6.7 19.7l1.1-6.1L3.4 9.4l6-.8z"/></svg>
+                            Advanced
+                        </span>
+                    </div>
+                    <div class="project-title">Build a learning platform</div>
+                    <div class="project-description">Build a full language-learning platform, wrestling with every decision alongside Jeremy.</div>
+                    <div class="project-tags">
+                        <span class="pill">Agentic coding</span>
+                        <span class="pill">Full-stack web</span>
+                        <span class="pill">Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════════
+             DIRECTION B — journey-path row
+             ══════════════════════════════════════════════════════════════ -->
+        <div class="direction-header">
+            <h2>Direction B — journey-path row</h2>
+            <p>Built from the cards on the Coding Fundamentals path: coloured 2px border, square icon on the left, outlined type pill above the title, and a tick or lock in the top-right. A Project earns its weight through the progress footer and meta line rather than a banner.</p>
+        </div>
+
+        <div>
+            <div class="variant-label">In progress</div>
+            <div class="journey-card">
+                <div class="journey-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="journey-main">
+                    <span class="type-pill">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+                        Project
+                    </span>
+                    <div class="journey-title">Build your personal homepage</div>
+                    <div class="journey-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="journey-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="journey-progress">
+                        <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+                        <span class="progress-label">3 of 8 steps complete</span>
+                        <button class="ui-btn ui-btn-small ui-btn-primary journey-action">Continue building</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Not started</div>
+            <div class="journey-card">
+                <div class="journey-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="journey-main">
+                    <span class="type-pill">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+                        Project
+                    </span>
+                    <div class="journey-title">Build your personal homepage</div>
+                    <div class="journey-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="journey-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                </div>
+                <button class="ui-btn ui-btn-default ui-btn-primary journey-action">Start project</button>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Complete</div>
+            <div class="journey-card journey-card-complete">
+                <div class="journey-marker journey-marker-complete">
+                    <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div class="journey-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="journey-main">
+                    <span class="type-pill">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+                        Project
+                    </span>
+                    <div class="journey-title">Build your personal homepage</div>
+                    <div class="journey-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="journey-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                </div>
+                <button class="ui-btn ui-btn-default ui-btn-secondary journey-action">Review project</button>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Coming soon</div>
+            <div class="journey-card journey-card-locked">
+                <div class="journey-marker journey-marker-locked">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                </div>
+                <div class="journey-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="journey-main">
+                    <span class="type-pill">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+                        Project
+                    </span>
+                    <div class="journey-title">Build a nutrition platform</div>
+                    <div class="journey-description">Build a platform that calculates recipes from the ingredients you already have.</div>
+                    <div class="journey-meta">
+                        <span>12 steps</span>
+                        <span>·</span>
+                        <span>15 hours</span>
+                        <span>·</span>
+                        <span>Intermediate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════════════════
+             DIRECTION C — Challenges grid tile, gone landscape
+             ══════════════════════════════════════════════════════════════ -->
+        <div class="direction-header">
+            <h2>Direction C — Challenges tile, gone landscape</h2>
+            <p>The Challenges grid tile stretched into a full-width row: hairline border, pale blue illustration disc, status chip in the top-right and the uppercase type line under the title. Same family as a Challenge, but wider and taller so it reads as the bigger commitment.</p>
+        </div>
+
+        <div>
+            <div class="variant-label">In progress</div>
+            <div class="tile-card">
+                <span class="status-chip status-chip-progress">In progress</span>
+                <div class="tile-illustration">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="tile-main">
+                    <div>
+                        <div class="tile-title">Build your personal homepage</div>
+                        <div class="tile-type">Project</div>
+                    </div>
+                    <div class="tile-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="tile-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="tile-footer">
+                        <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+                        <span class="progress-label">3 of 8 steps complete</span>
+                        <button class="ui-btn ui-btn-small ui-btn-primary">Continue building</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Not started</div>
+            <div class="tile-card">
+                <div class="tile-illustration">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="tile-main">
+                    <div>
+                        <div class="tile-title">Build your personal homepage</div>
+                        <div class="tile-type">Project</div>
+                    </div>
+                    <div class="tile-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="tile-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="ui-btn ui-btn-default ui-btn-primary">Start project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Complete</div>
+            <div class="tile-card">
+                <span class="status-chip status-chip-complete">Completed</span>
+                <div class="tile-illustration">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="tile-main">
+                    <div>
+                        <div class="tile-title">Build your personal homepage</div>
+                        <div class="tile-type">Project</div>
+                    </div>
+                    <div class="tile-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="tile-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="tile-footer">
+                        <button class="ui-btn ui-btn-default ui-btn-secondary">Review project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="variant-label">Coming soon</div>
+            <div class="tile-card tile-card-locked">
+                <span class="status-chip">Coming soon</span>
+                <div class="tile-illustration">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l2.5 2L7 13M12.5 13h4"/></svg>
+                </div>
+                <div class="tile-main">
+                    <div>
+                        <div class="tile-title">Build a learning platform</div>
+                        <div class="tile-type">Project</div>
+                    </div>
+                    <div class="tile-description">Build a full language-learning platform, wrestling with every decision alongside Jeremy.</div>
+                    <div class="tile-meta">
+                        <span>20 steps</span>
+                        <span>·</span>
+                        <span>30 hours</span>
+                        <span>·</span>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════════
+             DIRECTION D — square, illustration-led
+             ══════════════════════════════════════════════════════════════ -->
+        <div class="direction-header">
+            <h2>Direction D — square, illustration-led</h2>
+            <p>Square cards in a two-across grid, each led by its own illustration. Closest in feel to the Challenges grid, but with real artwork instead of an icon disc — so Projects still look like the bigger thing without needing the full-width row. Same illustration used on every card here as a placeholder; each project would get its own.</p>
+        </div>
+
+        <div class="square-grid">
+            <!-- in progress -->
+            <div class="square-card">
+                <div class="square-image">
+                    <img src="images/project-town.png" alt="">
+                </div>
+                <div class="square-body">
+                    <span class="pill" style="align-self:flex-start">Project</span>
+                    <div class="square-title">Build your personal homepage</div>
+                    <div class="square-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="square-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="square-footer-spacer"></div>
+                    <div class="square-footer">
+                        <div>
+                            <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+                            <div class="progress-label">3 of 8 steps complete</div>
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-primary">Continue building</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- not started -->
+            <div class="square-card">
+                <div class="square-image">
+                    <img src="images/project-town.png" alt="">
+                </div>
+                <div class="square-body">
+                    <span class="pill" style="align-self:flex-start">Project</span>
+                    <div class="square-title">Build your personal homepage</div>
+                    <div class="square-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="square-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="square-footer-spacer"></div>
+                    <div class="square-footer">
+                        <button class="ui-btn ui-btn-small ui-btn-primary">Start project</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- complete -->
+            <div class="square-card">
+                <div class="square-image">
+                    <img src="images/project-town.png" alt="">
+                </div>
+                <div class="journey-marker journey-marker-complete">
+                    <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div class="square-body">
+                    <span class="pill" style="align-self:flex-start">Project</span>
+                    <div class="square-title">Build your personal homepage</div>
+                    <div class="square-description">Build and deploy a real website from scratch, alongside Jeremy.</div>
+                    <div class="square-meta">
+                        <span>8 steps</span>
+                        <span>·</span>
+                        <span>6 hours</span>
+                        <span>·</span>
+                        <span>Beginner</span>
+                    </div>
+                    <div class="square-footer-spacer"></div>
+                    <div class="square-footer">
+                        <div class="footer-completed">
+                            <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                            Completed
+                        </div>
+                        <button class="ui-btn ui-btn-small ui-btn-secondary">Review project</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- coming soon -->
+            <div class="square-card square-card-locked">
+                <div class="square-image square-image-muted">
+                    <img src="images/project-town.png" alt="">
+                </div>
+                <div class="journey-marker journey-marker-locked">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                </div>
+                <div class="square-body">
+                    <span class="pill" style="align-self:flex-start">Project</span>
+                    <div class="square-title">Build a nutrition platform</div>
+                    <div class="square-description">Build a platform that calculates recipes from the ingredients you already have.</div>
+                    <div class="square-meta">
+                        <span>12 steps</span>
+                        <span>·</span>
+                        <span>15 hours</span>
+                        <span>·</span>
+                        <span>Intermediate</span>
+                    </div>
+                    <div class="square-footer-spacer"></div>
+                    <div class="square-footer">
+                        <span class="status-chip" style="position:static;align-self:flex-start">Coming soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════════
+             DIRECTION E — true 1:1 tile, three across
+             ══════════════════════════════════════════════════════════════ -->
+        <div class="direction-header">
+            <h2>Direction E — true 1:1 tile</h2>
+            <p>Actually square, three across, sitting in the Challenges grid layout. Description and meta are dropped — a square can't hold them without crowding. Progress becomes a hairline on the seam between the artwork and the caption.</p>
+        </div>
+
+        <div class="tile-grid">
+            <!-- in progress -->
+            <div class="square-tile">
+                <div class="tile-art"><img src="images/project-town.png" alt=""></div>
+                <div class="tile-seam-progress"><div style="width:37.5%"></div></div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build your personal homepage</div>
+                    <div class="tile-type">Project</div>
+                </div>
+                <span class="status-chip status-chip-progress">In progress</span>
+            </div>
+
+            <!-- complete -->
+            <div class="square-tile">
+                <div class="tile-art"><img src="images/project-town.png" alt=""></div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build a nutrition platform</div>
+                    <div class="tile-type">Project</div>
+                </div>
+                <div class="journey-marker journey-marker-complete" style="top:12px;right:12px">
+                    <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+            </div>
+
+            <!-- coming soon -->
+            <div class="square-tile square-tile-locked">
+                <div class="tile-art"><img src="images/project-town.png" alt=""></div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build a learning platform</div>
+                    <div class="tile-type">Project</div>
+                </div>
+                <span class="status-chip">Coming soon</span>
+            </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════════
+             DIRECTION F — the artwork is being built
+             ══════════════════════════════════════════════════════════════ -->
+        <div class="direction-header">
+            <h2>Direction F — the artwork is being built</h2>
+            <p>The same square tile, but the illustration reads as something the learner is making rather than a stock picture. All three use the one flat PNG — the motion is CSS only, so there's no animation to commission.</p>
+        </div>
+
+        <div class="tile-grid">
+            <!-- F1: in progress — the town builds up to the learner's actual progress -->
+            <div class="square-tile motion-card motion-build">
+                <div class="tile-art">
+                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-edge"></div>
+                </div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build your personal homepage</div>
+                    <div class="motion-status">3 of 8 steps built</div>
+                </div>
+                <span class="status-chip status-chip-progress">In progress</span>
+            </div>
+
+            <!-- F2: not started — the town builds itself on a loop, as a preview of what you'll make -->
+            <div class="square-tile motion-card motion-loop">
+                <div class="tile-art">
+                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                </div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build a nutrition platform</div>
+                    <div class="tile-type">Project</div>
+                </div>
+                <span class="status-chip">Not started</span>
+            </div>
+
+            <!-- F3: complete — finished, in full colour, gently alive -->
+            <div class="square-tile motion-card motion-drift">
+                <div class="tile-art motion-sweep">
+                    <img src="images/project-town.png" alt="">
+                </div>
+                <div class="tile-caption">
+                    <div class="square-tile-title">Build a learning platform</div>
+                    <div class="tile-type">Project</div>
+                </div>
+                <div class="journey-marker journey-marker-complete" style="top:12px;right:12px">
+                    <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
