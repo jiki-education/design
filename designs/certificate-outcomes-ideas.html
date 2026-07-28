@@ -36,7 +36,12 @@ The certificate and LinkedIn images are pulled from the live site
 
 - Ideas 1, 3 and 6 keep the certificate image large and hero-like.
 - Ideas 2 and 4 give equal billing to all three outcomes.
-- Idea 5 is the most compact — good if the page is getting long.
+- Idea 5 is the most compact, good if the page is getting long.
+- Ideas 7, 8 and 9 are variations on idea 2, all reusing its three visuals:
+  **7** is idea 2 on white instead of a dark panel, with hairlines between the columns and
+  darker call-out inks. **8** drops the columns and piles the three artefacts on top of each
+  other beside a ticked list, so the evidence reads as one object. **9** strings the same three
+  visuals along a dashed rail with numbered nodes, so it reads as a sequence rather than a list.
 
 ## Idea 2 in detail
 
@@ -47,11 +52,14 @@ row-per-outcome version, which matters this far down a long landing page.
 Each visual has **one** hand-drawn call-out — a Caveat label plus a curved SVG arrow. One per
 column, not two: at this width a second arrow reads as clutter rather than emphasis.
 
-1. **Certificate** — the artwork tilted, with a white "Add to profile" LinkedIn card floating
+1. **Certificate** - the artwork tilted, with a white "Share on LinkedIn" card floating
    off the top-right corner and a green "Verified · jiki.io/c/8f2a" chip over the bottom-left.
    The arrow points at the verification chip.
-2. **Portfolio** — two project videos as small prints plus a dashed "+40 more like these" tile.
-   The arrow points at the prints: these run, they aren't screenshots.
+2. **Portfolio** - three project cards fanned out, each built the same way as the landing page's
+   square tiles (white, gray-200 hairline, art area, centred title, blue tag pills). The middle
+   card sits upright and proud, the outer two rotate away from it by 9 degrees. Only the front
+   card carries tag pills, so the fan does not turn into noise at this size. Ideas 7 and 9 keep
+   the earlier version, a game print beside a single project card, for comparison.
 3. **Understanding** — a dark code card of unfamiliar code with one line highlighted in amber.
    The arrow points at that line.
 
@@ -59,14 +67,19 @@ column, not two: at this width a second arrow reads as clutter rather than empha
 
 - Arrows are inline SVG (\`.arrow-2\`), two paths each: the curve and a three-point arrowhead.
   They inherit \`currentColor\` from an inline \`color\`, so recolouring a call-out is one property.
+- \`.viz-2\` is a **fixed 250px tall with a 62px bottom band reserved for the call-out**. The
+  visual is centred in the space above that band and never enters it, so no label or arrow
+  ever sits on top of an image. All three columns line up on one baseline as a result.
 - Each label and arrow is positioned with inline \`top/left/right/bottom\` against its
-  \`.viz-2\` parent, which is a **fixed 190px tall** so all three columns line up on one
-  baseline regardless of what's in them. **The positions are hand-tuned to this content** —
+  \`.viz-2\` parent. **The positions are hand-tuned to this content** —
   changing copy length means re-nudging them. If this becomes CMS-driven, anchor the arrows to
   the elements they point at instead.
 - Below 900px the columns stack and the arrows and labels are hidden outright — annotation
   layouts do not survive a narrow column, and a half-broken arrow is worse than none.
-- The project videos come from \`assets.jiki.io\` (the landing page's own assets).
+- The print and the project card copy \`jiki-landing.html\`'s \`.FunPrints_grid__jk140 > div\` and
+  \`.square-tile\` treatments respectively, scaled down. Reuse those components rather than these
+  copies when implementing. The video comes from \`assets.jiki.io\`, the artwork from
+  \`designs/images/project-town.png\`.
 - Decorative only — the labels are visual flourish, so anything they say must also exist in the
   prose beneath. Nothing is said *only* by an arrow.
         `;
@@ -305,9 +318,91 @@ column, not two: at this width a second arrow reads as clutter rather than empha
             padding: 3.5rem 3rem;
         }
 
+        /* heading left, stamp right, so the top of the panel is not all weight on one side */
         .head-2 {
-            max-width: 620px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
             margin-bottom: 2.5rem;
+        }
+
+        .head-2 > div { max-width: 620px; }
+
+        /* an inked stamp imprint rather than a filled badge: one ink colour, no fill,
+           and a noise mask so the ink sits unevenly the way a real stamp does */
+        .seal-2 {
+            position: relative;
+            flex-shrink: 0;
+            width: 148px;
+            height: 148px;
+            border-radius: 999px;
+            border: 3px solid currentColor;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.25rem;
+            color: var(--color-amber-300);
+            background: none;
+            opacity: 0.85;
+            transform: rotate(-8deg);
+            /* the ink breaks up towards the edges */
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.25'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23s)'/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.25'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23s)'/%3E%3C/svg%3E"), linear-gradient(#000, #000);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+        }
+
+        /* the inner ring, the way a stamp has a double rule */
+        .seal-2::before {
+            content: '';
+            position: absolute;
+            inset: 7px;
+            border-radius: 999px;
+            border: 1.5px solid currentColor;
+            opacity: 0.85;
+        }
+
+        /* the tick is inked in the same colour, not a filled green disc */
+        .seal-2 .seal-tick {
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seal-2 .seal-tick svg { width: 22px; height: 22px; stroke: currentColor; }
+
+        .seal-2 strong {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            line-height: 1.25;
+        }
+
+        .seal-2 span {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: currentColor;
+        }
+
+        /* the handwritten aside that sits under the stamp */
+        .seal-note-2 {
+            position: absolute;
+            top: 100%;
+            inset-inline: -18px;
+            margin-top: 6px;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--color-amber-300);
+            transform: rotate(4deg);
         }
 
         .head-2 .section-heading { color: #fff; }
@@ -364,10 +459,13 @@ column, not two: at this width a second arrow reads as clutter rather than empha
         /* ---- the annotated visual at the top of each column ---- */
         .viz-2 {
             position: relative;
-            height: 190px;
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
+            /* the bottom band belongs to the call-out: the visual never enters it,
+               so no label or arrow ever sits on top of an image */
+            padding-bottom: 62px;
             margin-bottom: 1.5rem;
         }
 
@@ -398,7 +496,7 @@ column, not two: at this width a second arrow reads as clutter rather than empha
         }
 
         /* 01 — the certificate, tilted, with a LinkedIn share card floating off it */
-        .cert-viz-2 { position: relative; width: 58%; }
+        .cert-viz-2 { position: relative; width: 72%; }
 
         .cert-viz-2 img {
             width: 100%;
@@ -422,24 +520,24 @@ column, not two: at this width a second arrow reads as clutter rather than empha
             z-index: 3;
         }
 
-        .share-card-2 svg { width: 20px; height: 20px; flex-shrink: 0; }
-        .share-card-2 strong { display: block; font-size: 0.72rem; color: var(--color-gray-900); line-height: 1.2; }
-        .share-card-2 span { display: block; font-size: 0.64rem; color: var(--color-gray-500); }
+        .share-card-2 svg { width: 22px; height: 22px; flex-shrink: 0; }
+        .share-card-2 strong { display: block; font-size: 0.78rem; color: var(--color-gray-900); line-height: 1.2; }
+        .share-card-2 span { display: block; font-size: 0.7rem; color: var(--color-gray-500); }
 
         /* the verification chip that sits over the bottom edge of the certificate */
         .verify-chip-2 {
             position: absolute;
             bottom: -12px;
-            left: -32px;
+            right: -24px;
             display: flex;
             align-items: center;
             gap: 0.35rem;
             background: var(--color-green-500);
             color: #fff;
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             font-weight: 700;
             border-radius: 999px;
-            padding: 0.3rem 0.65rem;
+            padding: 0.32rem 0.7rem;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             transform: rotate(-2deg);
             z-index: 3;
@@ -447,67 +545,145 @@ column, not two: at this width a second arrow reads as clutter rather than empha
 
         .verify-chip-2 svg { width: 12px; height: 12px; }
 
-        /* 02 — a scattered row of finished projects */
+        /* 02 - the landing page's own artefacts: a game polaroid and a project card */
         .collage-2 {
             position: relative;
-            width: 78%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
+            width: 100%;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
         }
 
-        .collage-2 figure {
+        /* the polaroid print, exactly as the landing page's project prints row does it */
+        .print-2 {
             position: relative;
-            border-radius: 3px;
-            padding: 4px 4px 16px;
+            width: 38%;
+            flex-shrink: 0;
+            container-type: inline-size;
+            border-radius: 2px;
+            padding: 5% 5% 26%;
             background: radial-gradient(120% 100% at 50% 0%, #faf8f3 40%, #ece5d9 100%);
-            box-shadow: 0 10px 24px -8px rgba(0,0,0,0.6);
+            box-shadow: 0 1px 2px rgba(30,20,10,.28), 0 12px 24px -8px rgba(30,20,10,.22);
+            transform: rotate(-3deg);
         }
 
-        .collage-2 figure:nth-child(1) { transform: rotate(-4deg); }
-        .collage-2 figure:nth-child(2) { transform: rotate(2deg); }
-
-        .collage-2 video {
+        .print-2 video {
             display: block;
             width: 100%;
             aspect-ratio: 1;
             object-fit: cover;
-            background: var(--color-gray-800);
+            background: var(--color-gray-100);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,.35);
         }
 
-        .collage-2 figcaption {
+        .print-2 span {
             position: absolute;
             left: 0;
             right: 0;
-            bottom: 1px;
-            text-align: center;
-            font-family: 'Caveat', cursive;
-            font-weight: 700;
-            font-size: 0.72rem;
-            color: rgba(42,49,66,0.85);
-        }
-
-        /* the "+40 more" tile that closes the collage off */
-        .more-tile-2 {
+            bottom: 2px;
+            height: 26cqw;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            aspect-ratio: 1;
-            border-radius: 8px;
-            border: 2px dashed rgba(255,255,255,0.25);
-            color: #fff;
-            transform: rotate(-2deg);
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: calc(8.5cqw + 2px);
+            line-height: 1.05;
+            color: rgba(42,49,66,0.88);
+            text-align: center;
         }
 
-        .more-tile-2 strong { font-size: 1.1rem; font-weight: 800; }
-        .more-tile-2 span { font-size: 0.6rem; color: var(--color-gray-400); text-align: center; line-height: 1.2; }
+        /* three project cards fanned out, the middle one sitting proud */
+        .fan-2 {
+            position: relative;
+            width: 100%;
+            height: 175px;
+        }
+
+        .fan-2 .tile-2 {
+            position: absolute;
+            top: 0;
+            width: 46%;
+            height: 165px;
+            transform-origin: 50% 100%;
+        }
+
+        /* the caption fills whatever the art leaves, so all three cards match exactly */
+        .fan-2 .tile-2 .art { flex-shrink: 0; }
+        .fan-2 .tile-2 .caption { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+        .fan-2 .tile-2:nth-child(1) { left: 8%; transform: rotate(-9deg) translateY(10px); z-index: 1; }
+        .fan-2 .tile-2:nth-child(2) { left: 27%; transform: rotate(0deg); z-index: 2; }
+        /* the right-hand card sits on top of the fan */
+        .fan-2 .tile-2:nth-child(3) { left: 46%; transform: rotate(9deg) translateY(10px); z-index: 3; }
+
+        /* the project card, same anatomy as the landing page's square tiles */
+        .tile-2 {
+            width: 54%;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px -10px rgba(15,23,42,0.45);
+            transform: rotate(1.5deg);
+        }
+
+        .tile-2 .art {
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--color-gray-50);
+        }
+
+        .tile-2 .art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 72% 50%;
+            display: block;
+        }
+
+        .tile-2 .caption {
+            padding: 8px 10px 10px;
+            text-align: center;
+        }
+
+        .tile-2 .caption .t {
+            font-size: 0.72rem;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--color-gray-600);
+            text-wrap-style: balance;
+        }
+
+        .tile-2 .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .tile-2 .tags span {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: var(--color-blue-50);
+            color: var(--color-blue-700);
+            border: 1px solid var(--color-blue-100);
+            font-size: 0.55rem;
+            font-weight: 600;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
 
         /* 03 — a snippet of code you can actually reason about */
         .code-viz-2 {
             position: relative;
-            width: 84%;
+            width: 96%;
             border-radius: 10px;
             background: var(--color-gray-950);
             border: 1px solid rgba(255,255,255,0.12);
@@ -532,8 +708,8 @@ column, not two: at this width a second arrow reads as clutter rather than empha
 
         .code-viz-2 pre {
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 0.7rem;
-            line-height: 1.7;
+            font-size: 0.8rem;
+            line-height: 1.75;
             color: var(--color-gray-300);
             padding: 0.7rem 0.85rem 0.85rem;
             overflow-x: auto;
@@ -556,6 +732,148 @@ column, not two: at this width a second arrow reads as clutter rather than empha
         @media (max-width: 900px) {
             .rows-2 { grid-template-columns: 1fr; gap: 2.5rem; }
             .anno-2, .arrow-2 { display: none; }
+        }
+
+        /* ---------- Ideas 7-9: further takes on the annotated-outcomes pattern ---------- */
+
+        /* --- 7: the same three columns, on paper instead of a dark panel --- */
+        .panel-7 {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+        }
+
+        .head-7 { max-width: 620px; margin-bottom: 2.5rem; }
+
+        .panel-7 .item-2 h3 { color: var(--color-gray-900); }
+        .panel-7 .item-2 p { color: var(--color-gray-600); }
+
+        .panel-7 .item-2 .num {
+            background: var(--color-purple-50);
+            border-color: var(--color-purple-200);
+            color: var(--color-purple-700);
+        }
+
+        .panel-7 .outcome-2 { position: relative; }
+
+        /* a hairline between the columns, so they read as one set rather than three cards */
+        .panel-7 .outcome-2 + .outcome-2::before {
+            content: '';
+            position: absolute;
+            inset-block: 0;
+            inset-inline-start: -1rem;
+            width: 1px;
+            background: var(--color-gray-200);
+        }
+
+        /* darker inks, because the call-outs now sit on white */
+        .panel-7 .anno-2 { color: var(--color-amber-600); }
+        .panel-7 .anno-2.purple { color: var(--color-purple-600); }
+
+        /* --- 8: one pile of evidence, with a ticked list beside it --- */
+        .panel-8 {
+            background: linear-gradient(135deg, var(--color-gray-950), var(--color-purple-900));
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .panel-8 .section-heading { color: #fff; }
+        .panel-8 .section-sub { color: var(--color-gray-300); margin-bottom: 2rem; }
+
+        .checks-8 { display: flex; flex-direction: column; gap: 1.1rem; }
+
+        .check-8 { display: flex; gap: 0.85rem; align-items: flex-start; }
+
+        .check-8 .tick {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            background: var(--color-green-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-8 .tick svg { width: 13px; height: 13px; }
+
+        .check-8 h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+        .check-8 p { font-size: 0.9rem; line-height: 1.5; color: var(--color-gray-400); text-wrap-style: balance; }
+
+        /* the three artefacts, overlapped like things dropped on a desk */
+        .pile-8 { position: relative; height: 340px; }
+
+        .pile-8 > * { position: absolute; }
+
+        .pile-8 .cert-viz-2 { width: 68%; top: 8px; left: 0; z-index: 1; }
+        .pile-8 .print-2 { width: 34%; bottom: 0; left: 18%; z-index: 3; transform: rotate(-6deg); }
+        .pile-8 .code-viz-2 { width: 52%; right: 0; bottom: 18px; z-index: 2; transform: rotate(2deg); }
+
+        /* --- 9: the three outcomes as a rail, read left to right --- */
+        .panel-9 {
+            background: linear-gradient(135deg, var(--color-gray-950), var(--color-purple-900));
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+        }
+
+        .head-9 { text-align: center; max-width: 700px; margin: 0 auto 2.5rem; }
+        .head-9 .section-heading { color: #fff; }
+        .head-9 .section-sub { color: var(--color-gray-300); }
+
+        .rail-9 { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+        /* the rail itself, running behind the three nodes */
+        .rail-9::before {
+            content: '';
+            position: absolute;
+            top: 210px;
+            inset-inline: 8%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.28) 0 8px, transparent 8px 16px);
+        }
+
+        .stop-9 { position: relative; text-align: center; }
+
+        .stop-9 .viz-2 { height: 200px; padding-bottom: 0; margin-bottom: 0; }
+
+        .stop-9 .node {
+            position: relative;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            margin: 0 auto 1.1rem;
+            border-radius: 999px;
+            background: var(--color-purple-600);
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stop-9 h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
+        .stop-9 p { font-size: 0.88rem; line-height: 1.5; color: var(--color-gray-400); text-wrap-style: balance; }
+
+        .stop-9 .note {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--color-amber-300);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .panel-8 { grid-template-columns: 1fr; }
+            .pile-8 { height: 300px; }
+            .rail-9 { grid-template-columns: 1fr; }
+            .rail-9::before { display: none; }
         }
 
         /* ---------- Idea 3: Certificate left, stacked outcome rows right ---------- */
@@ -922,9 +1240,18 @@ column, not two: at this width a second arrow reads as clutter rather than empha
         </div>
         <div class="panel-2">
             <div class="head-2">
-                <div class="bubble">The end of the course</div>
-                <h2 class="section-heading">What you'll walk away with</h2>
-                <p class="section-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
+                <div>
+                    <div class="bubble">The end of the course</div>
+                    <h2 class="section-heading">What you'll walk away with</h2>
+                    <p class="section-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
+                </div>
+                <!-- stamp, to balance the weight of the heading on the left -->
+                <div class="seal-2">
+                    <span class="seal-tick"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                    <strong>Course<br>complete</strong>
+                    <span>June 2027</span>
+                    <span class="seal-note-2">and then it's yours</span>
+                </div>
             </div>
             <div class="rows-2">
 
@@ -935,10 +1262,7 @@ column, not two: at this width a second arrow reads as clutter rather than empha
                             <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
                             <div class="share-card-2">
                                 <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
-                                <div>
-                                    <strong>Add to profile</strong>
-                                    <span>Certifications · Jiki</span>
-                                </div>
+                                <strong>Share on LinkedIn</strong>
                             </div>
                             <div class="verify-chip-2">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
@@ -947,9 +1271,9 @@ column, not two: at this width a second arrow reads as clutter rather than empha
                         </div>
                         <!-- call-out: the verification chip -->
                         <span class="anno-2" style="bottom:0;left:0">Anyone can check<br>it's really yours</span>
-                        <svg class="arrow-2" style="bottom:44px;left:26px;width:66px;height:46px;color:var(--color-amber-300)" viewBox="0 0 66 46">
-                            <path d="M6 42C12 22 28 10 54 8"/>
-                            <path d="M43 2l12 6-9 9"/>
+                        <svg class="arrow-2" style="bottom:36px;left:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24">
+                            <path d="M2 21C20 19 46 13 66 3"/>
+                            <path d="M57 2l11 1-5 9"/>
                         </svg>
                     </div>
                     <div class="item-2">
@@ -964,25 +1288,34 @@ column, not two: at this width a second arrow reads as clutter rather than empha
                 <!-- 02 — the finished projects, scattered like prints on a desk -->
                 <div class="outcome-2">
                     <div class="viz-2">
-                        <div class="collage-2">
-                            <figure>
-                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
-                                <figcaption>Invaders</figcaption>
-                            </figure>
-                            <figure>
-                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/maze-59a6d-59a6d1950cc2.mp4"></video>
-                                <figcaption>Maze</figcaption>
-                            </figure>
-                            <div class="more-tile-2">
-                                <strong>+40</strong>
-                                <span>more like<br>these</span>
-                            </div>
+                        <div class="fan-2">
+                                <div class="tile-2">
+                                    <div class="art"><img src="images/project-town.png" alt="" style="object-position:18% 50%"></div>
+                                    <div class="caption">
+                                        <div class="t">Build a habit tracker</div>
+                                        <div class="tags"><span>Databases</span><span>Auth</span></div>
+                                    </div>
+                                </div>
+                                <div class="tile-2">
+                                    <div class="art"><img src="images/project-town.png" alt="" style="object-position:72% 50%"></div>
+                                    <div class="caption">
+                                        <div class="t">Build your personal homepage</div>
+                                        <div class="tags"><span>HTML/CSS</span><span>Git and GitHub</span></div>
+                                    </div>
+                                </div>
+                                <div class="tile-2">
+                                    <div class="art"><img src="images/project-town.png" alt="" style="object-position:50% 50%"></div>
+                                    <div class="caption">
+                                        <div class="t">Build a recipe box</div>
+                                        <div class="tags"><span>APIs</span><span>Frontends</span></div>
+                                    </div>
+                                </div>
                         </div>
                         <!-- call-out: they run, they aren't screenshots -->
-                        <span class="anno-2 purple" style="top:0;right:0;text-align:right">These actually<br>run — try them</span>
-                        <svg class="arrow-2" style="top:38px;right:52px;width:64px;height:46px;color:var(--color-purple-200)" viewBox="0 0 64 46">
-                            <path d="M58 4C50 24 32 36 8 38"/>
-                            <path d="M19 30L6 39l12 7"/>
+                        <span class="anno-2 purple" style="bottom:0;right:0;text-align:right">These actually<br>run — try them</span>
+                        <svg class="arrow-2" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-purple-200)" viewBox="0 0 72 24">
+                            <path d="M70 21C52 19 26 13 6 3"/>
+                            <path d="M15 2L4 3l5 9"/>
                         </svg>
                     </div>
                     <div class="item-2">
@@ -1009,9 +1342,9 @@ column, not two: at this width a second arrow reads as clutter rather than empha
                         </div>
                         <!-- call-out: the highlighted line -->
                         <span class="anno-2" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
-                        <svg class="arrow-2" style="bottom:42px;right:30px;width:66px;height:48px;color:var(--color-amber-300)" viewBox="0 0 66 48">
-                            <path d="M60 44C54 24 38 10 12 8"/>
-                            <path d="M23 2L10 8l9 10"/>
+                        <svg class="arrow-2" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24">
+                            <path d="M70 21C52 19 26 13 6 3"/>
+                            <path d="M15 2L4 3l5 9"/>
                         </svg>
                     </div>
                     <div class="item-2">
@@ -1206,6 +1539,245 @@ column, not two: at this width a second arrow reads as clutter rather than empha
                 <div class="outcome-6">
                     <h3>🧠 Real understanding</h3>
                     <p>You'll know how and why code works, so the next language you learn takes weeks, not months.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 7: idea 2's three annotated columns, on paper instead of a dark panel -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>7. The same three columns, on paper</h2>
+            <span>Idea 2's layout in the page's own white, with hairlines between the columns and darker call-out inks</span>
+        </div>
+        <div class="panel-7">
+            <div class="head-7">
+                <div class="bubble">The end of the course</div>
+                <h2 class="section-heading">What you'll walk away with</h2>
+                <p class="section-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
+            </div>
+            <div class="rows-2">
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="cert-viz-2">
+                            <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+                            <div class="share-card-2">
+                                <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                                <strong>Share on LinkedIn</strong>
+                            </div>
+                            <div class="verify-chip-2">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                                Verified · jiki.io/c/8f2a
+                            </div>
+                        </div>
+                        <span class="anno-2" style="bottom:0;left:0">Anyone can check<br>it's really yours</span>
+                        <svg class="arrow-2" style="bottom:36px;left:112px;width:72px;height:24px;color:var(--color-amber-600)" viewBox="0 0 72 24">
+                            <path d="M2 21C20 19 46 13 66 3"/>
+                            <path d="M57 2l11 1-5 9"/>
+                        </svg>
+                    </div>
+                    <div class="item-2">
+                        <div class="num">01</div>
+                        <div>
+                            <h3>A verified certificate</h3>
+                            <p>Official and verifiable. Add it to your resume and the Certifications section of your LinkedIn profile, and know you earned it.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="collage-2">
+                            <div class="print-2">
+                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                                <span>Space invaders</span>
+                            </div>
+                            <div class="tile-2">
+                                <div class="art"><img src="images/project-town.png" alt=""></div>
+                                <div class="caption">
+                                    <div class="t">Build your personal homepage</div>
+                                    <div class="tags">
+                                        <span>HTML/CSS</span>
+                                        <span>Git and GitHub</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="anno-2 purple" style="bottom:0;right:0;text-align:right">These actually<br>run, try them</span>
+                        <svg class="arrow-2" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-purple-600)" viewBox="0 0 72 24">
+                            <path d="M70 21C52 19 26 13 6 3"/>
+                            <path d="M15 2L4 3l5 9"/>
+                        </svg>
+                    </div>
+                    <div class="item-2">
+                        <div class="num">02</div>
+                        <div>
+                            <h3>A diverse portfolio of real projects</h3>
+                            <p>Space invaders, flappy bird, a maze solver, data visualisations, animations. Dozens of finished projects, all built by you.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="code-viz-2">
+                            <div class="code-bar-2"><i></i><i></i><i></i></div>
+<pre><span class="cmt"># code you've never seen</span>
+<span class="kw">def</span> <span class="fn">find_path</span>(maze, start):
+  queue = [start]
+<span class="hit">  <span class="kw">while</span> queue:</span>
+    cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
+    <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
+      <span class="kw">return</span> cell</pre>
+                        </div>
+                        <span class="anno-2" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+                        <svg class="arrow-2" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-600)" viewBox="0 0 72 24">
+                            <path d="M70 21C52 19 26 13 6 3"/>
+                            <path d="M15 2L4 3l5 9"/>
+                        </svg>
+                    </div>
+                    <div class="item-2">
+                        <div class="num">03</div>
+                        <div>
+                            <h3>A true understanding of how it all works</h3>
+                            <p>Not memorised syntax. You'll read unfamiliar code, reason about what it's doing, and pick up any new language far faster.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 8: the three artefacts in one pile, with a ticked list beside them -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>8. One pile of evidence</h2>
+            <span>The certificate, a game print and the code card dropped on top of each other, with a ticked list of what each one proves</span>
+        </div>
+        <div class="panel-8">
+            <div>
+                <div class="bubble">The end of the course</div>
+                <h2 class="section-heading">Three things you keep</h2>
+                <p class="section-sub">Not a completion screen. Actual artefacts, sitting on your desk at the end of it.</p>
+                <div class="checks-8">
+                    <div class="check-8">
+                        <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        <div>
+                            <h3>A verified certificate</h3>
+                            <p>Verifiable at a public URL, and one click onto your LinkedIn profile.</p>
+                        </div>
+                    </div>
+                    <div class="check-8">
+                        <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        <div>
+                            <h3>Dozens of finished projects</h3>
+                            <p>Games, animations and tools that run, all built by you, all yours to show off.</p>
+                        </div>
+                    </div>
+                    <div class="check-8">
+                        <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        <div>
+                            <h3>Code you can actually read</h3>
+                            <p>You'll open something unfamiliar and reason your way through it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pile-8">
+                <div class="cert-viz-2">
+                            <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+                            <div class="share-card-2">
+                                <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                                <strong>Share on LinkedIn</strong>
+                            </div>
+                            <div class="verify-chip-2">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                                Verified · jiki.io/c/8f2a
+                            </div>
+                        </div>
+                <div class="print-2">
+                    <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/maze-59a6d-59a6d1950cc2.mp4"></video>
+                    <span>Maze solver</span>
+                </div>
+                <div class="code-viz-2">
+                            <div class="code-bar-2"><i></i><i></i><i></i></div>
+<pre><span class="cmt"># code you've never seen</span>
+<span class="kw">def</span> <span class="fn">find_path</span>(maze, start):
+  queue = [start]
+<span class="hit">  <span class="kw">while</span> queue:</span>
+    cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
+    <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
+      <span class="kw">return</span> cell</pre>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea 9: the three outcomes as a rail, read left to right -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>9. A rail, read left to right</h2>
+            <span>Same three visuals, strung along a dashed rail with numbered nodes, so it reads as a sequence rather than a list</span>
+        </div>
+        <div class="panel-9">
+            <div class="head-9">
+                <div class="bubble">The end of the course</div>
+                <h2 class="section-heading">What you'll walk away with</h2>
+                <p class="section-sub">Skills, proof, and things you actually built. In that order.</p>
+            </div>
+            <div class="rail-9">
+                <div class="stop-9">
+                    <div class="viz-2"><div class="cert-viz-2">
+                            <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+                            <div class="share-card-2">
+                                <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                                <strong>Share on LinkedIn</strong>
+                            </div>
+                            <div class="verify-chip-2">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                                Verified · jiki.io/c/8f2a
+                            </div>
+                        </div></div>
+                    <div class="node">1</div>
+                    <p class="note">verifiable, forever</p>
+                    <h3>A verified certificate</h3>
+                    <p>Official, verifiable, and one click onto the Certifications section of your LinkedIn profile.</p>
+                </div>
+                <div class="stop-9">
+                    <div class="viz-2"><div class="collage-2">
+                            <div class="print-2">
+                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                                <span>Space invaders</span>
+                            </div>
+                            <div class="tile-2">
+                                <div class="art"><img src="images/project-town.png" alt=""></div>
+                                <div class="caption">
+                                    <div class="t">Build your personal homepage</div>
+                                    <div class="tags">
+                                        <span>HTML/CSS</span>
+                                        <span>Git and GitHub</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div></div>
+                    <div class="node">2</div>
+                    <p class="note">all of them run</p>
+                    <h3>A portfolio of real projects</h3>
+                    <p>Games, animations, tools and data visualisations. Dozens of them, all built by you.</p>
+                </div>
+                <div class="stop-9">
+                    <div class="viz-2"><div class="code-viz-2">
+                            <div class="code-bar-2"><i></i><i></i><i></i></div>
+<pre><span class="cmt"># code you've never seen</span>
+<span class="kw">def</span> <span class="fn">find_path</span>(maze, start):
+  queue = [start]
+<span class="hit">  <span class="kw">while</span> queue:</span>
+    cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
+    <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
+      <span class="kw">return</span> cell</pre>
+                        </div></div>
+                    <div class="node">3</div>
+                    <p class="note">any language, same ideas</p>
+                    <h3>A true understanding</h3>
+                    <p>Not memorised syntax. You'll read unfamiliar code and reason about what it does.</p>
                 </div>
             </div>
         </div>

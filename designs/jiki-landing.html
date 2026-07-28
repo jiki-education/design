@@ -2364,30 +2364,61 @@
         <style>
          .cert-outcomes{background:linear-gradient(135deg,var(--color-gray-950),var(--color-purple-900));padding:80px 48px}
          .cert-outcomes .co-inner{max-width:1200px;margin-inline:auto}
-         .cert-outcomes .co-head{max-width:620px;margin-bottom:40px}
+         .cert-outcomes .co-head{max-width:620px;margin-bottom:60px}
          .cert-outcomes .co-bubble{display:inline-block;border-radius:50px;padding:5px 16px;font-size:14px;color:#fff;font-weight:500;background:var(--color-purple-600);margin-bottom:16px}
          .cert-outcomes h3{font-size:36px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:14px;text-wrap-style:balance}
          .cert-outcomes .co-sub{color:var(--color-gray-300);font-size:17px;line-height:1.6;text-wrap-style:balance}
-         .cert-outcomes .co-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-         .cert-outcomes .co-list{display:flex;flex-direction:column;gap:28px}
-         .cert-outcomes .co-item{display:flex;gap:18px}
-         .cert-outcomes .co-num{flex-shrink:0;width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:background-color .5s ease,border-color .5s ease,box-shadow .5s ease}
-         .cert-outcomes .co-num svg{width:14px;height:14px;opacity:.5;transform:scale(.7);transition:opacity .5s ease,transform .5s ease}
+         /* three outcomes side by side, each with its own visual above its copy */
+         .cert-outcomes .co-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+         .cert-outcomes .co-item{display:flex;gap:14px;align-items:flex-start}
+         /* same type as the ideas page: 1.1rem/700 titles, 0.9rem/1.5 body */
+         .cert-outcomes .co-item h4{font-size:1.1rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.35rem;text-wrap-style:balance}
+         .cert-outcomes .co-item p{font-size:.9rem;line-height:1.5;color:var(--color-gray-400);text-wrap-style:balance}
+         .cert-outcomes .co-num{position:relative;flex-shrink:0;width:32px;height:32px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background-color .45s ease,border-color .45s ease,box-shadow .45s ease}
+         /* the numeral and the tick sit on top of each other and cross-fade */
+         .cert-outcomes .co-num > span,.cert-outcomes .co-num > svg{position:absolute;transition:opacity .35s ease,transform .35s ease}
+         .cert-outcomes .co-num > svg{width:16px;height:16px;opacity:0;transform:scale(.5)}
          .cert-outcomes .co-num.co-num-active{background:var(--color-purple-600);border-color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.35)}
-         .cert-outcomes .co-num.co-num-active svg{opacity:1;transform:scale(1);color:#fff}
-         @media (prefers-reduced-motion:reduce){.cert-outcomes .co-num{background:var(--color-purple-600);border-color:#fff}.cert-outcomes .co-num svg{opacity:1;transform:scale(1);color:#fff}.cert-outcomes .co-item h4{color:#fff}}
-         /* titles start grey and turn white in step with their tick */
-         .cert-outcomes .co-item h4{font-size:18px;font-weight:700;color:var(--color-gray-500);margin-bottom:6px;transition:color .5s ease}
-         .cert-outcomes .co-item:has(.co-num-active) h4{color:#fff}
-         .cert-outcomes .co-item p{color:var(--color-gray-400);font-size:15px;line-height:1.55}
-         .cert-outcomes .co-cert{position:relative}
-         .cert-outcomes .co-cert img{width:100%;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5);clip-path:inset(0.42% 0)}
-         /* floating "share on LinkedIn" card overlapping the certificate's top-left corner */
-         .cert-outcomes .co-share{position:absolute;top:-18px;right:-22px;z-index:2;display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:rotate(3deg)}
-         .cert-outcomes .co-share svg{width:26px;height:26px;flex-shrink:0}
-         .cert-outcomes .co-share strong{display:block;font-size:14px;font-weight:700;color:var(--color-gray-900);line-height:1.2}
-         .cert-outcomes .co-share span{display:block;font-size:12px;color:var(--color-gray-500);line-height:1.3}
-         .cert-outcomes .co-caption{text-align:center;color:var(--color-purple-200);font-size:14px;font-weight:600;margin-top:16px}
+         .cert-outcomes .co-num.co-num-active > span{opacity:0;transform:scale(.6)}
+         .cert-outcomes .co-num.co-num-active > svg{opacity:1;transform:scale(1)}
+         @media (prefers-reduced-motion:reduce){.cert-outcomes .co-num > span,.cert-outcomes .co-num > svg{transition:none}}
+         /* the visual sits in a fixed box with a clear band underneath for the call-out,
+            so no label or arrow ever covers an image and the three columns line up */
+         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;padding-bottom:62px;margin-bottom:22px}
+         .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:17px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
+         .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
+         .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
+         /* 01: the certificate, with the share card and the verification chip */
+         .cert-outcomes .co-cert{position:relative;width:72%}
+         .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0);transform:rotate(-2deg)}
+         .cert-outcomes .co-share{position:absolute;top:-14px;right:-40px;z-index:3;display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;padding:7px 10px;box-shadow:0 8px 24px rgba(0,0,0,.4);transform:rotate(3deg)}
+         .cert-outcomes .co-share svg{width:22px;height:22px;flex-shrink:0}
+         .cert-outcomes .co-share strong{display:block;font-size:12.5px;font-weight:700;color:var(--color-gray-900);line-height:1.2}
+         .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:var(--color-green-500);color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4);transform:rotate(-2deg)}
+         .cert-outcomes .co-verify svg{width:12px;height:12px}
+         /* 02: three project cards fanned out, same anatomy as the square tiles above */
+         .cert-outcomes .co-fan{position:relative;width:100%;height:175px}
+         .cert-outcomes .co-tile{position:absolute;top:0;width:46%;height:165px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-gray-200);border-radius:12px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45);transform-origin:50% 100%}
+         .cert-outcomes .co-tile:nth-child(1){left:8%;transform:rotate(-9deg) translateY(10px);z-index:1}
+         .cert-outcomes .co-tile:nth-child(2){left:27%;z-index:2}
+         .cert-outcomes .co-tile:nth-child(3){left:46%;transform:rotate(9deg) translateY(10px);z-index:3}
+         .cert-outcomes .co-tile .co-art{aspect-ratio:16/10;overflow:hidden;background:var(--color-gray-50);flex-shrink:0}
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:cover;display:block}
+         .cert-outcomes .co-tile .co-cap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:8px 10px 10px;text-align:center}
+         .cert-outcomes .co-tile .co-cap .co-t{font-size:11.5px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
+         .cert-outcomes .co-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px}
+         .cert-outcomes .co-tags span{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:var(--color-blue-50);color:var(--color-blue-700);border:1px solid var(--color-blue-100);font-size:9px;font-weight:600;line-height:1.3;white-space:nowrap}
+         /* 03: a snippet of unfamiliar code, one line marked up */
+         .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden;transform:rotate(-1deg)}
+         .cert-outcomes .co-code .co-bar{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.09)}
+         .cert-outcomes .co-code .co-bar i{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.2)}
+         .cert-outcomes .co-code pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.75;color:var(--color-gray-300);padding:11px 14px 14px;overflow-x:auto}
+         .cert-outcomes .co-code .kw{color:var(--color-purple-300)}
+         .cert-outcomes .co-code .fn{color:var(--color-blue-200)}
+         .cert-outcomes .co-code .str{color:var(--color-green-200)}
+         .cert-outcomes .co-code .cmt{color:var(--color-gray-500)}
+         .cert-outcomes .co-code .hit{display:block;background:rgba(251,191,36,.14);box-shadow:inset 3px 0 0 var(--color-amber-300);margin-inline:-14px;padding-inline:14px}
+         @media (max-width:900px){.cert-outcomes .co-cols{grid-template-columns:1fr;gap:44px}.cert-outcomes .co-anno,.cert-outcomes .co-arrow{display:none}}
         </style>
         <div class="cert-outcomes">
          <div class="co-inner">
@@ -2396,73 +2427,128 @@
           <h3>What you'll walk away with</h3>
           <p class="co-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
          </div>
-         <div class="co-grid">
-          <div class="co-list" id="co-checklist">
+         <div class="co-cols" id="co-checklist">
+          <div class="co-col">
+           <div class="co-viz">
+            <div class="co-cert">
+             <img alt="Jiki course completion certificate" decoding="async" height="478" loading="lazy" src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" width="700"/>
+             <div class="co-share">
+              <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+              <strong>Share on LinkedIn</strong>
+             </div>
+             <div class="co-verify">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              Verified · jiki.io/c/8f2a
+             </div>
+            </div>
+            <span class="co-anno" style="bottom:0;left:0">Anyone can check<br>it's really yours</span>
+            <svg class="co-arrow" style="bottom:36px;left:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
+             <path d="M2 21C20 19 46 13 66 3"/>
+             <path d="M57 2l11 1-5 9"/>
+            </svg>
+           </div>
            <div class="co-item">
-            <div class="co-num" data-co-num="0"><svg viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="co-num" data-co-num="0"><span>1</span><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div>
              <h4>A verified certificate</h4>
              <p>Official and verifiable. Add it to your resume and the Certifications section of your LinkedIn profile, and know you earned it.</p>
             </div>
            </div>
+          </div>
+          <div class="co-col">
+           <div class="co-viz">
+            <div class="co-fan">
+             <div class="co-tile">
+              <div class="co-art"><img src="images/project-town.png" alt="" style="object-position:18% 50%"></div>
+              <div class="co-cap">
+               <div class="co-t">Build a habit tracker</div>
+               <div class="co-tags"><span>Databases</span><span>Auth</span></div>
+              </div>
+             </div>
+             <div class="co-tile">
+              <div class="co-art"><img src="images/project-town.png" alt="" style="object-position:72% 50%"></div>
+              <div class="co-cap">
+               <div class="co-t">Build your personal homepage</div>
+               <div class="co-tags"><span>HTML/CSS</span><span>Git and GitHub</span></div>
+              </div>
+             </div>
+             <div class="co-tile">
+              <div class="co-art"><img src="images/project-town.png" alt="" style="object-position:50% 50%"></div>
+              <div class="co-cap">
+               <div class="co-t">Build a recipe box</div>
+               <div class="co-tags"><span>APIs</span><span>Frontends</span></div>
+              </div>
+             </div>
+            </div>
+            <span class="co-anno co-anno-purple" style="bottom:0;right:0;text-align:right">These actually<br>run, try them</span>
+            <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-purple-200)" viewBox="0 0 72 24" aria-hidden="true">
+             <path d="M70 21C52 19 26 13 6 3"/>
+             <path d="M15 2L4 3l5 9"/>
+            </svg>
+           </div>
            <div class="co-item">
-            <div class="co-num" data-co-num="1"><svg viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="co-num" data-co-num="1"><span>2</span><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div>
              <h4>A diverse portfolio of real projects</h4>
              <p>Space invaders, flappy bird, a maze solver, data visualisations, animations. Dozens of finished projects, all built by you, all yours to show off.</p>
             </div>
            </div>
+          </div>
+          <div class="co-col">
+           <div class="co-viz">
+            <div class="co-code">
+             <div class="co-bar"><i></i><i></i><i></i></div>
+<pre><span class="cmt"># code you've never seen</span>
+<span class="kw">def</span> <span class="fn">find_path</span>(maze, start):
+  queue = [start]
+<span class="hit">  <span class="kw">while</span> queue:</span>
+    cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
+    <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
+      <span class="kw">return</span> cell</pre>
+            </div>
+            <span class="co-anno" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+            <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
+             <path d="M70 21C52 19 26 13 6 3"/>
+             <path d="M15 2L4 3l5 9"/>
+            </svg>
+           </div>
            <div class="co-item">
-            <div class="co-num" data-co-num="2"><svg viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="co-num" data-co-num="2"><span>3</span><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div>
              <h4>A true understanding of how it all works</h4>
              <p>Not memorised syntax. You'll be able to read unfamiliar code, reason about what it's doing, and pick up any new language far faster.</p>
             </div>
            </div>
           </div>
-          <script>
-           (function () {
-            var list = document.getElementById('co-checklist');
-            if (!list) return;
-            var nums = list.querySelectorAll('[data-co-num]');
-            function activateAll() {
-             nums.forEach(function (n) { n.classList.add('co-num-active'); });
-            }
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-             activateAll();
-             return;
-            }
-            var i = 0;
-            function tick() {
-             if (i < nums.length) {
-              nums[i].classList.add('co-num-active');
-              i++;
-              setTimeout(tick, 220);
-             }
-            }
-            var observer = new IntersectionObserver(function (entries) {
-             entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-               setTimeout(tick, 250);
-               observer.disconnect();
-              }
-             });
-            }, { threshold: 0.3 });
-            observer.observe(list);
-           })();
-          </script>
-          <div class="co-cert">
-           <div class="co-share">
-            <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-            <div>
-             <strong>Share on LinkedIn</strong>
-             <span>Added to your Certifications</span>
-            </div>
-           </div>
-           <img alt="Jiki course completion certificate" decoding="async" height="478" loading="lazy" src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" width="700"/>
-           <div class="co-caption">Your certificate, issued at the end of the course</div>
-          </div>
          </div>
+         <script>
+          (function () {
+           var list = document.getElementById('co-checklist');
+           if (!list) return;
+           var nums = list.querySelectorAll('[data-co-num]');
+           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            nums.forEach(function (n) { n.classList.add('co-num-active'); });
+            return;
+           }
+           var i = 0;
+           function tick() {
+            if (i < nums.length) {
+             nums[i].classList.add('co-num-active');
+             i++;
+             setTimeout(tick, 320);
+            }
+           }
+           var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+             if (entry.isIntersecting) {
+              setTimeout(tick, 300);
+              observer.disconnect();
+             }
+            });
+           }, { threshold: 0.3 });
+           observer.observe(list);
+          })();
+         </script>
          </div>
         </div>
      </section>
