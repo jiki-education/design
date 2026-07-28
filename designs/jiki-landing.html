@@ -578,7 +578,7 @@
 .ex-noteWrap {
     position: relative;
     width: 100%;
-    max-width: 1050px;
+    max-width: 1150px;
     margin-inline: auto;
     /* sits above the band's optical centre; kept level as the band shortened */
     transform: translateY(-55px);
@@ -597,7 +597,7 @@
         radial-gradient(50% 45% at 78% 88%, rgba(245, 223, 77, 0.22) 0%, transparent 70%),
         radial-gradient(45% 45% at 18% 85%, rgba(240, 180, 41, 0.14) 0%, transparent 70%),
         linear-gradient(180deg, #f7f5ff 0%, #eae6fa 100%);
-    box-shadow: 0 2px 4px rgba(27, 20, 73, .18), 0 26px 48px -18px rgba(27, 20, 73, .35);
+    box-shadow: 0 1px 3px rgba(27, 20, 73, .12), 0 18px 36px -20px rgba(27, 20, 73, .22);
 }
 
 /* the same paper grain the sticky notes use */
@@ -2571,9 +2571,9 @@
         /* A torn strip of tape behind the section heading. The ragged left and
            right edges are CSS masks, so there is no artwork to commission and
            the strip stretches to whatever the copy needs. */
-        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 70px 30px;text-align:center;transform:rotate(-.8deg);clip-path:polygon(calc(100% - 11px) 0.0%, calc(100% - 3px) 7.1%, calc(100% - 9px) 14.3%, calc(100% - 5px) 21.4%, calc(100% - 14px) 28.6%, calc(100% - 7px) 35.7%, calc(100% - 2px) 42.9%, calc(100% - 12px) 50.0%, calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 4px) 71.4%, calc(100% - 13px) 78.6%, calc(100% - 8px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 9px) 100.0%, 8px 100.0%, 1px 92.9%, 6px 85.7%, 10px 78.6%, 3px 71.4%, 7px 64.3%, 14px 57.1%, 5px 50.0%, 11px 42.9%, 2px 35.7%, 6px 28.6%, 13px 21.4%, 4px 14.3%, 9px 7.1%, 0px 0.0%)}
+        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 70px 30px;text-align:center;transform:rotate(-.8deg);filter:drop-shadow(0 5px 6px rgba(15,23,42,.16));clip-path:polygon(calc(100% - 11px) 0.0%, calc(100% - 3px) 7.1%, calc(100% - 9px) 14.3%, calc(100% - 5px) 21.4%, calc(100% - 14px) 28.6%, calc(100% - 7px) 35.7%, calc(100% - 2px) 42.9%, calc(100% - 12px) 50.0%, calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 4px) 71.4%, calc(100% - 13px) 78.6%, calc(100% - 8px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 9px) 100.0%, 8px 100.0%, 1px 92.9%, 6px 85.7%, 10px 78.6%, 3px 71.4%, 7px 64.3%, 14px 57.1%, 5px 50.0%, 11px 42.9%, 2px 35.7%, 6px 28.6%, 13px 21.4%, 4px 14.3%, 9px 7.1%, 0px 0.0%)}
         .TornTape_strip__jk170::before{
-         content:"";position:absolute;inset:0;z-index:0;opacity:.9;
+         content:"";position:absolute;inset:0;z-index:0;opacity:.8;
          /* woven paper texture: two fine cross-hatches over a warm base, plus a
             couple of soft blotches so the tone is not perfectly even */
          background:
@@ -2587,7 +2587,7 @@
         /* the same paper grain the sticky notes use, so the two read as one set */
         .TornTape_strip__jk170::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.3;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='5'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23t)'/%3E%3C/svg%3E")}
         .TornTape_strip__jk170 > *{position:relative;z-index:2}
-        .TornTape_sub__jk171{font-size:20px;font-weight:400;color:var(--color-gray-600);margin-top:10px;text-wrap-style:balance}
+        .TornTape_sub__jk171{font-size:20px;font-weight:400;color:var(--color-gray-600);text-wrap-style:balance}
         @media (max-width:720px){.TornTape_strip__jk170{padding-inline:34px}}
        </style>
        <!-- the heading sits on a torn strip of tape -->
@@ -3070,7 +3070,7 @@
      <section class="FAQs_faqs__megGI">
       <style>
        /* light hairline separating the FAQs from the section above */
-       .FAQs_faqs__megGI{border-top:1px solid var(--color-gray-200)}
+       .FAQs_faqs__megGI{border-top:2px solid var(--color-gray-50)}
       </style>
       <div class="FAQs_container__a20Gp">
        <h2 style="margin-top:50px;text-align:left;color:var(--color-blue-950);font-weight:700;">
