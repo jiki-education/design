@@ -2232,7 +2232,26 @@
        </div>
        <div class="MeetJeremy_quote__jk151">
         <span>“</span>
-        <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
+        <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong class="rough-highlight" id="master-teacher-highlight">Jeremy is a master teacher.</strong></p>
+        <script>
+         (function () {
+          var el = document.getElementById('master-teacher-highlight');
+          if (!el) return;
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+           el.classList.add('is-visible');
+           return;
+          }
+          var observer = new IntersectionObserver(function (entries) {
+           entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+             el.classList.add('is-visible');
+             observer.disconnect();
+            }
+           });
+          }, { threshold: 0.2 });
+          observer.observe(el);
+         })();
+        </script>
         <div class="MeetJeremy_who__jk152">
          <span class="MeetJeremy_ring__jk180"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
          <div><strong>Thom Chittom</strong><em>Beginner</em></div>
@@ -2240,10 +2259,14 @@
        </div>
        <!-- Full-width break: the project prints, sat just before the signup band -->
        <style>
-        .FunPrints_band__jk138{width:100vw;margin-inline-start:50%;transform:translateX(-50%);padding-block:72px 80px;padding-inline:32px;overflow:hidden;background:radial-gradient(90% 60% at 15% 0%,rgba(168,85,247,.16) 0%,rgba(168,85,247,0) 60%),radial-gradient(80% 70% at 90% 100%,rgba(59,130,246,.16) 0%,rgba(59,130,246,0) 60%),linear-gradient(180deg,#fffdf8 0%,#fdf6ec 100%)}
+        .FunPrints_band__jk138{width:100vw;margin-inline-start:50%;transform:translateX(-50%);padding-block:72px 80px;padding-inline:32px;overflow:clip;overflow-clip-margin:420px;background:radial-gradient(90% 60% at 15% 0%,rgba(168,85,247,.16) 0%,rgba(168,85,247,0) 60%),radial-gradient(80% 70% at 90% 100%,rgba(59,130,246,.16) 0%,rgba(59,130,246,0) 60%),linear-gradient(180deg,#fffdf8 0%,#fdf6ec 100%)}
         .FunPrints_inner__jk139{max-width:1200px;margin-inline:auto;text-align:center}
         .FunPrints_eyebrow__jk142{font-family:'Caveat',cursive;font-size:29px;font-weight:700;color:var(--color-purple-600);transform:rotate(-2deg);margin-bottom:4px}
         .FunPrints_heading__jk143{font-size:42px;font-weight:800;color:var(--color-gray-700);line-height:1.15;margin-bottom:12px;text-wrap-style:balance}
+        .FunPrints_headingWrap__jk146{position:relative;display:inline-block}
+        /* mirrored, so the arrowhead points back in at the start of the heading */
+        .FunPrints_headingArrow__jk147{position:absolute;right:calc(100% + 54px);bottom:-4px;width:340px;height:auto;opacity:.45;transform:scaleX(-1);pointer-events:none}
+        @media (max-width:900px){.FunPrints_headingArrow__jk147{display:none}}
         .FunPrints_sub__jk144{font-size:18px;color:var(--color-gray-600);line-height:1.6;max-width:720px;margin-inline:auto;margin-bottom:44px;text-wrap-style:balance}
         /* the footnote runs straight on into the CTA below it, so it sits bigger and closer */
         .FunPrints_footnote__jk145{font-family:'Caveat',cursive;font-size:30px;color:var(--color-gray-500);transform:rotate(1deg);margin-top:42px;margin-bottom:18px;text-wrap-style:balance}
@@ -2271,7 +2294,11 @@
        <div class="FunPrints_band__jk138">
         <div class="FunPrints_inner__jk139">
          <p class="FunPrints_eyebrow__jk142">Look what you'll make</p>
-         <h2 class="FunPrints_heading__jk143">Games. Animations. Actual things.</h2>
+         <div class="FunPrints_headingWrap__jk146">
+          <h2 class="FunPrints_heading__jk143">Games. Animations. Actual things.</h2>
+          <!-- looping dashed arrow, pointing back at the heading -->
+          <img class="FunPrints_headingArrow__jk147" src="images/heading-arrow-loop.png" alt="" aria-hidden="true">
+         </div>
          <p class="FunPrints_sub__jk144">Every one of these is built from the same handful of core concepts, and you'll have made <strong>hundreds</strong> like them by the end.</p>
          <div class="FunPrints_grid__jk140">
            <div>
@@ -2364,7 +2391,13 @@
         <style>
          .cert-outcomes{background:linear-gradient(135deg,var(--color-gray-950),var(--color-purple-900));padding:80px 48px}
          .cert-outcomes .co-inner{max-width:1200px;margin-inline:auto}
-         .cert-outcomes .co-head{max-width:620px;margin-bottom:60px}
+         /* the same dotted hand-drawn arrow used above the "Hi there" intro */
+         /* out of flow, so it never pushes the heading or makes the copy wrap around it */
+         .cert-outcomes .co-arrowWrap{position:absolute;right:0;top:50%;flex-shrink:0;pointer-events:none;transform:translate(-90px,calc(-50% - 40px))}
+         .cert-outcomes .co-headArrow{width:280px;height:487px;fill:#fff;transform:scaleX(-1) rotate(-8deg)}
+         @media (max-width:900px){.cert-outcomes .co-arrowWrap{display:none}.cert-outcomes .co-headRow{display:block}}
+         .cert-outcomes .co-headRow{position:relative;display:flex;align-items:center;justify-content:space-between;gap:48px;margin-bottom:60px}
+         .cert-outcomes .co-head{max-width:620px}
          .cert-outcomes .co-bubble{display:inline-block;border-radius:50px;padding:5px 16px;font-size:14px;color:#fff;font-weight:500;background:var(--color-purple-600);margin-bottom:16px}
          .cert-outcomes h3{font-size:36px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:14px;text-wrap-style:balance}
          .cert-outcomes .co-sub{color:var(--color-gray-300);font-size:17px;line-height:1.6;text-wrap-style:balance}
@@ -2422,10 +2455,18 @@
         </style>
         <div class="cert-outcomes">
          <div class="co-inner">
+         <div class="co-headRow">
          <div class="co-head">
           <div class="co-bubble">At the end of the course</div>
           <h3>What you'll walk away with</h3>
           <p class="co-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
+         </div>
+         <div class="co-arrowWrap">
+          <svg class="co-headArrow" viewBox="0 0 168.39 139.53" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+           <path d="M2.11 20.49a36 36 0 0 1-1.27-3.58 12 12 0 0 1-.58-3.29c0-.23.66-.67 1-.67s1 .36 1.05.61c0 1 .17 1.91.28 2.86l.31 2.87a6 6 0 0 1 .15 1c0 .14-.34.33-.55.37s-.36-.16-.39-.17M4 25.53c.76 0 .89.6 1.07 1.06.41 1 .55 2 .87 3a14.5 14.5 0 0 0 .53 2.11c.23.48.12.81-.41 1.21a.35.35 0 0 1-.32 0c-.44-.76-.79-1.52-1.14-2.29l-.54-1.15c-.16-.4-.34-.79-.53-1.19s-.36-.6-.54-.91A1.34 1.34 0 0 1 4 25.53M.46 6.5C.39 6 .28 5.32.25 4.67s0-1.24-.08-1.61A12.6 12.6 0 0 1 0 .94C0 .6.42.25.72 0c.1-.07.48.2.73.31 1.06.49.63 1.3.6 2A32 32 0 0 0 1.63 6c.07.91-.15 1-1 .7-.18-.07-.23-.31-.17-.2m18.47 48.69c-1-.95-1.95-1.72-2.79-2.57a14 14 0 0 1-2-2.64c-.12-.19.26-.89.57-1.07s1.08-.17 1.23 0c1 1.62 2.12 3.2 3.22 4.79a3.8 3.8 0 0 1 .57.83c0 .13-.16.46-.33.58a.68.68 0 0 1-.47.08m3.97 3.65c.7-.31 1.08.13 1.45.45a21.6 21.6 0 0 1 2.13 2.35 9.8 9.8 0 0 0 1.41 1.66c.42.32.47.67.17 1.25a.35.35 0 0 1-.3.12 25 25 0 0 1-2.06-1.53c-.63-.56-1.25-1.12-2-1.64-.29-.21-.6-.38-.9-.57a1.32 1.32 0 0 1 .1-2.09M10.82 43.68c-.67-.78-1.5-2.26-2-2.84a12 12 0 0 1-1.23-1.73 1.7 1.7 0 0 1 .18-1.18c0-.11.51-.07.78-.1 1.12-.11 1.17.81 1.52 1.46s1 2.69 1.45 3.36.39 1-.56 1.12c-.08.03-.25-.15-.14-.09m38.33 35.57c-1.34-.43-2.51-.73-3.61-1.18a20 20 0 0 1-2.95-1.55c-.19-.12-.14-.92.07-1.2s.91-.62 1.13-.49c.83.49 1.64 1 2.45 1.53s1.65 1 2.48 1.5a4 4 0 0 1 .86.51c.1.1.05.48-.06.66s-.35.21-.37.22m5.1 1.75c.52-.56 1-.27 1.49-.12a20 20 0 0 1 2.9 1.31 11.5 11.5 0 0 0 1.93 1c.52.14.7.45.64 1.1 0 .08-.17.23-.23.22-1.75-.29-3.21-1-4.93-1.38-.34-.08-.7-.1-1-.16a1.35 1.35 0 0 1-.8-1.97M37 72.18c-.91-.46-2.34-1.37-3-1.71a8 8 0 0 1-1.83-1.06 1.72 1.72 0 0 1-.35-1.13c0-.12.42-.29.65-.43 1-.61 1.39.24 2 .69s2.13 1.95 2.79 2.37.74.75 0 1.28c-.19.08-.41-.02-.26-.01M86.1 90.8a37 37 0 0 1-3.79 0 19.3 19.3 0 0 1-3.31-.45c-.21 0-.43-.82-.33-1.17s.66-.87.91-.82c1.9.34 3.76.91 5.66 1.26a3.9 3.9 0 0 1 1 .21c.13.06.19.44.15.64s-.27.31-.29.33m5.4.08c.32-.69.89-.59 1.39-.57a28 28 0 0 1 3.16.39 15 15 0 0 0 2.15.41c.53 0 .79.24.92.88 0 .08-.09.27-.16.28-1.74.17-3.35 0-5.11.13-.35 0-.69.09-1 .14a1.36 1.36 0 0 1-1.35-1.66m-19.22-2.73c-1-.11-2.68-.44-3.4-.53a11 11 0 0 1-2.07-.35c-.33-.11-.58-.56-.75-.92 0-.11.29-.42.46-.64.7-.92 1.39-.29 2.11-.09s2.68 1.09 3.44 1.26c.91.18 1 .43.41 1.21-.08.11-.32.09-.2.06m52.58 3.29c-1.35.4-2.48.82-3.65 1a16 16 0 0 1-3.3.43c-.22 0-.64-.68-.63-1s.4-1 .65-1c1.93-.11 3.86-.17 5.78-.31a4.4 4.4 0 0 1 1-.06c.14 0 .3.36.32.57s-.16.34-.17.37M130 90c.1-.76.67-.84 1.15-1a32 32 0 0 1 3.11-.6 11 11 0 0 0 2.15-.33c.49-.18.82 0 1.16.52a.35.35 0 0 1-.06.32c-1.58.76-3.17 1.11-4.8 1.78-.33.13-.64.31-1 .46A1.34 1.34 0 0 1 130 90m-19.17 2.62c-1 .18-2.7.3-3.41.38a11.6 11.6 0 0 1-2.09.26c-.34 0-.71-.37-1-.67-.08-.09.16-.49.26-.74.41-1.08 1.26-.68 2-.69s2.88.37 3.67.29 1 .16.72 1.06c.02.12-.26.18-.15.11M160 76.22c-.37.61-.78 1.11-1.14 1.63a12 12 0 0 1-1.16 1.43c-.39.4-.78.81-1.2 1.19s-.89.7-1.36 1c-.19.12-.9-.23-1.08-.54s-.2-1.09 0-1.23l1.15-.83 1.09-.87c.78-.55 1.48-1.18 2.21-1.81a6.4 6.4 0 0 1 .73-.66c.12-.07.47.09.61.24s.15.42.15.45m2.83-4.55c-.47-.61-.09-1 .11-1.47.44-.92 1.06-1.75 1.54-2.67a7 7 0 0 0 1-1.85c.13-.51.44-.68 1.09-.67.08 0 .25.16.23.22a24.7 24.7 0 0 1-1.58 5c-.13.33-.21.69-.31 1a1.33 1.33 0 0 1-2.08.44m-14.16 12.98c-.82.62-2.34 1.38-2.95 1.79a11.3 11.3 0 0 1-1.84 1.06 1.6 1.6 0 0 1-1.15-.25c-.11 0 0-.51 0-.78 0-1.15.89-1.11 1.57-1.4s2.74-.86 3.43-1.24 1-.32 1.09.63c-.02.14-.21.29-.15.19m8.18-41.38a18.3 18.3 0 0 1 3.54 1.53 10.8 10.8 0 0 1 2.67 2.2c.15.17-.1.93-.39 1.15s-1 .34-1.21.17a26 26 0 0 0-4.25-3.63 5 5 0 0 1-.82-.54c-.09-.1 0-.47.08-.65s.36-.22.38-.23m-5.15-1.51c-.45.62-1 .43-1.44.33-1-.16-2-.49-3-.72a9 9 0 0 0-2.09-.5c-.52 0-.77-.25-.9-.9 0-.08.1-.27.17-.27a36 36 0 0 1 5.16.21h1.09a1.33 1.33 0 0 1 1.01 1.85m14.84 11.61c.13.22.27.49.42.78s.23.62.35.93c.21.62.46 1.21.55 1.57a10.6 10.6 0 0 1 .53 2.14 1.77 1.77 0 0 1-.66 1c-.09.08-.49-.15-.75-.24-.54-.19-.71-.47-.75-.81a9 9 0 0 1-.08-1.06 15 15 0 0 0-.52-3.45c-.37-.8-.21-1 .74-1 .13.01.27.22.17.14m-47.91-11.22c1.33-.46 2.44-.89 3.58-1.19a19 19 0 0 1 3.25-.62c.22 0 .69.63.71 1s-.33 1.05-.58 1.08c-1.93.27-3.87.4-5.8.61a4.3 4.3 0 0 1-1 .09c-.14 0-.32-.36-.34-.57a.6.6 0 0 1 .18-.4m-5.18 1.53c-.1.75-.68.82-1.16 1a25 25 0 0 1-3.14.54 14 14 0 0 0-2.16.26c-.51.17-.82 0-1.14-.55a.33.33 0 0 1 .06-.31c1.61-.71 3.2-1 4.85-1.65.32-.13.63-.3.95-.45a1.35 1.35 0 0 1 1.74 1.16M132.52 40c1-.28 2.67-.54 3.37-.71a10 10 0 0 1 2.08-.41 1.7 1.7 0 0 1 1 .61c.08.08-.13.49-.22.76-.34 1.1-1.2.74-1.94.81s-2.88-.09-3.65 0-1.05 0-.82-1c.05-.06.28-.13.18-.06M82.61 55.65a37 37 0 0 1 2.63-2.76A16.4 16.4 0 0 1 88 51c.2-.1.88.32 1 .65s.1 1.09-.11 1.21c-.82.49-1.62 1-2.45 1.47s-1.6 1-2.41 1.57a5.4 5.4 0 0 1-.82.56c-.13.05-.45-.15-.57-.32a.67.67 0 0 1-.03-.49m-3.56 4.05c.33.68-.12 1-.41 1.43a26 26 0 0 1-2.2 2.26 13 13 0 0 0-1.55 1.51c-.31.43-.64.51-1.24.26-.08 0-.17-.23-.14-.28a18 18 0 0 1 1.4-2.15c.48-.7 1-1.36 1.5-2.09a11 11 0 0 0 .52-.94 1.34 1.34 0 0 1 2.12 0M94.6 48.25c.87-.53 2.4-1.29 3.05-1.62a10 10 0 0 1 1.88-1 1.7 1.7 0 0 1 1.15.32c.11.06 0 .51 0 .78 0 1.16-1 1-1.64 1.32-.37.14-1.07.3-1.76.48a14 14 0 0 0-1.73.57c-.83.39-1 .26-1.07-.7-.01-.11.19-.25.12-.15M61.92 88c.17-1.41.33-2.59.56-3.76a20.3 20.3 0 0 1 1.05-3.17c.1-.21.9-.28 1.22-.11s.73.8.64 1c-.35.9-.72 1.78-1.11 2.66l-1.06 2.69a4.5 4.5 0 0 1-.36.93c-.08.12-.46.13-.65.06s-.27-.3-.29-.3m-.78 5.32c.64.4.48 1 .42 1.45a28 28 0 0 1-.73 3.09 13.4 13.4 0 0 0-.61 2.09c0 .53-.3.77-.95.84-.08 0-.26-.12-.26-.18 0-1.76.29-3.35.38-5.11v-1.06a1.33 1.33 0 0 1 1.75-1.12M67 74.86c.36-1 1-2.52 1.33-3.18a12 12 0 0 1 .84-2 1.63 1.63 0 0 1 1.09-.48c.12 0 .33.39.49.6.69.9-.05 1.43-.42 2.07-.19.34-.65.9-1.06 1.49a14 14 0 0 0-1 1.54c-.38.83-.63.83-1.27.13zm-9.15 51.63c-.3-1.38-.56-2.54-.73-3.72a19.3 19.3 0 0 1-.17-3.31c0-.22.73-.59 1.08-.55s1 .47 1 .72c0 1.94-.12 3.87-.17 5.81a4.3 4.3 0 0 1 0 1c0 .13-.4.27-.61.26s-.38-.2-.4-.21m.87 5.32c.73.21.73.79.8 1.28a24 24 0 0 1 .11 3.2 15 15 0 0 0-.08 2.19c.09.53-.12.82-.73 1a.32.32 0 0 1-.3-.12c-.43-1.69-.5-3.31-.89-5-.08-.35-.21-.68-.32-1-.21-.66.39-1.48 1.41-1.55m-.98-19.39c-.09-1-.11-2.71-.15-3.43a12.6 12.6 0 0 1-.11-2.11c0-.34.42-.68.75-.92.1-.07.47.2.71.32 1.05.49.59 1.31.54 2s-.54 2.85-.53 3.64-.23 1-1.11.64c-.12-.01-.16-.25-.1-.14">
+           </path>
+          </svg>
+         </div>
          </div>
          <div class="co-cols" id="co-checklist">
           <div class="co-col">
@@ -2713,8 +2754,9 @@
         .sticky-stateRow > span:first-child{transition:color .25s ease}
         .sticky-note:hover .sticky-stateRow > span:first-child{color:var(--color-purple-600)}
         /* the emphasised phrases pick up the brand purple on hover */
-        .sticky-note p strong{transition:color .25s ease}
-        .sticky-note:hover p strong{color:var(--color-purple-600)}
+        /* the highlight simply appears on hover, no sweep */
+        .sticky-note p strong{padding:.05em .15em;margin:0 -.15em;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+        .sticky-note:hover p strong{background:rgba(252,211,77,.5)}
        </style>
        <div class="sticky-panel">
         <div class="sticky-grid">
