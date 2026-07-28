@@ -77,9 +77,11 @@
 
 /* ===== Hero audience check items (added) ===== */
 .Hero_audienceChecks__a1b2c {
+    /* one line each, so each audience reads as its own claim */
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     margin-bottom: 28px;
     .Hero_check__d3e4f {
         display: flex;
@@ -88,6 +90,10 @@
         font-size: 16px;
         font-weight: 500;
         color: white;
+        /* the audience stays at 500, the qualifying clause drops to 400 */
+        > span {
+            font-weight: 400;
+        }
         svg {
             flex-shrink: 0;
             width: 22px;
@@ -491,9 +497,10 @@
     border: none;
     font-weight: 600;
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-purple-400) 50%, transparent), 0 8px 24px color-mix(in srgb, var(--color-purple-500) 40%, transparent);
-    border-radius: 999px;
-    padding-inline: 34px;
-    padding-block: 13px;
+    /* the UI Kit's standard button shape, not a pill */
+    border-radius: 12px;
+    padding-inline: 30px;
+    padding-block: 14px;
 }
 .SignupButton_btn__lEwmG .rocketLaunch_rocketWrapper__n56iN {
     display: inline-flex;
@@ -865,6 +872,20 @@
     color: var(--color-gray-500);
 }
 
+/* ===== Hero: bigger headline, slightly smaller video (added) ===== */
+.Hero_hero__3JlDy h1 {
+    font-size: 53px;
+    @media (min-width: 640px) {
+        font-size: 58px;
+    }
+    @media (min-width: 1024px) and (max-width: 1189px) {
+        font-size: 56px;
+    }
+}
+.Hero_hero__3JlDy .Hero_hero-rhs__CPXwh {
+    max-width: 560px;
+}
+
 /* ===== Watch-prompt: widen so the line wraps to 2 lines instead of 3 ===== */
 .Hero_hero__3JlDy .Hero_watch-prompt__UhSiW {
     max-width: 420px;
@@ -936,21 +957,21 @@
            <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
            <path d="M8 12.5l2.5 2.5 5-5.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          Beginners
+          Beginners <span>who have never written a line of code</span>
          </span>
          <span class="Hero_check__d3e4f">
           <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
            <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
            <path d="M8 12.5l2.5 2.5 5-5.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          Junior devs
+          Junior devs <span>who want the foundations they skipped</span>
          </span>
          <span class="Hero_check__d3e4f">
           <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
            <circle cx="12" cy="12" r="10" fill="currentColor"></circle>
            <path d="M8 12.5l2.5 2.5 5-5.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          Entrepreneurs
+          Entrepreneurs <span>who want to build before they hire</span>
          </span>
         </div>
         <div class="Hero_cta-wrapper__CORzQ Hero_cta-wrapper--row__t2Ln9">
