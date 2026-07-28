@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What You Walk Away With - Certificate Section Ideas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../ui-kit/styles.css">
     <script>
         const IMPLEMENTATION_NOTES = `
@@ -34,6 +37,38 @@ The certificate and LinkedIn images are pulled from the live site
 - Ideas 1, 3 and 6 keep the certificate image large and hero-like.
 - Ideas 2 and 4 give equal billing to all three outcomes.
 - Idea 5 is the most compact — good if the page is getting long.
+
+## Idea 2 in detail
+
+Three outcomes **side by side**, each column carrying its own annotated visual above its copy.
+Deliberately kept to one screen: the section is roughly a third the height of a stacked
+row-per-outcome version, which matters this far down a long landing page.
+
+Each visual has **one** hand-drawn call-out — a Caveat label plus a curved SVG arrow. One per
+column, not two: at this width a second arrow reads as clutter rather than emphasis.
+
+1. **Certificate** — the artwork tilted, with a white "Add to profile" LinkedIn card floating
+   off the top-right corner and a green "Verified · jiki.io/c/8f2a" chip over the bottom-left.
+   The arrow points at the verification chip.
+2. **Portfolio** — two project videos as small prints plus a dashed "+40 more like these" tile.
+   The arrow points at the prints: these run, they aren't screenshots.
+3. **Understanding** — a dark code card of unfamiliar code with one line highlighted in amber.
+   The arrow points at that line.
+
+**Build notes**
+
+- Arrows are inline SVG (\`.arrow-2\`), two paths each: the curve and a three-point arrowhead.
+  They inherit \`currentColor\` from an inline \`color\`, so recolouring a call-out is one property.
+- Each label and arrow is positioned with inline \`top/left/right/bottom\` against its
+  \`.viz-2\` parent, which is a **fixed 190px tall** so all three columns line up on one
+  baseline regardless of what's in them. **The positions are hand-tuned to this content** —
+  changing copy length means re-nudging them. If this becomes CMS-driven, anchor the arrows to
+  the elements they point at instead.
+- Below 900px the columns stack and the arrows and labels are hidden outright — annotation
+  layouts do not survive a narrow column, and a half-broken arrow is worse than none.
+- The project videos come from \`assets.jiki.io\` (the landing page's own assets).
+- Decorative only — the labels are visual flourish, so anything they say must also exist in the
+  prose beneath. Nothing is said *only* by an arrow.
         `;
     </script>
     <style>
@@ -61,6 +96,7 @@ The certificate and LinkedIn images are pulled from the live site
             --color-amber-50: #fffbeb;
             --color-amber-100: #fef3c7;
             --color-amber-200: #fde68a;
+            --color-amber-300: #fcd34d;
             --color-amber-500: #f59e0b;
             --color-amber-600: #d97706;
             --color-amber-700: #b45309;
@@ -277,34 +313,35 @@ The certificate and LinkedIn images are pulled from the live site
         .head-2 .section-heading { color: #fff; }
         .head-2 .section-sub { color: var(--color-gray-300); }
 
-        .grid-2 {
+        /* three outcomes side by side — each column carries its own annotated
+           visual above its copy, so the whole section stays one screen tall */
+        .rows-2 {
             display: grid;
-            grid-template-columns: 1.05fr 1fr;
-            gap: 3.5rem;
-            align-items: center;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
 
-        .list-2 {
+        .outcome-2 {
             display: flex;
             flex-direction: column;
-            gap: 1.75rem;
         }
 
         .item-2 {
             display: flex;
-            gap: 1.1rem;
+            gap: 0.9rem;
+            align-items: flex-start;
         }
 
         .item-2 .num {
             flex-shrink: 0;
-            width: 38px;
-            height: 38px;
+            width: 32px;
+            height: 32px;
             border-radius: 999px;
             background: rgba(255,255,255,0.1);
             border: 1px solid rgba(255,255,255,0.18);
             color: #fff;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -319,23 +356,206 @@ The certificate and LinkedIn images are pulled from the live site
 
         .item-2 p {
             color: var(--color-gray-400);
-            font-size: 0.95rem;
-            line-height: 1.55;
+            font-size: 0.9rem;
+            line-height: 1.5;
             text-wrap-style: balance;
         }
 
-        .cert-frame-2 img {
-            width: 100%;
-            border-radius: 6px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        /* ---- the annotated visual at the top of each column ---- */
+        .viz-2 {
+            position: relative;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
         }
 
-        .cert-caption-2 {
+        /* handwritten call-out label */
+        .anno-2 {
+            position: absolute;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.15;
+            color: var(--color-amber-300);
+            max-width: 118px;
+            text-wrap-style: balance;
+            z-index: 5;
+        }
+
+        .anno-2.purple { color: var(--color-purple-200); }
+
+        /* the arrow itself — an SVG stroked in the label's own colour */
+        .arrow-2 {
+            position: absolute;
+            overflow: visible;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            z-index: 5;
+        }
+
+        /* 01 — the certificate, tilted, with a LinkedIn share card floating off it */
+        .cert-viz-2 { position: relative; width: 58%; }
+
+        .cert-viz-2 img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+            transform: rotate(-2deg);
+        }
+
+        .share-card-2 {
+            position: absolute;
+            top: -14px;
+            right: -40px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            border-radius: 8px;
+            padding: 0.45rem 0.65rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transform: rotate(3deg);
+            z-index: 3;
+        }
+
+        .share-card-2 svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .share-card-2 strong { display: block; font-size: 0.72rem; color: var(--color-gray-900); line-height: 1.2; }
+        .share-card-2 span { display: block; font-size: 0.64rem; color: var(--color-gray-500); }
+
+        /* the verification chip that sits over the bottom edge of the certificate */
+        .verify-chip-2 {
+            position: absolute;
+            bottom: -12px;
+            left: -32px;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--color-green-500);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 0.3rem 0.65rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transform: rotate(-2deg);
+            z-index: 3;
+        }
+
+        .verify-chip-2 svg { width: 12px; height: 12px; }
+
+        /* 02 — a scattered row of finished projects */
+        .collage-2 {
+            position: relative;
+            width: 78%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .collage-2 figure {
+            position: relative;
+            border-radius: 3px;
+            padding: 4px 4px 16px;
+            background: radial-gradient(120% 100% at 50% 0%, #faf8f3 40%, #ece5d9 100%);
+            box-shadow: 0 10px 24px -8px rgba(0,0,0,0.6);
+        }
+
+        .collage-2 figure:nth-child(1) { transform: rotate(-4deg); }
+        .collage-2 figure:nth-child(2) { transform: rotate(2deg); }
+
+        .collage-2 video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: var(--color-gray-800);
+        }
+
+        .collage-2 figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 1px;
             text-align: center;
-            color: var(--color-purple-200);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 1rem;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: rgba(42,49,66,0.85);
+        }
+
+        /* the "+40 more" tile that closes the collage off */
+        .more-tile-2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 2px dashed rgba(255,255,255,0.25);
+            color: #fff;
+            transform: rotate(-2deg);
+        }
+
+        .more-tile-2 strong { font-size: 1.1rem; font-weight: 800; }
+        .more-tile-2 span { font-size: 0.6rem; color: var(--color-gray-400); text-align: center; line-height: 1.2; }
+
+        /* 03 — a snippet of code you can actually reason about */
+        .code-viz-2 {
+            position: relative;
+            width: 84%;
+            border-radius: 10px;
+            background: var(--color-gray-950);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+            overflow: hidden;
+            transform: rotate(-1deg);
+        }
+
+        .code-bar-2 {
+            display: flex;
+            gap: 0.35rem;
+            padding: 0.5rem 0.7rem;
+            border-bottom: 1px solid rgba(255,255,255,0.09);
+        }
+
+        .code-bar-2 i {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .code-viz-2 pre {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.7rem;
+            line-height: 1.7;
+            color: var(--color-gray-300);
+            padding: 0.7rem 0.85rem 0.85rem;
+            overflow-x: auto;
+        }
+
+        .code-viz-2 .kw { color: var(--color-purple-300); }
+        .code-viz-2 .fn { color: var(--color-blue-200); }
+        .code-viz-2 .str { color: var(--color-green-200); }
+        .code-viz-2 .cmt { color: var(--color-gray-500); }
+
+        /* the one line the annotations point at */
+        .code-viz-2 .hit {
+            display: block;
+            background: rgba(251,191,36,0.14);
+            box-shadow: inset 3px 0 0 var(--color-amber-300);
+            margin-inline: -0.85rem;
+            padding-inline: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .rows-2 { grid-template-columns: 1fr; gap: 2.5rem; }
+            .anno-2, .arrow-2 { display: none; }
         }
 
         /* ---------- Idea 3: Certificate left, stacked outcome rows right ---------- */
@@ -698,7 +918,7 @@ The certificate and LinkedIn images are pulled from the live site
     <div class="idea">
         <div class="idea-label">
             <h2>2. "What you walk away with" — numbered, dark</h2>
-            <span>Equal billing for all three outcomes; certificate sits alongside as evidence</span>
+            <span>Three columns, each with its own annotated visual and a hand-drawn arrow calling out the good bit — kept to one screen</span>
         </div>
         <div class="panel-2">
             <div class="head-2">
@@ -706,8 +926,32 @@ The certificate and LinkedIn images are pulled from the live site
                 <h2 class="section-heading">What you'll walk away with</h2>
                 <p class="section-sub">Most courses leave you with a video-watching habit. This one leaves you with skills, proof, and things you actually built.</p>
             </div>
-            <div class="grid-2">
-                <div class="list-2">
+            <div class="rows-2">
+
+                <!-- 01 — the certificate itself, with the share moment called out -->
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="cert-viz-2">
+                            <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
+                            <div class="share-card-2">
+                                <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                                <div>
+                                    <strong>Add to profile</strong>
+                                    <span>Certifications · Jiki</span>
+                                </div>
+                            </div>
+                            <div class="verify-chip-2">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                                Verified · jiki.io/c/8f2a
+                            </div>
+                        </div>
+                        <!-- call-out: the verification chip -->
+                        <span class="anno-2" style="bottom:0;left:0">Anyone can check<br>it's really yours</span>
+                        <svg class="arrow-2" style="bottom:44px;left:26px;width:66px;height:46px;color:var(--color-amber-300)" viewBox="0 0 66 46">
+                            <path d="M6 42C12 22 28 10 54 8"/>
+                            <path d="M43 2l12 6-9 9"/>
+                        </svg>
+                    </div>
                     <div class="item-2">
                         <div class="num">01</div>
                         <div>
@@ -715,12 +959,60 @@ The certificate and LinkedIn images are pulled from the live site
                             <p>Official and verifiable. Add it to your resume and the Certifications section of your LinkedIn profile — and know you earned it.</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- 02 — the finished projects, scattered like prints on a desk -->
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="collage-2">
+                            <figure>
+                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                                <figcaption>Invaders</figcaption>
+                            </figure>
+                            <figure>
+                                <video autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/maze-59a6d-59a6d1950cc2.mp4"></video>
+                                <figcaption>Maze</figcaption>
+                            </figure>
+                            <div class="more-tile-2">
+                                <strong>+40</strong>
+                                <span>more like<br>these</span>
+                            </div>
+                        </div>
+                        <!-- call-out: they run, they aren't screenshots -->
+                        <span class="anno-2 purple" style="top:0;right:0;text-align:right">These actually<br>run — try them</span>
+                        <svg class="arrow-2" style="top:38px;right:52px;width:64px;height:46px;color:var(--color-purple-200)" viewBox="0 0 64 46">
+                            <path d="M58 4C50 24 32 36 8 38"/>
+                            <path d="M19 30L6 39l12 7"/>
+                        </svg>
+                    </div>
                     <div class="item-2">
                         <div class="num">02</div>
                         <div>
                             <h3>A diverse portfolio of real projects</h3>
                             <p>Space invaders, flappy bird, a maze solver, data visualisations, animations. Dozens of finished projects, all built by you, all yours to show off.</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- 03 — real code, with the "you'll actually get this" moment marked up -->
+                <div class="outcome-2">
+                    <div class="viz-2">
+                        <div class="code-viz-2">
+                            <div class="code-bar-2"><i></i><i></i><i></i></div>
+<pre><span class="cmt"># code you've never seen</span>
+<span class="kw">def</span> <span class="fn">find_path</span>(maze, start):
+  queue = [start]
+<span class="hit">  <span class="kw">while</span> queue:</span>
+    cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
+    <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
+      <span class="kw">return</span> cell</pre>
+                        </div>
+                        <!-- call-out: the highlighted line -->
+                        <span class="anno-2" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+                        <svg class="arrow-2" style="bottom:42px;right:30px;width:66px;height:48px;color:var(--color-amber-300)" viewBox="0 0 66 48">
+                            <path d="M60 44C54 24 38 10 12 8"/>
+                            <path d="M23 2L10 8l9 10"/>
+                        </svg>
                     </div>
                     <div class="item-2">
                         <div class="num">03</div>
@@ -730,10 +1022,7 @@ The certificate and LinkedIn images are pulled from the live site
                         </div>
                     </div>
                 </div>
-                <div class="cert-frame-2">
-                    <img src="https://assets.jiki.io/_next/static/media/certificate.f34aa987.webp" alt="Jiki course completion certificate">
-                    <div class="cert-caption-2">Your certificate, issued at the end of the course</div>
-                </div>
+
             </div>
         </div>
     </div>

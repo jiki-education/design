@@ -554,26 +554,86 @@
     /* full-bleed: break out of the page container and fill the viewport height */
     width: 100vw;
     margin-inline: calc(50% - 50vw);
-    min-height: calc(100vh - 50px);
+    /* 50px shorter than a full screen, to close the gap under the card */
+    min-height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
     isolation: isolate;
     border-radius: 0;
-    /* Exercism-tinted wash: purple/teal/yellow blooms over the pale base gradient */
+    /* the same dotted surface as the testimonials section above it, so the two
+       sections read as one continuous wall */
+    background-color: #fff;
+    background-image: radial-gradient(var(--color-gray-200) 1px, transparent 1px);
+    background-size: 20px 20px;
+    padding: 96px 32px;
+    text-align: center;
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── the Exercism panel, stuck down like one of the notes on the wall ───────── */
+/* the wrapper carries the tilt so the tape can sit outside the clipped note */
+.ex-noteWrap {
+    position: relative;
+    width: 100%;
+    max-width: 1050px;
+    margin-inline: auto;
+    /* sits above the band's optical centre; kept level as the band shortened */
+    transform: translateY(-55px);
+}
+
+.ex-note {
+    position: relative;
+    padding: 76px 48px 72px;
+    border-radius: 4px;
+    overflow: hidden;
+    isolation: isolate;
+    /* the section's own colour, carried onto the note */
     background:
         radial-gradient(60% 55% at 12% 18%, rgba(96, 78, 210, 0.16) 0%, transparent 70%),
         radial-gradient(55% 50% at 88% 24%, rgba(46, 196, 160, 0.16) 0%, transparent 70%),
         radial-gradient(50% 45% at 78% 88%, rgba(245, 223, 77, 0.22) 0%, transparent 70%),
         radial-gradient(45% 45% at 18% 85%, rgba(240, 180, 41, 0.14) 0%, transparent 70%),
         linear-gradient(180deg, #f7f5ff 0%, #eae6fa 100%);
-    padding: 96px 32px;
-    text-align: center;
-    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    box-shadow: 0 2px 4px rgba(27, 20, 73, .18), 0 26px 48px -18px rgba(27, 20, 73, .35);
 }
+
+/* the same paper grain the sticky notes use */
+.ex-note::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: .1;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23e)'/%3E%3C/svg%3E");
+}
+
+/* two strips of tape holding the top corners down */
+.ex-tape {
+    position: absolute;
+    z-index: 3;
+    top: -14px;
+    width: 104px;
+    height: 28px;
+    background: rgba(251, 191, 36, .38);
+    border-inline: 1px solid rgba(251, 191, 36, .25);
+    box-shadow: 0 1px 2px rgba(30, 20, 10, .12);
+}
+
+.ex-tape-l { left: 54px; transform: rotate(-6deg); }
+.ex-tape-r { right: 54px; transform: rotate(5deg); }
+
+@media (max-width: 720px) {
+    .ex-note { padding: 60px 26px 56px; transform: rotate(-.6deg); }
+    .ex-tape { width: 72px; }
+    .ex-tape-l { left: 22px; }
+    .ex-tape-r { right: 22px; }
+}
+
 /* 1. Eyebrow */
 .ex-eyebrow {
     display: flex;
@@ -679,6 +739,16 @@
     text-decoration: none;
     padding: 14px 28px;
     border-radius: 10px;
+    /* border sits there from the start so nothing shifts on hover */
+    border: 2px solid var(--ex-purple);
+    transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+/* hover inverts it: white fill, purple type, the border now doing the work */
+.ex-btn:hover {
+    background: #fff;
+    color: var(--ex-purple);
+    box-shadow: 0 0 0 4px rgba(96, 78, 210, .18);
 }
 /* Decorative Exercism-motif shapes, scattered around the edges */
 .ex-shape {
@@ -2108,6 +2178,17 @@
         /* attribution: fixed type sizes so it doesn't inherit the section's 22px/150% body setting */
         .MeetJeremy_who__jk152{display:flex;align-items:center;gap:12px;flex:none;padding-inline-start:26px;border-inline-start:1px solid rgba(15,23,42,.1)}
         .MeetJeremy_who__jk152 img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;box-shadow:0 2px 8px -2px rgba(15,23,42,.3)}
+        /* gradient ring around the avatar; a wrapper rather than border-image,
+           which would square off the corners on a round photo */
+        .MeetJeremy_ring__jk180{
+            display:block;
+            flex:none;
+            padding:2.5px;
+            border-radius:999px;
+            background:linear-gradient(135deg,var(--color-purple-500) 0%,var(--color-blue-500) 55%,var(--color-teal-400,#2dd4bf) 100%);
+            box-shadow:0 2px 8px -2px rgba(15,23,42,.3);
+        }
+        .MeetJeremy_ring__jk180 img{display:block;box-shadow:none}
         .MeetJeremy_who__jk152 strong{display:block;font-size:15px;font-weight:600;line-height:1.25;color:var(--color-gray-800);white-space:nowrap}
         .MeetJeremy_who__jk152 em{display:block;font-size:12px;font-weight:600;font-style:normal;line-height:1.25;color:var(--color-gray-400);white-space:nowrap}
         @media (max-width:900px){.MeetJeremy_quote__jk151{flex-direction:column;gap:16px;text-align:center}.MeetJeremy_quote__jk151>span{display:none}.MeetJeremy_who__jk152{padding-inline-start:0;border-inline-start:none}}
@@ -2153,7 +2234,7 @@
         <span>“</span>
         <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
         <div class="MeetJeremy_who__jk152">
-         <img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom">
+         <span class="MeetJeremy_ring__jk180"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
          <div><strong>Thom Chittom</strong><em>Beginner</em></div>
         </div>
        </div>
@@ -2225,7 +2306,7 @@
        </h3>
        <div class="SoundFun_rule__jk65"></div>
        <style>
-        .PricingParagraph_smaller__jk30{font-size:19px;color:var(--color-gray-600);max-width:690px;margin-inline:auto;text-align:center}
+        .PricingParagraph_smaller__jk30{font-size:19px;font-weight:400;color:var(--color-gray-600);max-width:690px;margin-inline:auto;text-align:center}
        </style>
        <p class="PricingParagraph_smaller__jk30">
         The core "learn to code" curriculum is entirely free. The rest, where you follow me building real projects, costs just $19/month.
@@ -2404,18 +2485,21 @@
         /* A torn strip of tape behind the section heading. The ragged left and
            right edges are CSS masks, so there is no artwork to commission and
            the strip stretches to whatever the copy needs. */
-        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 64px 30px;text-align:center;transform:rotate(-.8deg)}
+        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 70px 30px;text-align:center;transform:rotate(-.8deg);clip-path:polygon(calc(100% - 11px) 0.0%, calc(100% - 3px) 7.1%, calc(100% - 9px) 14.3%, calc(100% - 5px) 21.4%, calc(100% - 14px) 28.6%, calc(100% - 7px) 35.7%, calc(100% - 2px) 42.9%, calc(100% - 12px) 50.0%, calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 4px) 71.4%, calc(100% - 13px) 78.6%, calc(100% - 8px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 9px) 100.0%, 8px 100.0%, 1px 92.9%, 6px 85.7%, 10px 78.6%, 3px 71.4%, 7px 64.3%, 14px 57.1%, 5px 50.0%, 11px 42.9%, 2px 35.7%, 6px 28.6%, 13px 21.4%, 4px 14.3%, 9px 7.1%, 0px 0.0%)}
         .TornTape_strip__jk170::before{
-         content:"";position:absolute;inset:0;z-index:0;
-         background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 24%),linear-gradient(100deg,var(--color-amber-100) 0%,#fdf1d2 45%,var(--color-amber-100) 100%);
+         content:"";position:absolute;inset:0;z-index:0;opacity:.9;
+         /* woven paper texture: two fine cross-hatches over a warm base, plus a
+            couple of soft blotches so the tone is not perfectly even */
+         background:
+          repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 1px,transparent 1px 4px),
+          repeating-linear-gradient(0deg,rgba(180,140,60,.16) 0 1px,transparent 1px 3px),
+          radial-gradient(70% 120% at 22% 0%,rgba(255,255,255,.6),transparent 60%),
+          radial-gradient(60% 130% at 78% 100%,rgba(190,150,70,.16),transparent 65%),
+          linear-gradient(100deg,#fdefc4 0%,#fbe8b8 45%,#fdefc4 100%);
          box-shadow:0 6px 18px -12px rgba(15,23,42,.4);
-         -webkit-mask-image:radial-gradient(9px 9px at 0 10px,transparent 98%,#000 100%),radial-gradient(7px 7px at 0 34px,transparent 98%,#000 100%),radial-gradient(11px 11px at 0 60px,transparent 98%,#000 100%),radial-gradient(8px 8px at 0 88px,transparent 98%,#000 100%),radial-gradient(10px 10px at 0 116px,transparent 98%,#000 100%),radial-gradient(8px 8px at 100% 16px,transparent 98%,#000 100%),radial-gradient(11px 11px at 100% 44px,transparent 98%,#000 100%),radial-gradient(7px 7px at 100% 72px,transparent 98%,#000 100%),radial-gradient(10px 10px at 100% 100px,transparent 98%,#000 100%),radial-gradient(8px 8px at 100% 126px,transparent 98%,#000 100%),linear-gradient(#000,#000);
-         -webkit-mask-composite:source-in;
-         mask-image:radial-gradient(9px 9px at 0 10px,transparent 98%,#000 100%),radial-gradient(7px 7px at 0 34px,transparent 98%,#000 100%),radial-gradient(11px 11px at 0 60px,transparent 98%,#000 100%),radial-gradient(8px 8px at 0 88px,transparent 98%,#000 100%),radial-gradient(10px 10px at 0 116px,transparent 98%,#000 100%),radial-gradient(8px 8px at 100% 16px,transparent 98%,#000 100%),radial-gradient(11px 11px at 100% 44px,transparent 98%,#000 100%),radial-gradient(7px 7px at 100% 72px,transparent 98%,#000 100%),radial-gradient(10px 10px at 100% 100px,transparent 98%,#000 100%),radial-gradient(8px 8px at 100% 126px,transparent 98%,#000 100%),linear-gradient(#000,#000);
-         mask-composite:intersect;
         }
         /* the same paper grain the sticky notes use, so the two read as one set */
-        .TornTape_strip__jk170::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.14;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23t)'/%3E%3C/svg%3E")}
+        .TornTape_strip__jk170::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.3;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='5'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23t)'/%3E%3C/svg%3E")}
         .TornTape_strip__jk170 > *{position:relative;z-index:2}
         .TornTape_sub__jk171{font-size:20px;font-weight:400;color:var(--color-gray-600);margin-top:10px;text-wrap-style:balance}
         @media (max-width:720px){.TornTape_strip__jk170{padding-inline:34px}}
@@ -2495,11 +2579,12 @@
         .TestimonialsSection_testimonial-section__XCiRB{background-color:#fff!important;background-image:radial-gradient(var(--color-gray-200) 1px,transparent 1px)!important;background-size:20px 20px!important}
         .sticky-panel{padding:2rem 2rem 3rem;margin-bottom:24px}
         /* columns rather than a grid, so each note is only as tall as its own quote */
-        .sticky-grid{max-width:900px;margin:0 auto;column-count:2;column-gap:74px}
-        .sticky-grid > .sticky-note{break-inside:avoid;width:100%;margin-bottom:calc(2.5rem + 10px)}
-        /* the two columns sit at different heights, so the wall reads as pinned by hand */
-        .sticky-grid > .sticky-note:nth-child(odd){margin-inline-start:-18px}
-        .sticky-grid > .sticky-note:nth-child(even){margin-inline-start:18px}
+        .sticky-grid{max-width:900px;margin:0 auto;display:flex;align-items:flex-start;gap:74px}
+        .sticky-col{flex:1;min-width:0}
+        .sticky-col > .sticky-note{width:100%;margin-bottom:calc(2.5rem + 10px)}
+        /* the second column sits lower, so the wall reads as pinned by hand */
+        .sticky-col:first-child{margin-inline-start:-18px}
+        .sticky-col:last-child{margin-inline-start:18px;padding-block-start:34px}
         .sticky-note{position:relative;background:#fff;border-radius:10px;border:2px solid var(--color-gray-200);padding:calc(1.5rem + 4px) calc(1.25rem + 4px) calc(1.25rem + 4px);box-shadow:0 10px 20px rgba(0,0,0,.12);transition:transform .25s ease,box-shadow .25s ease}
         /* fine paper grain + faint fibre flecks, sitting under the note's content */
         .sticky-note::after{content:"";position:absolute;inset:0;border-radius:8px;pointer-events:none;z-index:0;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23p)' opacity='0.35'/%3E%3C/svg%3E"),repeating-linear-gradient(92deg,rgba(0,0,0,.014) 0 2px,transparent 2px 7px)}
@@ -2528,7 +2613,7 @@
         .sticky-stars{display:flex;gap:1px;margin-inline-start:auto}
         /* the state and the stars share a line, so they always sit level */
         .sticky-footer > div{flex:1;min-width:0}
-        .sticky-stateRow{display:flex;align-items:center;gap:.75rem}
+        .sticky-footer .sticky-stateRow{display:flex;flex-direction:row;align-items:center;gap:.75rem}
         .sticky-stars svg{width:15px;height:15px;fill:var(--color-amber-400);flex-shrink:0}
         .sticky-footer img{width:52px;height:52px;border-radius:999px;object-fit:cover;border:2px solid #fff;box-shadow:0 0 0 2.5px var(--color-gray-300)}
         .sticky-purple-light .sticky-footer img{box-shadow:0 0 0 2.5px var(--color-purple-500)}
@@ -2538,10 +2623,18 @@
         .sticky-footer div{display:flex;flex-direction:column}
         .sticky-footer strong{font-size:.975rem;color:var(--color-gray-900)}
         .sticky-footer span{font-size:.875rem;font-weight:600;color:var(--color-gray-400)}
+        /* the state just changes colour on hover */
+        .sticky-stateRow > span:first-child{transition:color .25s ease}
+        .sticky-note:hover .sticky-stateRow > span:first-child{color:var(--color-purple-600)}
+        /* the emphasised phrases pick up the brand purple on hover */
+        .sticky-note p strong{transition:color .25s ease}
+        .sticky-note:hover p strong{color:var(--color-purple-600)}
        </style>
        <div class="sticky-panel">
         <div class="sticky-grid">
-         <div class="sticky-note sticky-purple-light" style="transform:rotate(-3.4deg);">
+         <!-- two explicit columns rather than CSS multi-column: multicol leaves the
+              absolutely-positioned tape behind when a note is pushed to the next column -->
+         <div class="sticky-col"><div class="sticky-note sticky-purple-light" style="transform:rotate(-3.4deg);">
           <span class="sticky-tape"></span>
           <p>"Before I started this course I didn't think I could do the exercises we do now. <strong>I thought I am not smart enough</strong>, that "this is not for me" and I didn't expect anything which required so much effort to be here in the fundamentals of programming. But in the end, <strong>Jeremy shows it's yet another skill that can be learnt</strong>, even in such a <strong>short period of time.</strong>"</p>
           <div class="sticky-footer">
@@ -2695,7 +2788,8 @@
            </div>
           </div>
          </div>
-         <div class="sticky-note sticky-blue-light" style="transform:rotate(-1.2deg);">
+         </div>
+         <div class="sticky-col"><div class="sticky-note sticky-blue-light" style="transform:rotate(-1.2deg);">
           <span class="sticky-tape"></span>
           <p>"This course hasn't just taught basic structures and logic for programming, but <strong>it instills some basic tenets of the coder's mindset</strong> that will be invaluable on your journey (<strong>how to start from a blank screen</strong>, breaking big impossible challenges into the smallest solvable pieces, creating more efficient, readable, and maintainable code)."</p>
           <div class="sticky-footer">
@@ -2836,6 +2930,7 @@
           </div>
          </div>
         </div>
+        </div>
        </div>
        <p class="TestimonialsSection_subheading__ubBqf" style="font-size:19px;">
         These are some extracts from what our beta users said.
@@ -2849,38 +2944,48 @@
       <div class="shared_lg-container__qNv1s">
        <!-- Guest-brand band: Exercism's own palette/motifs, scoped to .ex-band only -->
        <div class="ex-band">
-        <!-- Decorative Exercism motif shapes, hidden from screen readers -->
-        <span class="ex-shape ex-sq" aria-hidden="true"></span>
-        <svg class="ex-shape ex-zig" aria-hidden="true" width="70" height="20" viewBox="0 0 70 20" fill="none">
-         <path d="M2 14L14 4L26 14L38 4L50 14L62 4" stroke="#1b1449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <svg class="ex-shape ex-tri" aria-hidden="true" width="34" height="30" viewBox="0 0 34 30" fill="none">
-         <path d="M17 3L32 27H2L17 3Z" stroke="#f0b429" stroke-width="2.5" stroke-linejoin="round"/>
-        </svg>
-        <span class="ex-shape ex-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="ex-shape ex-diamond" aria-hidden="true"></span>
+        <div class="ex-noteWrap">
+         <span class="ex-tape ex-tape-l" aria-hidden="true"></span>
+         <span class="ex-tape ex-tape-r" aria-hidden="true"></span>
+         <div class="ex-note">
+          <!-- Decorative Exercism motif shapes, hidden from screen readers -->
+          <span class="ex-shape ex-sq" aria-hidden="true"></span>
+          <svg class="ex-shape ex-zig" aria-hidden="true" width="70" height="20" viewBox="0 0 70 20" fill="none">
+           <path d="M2 14L14 4L26 14L38 4L50 14L62 4" stroke="#1b1449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg class="ex-shape ex-tri" aria-hidden="true" width="34" height="30" viewBox="0 0 34 30" fill="none">
+           <path d="M17 3L32 27H2L17 3Z" stroke="#f0b429" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="ex-shape ex-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ex-shape ex-diamond" aria-hidden="true"></span>
 
-        <div class="ex-eyebrow">
-         From the makers of
-         <span class="ex-chip"><img src="assets/exercism-logo.png" alt="" aria-hidden="true"></span>
-         <span class="ex-name">Exercism</span>
-        </div>
-        <h2>The leading education platform for <span class="ex-highlight">coding practice</span></h2>
-        <p class="ex-support">Jiki is built by the same team behind Exercism. Everything they learned getting people to actually finish is baked into Jiki from day one.</p>
-        <div class="ex-stats">
-         <span><strong>2.9M+</strong> people taught</span>
-         <span class="ex-dot" aria-hidden="true"></span>
-         <span><strong>85,000+</strong> testimonials</span>
-         <span class="ex-dot" aria-hidden="true"></span>
-         <span><strong>69M+</strong> exercises solved</span>
-        </div>
-        <div>
-         <a class="ex-btn" href="https://exercism.org/about" target="_blank" rel="noopener noreferrer">read Exercism's story &rarr;</a>
+          <div class="ex-eyebrow">
+           From the makers of
+           <span class="ex-chip"><img src="assets/exercism-logo.png" alt="" aria-hidden="true"></span>
+           <span class="ex-name">Exercism</span>
+          </div>
+          <h2>The leading education platform for <span class="ex-highlight">coding practice</span></h2>
+          <p class="ex-support">Jiki is built by the same team behind Exercism. Everything they learned getting people to actually finish is baked into Jiki from day one.</p>
+          <div class="ex-stats">
+           <span><strong>2.9M+</strong> people taught</span>
+           <span class="ex-dot" aria-hidden="true"></span>
+           <span><strong>85,000+</strong> testimonials</span>
+           <span class="ex-dot" aria-hidden="true"></span>
+           <span><strong>69M+</strong> exercises solved</span>
+          </div>
+          <div>
+           <a class="ex-btn" href="https://exercism.org/about" target="_blank" rel="noopener noreferrer">Read Exercism's story &rarr;</a>
+          </div>
+                </div>
         </div>
        </div>
       </div>
      </section>
      <section class="FAQs_faqs__megGI">
+      <style>
+       /* light hairline separating the FAQs from the section above */
+       .FAQs_faqs__megGI{border-top:1px solid var(--color-gray-200)}
+      </style>
       <div class="FAQs_container__a20Gp">
        <h2 style="margin-top:50px;text-align:left;color:var(--color-blue-950);font-weight:700;">
         Frequently asked questions
@@ -3083,8 +3188,15 @@
      </section>
      <section class="LatestNewsSection_section__3ysfh">
       <style>
-       /* grey border by default; purple only on hover */
-       .LatestNewsSection_blogPostCard__BB_3g{border-color:var(--color-gray-200)}
+       /* grey border by default; purple only on hover, with no glow */
+       .LatestNewsSection_blogPostCard__BB_3g{border-color:var(--color-gray-100);border-width:3px}
+       .LatestNewsSection_blogPostCard__BB_3g:hover{border-color:var(--color-blue-500);box-shadow:none}
+       .LatestNewsSection_blogLink__douwx{color:var(--color-blue-500)}
+       /* titles 2px smaller than the stylesheet default */
+       .LatestNewsSection_postTitle__Ml9n5{font-size:20px}
+       @media (max-width:768px){.LatestNewsSection_postTitle__Ml9n5{font-size:18px}}
+       /* excerpts clamp to 3 lines, and reserve those 3 lines so the cards line up */
+       .LatestNewsSection_postExcerpt__qPfFW{line-clamp:3;min-height:calc(3 * 1.7em);flex-grow:0}
        /* one shade lighter section background */
        .LatestNewsSection_section__3ysfh{background:linear-gradient(180deg,var(--color-gray-50) 0%,#fff 100%)}
       </style>
@@ -3111,12 +3223,6 @@
          <p class="LatestNewsSection_postExcerpt__qPfFW">
           Over the weekend of July 31st - August 2nd, we're translating Jiki and Exercism into as many languages as we can, together. Here's how it works and how you can help.
          </p>
-         <div class="LatestNewsSection_postAuthor__yA9_2">
-          <img alt="Jeremy Walker" class="AuthorAvatar_avatar__tECNO" data-nimg="1" decoding="async" height="20" loading="lazy" src="/static/content/images/avatars/ihid-99edf390ba63.webp" style="color:transparent" width="20"/>
-          <span>
-           by Jeremy Walker
-          </span>
-         </div>
         </a>
         <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/how-to-get-into-tech-in-2026">
          <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)">
@@ -3132,12 +3238,6 @@
          <p class="LatestNewsSection_postExcerpt__qPfFW">
           For 30 years, code was the gatekeeper into tech. Now that LLMs write it for you, the route in has changed. Here's how to actually get into tech in 2026.
          </p>
-         <div class="LatestNewsSection_postAuthor__yA9_2">
-          <img alt="Jeremy Walker" class="AuthorAvatar_avatar__tECNO" data-nimg="1" decoding="async" height="20" loading="lazy" src="/static/content/images/avatars/ihid-99edf390ba63.webp" style="color:transparent" width="20"/>
-          <span>
-           by Jeremy Walker
-          </span>
-         </div>
         </a>
         <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/should-i-still-learn-to-code-in-2026">
          <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)">
@@ -3153,12 +3253,51 @@
          <p class="LatestNewsSection_postExcerpt__qPfFW">
           It's 2026 and Claude can out-code me in seconds. So why bother learning to code? Because you still need to read code well enough to catch the mistakes LLMs confidently make.
          </p>
-         <div class="LatestNewsSection_postAuthor__yA9_2">
-          <img alt="Jeremy Walker" class="AuthorAvatar_avatar__tECNO" data-nimg="1" decoding="async" height="20" loading="lazy" src="/static/content/images/avatars/ihid-99edf390ba63.webp" style="color:transparent" width="20"/>
-          <span>
-           by Jeremy Walker
+        </a>
+        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/why-we-built-our-own-editor">
+         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)">
+         </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          <span class="LatestNewsSection_postDate__fJKCZ">
+           12th Jun 2026
           </span>
          </div>
+         <h3 class="LatestNewsSection_postTitle__Ml9n5">
+          Why we built our own editor
+         </h3>
+         <p class="LatestNewsSection_postExcerpt__qPfFW">
+          Every off-the-shelf editor assumed you already knew how to code. So we built one that shows you what your program is actually doing, line by line.
+         </p>
+        </a>
+        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/the-first-100-beta-users">
+         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)">
+         </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          <span class="LatestNewsSection_postDate__fJKCZ">
+           28th May 2026
+          </span>
+         </div>
+         <h3 class="LatestNewsSection_postTitle__Ml9n5">
+          What our first 100 beta users taught us
+         </h3>
+         <p class="LatestNewsSection_postExcerpt__qPfFW">
+          We watched a hundred complete beginners work through the first three weeks of Jiki. Here's every place they got stuck, and what we changed because of it.
+         </p>
+        </a>
+        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/learning-to-code-is-not-about-syntax">
+         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)">
+         </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          <span class="LatestNewsSection_postDate__fJKCZ">
+           14th May 2026
+          </span>
+         </div>
+         <h3 class="LatestNewsSection_postTitle__Ml9n5">
+          Learning to code isn't about syntax
+         </h3>
+         <p class="LatestNewsSection_postExcerpt__qPfFW">
+          Nobody ever got stuck because they forgot a semicolon. They got stuck because nobody explained what the computer was actually doing. Our whole curriculum starts there.
+         </p>
         </a>
        </div>
       </div>
