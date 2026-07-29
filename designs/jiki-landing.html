@@ -633,6 +633,14 @@
     .ex-note { padding: 60px 26px 56px; transform: rotate(-.6deg); }
 }
 
+/* the Exercism face mark, sat above the eyebrow */
+.ex-face {
+    display: block;
+    width: 52px;
+    height: auto;
+    margin: 0 auto 14px;
+}
+
 /* 1. Eyebrow */
 .ex-eyebrow {
     display: flex;
@@ -640,7 +648,7 @@
     justify-content: center;
     gap: 10px;
     margin-bottom: 28px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: normal;
@@ -661,9 +669,10 @@
     line-height: 1.25;
     font-weight: 700;
     color: var(--ex-indigo);
-    max-width: 780px;
+    /* the claim reads as one line, so it gets the room to stay on one */
+    max-width: none;
+    white-space: nowrap;
     margin: 0 auto 20px;
-    text-wrap-style: balance;
 }
 .ex-highlight {
     position: relative;
@@ -845,7 +854,7 @@
 
 @media (max-width: 900px) {
     .ex-band { padding: 64px 24px; min-height: auto; }
-    .ex-band h2 { font-size: 32px; }
+    .ex-band h2 { font-size: 32px; white-space: normal; text-wrap-style: balance; }
     .ex-shape { display: none; }
 }
 
@@ -1514,7 +1523,7 @@
         .FunPrints_heading__jk143{font-size:34px;font-weight:800;color:var(--color-gray-800);line-height:1.15;margin-bottom:12px;text-wrap-style:balance}
         .FunPrints_headingWrap__jk146{position:relative;display:inline-block}
         /* mirrored, so the arrowhead points back in at the start of the heading */
-        .FunPrints_headingArrow__jk147{position:absolute;right:calc(100% + 54px);bottom:-4px;width:340px;height:auto;opacity:.45;transform:scaleX(-1);pointer-events:none}
+        .FunPrints_headingArrow__jk147{position:absolute;right:calc(100% + 24px);bottom:-4px;width:340px;height:auto;opacity:.45;transform:scaleX(-1);pointer-events:none}
         @media (max-width:900px){.FunPrints_headingArrow__jk147{display:none}}
         .FunPrints_sub__jk144{font-size:18px;font-weight:400;color:var(--color-gray-600);line-height:1.6;max-width:720px;margin-inline:auto;margin-bottom:44px;text-wrap-style:balance}
         /* the footnote runs straight on into the CTA below it, so it sits bigger and closer */
@@ -1623,7 +1632,7 @@
           .BuildGrid_bullets__jk96 .TrackCardsSection_list__x3Fh9 li{max-width:none}
           .BuildGrid_pillsCol__jk97{flex:1 1 0;min-width:0;padding-top:4px}
           @media (min-width:800px){.BuildGrid_pillsCol__jk97{padding-inline-start:22px;display:flex;flex-direction:column;justify-content:flex-start}}
-          .BuildGrid_pillsLabel__jk98{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);margin-bottom:18px}
+          .BuildGrid_pillsLabel__jk98{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);padding-top:40px;margin-bottom:18px}
           .BuildGrid_pills__jk99{display:flex;flex-wrap:wrap;gap:12px}
           .BuildGrid_pill__jk100{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--color-gray-200);background:var(--color-gray-50);font-size:13px;font-weight:600;color:var(--color-gray-600);white-space:nowrap;transition:background-color .7s ease,border-color .7s ease,color .7s ease}
           .BuildGrid_pillTick__jk115{width:13px;height:13px;flex-shrink:0;position:relative;top:1px;opacity:0;transform:scale(.4);transition:opacity .5s ease,transform .5s ease}
@@ -1651,7 +1660,7 @@
           .BuildGrid_dot__jk132.BuildGrid_dotActive__jk133{background:var(--color-blue-600);width:22px}
           .BuildGrid_panel__jk107{display:none}
           /* dots pinned to the top of the column; panel content centres in what's left */
-          .BuildGrid_panel__jk107.BuildGrid_active__jk108{display:flex;flex-direction:column;justify-content:flex-start;flex:1 1 auto;min-height:343px;animation:BuildGrid_fadeIn__jk109 .5s ease}
+          .BuildGrid_panel__jk107.BuildGrid_active__jk108{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto;min-height:343px;animation:BuildGrid_fadeIn__jk109 .5s ease}
           @keyframes BuildGrid_fadeIn__jk109{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
           .BuildGrid_placeholder__jk110{display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;border:1.5px dashed var(--color-gray-300);border-radius:12px;color:var(--color-gray-400);font-size:13px;font-style:italic}
           .BuildGrid_indicator__jk111{flex-shrink:0;width:30px;height:1.55em;align-self:flex-start;margin-top:0;display:flex;align-items:center;justify-content:center;overflow:visible}
@@ -1664,7 +1673,7 @@
           @keyframes BuildGrid_arrowPulse__jk121{0%,100%{transform:translateX(0);opacity:.7}50%{transform:translateX(6px);opacity:1}}
           @media (prefers-reduced-motion:reduce){.BuildGrid_indicatorArrow__jk113,li.BuildGrid_active__jk108 .BuildGrid_indicatorArrow__jk113{animation:none}}
          </style>
-         <div class="BuildGrid_wrap__jk95" style="padding-bottom:20px">
+         <div class="BuildGrid_wrap__jk95">
           <div class="BuildGrid_bullets__jk96">
            <ul class="TrackCardsSection_list__x3Fh9">
             <li>
@@ -1745,7 +1754,7 @@
              .LiveQA_chatFace__jk160{position:absolute;left:-68px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--color-blue-500);background:#fff;box-shadow:0 6px 18px rgba(37,99,235,.18)}
              .LiveQA_chatBody__jk161{display:flex;flex-direction:column;gap:2px;min-width:0}
              .LiveQA_chatMsg__jk117{font-size:12px;font-weight:500;color:var(--color-gray-600);line-height:140%}
-             .LiveQA_checks__jk118{max-width:420px;margin:20px auto 0;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:center;gap:18px}
+             .LiveQA_checks__jk118{max-width:420px;margin:23px auto 0;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:center;gap:18px}
              .LiveQA_check__jk119{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--color-gray-600);white-space:nowrap}
              .LiveQA_checkIcon__jk120{width:16px;height:16px;flex-shrink:0;color:var(--color-blue-600)}
             </style>
@@ -1927,7 +1936,7 @@
               observer.observe(wrap);
              })();
             </script>
-            <div class="BuildGrid_langsLabel__jk101">Learning technologies like:</div>
+            <div class="BuildGrid_langsLabel__jk101">Learn technologies including:</div>
             <div class="BuildGrid_langs__jk102" id="build-langs-row">
              <div class="BuildGrid_lang__jk103">
               <div class="BuildGrid_langIcon__jk104"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#3178C6" d="M2 63.91v62.5h125V1.41H2zm100.73-5a15.56 15.56 0 017.82 4.5 20.58 20.58 0 013 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 00-5.87-3.53c-3.79-.26-6.23 1.73-6.21 5a4.58 4.58 0 00.54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 01-9.52-.1 23 23 0 01-12.72-6.63c-1.15-1.27-3.39-4.58-3.25-4.82a9.34 9.34 0 011.15-.73l4.6-2.64 3.59-2.08.75 1.11a16.78 16.78 0 004.74 4.54c4 2.1 9.46 1.81 12.16-.62a5.43 5.43 0 00.69-6.92c-1-1.39-3-2.56-8.59-5-6.45-2.78-9.23-4.5-11.77-7.24a16.48 16.48 0 01-3.43-6.25 25 25 0 01-.22-8c1.33-6.23 6-10.58 12.82-11.87a31.66 31.66 0 019.49.26zm-29.34 5.24v5.12H57.16v46.23H45.65V69.26H29.38v-5a49.19 49.19 0 01.14-5.16c.06-.08 10-.12 22-.1h21.81z"/></svg></div>
@@ -1999,7 +2008,9 @@
          @media (prefers-reduced-motion:reduce){.cert-outcomes .co-num > span,.cert-outcomes .co-num > svg{transition:none}}
          /* the visual sits in a fixed box with a clear band underneath for the call-out,
             so no label or arrow ever covers an image and the three columns line up */
-         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;padding-bottom:62px;margin-bottom:22px}
+         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+         /* only the column that still carries a call-out reserves the band beneath it */
+         .cert-outcomes .co-col:last-child .co-viz{padding-bottom:62px}
          .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:18px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
          .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
@@ -2011,18 +2022,40 @@
          /* 02: three project cards fanned out, same anatomy as the square tiles above */
                   /* four project cards in a 2x2 grid, each nudged off square so the set still
             reads as things laid out by hand rather than a table */
-         .cert-outcomes .co-fan{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 14px;width:92%}
-         .cert-outcomes .co-tile{display:flex;flex-direction:column;height:88px;background:#fff;border:1px solid var(--color-gray-200);border-radius:16px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45)}
-         .cert-outcomes .co-tile:nth-child(1){transform:rotate(-2.5deg)}
-         .cert-outcomes .co-tile:nth-child(2){transform:rotate(1.8deg)}
-         .cert-outcomes .co-tile:nth-child(3){transform:rotate(1.2deg)}
-         .cert-outcomes .co-tile:nth-child(4){transform:rotate(-2deg)}
+         /* the four cards sit in a folder of finished work: a tabbed manila wallet with a
+            front flap the cards tuck behind */
+         .cert-outcomes .co-folder{position:relative;width:78%;padding:20px 14px 24px;border-radius:2px 3px 3px 3px;background:linear-gradient(180deg,var(--color-amber-100) 0%,var(--color-amber-200) 100%);box-shadow:0 10px 26px -12px rgba(30,20,10,.6);transform:rotate(-1deg)}
+         /* the tab */
+         .cert-outcomes .co-folder::before{content:"";position:absolute;top:-13px;left:16px;width:108px;height:14px;border-radius:3px 3px 0 0;background:var(--color-amber-100)}
+         /* the front flap, sat over the bottom of the cards */
+         .cert-outcomes .co-folder::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,var(--color-amber-200) 0%,var(--color-amber-300) 100%);box-shadow:0 -1px 2px rgba(30,20,10,.14);z-index:2}
+         /* one card at a time: they are stacked, and each takes its turn in the folder */
+         .cert-outcomes .co-fan{position:relative;z-index:1;width:100%;height:148px;margin-inline:auto}
+         /* each one is finished, so it carries a tick */
+         .cert-outcomes .co-done{position:absolute;top:5px;right:5px;z-index:2;width:15px;height:15px;border-radius:999px;background:var(--color-green-500);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+         .cert-outcomes .co-done svg{width:9px;height:9px}
+         .cert-outcomes .co-tile{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-gray-200);border-radius:6px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45);opacity:0;animation:co-cardCycle 13.2s linear infinite}
+         .cert-outcomes .co-tile:nth-child(2){animation-delay:-3.3s}
+         .cert-outcomes .co-tile:nth-child(3){animation-delay:-6.6s}
+         .cert-outcomes .co-tile:nth-child(4){animation-delay:-9.9s}
+         @keyframes co-cardCycle{
+          0%{opacity:0;transform:translateY(12px) scale(.97)}
+          3%{opacity:1;transform:translateY(0) scale(1)}
+          22%{opacity:1;transform:translateY(0) scale(1)}
+          25%{opacity:0;transform:translateY(-12px) scale(.97)}
+          100%{opacity:0;transform:translateY(12px) scale(.97)}
+         }
+         @media (prefers-reduced-motion:reduce){
+          .cert-outcomes .co-tile{animation:none;opacity:0}
+          .cert-outcomes .co-tile:first-child{opacity:1}
+         }
          .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;background:var(--color-gray-50)}
-         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:6px;background:var(--color-gray-50);display:block}
-         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding:5px 8px 6px;text-align:center}
-         .cert-outcomes .co-tile .co-cap .co-t{font-size:10.5px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
-         .cert-outcomes .co-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px}
-         .cert-outcomes .co-tags span{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:var(--color-blue-50);color:var(--color-blue-700);border:1px solid var(--color-blue-100);font-size:9px;font-weight:600;line-height:1.3;white-space:nowrap}
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:5px;background:var(--color-gray-50);display:block}
+         /* the white strip: title centred, tags underneath, as on the full card */
+         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 8px 8px;text-align:center}
+         .cert-outcomes .co-tile .co-cap .co-t{font-size:10px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
+         .cert-outcomes .co-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:4px}
+         .cert-outcomes .co-tags span{display:inline-flex;align-items:center;padding:1px 6px;border-radius:999px;background:var(--color-blue-50);color:var(--color-blue-700);border:1px solid var(--color-blue-100);font-size:8.5px;font-weight:600;line-height:1.3;white-space:nowrap}
          /* 03: a snippet of unfamiliar code, one line marked up */
          .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden;transform:rotate(-1deg)}
          .cert-outcomes .co-code .co-bar{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.09)}
@@ -2071,22 +2104,28 @@
           </div>
           <div class="co-col">
            <div class="co-viz">
-            <div class="co-fan">
+            <div class="co-folder">
+             <div class="co-fan">
              <div class="co-tile">
+              <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-todo.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build a habit tracker</div></div>
+              <div class="co-cap"><div class="co-t">Build a habit tracker</div><div class="co-tags"><span>Databases</span><span>Auth</span></div></div>
              </div>
              <div class="co-tile">
+              <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-weather.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build your personal homepage</div></div>
+              <div class="co-cap"><div class="co-t">Build your personal homepage</div><div class="co-tags"><span>HTML/CSS</span><span>Git</span></div></div>
              </div>
              <div class="co-tile">
+              <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-memory.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build a recipe box</div></div>
+              <div class="co-cap"><div class="co-t">Build a recipe box</div><div class="co-tags"><span>APIs</span><span>Frontends</span></div></div>
              </div>
              <div class="co-tile">
+              <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-space-invaders.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build an arcade game</div></div>
+              <div class="co-cap"><div class="co-t">Build an arcade game</div><div class="co-tags"><span>Canvas</span><span>Game loop</span></div></div>
+             </div>
              </div>
             </div>
            </div>
@@ -2190,17 +2229,18 @@
         .WelcomeSection_welcome__p57Zs h3.MeetJeremy_h__jk153 strong{font-weight:600}
         .WelcomeSection_welcome__p57Zs p.MeetJeremy_p__jk154{font-size:17px;font-weight:300;line-height:1.65;color:var(--color-gray-700);margin-bottom:16px;text-wrap-style:balance}
         /* credential chips - turn the claims in the copy into scannable proof */
-        .MeetJeremy_chips__jk155{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
-        .MeetJeremy_chip__jk156{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:600;background:#fff;border:1px solid var(--color-gray-200);color:var(--color-gray-700);box-shadow:0 1px 2px rgba(15,23,42,.05)}
+        /* the three chips stay on one line */
+        .MeetJeremy_chips__jk155{display:flex;flex-wrap:nowrap;gap:10px;margin-bottom:24px}
+        .MeetJeremy_chip__jk156{display:inline-flex;align-items:center;gap:7px;padding:2px 12px;border-radius:100px;font-size:13px;white-space:nowrap;font-weight:600;background:#fff;border:1px solid var(--color-gray-200);color:var(--color-gray-700);box-shadow:0 1px 2px rgba(15,23,42,.05)}
         .MeetJeremy_chip__jk156 svg{width:15px;height:15px;flex:none}
         .MeetJeremy_sig__jk150{font-family:'Caveat',cursive;font-size:34px;line-height:1;color:var(--color-gray-700);transform:rotate(-2deg);display:inline-block}
         /* testimonial: a hairline rule, then a horizontal quote line */
         .MeetJeremy_quote__jk151{display:flex;align-items:center;gap:26px;justify-content:center;border-top:1px solid rgba(15,23,42,.08);padding-top:36px;margin-bottom:60px}
         .MeetJeremy_quote__jk151>span{font-family:Georgia,serif;font-size:64px;line-height:0;color:var(--color-purple-200);flex:none}
-        .MeetJeremy_quote__jk151 p{font-size:20px;font-weight:300;line-height:1.55;color:var(--color-gray-700);max-width:640px;margin:0;text-wrap-style:balance}
+        .MeetJeremy_quote__jk151 p{font-size:20px;font-weight:400;line-height:1.55;color:var(--color-gray-700);max-width:640px;margin:0;text-wrap-style:balance}
         .MeetJeremy_quote__jk151 p strong{font-weight:600}
         /* attribution: fixed type sizes so it doesn't inherit the section's 22px/150% body setting */
-        .MeetJeremy_who__jk152{display:flex;align-items:center;gap:12px;flex:none;padding-inline-start:26px;border-inline-start:1px solid rgba(15,23,42,.1)}
+        .MeetJeremy_who__jk152{display:flex;align-items:center;gap:12px;flex:none}
         .MeetJeremy_who__jk152 img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;box-shadow:0 2px 8px -2px rgba(15,23,42,.3)}
         /* gradient ring around the avatar; a wrapper rather than border-image,
            which would square off the corners on a round photo */
@@ -2215,7 +2255,7 @@
         .MeetJeremy_ring__jk180 img{display:block;box-shadow:none}
         .MeetJeremy_who__jk152 strong{display:block;font-size:16px;font-weight:600;line-height:1.25;color:var(--color-gray-800);white-space:nowrap;margin-bottom:3px}
         .MeetJeremy_who__jk152 em{display:block;font-size:13px;font-weight:600;font-style:normal;line-height:1.25;color:var(--color-gray-400);white-space:nowrap}
-        @media (max-width:900px){.MeetJeremy_quote__jk151{flex-direction:column;gap:16px;text-align:center}.MeetJeremy_quote__jk151>span{display:none}.MeetJeremy_who__jk152{padding-inline-start:0;border-inline-start:none}}
+        @media (max-width:900px){.MeetJeremy_quote__jk151{flex-direction:column;gap:16px;text-align:center}.MeetJeremy_quote__jk151>span{display:none}}
        </style>
        <div class="MeetJeremy_grid__jk146">
         <div>
@@ -2361,26 +2401,9 @@
         /* A torn strip of tape behind the section heading. The ragged left and
            right edges are CSS masks, so there is no artwork to commission and
            the strip stretches to whatever the copy needs. */
-        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 70px 30px;text-align:center;transform:rotate(-.8deg);filter:drop-shadow(0 5px 6px rgba(15,23,42,.16));clip-path:polygon(calc(100% - 11px) 0.0%, calc(100% - 3px) 7.1%, calc(100% - 9px) 14.3%, calc(100% - 5px) 21.4%, calc(100% - 14px) 28.6%, calc(100% - 7px) 35.7%, calc(100% - 2px) 42.9%, calc(100% - 12px) 50.0%, calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 4px) 71.4%, calc(100% - 13px) 78.6%, calc(100% - 8px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 9px) 100.0%, 8px 100.0%, 1px 92.9%, 6px 85.7%, 10px 78.6%, 3px 71.4%, 7px 64.3%, 14px 57.1%, 5px 50.0%, 11px 42.9%, 2px 35.7%, 6px 28.6%, 13px 21.4%, 4px 14.3%, 9px 7.1%, 0px 0.0%)}
-        .TornTape_strip__jk170::before{
-         content:"";position:absolute;inset:0;z-index:0;opacity:.8;
-         /* woven paper texture: two fine cross-hatches over a warm base, plus a
-            couple of soft blotches so the tone is not perfectly even */
-         background:
-          repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 1px,transparent 1px 4px),
-          repeating-linear-gradient(0deg,rgba(180,140,60,.16) 0 1px,transparent 1px 3px),
-          radial-gradient(70% 120% at 22% 0%,rgba(255,255,255,.6),transparent 60%),
-          radial-gradient(60% 130% at 78% 100%,rgba(190,150,70,.16),transparent 65%),
-          linear-gradient(100deg,#fdefc4 0%,#fbe8b8 45%,#fdefc4 100%);
-         box-shadow:0 6px 18px -12px rgba(15,23,42,.4);
-        }
-        /* the same paper grain the sticky notes use, so the two read as one set */
-        .TornTape_strip__jk170::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.3;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='5'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23t)'/%3E%3C/svg%3E")}
-        .TornTape_strip__jk170 > *{position:relative;z-index:2}
+        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 0 30px;text-align:center}
         .TornTape_sub__jk171{font-size:20px;font-weight:400;color:var(--color-gray-600);text-wrap-style:balance}
-        @media (max-width:720px){.TornTape_strip__jk170{padding-inline:34px}}
        </style>
-       <!-- the heading sits on a torn strip of tape -->
        <div class="TornTape_strip__jk170">
         <h2 class="TestimonialsConfetti_wrap__jk80" id="testimonials-heading">
          What do our students think?
@@ -2799,7 +2822,7 @@
         </div>
         </div>
        </div>
-       <p class="TestimonialsSection_subheading__ubBqf" style="font-size:19px;">
+       <p class="TestimonialsSection_subheading__ubBqf" style="font-size:19px;margin-top:-50px;">
         These are some extracts from what our beta users said.
         <a class="TestimonialsSection_subheadingLink__bcXR6" href="/testimonials">
          Read the full versions here!
@@ -2826,11 +2849,11 @@
           <span class="ex-shape ex-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
           <span class="ex-shape ex-diamond" aria-hidden="true"></span>
 
+          <img class="ex-face" src="assets/exercism-face.png" alt="" aria-hidden="true">
           <div class="ex-eyebrow">
-           From the makers of
-           <img class="ex-wordmark" src="assets/exercism-wordmark.png" alt="Exercism">
+           From the makers of Exercism
           </div>
-          <h2>The leading education platform for <span class="ex-highlight">coding practice</span></h2>
+          <h2>The nonprofit that's taught <span class="ex-highlight">2.5M+ people to code</span></h2>
           <p class="ex-support">Jiki is built by the same team behind Exercism. Everything they learned getting people to actually finish is baked into Jiki from day one.</p>
           <div class="ex-stats">
            <span><strong>2.9M+</strong> people taught</span>

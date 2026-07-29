@@ -13,7 +13,7 @@
         const IMPLEMENTATION_NOTES = `
 # Implementation Notes
 
-Six replacements for the **"Ready to get started?"** bar that sits between the parallel-tracks
+Eight replacements for the **"Ready to get started?"** bar that sits between the parallel-tracks
 section and the Learn to Code / Learn to Build cards on \`jiki-landing.html\`.
 
 ## Why replace it
@@ -28,38 +28,61 @@ rather than a moment in it.
 Every idea below is built from things the page already does, so nothing new has to be designed or
 commissioned.
 
-## The six directions
+## The directions
 
-1. **Tape strip** - the ask on a torn strip of the same amber paper as the testimonials heading,
-   on the page's white dot grid. Quietest, and the closest match to the section above it.
-2. **Pinned note** - the CTA as a sticky note with masking tape, tilted, sitting on the wall
-   alongside the student quotes.
-3. **Dark band, annotated** - keeps a dark band for contrast and rhythm, but adds the page's
-   hand-drawn arrow and a Caveat aside pointing at the button. Smallest change to what exists.
-4. **Cream band** - the full-bleed warm paper of the project prints band, so the CTA reads as
+1. **Pinned note** - the CTA as a sticky note with masking tape, tilted, sitting on the wall
+   alongside the student quotes. Quietest, and the closest match to what surrounds it.
+2. **Cream band** - the full-bleed warm paper of the project prints band, so the CTA reads as
    part of that same sheet.
-5. **Progress recap** - three ticked outcomes beside the button, reusing the numbered-tick idiom
+3. **Progress recap** - three ticked outcomes beside the button, reusing the numbered-tick idiom
    from "What you'll walk away with". Earns the click rather than just asking for it.
-6. **Ticket stub** - the sign-up as a perforated ticket with a dashed tear line. The most
-   distinctive, and the only one that introduces a new object.
+4. **Polaroid beside the ask** - one print pulled out of the projects band and set next to the CTA,
+   so the ask is attached to something you'd actually make rather than floating on its own.
+5. **Asked and answered** - the live-chat bubble from the Q&A section asks the question the reader
+   is already thinking ("do I need to know anything first?") and the CTA answers it.
+6. **Puzzle seam** - the two tracks drawn as interlocking pieces, **Code** in purple and **Build**
+   in blue, matching the colours the track headings already use. The CTA sits under the join, right
+   where the reader is about to meet both cards.
+7. **Bare sentence** - no block at all: one sentence with the sign-up as an inline link. The
+   lightest beat possible, keeping all the visual weight on the two track cards.
+8. **Polaroid + checklist** - idea 4 with the same three ticked outcomes under the intro line. The
+   print shows what you'll make, the list says what you'll get. The most complete of the set, and
+   the heaviest - worth checking it doesn't overpower the two track cards right beneath it.
 
 ## Recommendation
 
-**Idea 3** if the page needs a dark beat there for rhythm: it is a handful of lines on top of the
-existing bar and it stops the block feeling imported. **Idea 1** if you would rather the whole
-stretch read as one continuous wall, which is where the rest of the page has ended up.
+**Idea 5** is the strongest standalone: it handles the actual objection at that point in the page
+("is this for someone like me?") instead of just repeating the header button, and it reuses a
+component the page already has.
+
+**Idea 7** is worth a look if the CTA is competing too hard with the two track cards directly
+beneath it - the risk with every boxed idea here is that the reader meets three call-to-action
+blocks in a row.
 
 ## Build notes
 
-- The tape strip in idea 1 is the \`.TornTape_strip__jk170\` treatment from \`jiki-landing.html\`
-  verbatim: ragged edges from a \`clip-path\`, woven-paper background, grain overlay, and a
-  \`drop-shadow\` filter (a \`box-shadow\` would be cut off by the clip).
-- The sticky note in idea 2 reuses \`.sticky-note\` and \`.sticky-tape\`; the tape in ideas 2 and 4
-  is a translucent amber block, no artwork.
-- The arrow in idea 3 is \`designs/images/heading-arrow-loop.png\`, already in the repo.
-- The ticks in idea 5 are the same green disc and \`M5 13l4 4L19 7\` path used across the page.
+- The sticky note in idea 1 reuses \`.sticky-note\` and \`.sticky-tape\`; the tape is a translucent
+  amber block, no artwork.
+- The ticks in idea 3 are the same green disc and \`M5 13l4 4L19 7\` path used across the page.
 - Buttons are the UI Kit's \`.ui-btn\` at the standard 12px radius, matching the header sign-up.
-- The dashed tear line in idea 6 is a \`repeating-linear-gradient\`, not an image.
+- The print in idea 4 is the \`.FunPrints_grid__jk140 > div\` treatment verbatim, holding the same
+  Space Invaders video the projects band uses. Container queries size the Caveat caption against the
+  print width, so it scales if the print does. Pixel-art clips skip the film grade
+  (\`.FunPrints_pixel__jk141\`); photographic ones keep it.
+- The print is **219px** wide, the same size it renders at in the projects band
+  (\`(1200 - 4 x 26) / 5\`). Its padding is in px rather than the band's 5% / 26%, because outside a
+  grid track those percentages resolve against the row, not the print.
+- The bubble in idea 5 is \`.LiveQA_chatCard__jk115\` reduced to a single static message: same blue
+  border, same 45deg-rotated tail, same circular avatar. The avatar is a placeholder.
+- The two pieces in idea 6 are inline SVG, not images - one path with a knob on its right edge, one
+  with the matching socket on its left, overlapped with a negative margin so they interlock. Purple
+  (\`purple-100\` / \`purple-400\` / \`purple-700\`) is Learn to Code and blue is Learn to Build, the same
+  pairing the two track headings use. They sit in normal flow below a dashed
+  \`repeating-linear-gradient\` seam, so nothing is clipped by the section edge.
+- Idea 8's ticks are the landing page's tick disc with a \`blue-900\` fill instead of \`green-500\`,
+  which keeps the list quieter against the cream paper than the green version does.
+- The underline in idea 7 is a \`background-image\` that grows to a full highlight on hover, so it
+  needs no extra markup.
 - Colours are palette tokens throughout. The one exception is the cream paper
   (\`#fffdf8\` to \`#fdf6ec\`) and the tape's warm base, both lifted from the landing page.
         `;
@@ -153,35 +176,8 @@ stretch read as one continuous wall, which is where the rest of the page has end
             text-wrap-style: balance;
         }
 
-        /* ── Idea 1: torn tape strip ──────────────────────────────────────────── */
-        .i1 { padding: 72px 24px; text-align: center; }
-        .tape {
-            position: relative;
-            display: inline-block;
-            width: fit-content;
-            max-width: 100%;
-            padding: 30px 70px 34px;
-            transform: rotate(-.8deg);
-            filter: drop-shadow(0 5px 6px rgba(15, 23, 42, .16));
-            clip-path: polygon(calc(100% - 11px) 0%, calc(100% - 3px) 7.1%, calc(100% - 9px) 14.3%, calc(100% - 5px) 21.4%, calc(100% - 14px) 28.6%, calc(100% - 7px) 35.7%, calc(100% - 2px) 42.9%, calc(100% - 12px) 50%, calc(100% - 6px) 57.1%, calc(100% - 10px) 64.3%, calc(100% - 4px) 71.4%, calc(100% - 13px) 78.6%, calc(100% - 8px) 85.7%, calc(100% - 3px) 92.9%, calc(100% - 9px) 100%, 8px 100%, 1px 92.9%, 6px 85.7%, 10px 78.6%, 3px 71.4%, 7px 64.3%, 14px 57.1%, 5px 50%, 11px 42.9%, 2px 35.7%, 6px 28.6%, 13px 21.4%, 4px 14.3%, 9px 7.1%, 0 0);
-        }
-        .tape::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            opacity: .8;
-            background:
-                repeating-linear-gradient(90deg, rgba(255,255,255,.5) 0 1px, transparent 1px 4px),
-                repeating-linear-gradient(0deg, rgba(180,140,60,.16) 0 1px, transparent 1px 3px),
-                linear-gradient(100deg, #fdefc4 0%, #fbe8b8 45%, #fdefc4 100%);
-        }
-        .tape > * { position: relative; z-index: 2; }
-        .tape .cta-h { color: var(--color-gray-900); }
-        .tape .cta-p { color: var(--color-gray-700); margin-inline: auto; margin-bottom: 22px; }
-
-        /* ── Idea 2: pinned note ──────────────────────────────────────────────── */
-        .i2 { padding: 72px 24px; display: flex; justify-content: center; }
+        /* ── Idea 1: pinned note ──────────────────────────────────────────────── */
+        .i1 { padding: 72px 24px; display: flex; justify-content: center; }
         .note {
             position: relative;
             max-width: 560px;
@@ -218,47 +214,17 @@ stretch read as one continuous wall, which is where the rest of the page has end
         .tape-strip.r { right: 40px; transform: rotate(5deg); }
         .note .cta-p { margin-inline: auto; margin-bottom: 22px; color: var(--color-gray-600); }
 
-        /* ── Idea 3: dark band, annotated ─────────────────────────────────────── */
-        .i3 { padding: 52px 0; }
-        .i3 .inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-            position: relative;
-        }
-        .i3 .cta-h { color: #fff; }
-        .i3 .cta-p { color: var(--color-blue-100); }
-        .i3-btnwrap { position: relative; flex-shrink: 0; }
-        .i3-arrow {
-            position: absolute;
-            right: calc(100% + 4px);
-            bottom: -18px;
-            width: 130px;
-            opacity: .5;
-            transform: scaleX(-1);
-            pointer-events: none;
-        }
-        .i3-aside {
-            position: absolute;
-            right: calc(100% + 128px);
-            bottom: -6px;
-            color: var(--color-amber-300);
-            text-align: right;
-            max-width: 150px;
-        }
-
-        /* ── Idea 4: cream band ───────────────────────────────────────────────── */
-        .i4 { padding: 66px 0; }
-        .i4 .inner {
+        /* ── Idea 2: cream band ───────────────────────────────────────────────── */
+        .i2 { padding: 66px 0; }
+        .i2 .inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 40px;
         }
-        .i4 .cta-h { color: var(--color-gray-800); }
-        .i4 .cta-p { color: var(--color-gray-600); }
-        .i4 .eyebrow {
+        .i2 .cta-h { color: var(--color-gray-800); }
+        .i2 .cta-p { color: var(--color-gray-600); }
+        .i2 .eyebrow {
             font-family: 'Caveat', cursive;
             font-weight: 700;
             font-size: 26px;
@@ -268,13 +234,13 @@ stretch read as one continuous wall, which is where the rest of the page has end
             margin-bottom: 2px;
         }
 
-        /* ── Idea 5: progress recap ───────────────────────────────────────────── */
-        .i5 { padding: 56px 0; }
-        .i5 .inner { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
-        .i5 .cta-h { color: #fff; }
-        .i5-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
-        .i5-row { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--color-blue-100); }
-        .i5-tick {
+        /* ── Idea 3: progress recap ───────────────────────────────────────────── */
+        .i3 { padding: 56px 0; }
+        .i3 .inner { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+        .i3 .cta-h { color: #fff; }
+        .i3-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+        .i3-row { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--color-blue-100); }
+        .i3-tick {
             flex-shrink: 0;
             width: 22px;
             height: 22px;
@@ -284,72 +250,189 @@ stretch read as one continuous wall, which is where the rest of the page has end
             align-items: center;
             justify-content: center;
         }
-        .i5-tick svg { width: 12px; height: 12px; }
+        .i3-tick svg { width: 12px; height: 12px; }
 
-        /* ── Idea 6: ticket stub ──────────────────────────────────────────────── */
-        .i6 { padding: 72px 24px; display: flex; justify-content: center; }
-        .ticket {
-            position: relative;
-            display: flex;
-            align-items: stretch;
-            max-width: 720px;
-            width: 100%;
-            background: #fff;
-            border: 2px solid var(--color-purple-200);
-            border-radius: 16px;
-            box-shadow: 0 10px 28px -12px rgba(88, 28, 135, .35);
-            overflow: hidden;
-        }
-        .ticket-main { flex: 1; padding: 34px 36px; }
-        .ticket-main .cta-p { color: var(--color-gray-600); }
-        .ticket-stub {
+        /* ── Idea 4: polaroid beside the ask ──────────────────────────────────── */
+        .i4 { padding: 64px 0; }
+        .i4 .inner { display: flex; align-items: center; gap: 56px; }
+        .i4 .cta-h { color: var(--color-gray-800); }
+        .i4 .cta-p { color: var(--color-gray-600); margin-bottom: 24px; }
+        .i4-print {
             flex-shrink: 0;
-            width: 232px;
-            padding: 34px 26px;
-            background: var(--color-purple-50);
+            container-type: inline-size;
+            position: relative;
+            /* (1200 max-width - 4 x 26px gap) / 5 columns = the print's size in the projects band */
+            width: 219px;
+            /* the band's 5% / 26% padding resolved against 219px - percentages here would
+               resolve against the flex row, not the print */
+            padding: 11px 11px 57px;
+            border-radius: 2px;
+            transform: rotate(-2.5deg);
+            background: radial-gradient(120% 100% at 50% 0%, #faf8f3 40%, #ece5d9 100%);
+            box-shadow: 0 1px 2px rgba(30, 20, 10, .28), 0 12px 24px -8px rgba(30, 20, 10, .22);
+        }
+        .i4-print video {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+            background: var(--color-gray-100);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, .35);
+            filter: contrast(.92) saturate(.94) sepia(.06) brightness(1.02);
+        }
+        /* pixel-art prints skip the film grade, same as the projects band */
+        .i4-print video.i4-pixel { filter: none; }
+        .i4-print span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 2px;
+            height: 26cqw;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            text-align: center;
-            position: relative;
-        }
-        /* the perforation, plus the two notches that make it read as a tear line */
-        .ticket-stub::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 2px;
-            background: repeating-linear-gradient(180deg, var(--color-purple-200) 0 6px, transparent 6px 12px);
-        }
-        .notch {
-            position: absolute;
-            left: -9px;
-            width: 16px;
-            height: 16px;
-            border-radius: 999px;
-            background: #fff;
-            border: 2px solid var(--color-purple-200);
-            z-index: 2;
-        }
-        .notch.t { top: -9px; }
-        .notch.b { bottom: -9px; }
-        .ticket-kicker {
-            font-size: 11px;
+            padding: 0 6%;
+            font-family: 'Caveat', cursive;
             font-weight: 700;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            color: var(--color-purple-600);
+            font-size: calc(8.5cqw + 2px);
+            line-height: 1.05;
+            color: rgba(42, 49, 66, .88);
+            text-align: center;
+            transform: rotate(1.2deg);
         }
 
+        /* ── Idea 5: chat bubble ask ──────────────────────────────────────────── */
+        .i5 { padding: 72px 24px; display: flex; justify-content: center; }
+        .i5-wrap { max-width: 620px; width: 100%; }
+        .i5-msg {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-left: 58px;
+            margin-bottom: 26px;
+            padding: 14px 18px;
+            background: #fff;
+            border: 2px solid var(--color-blue-500);
+            border-radius: 12px;
+            filter: drop-shadow(0 5px 10px rgba(37, 99, 235, .22));
+        }
+        .i5-msg::before {
+            content: "";
+            position: absolute;
+            left: -7px;
+            top: 50%;
+            margin-top: -6px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-left: 2px solid var(--color-blue-500);
+            border-bottom: 2px solid var(--color-blue-500);
+            border-radius: 0 0 0 3px;
+            transform: rotate(45deg);
+        }
+        .i5-face {
+            position: absolute;
+            left: -58px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--color-blue-500);
+            background: #fff;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, .18);
+        }
+        .i5-name { font-size: 12px; font-weight: 700; color: var(--color-blue-800); display: block; }
+        .i5-text { font-size: 14px; font-weight: 500; color: var(--color-gray-600); line-height: 1.4; }
+        .i5-answer { text-align: center; }
+        .i5-answer .cta-h { color: var(--color-gray-800); }
+        .i5-answer .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 22px; }
+
+        /* ── Idea 6: puzzle seam ─────────────────────────────────────────────── */
+        .i6 { position: relative; padding: 44px 0 60px; text-align: center; }
+        .i6::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, var(--color-purple-200) 0 10px, transparent 10px 20px);
+        }
+        /* the two tracks as interlocking pieces, sitting in flow under the seam so nothing clips */
+        .i6-pieces {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 26px;
+            transform: rotate(-1.5deg);
+            filter: drop-shadow(0 6px 10px rgba(15, 23, 42, .12));
+        }
+        .i6-pieces svg { width: 158px; height: 158px; display: block; }
+        .i6-pieces svg + svg { margin-left: -53px; }
+        .i6-pieces text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        .i6 .cta-h { color: var(--color-gray-800); }
+        .i6 .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 24px; }
+
+        /* ── Idea 7: bare sentence ───────────────────────────────────────────── */
+        .i7 { padding: 80px 24px; text-align: center; }
+        .i7-line {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 1.45;
+            color: var(--color-gray-800);
+            max-width: 780px;
+            margin-inline: auto;
+            text-wrap-style: balance;
+        }
+        .i7-link {
+            color: var(--color-purple-600);
+            text-decoration: none;
+            background-image: linear-gradient(var(--color-purple-300), var(--color-purple-300));
+            background-repeat: no-repeat;
+            background-position: 0 92%;
+            background-size: 100% 8px;
+            padding-bottom: 2px;
+            transition: background-size .2s ease;
+        }
+        .i7-link:hover { background-size: 100% 100%; }
+        .i7-aside { color: var(--color-gray-500); transform: rotate(-1.5deg); display: inline-block; margin-top: 14px; }
+
+        /* ── Idea 8: polaroid + checklist ─────────────────────────────────────── */
+        .i8 { padding: 64px 0; }
+        .i8 .inner { display: flex; align-items: center; gap: 56px; }
+        .i8 .cta-h { color: var(--color-gray-800); }
+        .i8 .cta-p { color: var(--color-gray-600); margin-bottom: 20px; }
+        .i8-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+        .i8-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 16px;
+            color: var(--color-gray-700);
+        }
+        /* the landing page's tick disc, in navy rather than green */
+        .i8-tick {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: var(--color-blue-900);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .i8-tick svg { width: 12px; height: 12px; }
+
         @media (max-width: 900px) {
-            .i3 .inner, .i4 .inner, .i5 .inner { flex-direction: column; align-items: flex-start; }
-            .i3-arrow, .i3-aside { display: none; }
-            .ticket { flex-direction: column; }
-            .ticket-stub { width: 100%; }
+            .i2 .inner, .i3 .inner, .i4 .inner, .i8 .inner { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -357,36 +440,17 @@ stretch read as one continuous wall, which is where the rest of the page has end
 
 <div class="page-header">
     <h1>"Ready to get started?" - mid-page CTA ideas</h1>
-    <p>Six replacements for the dark gradient bar between the parallel-tracks section and the two track cards. The page around it has become a paper wall (torn tape, prints, sticky notes, hand-drawn arrows, dot grid), and the bar is now the only thing in that stretch that reads as an advert dropped in rather than part of the page. Every idea below is built from things the page already does.</p>
+    <p>Eight replacements for the dark gradient bar between the parallel-tracks section and the two track cards. The page around it has become a paper wall (torn tape, prints, sticky notes, hand-drawn arrows, dot grid), and the bar is now the only thing in that stretch that reads as an advert dropped in rather than part of the page. Every idea below is built from things the page already does.</p>
 </div>
 
 <!-- ══ Idea 1 ═══════════════════════════════════════════════════════════════ -->
 <div class="idea">
     <div class="idea-label">
-        <h2>1. Torn tape strip</h2>
-        <span>The ask on the same amber paper as the testimonials heading, on the page's dot grid. Quietest, and the closest match to what surrounds it.</span>
-    </div>
-    <div class="slice dots">
-        <div class="i1">
-            <div class="tape">
-                <h2 class="cta-h">Ready to get started?</h2>
-                <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
-                <a class="btn btn-purple" href="/auth/signup">Get started free
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ══ Idea 2 ═══════════════════════════════════════════════════════════════ -->
-<div class="idea">
-    <div class="idea-label">
-        <h2>2. Pinned note</h2>
+        <h2>1. Pinned note</h2>
         <span>The CTA as one more note taped to the wall, alongside the student quotes.</span>
     </div>
     <div class="slice dots">
-        <div class="i2">
+        <div class="i1">
             <div class="note">
                 <span class="tape-strip l" aria-hidden="true"></span>
                 <span class="tape-strip r" aria-hidden="true"></span>
@@ -400,39 +464,14 @@ stretch read as one continuous wall, which is where the rest of the page has end
     </div>
 </div>
 
-<!-- ══ Idea 3 ═══════════════════════════════════════════════════════════════ -->
+<!-- ══ Idea 2 ═══════════════════════════════════════════════════════════════ -->
 <div class="idea">
     <div class="idea-label">
-        <h2>3. Dark band, annotated</h2>
-        <span>Keeps the dark beat for rhythm, but adds the page's own arrow and a handwritten aside. Smallest change to what exists. Recommended if the band stays.</span>
-    </div>
-    <div class="slice">
-        <div class="dark i3">
-            <div class="inner">
-                <div>
-                    <h2 class="cta-h">Ready to get started?</h2>
-                    <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
-                </div>
-                <div class="i3-btnwrap">
-                    <span class="note-hand i3-aside">no card, no catch</span>
-                    <img class="i3-arrow" src="images/heading-arrow-loop.png" alt="" aria-hidden="true">
-                    <a class="btn btn-white" href="/auth/signup">Get started free
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ══ Idea 4 ═══════════════════════════════════════════════════════════════ -->
-<div class="idea">
-    <div class="idea-label">
-        <h2>4. Cream band</h2>
+        <h2>2. Cream band</h2>
         <span>The warm paper of the project prints band, so the CTA sits on the same sheet as the rest of the page.</span>
     </div>
     <div class="slice">
-        <div class="paper i4">
+        <div class="paper i2">
             <div class="inner">
                 <div>
                     <span class="eyebrow">One more thing</span>
@@ -447,21 +486,21 @@ stretch read as one continuous wall, which is where the rest of the page has end
     </div>
 </div>
 
-<!-- ══ Idea 5 ═══════════════════════════════════════════════════════════════ -->
+<!-- ══ Idea 3 ═══════════════════════════════════════════════════════════════ -->
 <div class="idea">
     <div class="idea-label">
-        <h2>5. Progress recap</h2>
+        <h2>3. Progress recap</h2>
         <span>Three ticked outcomes beside the button, reusing the tick idiom from "What you'll walk away with". Earns the click rather than just asking for it.</span>
     </div>
     <div class="slice">
-        <div class="dark i5">
+        <div class="dark i3">
             <div class="inner">
                 <div>
                     <h2 class="cta-h">Ready to get started?</h2>
-                    <div class="i5-list">
-                        <div class="i5-row"><span class="i5-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>The whole "learn to code" curriculum, free</div>
-                        <div class="i5-row"><span class="i5-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Real projects from your first week</div>
-                        <div class="i5-row"><span class="i5-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Jeremy on the livestreams when you get stuck</div>
+                    <div class="i3-list">
+                        <div class="i3-row"><span class="i3-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>The whole "learn to code" curriculum, free</div>
+                        <div class="i3-row"><span class="i3-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Real projects from your first week</div>
+                        <div class="i3-row"><span class="i3-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Jeremy on the livestreams when you get stuck</div>
                     </div>
                 </div>
                 <a class="btn btn-white" href="/auth/signup">Get started free
@@ -472,28 +511,136 @@ stretch read as one continuous wall, which is where the rest of the page has end
     </div>
 </div>
 
-<!-- ══ Idea 6 ═══════════════════════════════════════════════════════════════ -->
+<!-- ══ Idea 4 ═══════════════════════════════════════════════════════════════ -->
 <div class="idea">
     <div class="idea-label">
-        <h2>6. Ticket stub</h2>
-        <span>The sign-up as a perforated ticket. The most distinctive, and the only one that introduces a new object to the page.</span>
+        <h2>4. Polaroid beside the ask</h2>
+        <span>One print pulled out of the projects band and set next to the CTA, so the ask is attached to a thing you'd actually make.</span>
     </div>
-    <div class="slice dots">
-        <div class="i6">
-            <div class="ticket">
-                <div class="ticket-main">
-                    <h2 class="cta-h">Ready to get started?</h2>
-                    <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+    <div class="slice">
+        <div class="paper i4">
+            <div class="inner">
+                <div class="i4-print">
+                    <video class="i4-pixel" aria-label="Space invaders" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                    <span>space invaders</span>
                 </div>
-                <div class="ticket-stub">
-                    <span class="notch t" aria-hidden="true"></span>
-                    <span class="notch b" aria-hidden="true"></span>
-                    <span class="ticket-kicker">Admit one</span>
+                <div>
+                    <h2 class="cta-h">Ready to make your first one?</h2>
+                    <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
                     <a class="btn btn-purple" href="/auth/signup">Get started free
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
-                    <span class="note-hand" style="color:var(--color-gray-500);font-size:20px">free, forever</span>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 5 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>5. Asked and answered</h2>
+        <span>Borrows the live-chat bubble from the Q&amp;A section: a student asks the question the reader is thinking, and the CTA is the answer.</span>
+    </div>
+    <div class="slice dots">
+        <div class="i5">
+            <div class="i5-wrap">
+                <div class="i5-msg">
+                    <img class="i5-face" src="assets/avatars/avatar-placeholder-1.png" alt="" aria-hidden="true">
+                    <span>
+                        <span class="i5-name">Priya</span>
+                        <span class="i5-text">honestly do I need to know anything before I start?</span>
+                    </span>
+                </div>
+                <div class="i5-answer">
+                    <h2 class="cta-h">Nope. That's the whole point.</h2>
+                    <p class="cta-p">Start from zero, build something real in your first week, and ask Jeremy anything on the livestreams.</p>
+                    <a class="btn btn-purple" href="/auth/signup">Get started free
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 6 ══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>6. Puzzle seam</h2>
+        <span>The two tracks as interlocking pieces - Code in purple, Build in blue - clicking together right where the reader is about to meet both cards.</span>
+    </div>
+    <div class="slice dots">
+        <div class="i6">
+            <div class="i6-pieces" aria-hidden="true">
+                <!-- Learn to Code: purple, knob on the right -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14,4 H90 A10,10 0 0 1 100,14 V42 C118,32 118,88 100,78 V106 A10,10 0 0 1 90,116 H14 A10,10 0 0 1 4,106 V14 A10,10 0 0 1 14,4 Z" fill="var(--color-purple-100)" stroke="var(--color-purple-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="52" y="67" fill="var(--color-purple-700)">Code</text>
+                </svg>
+                <!-- Learn to Build: blue, matching socket on the left -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30,4 H106 A10,10 0 0 1 116,14 V106 A10,10 0 0 1 106,116 H30 A10,10 0 0 1 20,106 V78 C38,88 38,32 20,42 V14 A10,10 0 0 1 30,4 Z" fill="var(--color-blue-100)" stroke="var(--color-blue-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="70" y="67" fill="var(--color-blue-700)">Build</text>
+                </svg>
+            </div>
+            <h2 class="cta-h">Ready to put it together?</h2>
+            <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+            <a class="btn btn-purple" href="/auth/signup">Get started free
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 7 ══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>7. Bare sentence</h2>
+        <span>No block at all - one sentence on the wall with the sign-up as a link. The lightest possible beat, and it keeps all the weight on the two track cards below.</span>
+    </div>
+    <div class="slice dots">
+        <div class="i7">
+            <p class="i7-line">You can read about it, or you can <a class="i7-link" href="/auth/signup">start building today</a> - for free, with Jeremy and Jiki in your corner.</p>
+            <span class="note-hand i7-aside">takes about a minute to set up</span>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 8 ══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>8. Polaroid + checklist</h2>
+        <span>Idea 4 with the three outcomes ticked off underneath the intro line, so the print shows what you'll make and the list says what you'll get.</span>
+    </div>
+    <div class="slice">
+        <div class="paper i8">
+            <div class="inner">
+            <div class="i4-print">
+                <video class="i4-pixel" aria-label="Space invaders" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                <span>space invaders</span>
+            </div>
+            <div>
+                <h2 class="cta-h">Ready to make your first one?</h2>
+                <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+                <div class="i8-list">
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        The whole "learn to code" curriculum, free
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Real projects from your first week
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Jeremy on the livestreams when you get stuck
+                    </div>
+                </div>
+                <a class="btn btn-purple" href="/auth/signup">Get started free
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
             </div>
         </div>
     </div>

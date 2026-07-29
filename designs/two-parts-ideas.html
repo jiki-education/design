@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two parts: Learn to Code &amp; Learn to Build - section ideas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Seven concepts for the section that sits **just below the fold** on \`jiki-landing.html\` and explains
+that Jiki is two things: **Learn to Code** and **Learn to Build**.
+
+## What this section has to do
+
+It is the first thing after the hero, so it carries the whole "what is this?" job. Right now the
+reader meets the two full-width detail cards (Part 1 / Learn to Code, then Learn to Build) without
+being told first that there are two parts at all. Each idea below is a short overview band that goes
+above those cards and sets them up.
+
+The one thing every version must land: **the two run alongside each other**, they are not
+sequential. The Learn to Build copy already says "alongside the code", so nothing should imply you
+finish one before starting the other.
+
+## Colours
+
+**Code is purple, Build is blue** throughout - the same pairing the two track headings already use
+(\`purple-600\` and \`blue-600\`). Keeping that consistent from this section down through the cards is
+what makes the rest of the page legible.
+
+## The seven directions
+
+1. **Two panels** - the plain version: two columns side by side, colour-coded, three ticks each.
+   Clearest and the least work. Nothing about it is memorable, which may be fine this high up.
+2. **Parallel rails** - a small diagram of the two tracks running alongside each other week by week,
+   so "at the same time" is shown rather than asserted. The only idea that makes the parallel point
+   visually.
+3. **Interlocking pieces** - the two tracks as puzzle pieces that click together, copy either side.
+   Says "these two make one thing" better than any wording does.
+4. **One sentence** - a single large statement with **Code** and **Build** picked out in their
+   colours, then two short columns beneath. Quietest, and the fastest to read.
+5. **Two notes on the wall** - the handmade language the rest of the page uses, as two taped notes.
+   Warmest, but it is the same idiom as the testimonial wall further down.
+6. **Split diptych** - one full-bleed band torn down the middle, a purple half and a blue half. The
+   boldest of the set and the only dark option, so it is the one to reach for if the top of the page
+   needs contrast against the white hero.
+7. **Show, don't tell** - each part illustrated by what it actually looks like: a snippet of code for
+   one, a sketch of frontend-API-database for the other. Answers "what is the difference between
+   these?" faster than any sentence can.
+
+## Recommendation
+
+**Idea 2** for the job this section actually has. It is the only one that answers "do I do these one
+after the other?" without the reader having to work it out, and that is the question this spot
+exists to answer.
+
+**Idea 7** answers the other half of the question - what these two things even are - faster than any
+of the others. Worth prototyping alongside 2; between them they cover both points.
+
+**Idea 1** if you would rather keep the top of the page quiet and let the detail cards do the work -
+it is the safest, and it costs almost nothing to build.
+
+Idea 5 is lovely but I would hold it back: the sticky-note wall already appears in the testimonials
+section, and using it twice weakens it in both places.
+
+## Build notes
+
+- Colours are palette tokens throughout. The cream paper (\`#fffdf8\` to \`#fdf6ec\`) and the tape's
+  warm amber are lifted from \`jiki-landing.html\`.
+- Ticks are the same green disc and \`M5 13l4 4L19 7\` path used across the landing page.
+- The rails in idea 2 are two \`repeating-linear-gradient\` dashed lines with absolutely positioned
+  markers - no image, and the week labels are plain text so they are translatable.
+- The puzzle pieces in idea 3 are inline SVG (a knob on one path, the matching socket on the other,
+  overlapped with a negative margin). Same artwork as \`mid-page-cta-ideas.html\`.
+- Idea 4's highlight is a \`background-image\` underline that can animate to a full highlight, the
+  same trick \`.rough-highlight\` uses on the landing page.
+- The diagonal seam in idea 6 is a \`clip-path\` on the left half plus a matching negative margin, so
+  the two halves overlap rather than leaving a gap. It flattens to a plain stack on narrow screens.
+- Idea 7's code snippet is static markup with spans for colour, not a syntax highlighter. Swap it for
+  a real exercise before build. The architecture sketch is the request path (browser, frontend, API,
+  database) as bordered boxes, with the supporting pieces - auth, caching, queues, emails, payments,
+  testing, deploys - as pills hanging off it on a dashed drop line. All markup, no images. The list
+  of pieces is the part to check with Jeremy: it should read as the actual Learn to Build syllabus.
+- All seven are static markup - no JavaScript.
+        `;
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--color-gray-100);
+            color: var(--color-gray-900);
+            padding: 48px 0 96px;
+        }
+
+        .page-header {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding: 0 24px;
+        }
+        .page-header h1 { font-size: 30px; font-weight: 600; margin-bottom: 10px; text-wrap-style: balance; }
+        .page-header p { font-size: 16px; color: var(--color-gray-600); line-height: 1.6; text-wrap-style: balance; }
+
+        .idea { margin-bottom: 56px; }
+
+        .idea-label {
+            max-width: 900px;
+            margin: 0 auto 14px;
+            padding: 0 24px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .idea-label h2 { font-size: 19px; font-weight: 600; }
+        .idea-label span { font-size: 14px; color: var(--color-gray-500); text-wrap-style: balance; }
+
+        .slice {
+            background: white;
+            border-top: 1px solid var(--color-gray-200);
+            border-bottom: 1px solid var(--color-gray-200);
+            overflow: hidden;
+        }
+
+        /* the landing page's own surfaces */
+        .dots {
+            background-color: #fff;
+            background-image: radial-gradient(var(--color-gray-200) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .paper {
+            background:
+                radial-gradient(90% 60% at 15% 0%, rgba(168, 85, 247, .16) 0%, rgba(168, 85, 247, 0) 60%),
+                radial-gradient(80% 70% at 90% 100%, rgba(59, 130, 246, .16) 0%, rgba(59, 130, 246, 0) 60%),
+                linear-gradient(180deg, #fffdf8 0%, #fdf6ec 100%);
+        }
+
+        .inner {
+            max-width: 1100px;
+            margin-inline: auto;
+            padding-inline: 5%;
+        }
+
+        /* shared section furniture */
+        .eyebrow {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 27px;
+            color: var(--color-purple-600);
+            transform: rotate(-2deg);
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+        .sec-h {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--color-gray-800);
+            margin-bottom: 12px;
+            text-wrap-style: balance;
+        }
+        .sec-p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--color-gray-600);
+            max-width: 700px;
+            text-wrap-style: balance;
+        }
+        .centred { text-align: center; }
+        .centred .sec-p { margin-inline: auto; }
+
+        .code-word { color: var(--color-purple-600); font-weight: 800; }
+        .build-word { color: var(--color-blue-600); font-weight: 800; }
+
+        .ticks { display: flex; flex-direction: column; gap: 10px; }
+        .tick-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 15px;
+            line-height: 1.4;
+            color: var(--color-gray-700);
+            text-align: left;
+        }
+        .tick {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            background: var(--color-green-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tick svg { width: 11px; height: 11px; }
+
+        /* ── Idea 1: two panels ───────────────────────────────────────────────── */
+        .i1 { padding: 64px 0 68px; }
+        .i1-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            margin-top: 36px;
+        }
+        .i1-panel {
+            padding: 32px 30px 34px;
+            border-radius: 16px;
+            border: 2px solid;
+            background: #fff;
+        }
+        .i1-panel.code { border-color: var(--color-purple-200); background: linear-gradient(180deg, var(--color-purple-50), #fff 60%); }
+        .i1-panel.build { border-color: var(--color-blue-200); background: linear-gradient(180deg, var(--color-blue-50), #fff 60%); }
+        .i1-kicker {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .i1-panel.code .i1-kicker { color: var(--color-purple-600); }
+        .i1-panel.build .i1-kicker { color: var(--color-blue-600); }
+        .i1-h { font-size: 25px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 8px; }
+        .i1-p { font-size: 16px; line-height: 1.6; color: var(--color-gray-600); margin-bottom: 20px; text-wrap-style: balance; }
+
+        /* ── Idea 2: parallel rails ───────────────────────────────────────────── */
+        .i2 { padding: 64px 0 76px; }
+        .i2-diagram { margin-top: 44px; position: relative; }
+        .i2-weeks {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-gray-400);
+            margin-bottom: 14px;
+            letter-spacing: .04em;
+        }
+        .i2-rail {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 22px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+        .i2-rail.code { background: var(--color-purple-50); }
+        .i2-rail.build { background: var(--color-blue-50); }
+        .i2-label {
+            flex-shrink: 0;
+            width: 132px;
+            font-size: 17px;
+            font-weight: 700;
+        }
+        .i2-rail.code .i2-label { color: var(--color-purple-700); }
+        .i2-rail.build .i2-label { color: var(--color-blue-700); }
+        /* the dashed line, with the stop markers sat on top of it */
+        .i2-line { position: relative; flex: 1; height: 22px; }
+        .i2-line::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            margin-top: -1.5px;
+        }
+        .i2-rail.code .i2-line::before { background: repeating-linear-gradient(90deg, var(--color-purple-300) 0 9px, transparent 9px 18px); }
+        .i2-rail.build .i2-line::before { background: repeating-linear-gradient(90deg, var(--color-blue-300) 0 9px, transparent 9px 18px); }
+        .i2-stop {
+            position: absolute;
+            top: 50%;
+            width: 15px;
+            height: 15px;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            border-radius: 999px;
+            border: 3px solid #fff;
+        }
+        .i2-rail.code .i2-stop { background: var(--color-purple-500); }
+        .i2-rail.build .i2-stop { background: var(--color-blue-500); }
+        .i2-note {
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
+            font-size: 25px;
+            color: var(--color-gray-500);
+            transform: rotate(-1deg);
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* ── Idea 3: interlocking pieces ──────────────────────────────────────── */
+        .i3 { padding: 64px 0 68px; }
+        .i3-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .i3-col { flex: 1; max-width: 300px; }
+        .i3-col.right { text-align: right; }
+        .i3-col h3 { font-size: 23px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 8px; }
+        .i3-col p { font-size: 16px; line-height: 1.6; color: var(--color-gray-600); text-wrap-style: balance; }
+        .i3-pieces {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            transform: rotate(-1.5deg);
+            filter: drop-shadow(0 6px 10px rgba(15, 23, 42, .12));
+        }
+        .i3-pieces svg { width: 140px; height: 140px; display: block; }
+        .i3-pieces svg + svg { margin-left: -47px; }
+        .i3-pieces text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+
+        /* ── Idea 4: one sentence ─────────────────────────────────────────────── */
+        .i4 { padding: 76px 0 72px; text-align: center; }
+        .i4-line {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.35;
+            color: var(--color-gray-800);
+            max-width: 860px;
+            margin-inline: auto;
+            margin-bottom: 44px;
+            text-wrap-style: balance;
+        }
+        .i4-mark {
+            background-repeat: no-repeat;
+            background-position: 0 88%;
+            background-size: 100% 12px;
+            padding-inline: 2px;
+        }
+        .i4-mark.code { color: var(--color-purple-700); background-image: linear-gradient(var(--color-purple-200), var(--color-purple-200)); }
+        .i4-mark.build { color: var(--color-blue-700); background-image: linear-gradient(var(--color-blue-200), var(--color-blue-200)); }
+        .i4-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            max-width: 820px;
+            margin-inline: auto;
+            text-align: left;
+        }
+        .i4-col h3 { font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+        .i4-col.code h3 { color: var(--color-purple-600); }
+        .i4-col.build h3 { color: var(--color-blue-600); }
+        .i4-col p { font-size: 16px; line-height: 1.65; color: var(--color-gray-600); text-wrap-style: balance; }
+
+        /* ── Idea 5: two notes on the wall ────────────────────────────────────── */
+        .i5 { padding: 68px 24px 76px; }
+        .i5-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 880px;
+            margin-inline: auto;
+            margin-top: 44px;
+        }
+        .i5-note {
+            position: relative;
+            padding: 34px 32px 36px;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(30, 20, 10, .13);
+        }
+        .i5-note.code { background: #f6ecff; transform: rotate(-1.3deg); }
+        .i5-note.build { background: #e8f0ff; transform: rotate(1deg); }
+        .i5-tape {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            width: 104px;
+            height: 28px;
+            margin-left: -52px;
+            background: rgba(251, 191, 36, .38);
+            border-inline: 1px solid rgba(251, 191, 36, .25);
+            box-shadow: 0 1px 2px rgba(30, 20, 10, .12);
+            transform: rotate(-2deg);
+        }
+        .i5-note.build .i5-tape { transform: rotate(2.5deg); }
+        .i5-kicker {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .i5-note.code .i5-kicker { color: var(--color-purple-600); }
+        .i5-note.build .i5-kicker { color: var(--color-blue-600); }
+        .i5-h { font-size: 24px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 8px; }
+        .i5-p { font-size: 16px; line-height: 1.6; color: var(--color-gray-700); text-wrap-style: balance; }
+
+        /* ── Idea 6: split diptych ───────────────────────────────────────────── */
+        .i6 { display: flex; }
+        .i6-half {
+            flex: 1;
+            padding: 66px 5% 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .i6-half.code {
+            background: linear-gradient(160deg, var(--color-purple-700), var(--color-purple-900));
+            /* the seam: a slight diagonal so the two halves read as torn apart, not tiled */
+            clip-path: polygon(0 0, 100% 0, calc(100% - 42px) 100%, 0 100%);
+            margin-right: -42px;
+            padding-right: calc(5% + 42px);
+        }
+        .i6-half.build { background: linear-gradient(160deg, var(--color-blue-700), var(--color-blue-900)); }
+        .i6-kicker {
+            font-family: 'Caveat', cursive;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .i6-half.code .i6-kicker { color: var(--color-purple-200); }
+        .i6-half.build .i6-kicker { color: var(--color-blue-200); }
+        .i6-h { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        .i6-p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; max-width: 380px; text-wrap-style: balance; }
+        .i6-half.code .i6-p { color: var(--color-purple-100); }
+        .i6-half.build .i6-p { color: var(--color-blue-100); }
+        .i6 .tick-row { color: rgba(255, 255, 255, .92); }
+        .i6 .tick { background: rgba(255, 255, 255, .22); }
+
+        /* ── Idea 7: show, don't tell ────────────────────────────────────────── */
+        .i7 { padding: 64px 0 70px; }
+        .i7-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 38px; }
+        .i7-card {
+            padding: 26px 26px 28px;
+            border-radius: 16px;
+            border: 2px solid;
+            background: #fff;
+            text-align: left;
+        }
+        .i7-card.code { border-color: var(--color-purple-200); }
+        .i7-card.build { border-color: var(--color-blue-200); }
+        .i7-card h3 { font-size: 21px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 6px; }
+        .i7-card p { font-size: 15px; line-height: 1.6; color: var(--color-gray-600); margin-bottom: 20px; text-wrap-style: balance; }
+        /* a snippet of what "learning to code" looks like */
+        .i7-code {
+            background: var(--color-blue-950);
+            border-radius: 10px;
+            padding: 18px 20px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: #cbd5e1;
+        }
+        .i7-code .kw { color: #c084fc; }
+        .i7-code .fn { color: #60a5fa; }
+        .i7-code .str { color: #86efac; }
+        .i7-code .cm { color: #64748b; }
+        /* and a sketch of what "learning to build" looks like - the request path across
+           the top, the pieces that hang off it underneath */
+        .i7-arch { display: flex; align-items: center; gap: 8px; padding: 22px 0 0; }
+        .i7-box {
+            flex: 1;
+            padding: 14px 6px;
+            border-radius: 10px;
+            border: 2px solid var(--color-blue-200);
+            background: var(--color-blue-50);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-blue-800);
+            text-align: center;
+        }
+        .i7-wire { flex-shrink: 0; width: 16px; height: 2px; background: var(--color-blue-300); }
+        /* the drop lines from the request path down to the supporting pieces */
+        .i7-drops {
+            height: 16px;
+            margin-inline: 14%;
+            border-left: 2px dashed var(--color-blue-200);
+            border-right: 2px dashed var(--color-blue-200);
+            border-bottom: 2px dashed var(--color-blue-200);
+        }
+        .i7-parts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 7px;
+            padding: 14px 0 6px;
+        }
+        .i7-part {
+            padding: 7px 12px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--color-blue-200);
+            background: #fff;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--color-blue-700);
+        }
+
+        @media (max-width: 900px) {
+            .i1-grid, .i4-cols, .i5-grid, .i7-grid { grid-template-columns: 1fr; }
+            .i6 { flex-direction: column; }
+            .i6-half.code { clip-path: none; margin-right: 0; padding-right: 5%; }
+            .i3-row { flex-direction: column; }
+            .i3-col, .i3-col.right { text-align: center; max-width: 460px; }
+        }
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="page-header">
+    <h1>Two parts: Learn to Code &amp; Learn to Build</h1>
+    <p>Seven concepts for the overview band that sits just below the fold and explains that Jiki is two things. It has to set up the two full-width detail cards that follow, and above all it has to land that the two run <strong>alongside each other</strong> rather than one after the other. Code is purple and Build is blue throughout, matching the track headings already on the page.</p>
+</div>
+
+<!-- ══ Idea 1 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>1. Two panels</h2>
+        <span>The plain version - two colour-coded columns, three ticks each. Clearest and cheapest, if not especially memorable.</span>
+    </div>
+    <div class="slice">
+        <div class="dots i1">
+            <div class="inner centred">
+                <span class="eyebrow">How it works</span>
+                <h2 class="sec-h">Jiki is two courses, running side by side</h2>
+                <p class="sec-p">You'll learn to write code and learn how real software is built at the same time - each one making more sense because of the other.</p>
+                <div class="i1-grid">
+                    <div class="i1-panel code">
+                        <span class="i1-kicker">Part 1</span>
+                        <h3 class="i1-h">Learn to <span class="code-word">Code</span></h3>
+                        <p class="i1-p">Rock solid coding foundations: every core concept, with tons of exercises and projects to practise on.</p>
+                        <div class="ticks">
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Every core concept, from zero</div>
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Hundreds of exercises to practise on</div>
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Free, forever</div>
+                        </div>
+                    </div>
+                    <div class="i1-panel build">
+                        <span class="i1-kicker">Part 2</span>
+                        <h3 class="i1-h">Learn to <span class="build-word">Build</span></h3>
+                        <p class="i1-p">How technology actually works: databases, auth, frontends, backends and everything in between.</p>
+                        <div class="ticks">
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Databases, auth, frontends, backends</div>
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Real projects, start to finish</div>
+                            <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Built for the LLM era</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 2 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>2. Parallel rails</h2>
+        <span>Shows the two tracks running alongside each other week by week, rather than asserting it in copy. Recommended - it answers the question this section exists for.</span>
+    </div>
+    <div class="slice">
+        <div class="dots i2">
+            <div class="inner centred">
+                <span class="eyebrow">How it works</span>
+                <h2 class="sec-h">Two tracks, running at the same time</h2>
+                <p class="sec-p">You don't finish one and start the other. Every week you write code <em>and</em> learn how real software fits together - which is why both stick.</p>
+                <div class="i2-diagram">
+                    <div class="i2-weeks">
+                        <span>Week 1</span><span>Week 4</span><span>Week 8</span><span>Week 12</span><span>Onwards</span>
+                    </div>
+                    <div class="i2-rail code">
+                        <span class="i2-label">Learn to <span class="code-word">Code</span></span>
+                        <span class="i2-line">
+                            <span class="i2-stop" style="left:0"></span>
+                            <span class="i2-stop" style="left:25%"></span>
+                            <span class="i2-stop" style="left:50%"></span>
+                            <span class="i2-stop" style="left:75%"></span>
+                            <span class="i2-stop" style="left:100%"></span>
+                        </span>
+                    </div>
+                    <div class="i2-rail build">
+                        <span class="i2-label">Learn to <span class="build-word">Build</span></span>
+                        <span class="i2-line">
+                            <span class="i2-stop" style="left:0"></span>
+                            <span class="i2-stop" style="left:25%"></span>
+                            <span class="i2-stop" style="left:50%"></span>
+                            <span class="i2-stop" style="left:75%"></span>
+                            <span class="i2-stop" style="left:100%"></span>
+                        </span>
+                    </div>
+                    <span class="i2-note">both from day one - no waiting</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 3 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>3. Interlocking pieces</h2>
+        <span>The two tracks as puzzle pieces that click together, copy either side. Makes the "these are one thing" point without needing to say it.</span>
+    </div>
+    <div class="slice">
+        <div class="paper i3">
+            <div class="inner centred">
+                <span class="eyebrow">How it works</span>
+                <h2 class="sec-h">Two halves of the same thing</h2>
+                <p class="sec-p">Writing code and understanding how software works are two different skills. Jiki teaches both, together, because neither one is much use on its own.</p>
+                <div class="i3-row">
+                    <div class="i3-col right">
+                        <h3>Learn to <span class="code-word">Code</span></h3>
+                        <p>Every core concept, with hundreds of exercises and projects to practise on.</p>
+                    </div>
+                    <div class="i3-pieces" aria-hidden="true">
+                        <!-- Code: purple, knob on the right -->
+                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14,4 H90 A10,10 0 0 1 100,14 V42 C118,32 118,88 100,78 V106 A10,10 0 0 1 90,116 H14 A10,10 0 0 1 4,106 V14 A10,10 0 0 1 14,4 Z" fill="var(--color-purple-100)" stroke="var(--color-purple-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                            <text x="52" y="67" fill="var(--color-purple-700)">Code</text>
+                        </svg>
+                        <!-- Build: blue, matching socket on the left -->
+                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30,4 H106 A10,10 0 0 1 116,14 V106 A10,10 0 0 1 106,116 H30 A10,10 0 0 1 20,106 V78 C38,88 38,32 20,42 V14 A10,10 0 0 1 30,4 Z" fill="var(--color-blue-100)" stroke="var(--color-blue-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                            <text x="70" y="67" fill="var(--color-blue-700)">Build</text>
+                        </svg>
+                    </div>
+                    <div class="i3-col">
+                        <h3>Learn to <span class="build-word">Build</span></h3>
+                        <p>Databases, auth, frontends, backends - how real technology actually works.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 4 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>4. One sentence</h2>
+        <span>A single large statement with the two words picked out in their colours, then two short columns. Quietest and the fastest to read.</span>
+    </div>
+    <div class="slice">
+        <div class="dots i4">
+            <div class="inner">
+                <p class="i4-line">Jiki teaches you to <span class="i4-mark code">code</span>, and how to <span class="i4-mark build">build</span> real software - from your first week.</p>
+                <div class="i4-cols">
+                    <div class="i4-col code">
+                        <h3>Learn to Code</h3>
+                        <p>Rock solid foundations: every core concept, with tons of exercises and projects to practise on. Free, forever.</p>
+                    </div>
+                    <div class="i4-col build">
+                        <h3>Learn to Build</h3>
+                        <p>Alongside the code, we go deep on how technology actually works: databases, auth, frontends, backends and more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 5 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>5. Two notes on the wall</h2>
+        <span>The page's handmade language, as two taped notes. Warmest - but it reuses the sticky-note idiom the testimonials section already owns.</span>
+    </div>
+    <div class="slice">
+        <div class="paper i5">
+            <div class="inner centred">
+                <span class="eyebrow">How it works</span>
+                <h2 class="sec-h">There are two parts, and you do both</h2>
+                <p class="sec-p">Not one course then another - the two run side by side from your very first week.</p>
+                <div class="i5-grid">
+                    <div class="i5-note code">
+                        <span class="i5-tape" aria-hidden="true"></span>
+                        <span class="i5-kicker">part one</span>
+                        <h3 class="i5-h">Learn to <span class="code-word">Code</span></h3>
+                        <p class="i5-p">Every core concept, with hundreds of exercises and projects to practise on. Free, forever.</p>
+                    </div>
+                    <div class="i5-note build">
+                        <span class="i5-tape" aria-hidden="true"></span>
+                        <span class="i5-kicker">part two</span>
+                        <h3 class="i5-h">Learn to <span class="build-word">Build</span></h3>
+                        <p class="i5-p">How technology actually works: databases, auth, frontends, backends and more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 6 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>6. Split diptych</h2>
+        <span>One full-bleed band torn down the middle, purple half and blue half. The boldest, and the only dark option - useful if the top of the page needs contrast.</span>
+    </div>
+    <div class="slice">
+        <div class="i6">
+            <div class="i6-half code">
+                <span class="i6-kicker">part one</span>
+                <h3 class="i6-h">Learn to Code</h3>
+                <p class="i6-p">Rock solid coding foundations: every core concept, with tons of exercises and projects to practise on.</p>
+                <div class="ticks">
+                    <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Every core concept, from zero</div>
+                    <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Free, forever</div>
+                </div>
+            </div>
+            <div class="i6-half build">
+                <span class="i6-kicker">at the same time</span>
+                <h3 class="i6-h">Learn to Build</h3>
+                <p class="i6-p">How technology actually works: databases, auth, frontends, backends and everything in between.</p>
+                <div class="ticks">
+                    <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Real projects, start to finish</div>
+                    <div class="tick-row"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>Built for the LLM era</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 7 ═══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>7. Show, don&#39;t tell</h2>
+        <span>Each part illustrated by what it actually looks like - a snippet of code, and a sketch of how software fits together. Answers "what's the difference?" in one glance.</span>
+    </div>
+    <div class="slice">
+        <div class="dots i7">
+            <div class="inner centred">
+                <span class="eyebrow">How it works</span>
+                <h2 class="sec-h">Two very different skills. You need both.</h2>
+                <p class="sec-p">One is writing the code. The other is knowing what to build and how the pieces fit together. Jiki teaches them side by side.</p>
+                <div class="i7-grid">
+                    <div class="i7-card code">
+                        <h3>Learn to <span class="code-word">Code</span></h3>
+                        <p>Every core concept, with hundreds of exercises to practise on.</p>
+                        <pre class="i7-code"><span class="cm">// move the character to the exit</span>
+<span class="kw">repeat</span> 4 {
+  <span class="fn">move</span>()
+  <span class="fn">turn_right</span>()
+}</pre>
+                    </div>
+                    <div class="i7-card build">
+                        <h3>Learn to <span class="build-word">Build</span></h3>
+                        <p>How real technology actually works, end to end.</p>
+                        <div class="i7-arch">
+                            <span class="i7-box">Browser</span>
+                            <span class="i7-wire"></span>
+                            <span class="i7-box">Frontend</span>
+                            <span class="i7-wire"></span>
+                            <span class="i7-box">API</span>
+                            <span class="i7-wire"></span>
+                            <span class="i7-box">Database</span>
+                        </div>
+                        <div class="i7-drops" aria-hidden="true"></div>
+                        <div class="i7-parts">
+                            <span class="i7-part">Auth</span>
+                            <span class="i7-part">Caching</span>
+                            <span class="i7-part">Queues</span>
+                            <span class="i7-part">Emails</span>
+                            <span class="i7-part">Payments</span>
+                            <span class="i7-part">Testing</span>
+                            <span class="i7-part">Deploys</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
