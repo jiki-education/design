@@ -53,10 +53,11 @@
 
 /* ===== Hero video shadow (added) ===== */
 .Hero_hero__3JlDy .Hero_video-container___wyiH {
-    background: linear-gradient(135deg, var(--color-purple-700), var(--color-blue-700));
+    background: #fff;
+    border: 1px solid var(--color-gray-200);
     padding-block: 5px;
     padding-inline: 5px;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 /* ===== Hero h1 weight override (added) ===== */
@@ -87,10 +88,10 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 17px;
+        font-weight: 600;
         color: white;
-        /* the audience stays at 500, the qualifying clause drops to 400 */
+        /* the audience stays at 600, the qualifying clause drops to 400 */
         > span {
             font-weight: 400;
         }
@@ -561,8 +562,8 @@
     /* full-bleed: break out of the page container and fill the viewport height */
     width: 100vw;
     margin-inline: calc(50% - 50vw);
-    /* 50px shorter than a full screen, to close the gap under the card */
-    min-height: calc(100vh - 100px);
+    /* 105px shorter than a full screen, to close the gap under the card */
+    min-height: calc(100vh - 240px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -584,11 +585,12 @@
 /* the wrapper carries the tilt so the tape can sit outside the clipped note */
 .ex-noteWrap {
     position: relative;
+    /* spans the full band, inside its 32px gutter */
     width: 100%;
-    max-width: 1150px;
+    max-width: none;
     margin-inline: auto;
     /* sits above the band's optical centre; kept level as the band shortened */
-    transform: translateY(-55px);
+    transform: translateY(-45px);
 }
 
 .ex-note {
@@ -654,31 +656,15 @@
     letter-spacing: normal;
     color: var(--ex-purple);
 }
-.ex-chip {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    background: #fff;
-    border: 1px solid #c9c1f2;
-    box-shadow: 0 3px 10px rgba(96, 78, 210, 0.28);
-    color: var(--ex-indigo);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1;
+/* the Exercism wordmark, sat inline with the eyebrow copy */
+.ex-wordmark {
+    height: 28px;
+    width: auto;
+    display: block;
+    position: relative;
+    top: -1px;
 }
-.ex-chip img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-.ex-eyebrow .ex-name {
-    color: var(--ex-indigo);
-    letter-spacing: normal;
-}
+
 /* 2. Heading with highlighter swipe */
 .ex-band h2 {
     font-size: 42px;
@@ -763,47 +749,110 @@
     pointer-events: none;
     z-index: 0;
 }
+
+/* Exercism's own motifs: a filled shape in a brand colour, with the same shape
+   outlined in indigo sitting slightly offset on top of it. */
+
+/* offset squares */
 .ex-sq {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    background: var(--ex-teal);
-    border: 2px solid var(--ex-indigo);
-    transform: rotate(18deg);
-    top: 16%;
-    left: 10%;
+    width: 40px;
+    height: 40px;
+    top: 15%;
+    left: 9%;
 }
+.ex-sq::before,
+.ex-sq::after {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+}
+.ex-sq::before {
+    top: 0;
+    left: 0;
+    background: var(--ex-yellow);
+}
+.ex-sq::after {
+    top: 8px;
+    left: 8px;
+    background: #fff;
+    border: 3px solid var(--ex-indigo);
+}
+
+/* two short diagonal strokes */
 .ex-zig {
-    top: 14%;
-    right: 12%;
+    top: 20%;
+    right: 13%;
 }
+
+/* offset triangles, pointing down */
 .ex-tri {
-    bottom: 16%;
-    left: 14%;
-    transform: rotate(-12deg);
+    width: 44px;
+    height: 36px;
+    bottom: 17%;
+    left: 13%;
 }
+.ex-tri::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 18px 0 18px;
+    border-color: var(--ex-amber) transparent transparent transparent;
+}
+.ex-tri svg {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+}
+
+/* the nine-dot grid */
 .ex-dots {
     display: grid;
-    grid-template-columns: repeat(3, 6px);
-    gap: 8px;
-    bottom: 15%;
-    right: 11%;
+    grid-template-columns: repeat(3, 5px);
+    gap: 7px;
+    bottom: 16%;
+    right: 12%;
 }
 .ex-dots i {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: #d9d2f5;
+    background: var(--ex-indigo);
 }
+
+/* offset diamonds */
 .ex-diamond {
-    width: 16px;
-    height: 16px;
-    background: var(--ex-amber);
-    transform: rotate(45deg);
-    border-radius: 3px;
-    top: 46%;
+    width: 42px;
+    height: 42px;
+    top: 44%;
     right: 6%;
 }
+.ex-diamond::before,
+.ex-diamond::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 3px;
+    transform: rotate(45deg);
+}
+.ex-diamond::before {
+    top: 8px;
+    left: 0;
+    background: var(--ex-teal);
+}
+.ex-diamond::after {
+    top: 2px;
+    left: 8px;
+    background: #fff;
+    border: 3px solid var(--ex-indigo);
+}
+
 @media (max-width: 900px) {
     .ex-band { padding: 64px 24px; min-height: auto; }
     .ex-band h2 { font-size: 32px; }
@@ -872,15 +921,28 @@
     color: var(--color-gray-500);
 }
 
+/* ===== Hero hamster: sits a little higher above the marquee (added) ===== */
+.Hero_hero__3JlDy .Hero_hamster__g3oUs {
+    top: -92px;
+    @media (min-width: 768px) {
+        top: -112px;
+    }
+}
+
 /* ===== Hero: bigger headline, slightly smaller video (added) ===== */
 .Hero_hero__3JlDy h1 {
-    font-size: 53px;
+    font-size: 55px;
     @media (min-width: 640px) {
-        font-size: 58px;
+        font-size: 55px;
     }
     @media (min-width: 1024px) and (max-width: 1189px) {
-        font-size: 56px;
+        font-size: 55px;
     }
+}
+/* the hero container breathes with the viewport rather than a fixed gutter */
+.Hero_hero__3JlDy .Hero_container__g15qc {
+    padding-inline-start: 3%;
+    padding-inline-end: 3%;
 }
 .Hero_hero__3JlDy .Hero_hero-rhs__CPXwh {
     max-width: 560px;
@@ -939,7 +1001,7 @@
      <div class="Hero_hero__3JlDy">
       <div class="Hero_container__g15qc shared_lg-container__qNv1s">
        <div class="Hero_hero-lhs__3EaGF">
-        <h1 data-rock-solid="true" style="margin-top:20px">
+        <h1 data-rock-solid="true" style="margin-top:-10px">
          Code and build real things
          <span class="Hero_headlineHighlight__J4KTO" data-anim="highlight-headline">
           from day one
@@ -1002,7 +1064,7 @@
         </div>
        </div>
        <div class="Hero_hero-rhs__CPXwh" style="margin-top:20px">
-        <div class="Hero_video-container___wyiH" data-video-container="true" style="margin-top:20px">
+        <div class="Hero_video-container___wyiH" data-video-container="true">
          <button aria-label="Play video" class="Hero_video-poster-button__g157V" type="button">
           <img alt="" class="Hero_video-poster-image__o9sE3" data-nimg="fill" decoding="async" fetchpriority="high" src="images/landing-video-thumbnail-ef14e.webp" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent"/>
           <span aria-hidden="true" class="Hero_video-play-circle__KzmMC">
@@ -1030,8 +1092,27 @@
        </div>
       </div>
       <div class="Hero_scrolling-testimonials__r8Z7t" style="margin-bottom:-20px">
-       <div class="Hero_hamster__g3oUs">
-       </div>
+       <!-- the hamster-in-a-wheel from the live hero, held on a single frame (no animation) -->
+       <div class="Hero_hamster__g3oUs" id="hero-hamster"></div>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+       <script>
+        (function () {
+         var el = document.getElementById('hero-hamster');
+         if (!el || !window.lottie) return;
+         fetch('assets/hamster-wheel.json')
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+           var anim = lottie.loadAnimation({
+            container: el,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            animationData: data
+           });
+           anim.addEventListener('DOMLoaded', function () { anim.goToAndStop(0, true); });
+          });
+        })();
+       </script>
        <div>
        </div>
        <div class="Hero_inner__hJsqd">
@@ -1617,23 +1698,27 @@
           .BuildGrid_bullets__jk96 .TrackCardsSection_list__x3Fh9 li{max-width:none}
           .BuildGrid_pillsCol__jk97{flex:1 1 0;min-width:0;padding-top:4px}
           @media (min-width:800px){.BuildGrid_pillsCol__jk97{padding-inline-start:22px;display:flex;flex-direction:column;justify-content:flex-start}}
-          .BuildGrid_pillsLabel__jk98{font-size:15px;font-weight:600;letter-spacing:normal;color:var(--color-gray-500);margin-bottom:18px}
+          .BuildGrid_pillsLabel__jk98{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);margin-bottom:18px}
           .BuildGrid_pills__jk99{display:flex;flex-wrap:wrap;gap:12px}
           .BuildGrid_pill__jk100{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--color-gray-200);background:var(--color-gray-50);font-size:13px;font-weight:600;color:var(--color-gray-600);white-space:nowrap;transition:background-color .7s ease,border-color .7s ease,color .7s ease}
           .BuildGrid_pillTick__jk115{width:13px;height:13px;flex-shrink:0;position:relative;top:1px;opacity:0;transform:scale(.4);transition:opacity .5s ease,transform .5s ease}
           .BuildGrid_pill__jk100.BuildGrid_pillChecked__jk116{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-700)}
           .BuildGrid_pill__jk100.BuildGrid_pillChecked__jk116 .BuildGrid_pillTick__jk115{opacity:1;transform:scale(1)}
           @media (prefers-reduced-motion:reduce){.BuildGrid_pill__jk100{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-700)}.BuildGrid_pillTick__jk115{opacity:1;transform:scale(1)}}
-          .BuildGrid_langsLabel__jk101{font-size:15px;font-weight:600;letter-spacing:normal;color:var(--color-gray-500);margin-top:32px;margin-bottom:18px}
+          .BuildGrid_langsLabel__jk101{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);margin-top:32px;margin-bottom:18px}
           .BuildGrid_langs__jk102{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:22px}
              /* "Learn wide range of technologies" - everything centred in the panel */
              .BuildGrid_panel__jk107[data-panel="1"]{align-items:center;text-align:center}
              .BuildGrid_panel__jk107[data-panel="1"] .BuildGrid_pills__jk99{justify-content:center}
              .BuildGrid_panel__jk107[data-panel="1"] .BuildGrid_langs__jk102{justify-content:center}
           .BuildGrid_lang__jk103{display:flex;flex-direction:column;align-items:center;gap:8px;width:56px}
-          .BuildGrid_langIcon__jk104{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+          /* the logos start drained of colour and fill in one at a time */
+          .BuildGrid_langIcon__jk104{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;filter:grayscale(1) opacity(.55);transition:filter .5s ease,transform .5s ease}
+          .BuildGrid_lang__jk103.BuildGrid_langLit__jk121 .BuildGrid_langIcon__jk104{filter:grayscale(0) opacity(1)}
+          .BuildGrid_langName__jk105{transition:color .5s ease}
+          @media (prefers-reduced-motion:reduce){.BuildGrid_langIcon__jk104{filter:grayscale(0) opacity(1)}}
              .BuildGrid_langIcon__jk104 svg{width:100%;height:100%;display:block}
-          .BuildGrid_langName__jk105{font-size:12px;font-weight:600;color:var(--color-gray-600);text-align:center}
+          .BuildGrid_langName__jk105{font-size:12px;font-weight:600;color:var(--color-gray-400);text-align:center}
           .BuildGrid_bullets__jk96 .TrackCardsSection_list__x3Fh9 li{cursor:pointer;padding-block:14px;margin-block:-14px}
           .BuildGrid_bullets__jk96 .TrackCardsSection_list__x3Fh9 li .TrackCardsSection_leadDetail__jk70{border-radius:12px;padding:14px;padding-inline-end:34px;margin-block:-14px;margin-inline-start:-14px;margin-inline-end:-34px;transition:background-color .5s ease}
           .BuildGrid_bullets__jk96 .TrackCardsSection_list__x3Fh9 li.BuildGrid_active__jk108 .TrackCardsSection_leadDetail__jk70{background:transparent}
@@ -1647,10 +1732,12 @@
           .BuildGrid_panel__jk107.BuildGrid_active__jk108{display:flex;flex-direction:column;justify-content:flex-start;flex:1 1 auto;min-height:343px;animation:BuildGrid_fadeIn__jk109 .5s ease}
           @keyframes BuildGrid_fadeIn__jk109{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
           .BuildGrid_placeholder__jk110{display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;border:1.5px dashed var(--color-gray-300);border-radius:12px;color:var(--color-gray-400);font-size:13px;font-style:italic}
-          .BuildGrid_indicator__jk111{flex-shrink:0;width:30px;height:25.6px;align-self:flex-start;margin-top:0;display:flex;align-items:center;justify-content:center;overflow:visible}
+          .BuildGrid_indicator__jk111{flex-shrink:0;width:30px;height:1.55em;align-self:flex-start;margin-top:0;display:flex;align-items:center;justify-content:center;overflow:visible}
           .BuildGrid_indicatorDot__jk112{display:none}
-          .BuildGrid_indicatorArrow__jk113{display:block;flex-shrink:0;color:var(--color-blue-300);width:22px;height:22px;transition:color .3s ease;animation:BuildGrid_arrowPulse__jk121 1.8s ease-in-out infinite}
-          .BuildGrid_bullets__jk96 li.BuildGrid_active__jk108 .BuildGrid_indicator__jk111 .BuildGrid_indicatorArrow__jk113{display:block;color:var(--color-blue-600);width:30px;height:30px;animation:BuildGrid_arrowIn__jk114 .3s ease}
+          /* the unselected arrows are the darker blue and nudge, inviting a click;
+             the selected one goes pale and sits still */
+          .BuildGrid_indicatorArrow__jk113{display:block;flex-shrink:0;color:var(--color-blue-600);width:22px;height:22px;transition:color .3s ease;animation:BuildGrid_arrowPulse__jk121 1.8s ease-in-out infinite}
+          .BuildGrid_bullets__jk96 li.BuildGrid_active__jk108 .BuildGrid_indicator__jk111 .BuildGrid_indicatorArrow__jk113{display:block;color:var(--color-blue-300);width:22px;height:22px;animation:BuildGrid_arrowIn__jk114 .3s ease}
           @keyframes BuildGrid_arrowIn__jk114{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:translateX(0)}}
           @keyframes BuildGrid_arrowPulse__jk121{0%,100%{transform:translateX(0);opacity:.7}50%{transform:translateX(6px);opacity:1}}
           @media (prefers-reduced-motion:reduce){.BuildGrid_indicatorArrow__jk113,li.BuildGrid_active__jk108 .BuildGrid_indicatorArrow__jk113{animation:none}}
@@ -1704,7 +1791,7 @@
            </div>
            <!-- Panel 1: build from scratch -->
            <div class="BuildGrid_panel__jk107" data-panel="1">
-            <div class="BuildGrid_pillsLabel__jk98">The kind of thing you'll get hands-on with</div>
+            <div class="BuildGrid_pillsLabel__jk98">Get hands on with:</div>
             <div class="BuildGrid_pills__jk99" id="build-pills-wrap">
              <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Databases</span>
              <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Auth</span>
@@ -1720,6 +1807,18 @@
               if (!wrap) return;
               var pills = wrap.querySelectorAll('.BuildGrid_pill__jk100');
               var i = 0;
+              var j = 0;
+              // the language logos take their colour one by one, alongside the pills.
+              // the row is looked up lazily: this script runs before it exists in the DOM
+              function litNext() {
+               var langs = document.getElementById('build-langs-row');
+               var langItems = langs ? langs.querySelectorAll('.BuildGrid_lang__jk103') : [];
+               if (j < langItems.length) {
+                langItems[j].classList.add('BuildGrid_langLit__jk121');
+                j++;
+                setTimeout(litNext, 420);
+               }
+              }
               function tick() {
                if (i < pills.length) {
                 pills[i].classList.add('BuildGrid_pillChecked__jk116');
@@ -1730,7 +1829,9 @@
               var observer = new IntersectionObserver(function (entries) {
                entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
+                 // pills and language logos start together
                  setTimeout(tick, 300);
+                 setTimeout(litNext, 300);
                  observer.disconnect();
                 }
                });
@@ -1738,8 +1839,8 @@
               observer.observe(wrap);
              })();
             </script>
-            <div class="BuildGrid_langsLabel__jk101">Languages you'll code in</div>
-            <div class="BuildGrid_langs__jk102">
+            <div class="BuildGrid_langsLabel__jk101">Coding in these languages:</div>
+            <div class="BuildGrid_langs__jk102" id="build-langs-row">
              <div class="BuildGrid_lang__jk103">
               <div class="BuildGrid_langIcon__jk104"><svg viewBox="0 0 128 128" aria-hidden="true"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"/><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.142-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.928l-.048 29.83c0 6.343.33 12.155-.706 13.94-1.696 3.523-6.031 3.082-8.004 2.404-2.01-.986-3.034-2.379-4.224-4.354-.33-.572-.578-1.011-.66-1.045l-9.377 5.737c1.563 3.209 3.868 5.997 6.827 7.814 4.415 2.653 10.352 3.464 16.564 2.03 4.046-1.176 7.533-3.61 9.352-7.318 2.629-4.842 2.07-10.715 2.045-17.207.06-10.567.001-21.132.001-31.831z"/></svg></div>
               <span class="BuildGrid_langName__jk105">JavaScript</span>
@@ -1779,7 +1880,11 @@
              .PortfolioF_tag__jk162 svg{width:12px;height:12px;flex-shrink:0}
              /* a deck: all six sit stacked, the top one falls away to reveal the next */
              .PortfolioF_grid__jk160{position:relative;width:360px;height:270px;margin:16px auto 0;align-self:center;overflow:visible}
-             .PortfolioF_grid__jk160 .square-tile{position:absolute;inset:0;transform-origin:50% 50%;animation:PortfolioF_deck__jk161 15s cubic-bezier(.4,0,.2,1) infinite}
+             .PortfolioF_grid__jk160 .square-tile{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform,opacity;animation:PortfolioF_deck__jk161 15s linear infinite}
+             /* the front card takes a darker blue outline and a soft glow, faded in and out
+                on its own layer so nothing has to repaint during the drift */
+             .PortfolioF_grid__jk160 .square-tile::after{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;border:1.5px solid var(--color-blue-300);box-shadow:0 0 0 4px rgba(59,130,246,.12),0 0 20px 2px rgba(37,99,235,.24),0 14px 32px -8px rgba(37,99,235,.34);opacity:0;will-change:opacity;animation:PortfolioF_front__jk162 15s linear infinite;animation-delay:inherit}
+             @keyframes PortfolioF_front__jk162{0%,60%{opacity:0}72%{opacity:1}92%{opacity:1}95%,100%{opacity:0}}
              .PortfolioF_grid__jk160 .square-tile:nth-child(1){animation-delay:0s}
              .PortfolioF_grid__jk160 .square-tile:nth-child(2){animation-delay:-2.5s}
              .PortfolioF_grid__jk160 .square-tile:nth-child(3){animation-delay:-5s}
@@ -1787,18 +1892,25 @@
              .PortfolioF_grid__jk160 .square-tile:nth-child(5){animation-delay:-10s}
              .PortfolioF_grid__jk160 .square-tile:nth-child(6){animation-delay:-12.5s}
              @keyframes PortfolioF_deck__jk161{
-              /* the stack sits up and to the left, so its edges show on those two sides */
-              0%   {box-shadow:0 8px 20px -10px rgba(15,23,42,.25);transform:translate(-20px,-20px) scale(.985) rotate(-1deg);opacity:0;z-index:1}
-              8%   {box-shadow:0 8px 20px -10px rgba(15,23,42,.25);transform:translate(-20px,-20px) scale(.985) rotate(-1deg);opacity:1;z-index:1}
-              16%  {box-shadow:0 8px 20px -10px rgba(15,23,42,.25);transform:translate(-16px,-16px) scale(.988) rotate(.6deg);opacity:1;z-index:2}
-              32%  {box-shadow:0 8px 20px -10px rgba(15,23,42,.25);transform:translate(-12px,-12px) scale(.991) rotate(-.6deg);opacity:1;z-index:3}
-              48%  {box-shadow:0 8px 20px -10px rgba(15,23,42,.25);transform:translate(-8px,-8px)   scale(.994) rotate(.4deg);opacity:1;z-index:4}
-              64%  {box-shadow:0 8px 22px -10px rgba(37,99,235,.3);transform:translate(-4px,-4px)   scale(.997) rotate(-.3deg);opacity:1;z-index:5}
-              80%  {transform:translate(0,0) scale(1) rotate(0deg);opacity:1;z-index:6;box-shadow:0 0 0 3px rgba(59,130,246,.16),0 12px 30px -8px rgba(37,99,235,.38)}
-              92%  {transform:translate(0,0) scale(1) rotate(0deg);opacity:1;z-index:6;box-shadow:0 0 0 3px rgba(59,130,246,.16),0 12px 30px -8px rgba(37,99,235,.38)}
-              96%  {transform:translate(110%,80px)  scale(.95) rotate(11deg);opacity:1;z-index:6}
-              99%  {transform:translate(210%,190px) scale(.88) rotate(20deg);opacity:0;z-index:6}
-              100% {transform:translate(-20px,-20px) scale(.985) rotate(-1deg);opacity:0;z-index:1}
+              /* transform and opacity only: animating box-shadow here forced a full repaint of six
+                 blurred shadows every frame, which is what made the deck stutter.
+                 the stack sits up and to the left, so its edges show on those two sides.
+                 every step is linear and the rotation eases monotonically towards 0, so the
+                 creep up the deck reads as one continuous drift rather than six little hops */
+              0%   {animation-timing-function:linear;transform:translate(-20px,-20px) scale(.985) rotate(-1.2deg);opacity:0;z-index:1}
+              8%   {animation-timing-function:linear;transform:translate(-20px,-20px) scale(.985) rotate(-1.2deg);opacity:1;z-index:1}
+              16%  {animation-timing-function:linear;transform:translate(-16.8px,-16.8px) scale(.988) rotate(-1deg);opacity:1;z-index:2}
+              32%  {animation-timing-function:linear;transform:translate(-12.6px,-12.6px) scale(.991) rotate(-.75deg);opacity:1;z-index:3}
+              48%  {animation-timing-function:linear;transform:translate(-8.4px,-8.4px) scale(.994) rotate(-.5deg);opacity:1;z-index:4}
+              64%  {animation-timing-function:linear;transform:translate(-4.2px,-4.2px) scale(.997) rotate(-.25deg);opacity:1;z-index:5}
+              80%  {animation-timing-function:linear;transform:translate(0,0) scale(1) rotate(0deg);opacity:1;z-index:6}
+              /* it sits still while it is the front card, then leaves on an arc:
+                 easing in as it lifts away, out as it falls */
+              92%  {animation-timing-function:cubic-bezier(.45,0,.75,.35);transform:translate(0,0) scale(1) rotate(0deg);opacity:1;z-index:6}
+              95%  {animation-timing-function:linear;transform:translate(70%,-46px) scale(.97) rotate(8deg);opacity:1;z-index:6}
+              97.5%{animation-timing-function:cubic-bezier(.4,0,.9,.6);transform:translate(150%,-6px) scale(.92) rotate(15deg);opacity:1;z-index:6}
+              99.5%{transform:translate(240%,190px) scale(.85) rotate(23deg);opacity:0;z-index:6}
+              100% {transform:translate(-20px,-20px) scale(.985) rotate(-1.2deg);opacity:0;z-index:1}
              }
              @media (prefers-reduced-motion:reduce){
               .PortfolioF_grid__jk160 .square-tile{animation:none}
@@ -1827,10 +1939,12 @@
         .PortfolioF_grid__jk160 .square-tile .tile-art img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: 72% 50%;
+            object-fit: contain;
+            padding: 10px;
+            background: var(--color-gray-50);
             display: block;
         }
+
 
         .PortfolioF_grid__jk160 .square-tile .tile-caption {
             flex-shrink: 0;
@@ -1923,8 +2037,8 @@
 <div class="PortfolioF_grid__jk160">
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-todo.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-todo.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build your personal homepage</div>
@@ -1937,8 +2051,8 @@
 
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-weather.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-weather.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build a nutrition platform</div>
@@ -1951,8 +2065,8 @@
 
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-memory.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-memory.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build a learning platform</div>
@@ -1965,8 +2079,8 @@
 
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-calculator.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-calculator.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build a habit tracker</div>
@@ -1979,8 +2093,8 @@
 
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-chat.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-chat.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build a recipe box</div>
@@ -1993,8 +2107,8 @@
 
             <div class="square-tile motion-card">
                 <div class="tile-art">
-                    <div class="art-ghost"><img src="images/project-town.png" alt=""></div>
-                    <div class="art-built"><img src="images/project-town.png" alt=""></div>
+                    <div class="art-ghost"><img src="images/project-icons/icon-space-invaders.png" alt=""></div>
+                    <div class="art-built"><img src="images/project-icons/icon-space-invaders.png" alt=""></div>
                 </div>
                 <div class="tile-caption">
                     <div class="square-tile-title">Build an arcade game</div>
@@ -2012,22 +2126,33 @@
              .LiveQA_frame__jk111{position:relative;max-width:420px;margin:12px auto 0}
              .LiveQA_img__jk112{width:100%;height:auto;border-radius:16px;border:1px solid var(--color-gray-200);display:block;box-shadow:0 8px 24px rgba(0,0,0,.18)}
              .LiveQA_avatar__jk113{position:absolute;width:52px;height:52px;border-radius:999px;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0}
-             /* each face only appears while its own reaction is playing */
-             .LiveQA_avatar__jk113.LiveQA_avatarFloat__jk126{animation:LiveQA_avatarFloat__jk127 2.6s cubic-bezier(.34,1.56,.64,1)}
-             .LiveQA_avatar__jk113.LiveQA_avatarFloat__jk126{animation:LiveQA_avatarFloat__jk127 .7s cubic-bezier(.34,1.56,.64,1)}
+             /* each face is on screen for exactly one chat message: the 2.5s here plus the 700ms
+                delay in the script matches the 3.2s setInterval below, so the face leaves as its message is replaced */
+             .LiveQA_avatar__jk113.LiveQA_avatarFloat__jk126{animation:LiveQA_avatarFloat__jk127 2.5s cubic-bezier(.34,1.56,.64,1)}
              @keyframes LiveQA_avatarFloat__jk127{0%{transform:translateY(16px) scale(.7);opacity:0}12%{transform:translateY(-5px) scale(1.12);opacity:1}20%{transform:translateY(0) scale(1);opacity:1}78%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(6px) scale(.92);opacity:0}}
              /* emoji reactions drifting up from an avatar when its author posts */
              .LiveQA_emoji__jk128{position:absolute;z-index:3;pointer-events:none;font-size:20px;line-height:1;opacity:0;will-change:transform,opacity;animation:LiveQA_emojiRise__jk129 1.9s ease-out forwards}
              @keyframes LiveQA_emojiRise__jk129{0%{opacity:0;transform:translate(-50%,0) scale(.5)}15%{opacity:1;transform:translate(-50%,-10px) scale(1)}70%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--em-x,0px)),-72px) scale(1.05) rotate(var(--em-r,0deg))}}
              @media (prefers-reduced-motion:reduce){.LiveQA_emoji__jk128{display:none}}
-             .LiveQA_chatCard__jk115{position:absolute;top:-22px;right:-24px;z-index:2;width:222px;height:76px;background:#fff;border:1px solid var(--color-gray-200);border-radius:12px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.12);overflow:hidden}
-             .LiveQA_chatViewport__jk121{position:relative;width:100%;height:100%}
-             .LiveQA_chatItem__jk122{position:absolute;top:0;left:0;width:100%;display:flex;flex-direction:row;align-items:flex-start;gap:8px;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-             .LiveQA_chatItem__jk122.LiveQA_chatVisible__jk123{opacity:1;transform:translateY(0)}
-             .LiveQA_chatItem__jk122.LiveQA_chatLeaving__jk124{opacity:0;transform:translateY(-14px)}
-             .LiveQA_chatName__jk116{font-size:11px;font-weight:700;color:var(--color-blue-700)}
-             /* the speaker's photo, so it reads as a student talking */
-             .LiveQA_chatFace__jk160{flex-shrink:0;width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+             /* blue-bordered card, with a pointer on its left edge aimed at the speaker's photo */
+             /* blue-bordered card; the shadow is a filter so it traces the card and its
+                pointer as one silhouette rather than a plain rectangle */
+             .LiveQA_chatCard__jk115{position:absolute;top:-22px;right:-24px;z-index:2;width:200px;height:64px;min-height:64px;background:#fff;border:2px solid var(--color-blue-500);border-radius:12px;padding:10px;display:flex;align-items:center;transition:height .35s ease;filter:drop-shadow(0 5px 10px rgba(37,99,235,.22));overflow:visible}
+             /* the pointer is a rotated square, so it carries the same 1px border as the card */
+             .LiveQA_chatCard__jk115::before{content:"";position:absolute;left:-7px;top:50%;margin-top:-6px;width:12px;height:12px;background:#fff;border-left:2px solid var(--color-blue-500);border-bottom:2px solid var(--color-blue-500);border-radius:0 0 0 3px;transform:rotate(45deg);z-index:1}
+             /* hides the card's own border line where the pointer joins it, so the two borders
+                read as one continuous outline */
+             .LiveQA_chatCard__jk115::after{content:"";position:absolute;left:-2px;top:50%;margin-top:-5px;width:2px;height:10px;background:#fff;z-index:2}
+             /* clips the message animation vertically, but lets the photo sit outside the card */
+             .LiveQA_chatViewport__jk121{position:relative;flex:0 0 auto;width:100%;height:100%;transition:height .35s ease;overflow:clip;overflow-clip-margin:140px}
+             /* the message is centred in the card, so any rounding in the measured height
+                splits evenly and the padding reads the same top and bottom */
+             .LiveQA_chatItem__jk122{position:absolute;top:50%;left:0;width:100%;display:flex;flex-direction:row;align-items:flex-start;gap:8px;opacity:0;transform:translateY(calc(-50% + 14px));transition:opacity .5s ease,transform .5s ease}
+             .LiveQA_chatItem__jk122.LiveQA_chatVisible__jk123{opacity:1;transform:translateY(-50%)}
+             .LiveQA_chatItem__jk122.LiveQA_chatLeaving__jk124{opacity:0;transform:translateY(calc(-50% - 14px))}
+             .LiveQA_chatName__jk116{font-size:11px;font-weight:700;color:var(--color-blue-800);white-space:nowrap}
+             /* the speaker's photo sits outside the card, with the pointer aimed at it */
+             .LiveQA_chatFace__jk160{position:absolute;left:-68px;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--color-blue-500);background:#fff;box-shadow:0 6px 18px rgba(37,99,235,.18)}
              .LiveQA_chatBody__jk161{display:flex;flex-direction:column;gap:2px;min-width:0}
              .LiveQA_chatMsg__jk117{font-size:12px;font-weight:500;color:var(--color-gray-600);line-height:140%}
              .LiveQA_checks__jk118{max-width:420px;margin:20px auto 0;display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:center;gap:18px}
@@ -2054,6 +2179,14 @@
             <script>
              (function () {
               var viewport = document.getElementById('live-qa-chat-viewport');
+              function fitCard(item) {
+               if (!viewport || !item) return;
+               var card = viewport.closest('.LiveQA_chatCard__jk115');
+               if (!card) return;
+               var needed = item.scrollHeight;
+               viewport.style.height = needed + 'px';
+               card.style.height = (needed + 20) + 'px';
+              }
               if (!viewport) return;
               var frame = viewport.closest('.LiveQA_frame__jk111');
               var avatars = frame ? frame.querySelectorAll('[data-avatar-name]') : [];
@@ -2068,12 +2201,17 @@
               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
               var i = 0;
               var avatarTurn = 0;
+              // the first message ships in the markup, so size the card for it straight away
+              fitCard(viewport.querySelector('.LiveQA_chatItem__jk122'));
+              // the face that pops up is deliberately NOT the person in the chat card:
+              // it reads as another student reacting to what was just said
               function floatAvatar(name) {
                if (!avatars.length) return;
-               var match = null;
-               avatars.forEach(function (a) { if (a.dataset.avatarName === name) match = a; });
-               var target = match || avatars[avatarTurn % avatars.length];
-               if (!match) avatarTurn++;
+               var others = [];
+               avatars.forEach(function (a) { if (a.dataset.avatarName !== name) others.push(a); });
+               if (!others.length) others = Array.prototype.slice.call(avatars);
+               var target = others[avatarTurn % others.length];
+               avatarTurn++;
                target.classList.remove('LiveQA_avatarFloat__jk126');
                void target.offsetWidth;
                target.classList.add('LiveQA_avatarFloat__jk126');
@@ -2111,7 +2249,9 @@
                 + '<div class="LiveQA_chatBody__jk161"><span class="LiveQA_chatName__jk116">' + messages[i].name + '</span>'
                 + '<span class="LiveQA_chatMsg__jk117">' + messages[i].msg + '</span></div>';
                viewport.appendChild(next);
-               floatAvatar(messages[i].name);
+               // the card grows to fit a message that needs two lines, and shrinks back after
+               fitCard(next);
+               (function (who) { setTimeout(function () { floatAvatar(who); }, 700); })(messages[i].name);
                requestAnimationFrame(function () {
                 requestAnimationFrame(function () {
                  next.classList.add('LiveQA_chatVisible__jk123');
@@ -2354,7 +2494,7 @@
        </h3>
        <div class="SoundFun_rule__jk65"></div>
        <style>
-        .PricingParagraph_smaller__jk30{font-size:19px;font-weight:400;color:var(--color-gray-600);max-width:690px;margin-inline:auto;text-align:center}
+        .PricingParagraph_smaller__jk30{font-size:19px;font-weight:500;color:var(--color-gray-600);max-width:690px;margin-inline:auto;text-align:center}
        </style>
        <p class="PricingParagraph_smaller__jk30">
         The core "learn to code" curriculum is entirely free. The rest, where you follow me building real projects, costs just $19/month.
@@ -3099,19 +3239,20 @@
          <div class="ex-note">
           <!-- Decorative Exercism motif shapes, hidden from screen readers -->
           <span class="ex-shape ex-sq" aria-hidden="true"></span>
-          <svg class="ex-shape ex-zig" aria-hidden="true" width="70" height="20" viewBox="0 0 70 20" fill="none">
-           <path d="M2 14L14 4L26 14L38 4L50 14L62 4" stroke="#1b1449" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg class="ex-shape ex-zig" aria-hidden="true" width="30" height="30" viewBox="0 0 30 30" fill="none">
+           <path d="M4 16L16 4M8 26L20 14" stroke="#1b1449" stroke-width="3" stroke-linecap="round"/>
           </svg>
-          <svg class="ex-shape ex-tri" aria-hidden="true" width="34" height="30" viewBox="0 0 34 30" fill="none">
-           <path d="M17 3L32 27H2L17 3Z" stroke="#f0b429" stroke-width="2.5" stroke-linejoin="round"/>
-          </svg>
+          <span class="ex-shape ex-tri" aria-hidden="true">
+           <svg width="36" height="30" viewBox="0 0 36 30" fill="none">
+            <path d="M18 27L2.5 3h31L18 27Z" stroke="#1b1449" stroke-width="3" stroke-linejoin="round" fill="#fff"/>
+           </svg>
+          </span>
           <span class="ex-shape ex-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
           <span class="ex-shape ex-diamond" aria-hidden="true"></span>
 
           <div class="ex-eyebrow">
            From the makers of
-           <span class="ex-chip"><img src="assets/exercism-logo.png" alt="" aria-hidden="true"></span>
-           <span class="ex-name">Exercism</span>
+           <img class="ex-wordmark" src="assets/exercism-wordmark.png" alt="Exercism">
           </div>
           <h2>The leading education platform for <span class="ex-highlight">coding practice</span></h2>
           <p class="ex-support">Jiki is built by the same team behind Exercism. Everything they learned getting people to actually finish is baked into Jiki from day one.</p>
