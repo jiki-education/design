@@ -621,26 +621,39 @@ reviewable; worth correcting across the ideas pages in one pass.
         }
         .callout h3 { font-size: 0.95rem; margin-bottom: 0.25rem; }
         .callout p { font-size: 0.82rem; line-height: 1.5; }
-        /* the fifth callout sits under the frame rather than beside it, since
-           there are only four margins and five things to say */
-        .callout--below {
-            position: static;
-            max-width: 380px;
-            margin-inline: auto;
-            text-align: center;
-        }
 
-        /* the little pointer dot that sits on the UI the callout refers to */
-        .pin {
+        /* Idea 5's margins are columns pinned to the top and bottom of the frame,
+           with the callouts spaced inside them. Distributing rather than placing
+           each one at a hand-picked percentage is what guarantees they always sit
+           within the height of the video, whatever the copy runs to. */
+        .callout-col {
             position: absolute;
-            z-index: 4;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--color-purple-600);
-            box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.25);
-            animation: pulse 2s ease-out infinite;
+            top: 0;
+            bottom: 0;
+            width: 230px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            gap: 0.75rem;
         }
+        .callout-col .callout {
+            position: static;
+            max-width: none;
+            opacity: 1;
+            border: 2px solid transparent;
+            /* each callout is lit for its own 3s of the same 15s loop the bar runs on,
+               so the bar along the bottom is a guide to which one is being shown */
+            animation: callout-live 15s linear infinite;
+        }
+        @keyframes callout-live {
+            0%, 20% {
+                border-color: var(--color-purple-500);
+                box-shadow: 0 12px 30px rgba(147, 51, 234, 0.24);
+            }
+            20.01%, 100% {
+                border-color: transparent;
+                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+            }}
 
         /* ---- Idea 6: the same callouts as tilted stickers on the frame ---- */
         .sticker {
@@ -730,17 +743,19 @@ reviewable; worth correcting across the ideas pages in one pass.
 
         @media (prefers-reduced-motion: reduce) {
             .chapter-fill { width: 20%; animation: none; }
-            .chapter b, .chapter h3, .callout, .pin, .live-pill b { animation: none; }
+            .chapter b, .chapter h3, .callout, .live-pill b { animation: none; }
             .callout { opacity: 1; }
             .chapter:first-child h3 { color: var(--color-purple-600); }
-            .chapter:first-child b { background: var(--color-purple-500); }}
+            .chapter:first-child b { background: var(--color-purple-500); }
+            /* the cycle stops, so the first callout stays lit rather than none of them */
+            .callout-col:first-of-type .callout:first-child { border-color: var(--color-purple-500); }}
 
         @media (max-width: 900px) {
-            /* the margins disappear, so the floated callouts come back into flow */
+            /* the margins disappear, so the callout columns come back into flow and
+               stack under the video rather than sitting over it */
             .demo { padding-inline: 0 !important; }
             .callout { position: static; max-width: none; margin-bottom: 1rem; }
-            .callout--below { margin-bottom: 0; }
-            .pin { display: none; }
+            .callout-col { position: static; width: auto; display: block; padding-top: 1rem; }
             .chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1rem; }}</style>
 </head>
 <body class="ui-body">
@@ -1005,7 +1020,7 @@ reviewable; worth correcting across the ideas pages in one pass.
     <div class="idea">
         <div class="idea-label">
             <h2>5. Centre stage, callouts in the margins</h2>
-            <span>One running demo in the middle, the five callouts around it. Nothing sits over the interface, so the demo is never obscured. The video answer to idea 3.</span>
+            <span>One running demo in the middle, the five callouts around it, and a progress bar along the bottom. Each callout lights as the recording reaches it, so the bar is a guide to which one is being shown. Nothing sits over the interface.</span>
         </div>
         <div class="panel">
             <div style="max-width: 760px; margin: 0 auto 2.5rem; text-align: center;">
@@ -1020,37 +1035,45 @@ reviewable; worth correcting across the ideas pages in one pass.
                         <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
                         <span>jiki.io — Solve the Maze</span>
                     </div>
-                    <video src="assets/learn-to-code-demo.mov" autoplay muted loop playsinline aria-label="Screen recording of the Jiki editor solving the maze exercise"></video>
+                    <video src="assets/learn-to-code-demo.mov" autoplay muted loop playsinline aria-label="Screen recording of the Jiki editor working through five moments"></video>
                     <div class="live-pill"><b></b> Live demo</div>
+                    <!-- the same bar as idea 7: one fill across the whole recording, with
+                         a tick at each of the five boundaries -->
+                    <div class="chapter-track" aria-hidden="true">
+                        <div class="chapter-fill"></div>
+                        <span class="chapter-tick" style="left: 20%"></span>
+                        <span class="chapter-tick" style="left: 40%"></span>
+                        <span class="chapter-tick" style="left: 60%"></span>
+                        <span class="chapter-tick" style="left: 80%"></span>
+                    </div>
                 </div>
 
-                <div class="callout" style="top: 8%; left: 0; animation-delay: 0.2s;">
-                    <h3 class="cx-label">Errors in plain English</h3>
-                    <p class="cx-copy">When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
+                <!-- three in the left margin, two in the right, spaced inside columns
+                     that run the full height of the frame so none can fall outside it -->
+                <div class="callout-col" style="left: 0;">
+                    <div class="callout" style="animation-delay: 0s;">
+                        <h3 class="cx-label">Errors in plain English</h3>
+                        <p class="cx-copy">When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
+                    </div>
+                    <div class="callout" style="animation-delay: 3s;">
+                        <h3 class="cx-label">Rewind your own code</h3>
+                        <p class="cx-copy">Step back through every instruction and watch exactly what happened, one line at a time.</p>
+                    </div>
+                    <div class="callout" style="animation-delay: 6s;">
+                        <h3 class="cx-label">Help, not answers</h3>
+                        <p class="cx-copy">Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
+                    </div>
                 </div>
-                <div class="callout" style="top: 52%; left: 0; animation-delay: 0.8s;">
-                    <h3 class="cx-label">Rewind your own code</h3>
-                    <p class="cx-copy">Step back through every instruction and watch exactly what happened, one line at a time.</p>
+                <div class="callout-col" style="right: 0;">
+                    <div class="callout" style="animation-delay: 9s;">
+                        <h3 class="cx-label">See what your code did</h3>
+                        <p class="cx-copy">Your instructions, playing out in front of you. No guessing what the computer heard.</p>
+                    </div>
+                    <div class="callout" style="animation-delay: 12s;">
+                        <h3 class="cx-label">Stretched, Never Stranded</h3>
+                        <p class="cx-copy">The next step is always within reach, and always a step up.</p>
+                    </div>
                 </div>
-                <div class="callout" style="top: 8%; right: 0; animation-delay: 0.5s;">
-                    <h3 class="cx-label">Help, not answers</h3>
-                    <p class="cx-copy">Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
-                </div>
-                <div class="callout" style="top: 52%; right: 0; animation-delay: 1.1s;">
-                    <h3 class="cx-label">See what your code did</h3>
-                    <p class="cx-copy">Your instructions, playing out in front of you. No guessing what the computer heard.</p>
-                </div>
-
-                <!-- pins on the part of the interface each callout points at -->
-                <div class="pin" style="top: 14%; left: 272px;"></div>
-                <div class="pin" style="top: 58%; left: 300px;"></div>
-                <div class="pin" style="top: 16%; right: 276px;"></div>
-                <div class="pin" style="top: 66%; right: 300px;"></div>
-            </div>
-
-            <div class="callout callout--below" style="animation-delay: 1.4s;">
-                <h3 class="cx-label">Stretched, Never Stranded</h3>
-                <p class="cx-copy">The next step is always within reach, and always a step up.</p>
             </div>
         </div>
     </div>
@@ -1080,7 +1103,7 @@ reviewable; worth correcting across the ideas pages in one pass.
                     <video src="assets/learn-to-code-demo.mov" autoplay muted loop playsinline aria-label="Screen recording of the Jiki editor solving the maze exercise"></video>
                 </div>
 
-                <div class="callout sticker" style="top: -26px; left: -46px; transform: rotate(-4deg); max-width: 210px; animation-delay: 0.2s;">
+                <div class="callout sticker" style="top: 3%; left: -46px; transform: rotate(-4deg); max-width: 210px; animation-delay: 0.2s;">
                     <h3 class="cx-label">Errors in plain English</h3>
                     <p class="cx-copy">Told to you in normal English, not jargon.</p>
                 </div>
@@ -1096,7 +1119,7 @@ reviewable; worth correcting across the ideas pages in one pass.
                     <h3 class="cx-label">See what your code did</h3>
                     <p class="cx-copy">Watch it play out in front of you.</p>
                 </div>
-                <div class="callout sticker" style="bottom: -30px; left: 22%; transform: rotate(-2deg); max-width: 250px; animation-delay: 1.8s;">
+                <div class="callout sticker" style="bottom: 3%; left: 22%; transform: rotate(-2deg); max-width: 250px; animation-delay: 1.8s;">
                     <h3 class="cx-label">Stretched, Never Stranded</h3>
                     <p class="cx-copy">The next step is always within reach, and always a step up.</p>
                 </div>
