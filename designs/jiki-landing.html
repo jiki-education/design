@@ -1920,12 +1920,14 @@
             so no label or arrow ever covers an image and the three columns line up */
          /* the three visuals share a top edge so the row reads as one band, whatever
             each one's natural height is */
-         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:flex-start;justify-content:center;margin-bottom:22px}
+         /* the three visuals are different heights, so centre each in the same fixed box
+            and they sit on a shared middle line rather than a shared top edge */
+         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
          .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:18px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
          .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
          /* 01: the certificate, with the share card and the verification chip */
-         .cert-outcomes .co-cert{position:relative;width:72%}
+         .cert-outcomes .co-cert{position:relative;width:calc(72% + 45px)}
          .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0)}
          .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:#0A66C2;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
          .cert-outcomes .co-verify svg{width:14px;height:14px}
@@ -1943,30 +1945,23 @@
          }
          @media (prefers-reduced-motion:reduce){.cert-outcomes .co-splash{animation:none}}
          /* 02: three project cards fanned out, same anatomy as the square tiles above */
-                  /* four project cards in a 2x2 grid, each nudged off square so the set still
-            reads as things laid out by hand rather than a table */
-         /* the four cards sit in a folder of finished work: a tabbed manila wallet with a
-            front flap the cards tuck behind */
-         .cert-outcomes .co-folder{position:relative;width:78%;padding:20px 14px 24px;border-radius:2px 3px 3px 3px;background:linear-gradient(180deg,var(--color-amber-100) 0%,var(--color-amber-200) 100%);box-shadow:0 10px 26px -12px rgba(30,20,10,.6)}
-         /* the tab */
-         .cert-outcomes .co-folder::before{content:"";position:absolute;top:-13px;left:16px;width:108px;height:14px;border-radius:3px 3px 0 0;background:var(--color-amber-100)}
-         /* the front flap, sat over the bottom of the cards */
-         .cert-outcomes .co-folder::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,var(--color-amber-200) 0%,var(--color-amber-300) 100%);box-shadow:0 -1px 2px rgba(30,20,10,.14);z-index:2}
-         /* one card at a time: they are stacked, and each takes its turn in the folder */
-         /* the cards sit 30px narrower than the folder, so more of the wallet shows either side */
-         .cert-outcomes .co-fan{position:relative;z-index:1;width:calc(100% - 30px);height:162px;margin-inline:auto}
+         /* four finished project cards, all four on show at once in a 2x2 grid - the point
+            of the outcome is that there are lots of them, so showing them together says it
+            faster than cycling one at a time did */
+         .cert-outcomes .co-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:calc(92% - 16px)}
+         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;background:#fff;border:1px solid var(--color-gray-200);border-radius:6px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45)}
          /* each one is finished, so it carries a tick */
-         .cert-outcomes .co-done{position:absolute;top:8px;right:8px;z-index:3;width:24px;height:24px;border-radius:999px;background:var(--color-green-500);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);animation:co-tickPop 13.2s linear infinite}
-         .cert-outcomes .co-done svg{width:14px;height:14px}
+         .cert-outcomes .co-done{position:absolute;top:6px;right:6px;z-index:3;width:20px;height:20px;border-radius:999px;background:var(--color-green-500);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);animation:co-tickPop 9s linear infinite}
+         .cert-outcomes .co-done svg{width:11px;height:11px}
          /* the ring lives on a pseudo element so the tick keeps its own drop shadow */
-         .cert-outcomes .co-done::after{content:"";position:absolute;inset:-2px;border-radius:999px;animation:co-tickRing 13.2s linear infinite}
-         /* each tick pops just after its own card lands, so it reads as the card being marked done */
+         .cert-outcomes .co-done::after{content:"";position:absolute;inset:-2px;border-radius:999px;animation:co-tickRing 9s linear infinite}
+         /* the four ticks pop in turn, so the set reads as work being completed one by one */
          .cert-outcomes .co-tile:nth-child(2) .co-done,
-         .cert-outcomes .co-tile:nth-child(2) .co-done::after{animation-delay:-3.3s}
+         .cert-outcomes .co-tile:nth-child(2) .co-done::after{animation-delay:.45s}
          .cert-outcomes .co-tile:nth-child(3) .co-done,
-         .cert-outcomes .co-tile:nth-child(3) .co-done::after{animation-delay:-6.6s}
+         .cert-outcomes .co-tile:nth-child(3) .co-done::after{animation-delay:.9s}
          .cert-outcomes .co-tile:nth-child(4) .co-done,
-         .cert-outcomes .co-tile:nth-child(4) .co-done::after{animation-delay:-9.9s}
+         .cert-outcomes .co-tile:nth-child(4) .co-done::after{animation-delay:1.35s}
          @keyframes co-tickPop{
           0%,3%{transform:scale(.3)}
           7%{transform:scale(1.3)}
@@ -1978,31 +1973,15 @@
           16%{box-shadow:0 0 0 13px rgba(16,185,129,0)}
           100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}
          }
-         .cert-outcomes .co-tile{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-gray-200);border-radius:6px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45);opacity:0;animation:co-cardCycle 13.2s linear infinite}
-         .cert-outcomes .co-tile:nth-child(2){animation-delay:-3.3s}
-         .cert-outcomes .co-tile:nth-child(3){animation-delay:-6.6s}
-         .cert-outcomes .co-tile:nth-child(4){animation-delay:-9.9s}
-         /* each card is visible for slightly longer than the 25% gap between them, so one
-            is always in the folder rather than it flashing empty between cards */
-         @keyframes co-cardCycle{
-          0%{opacity:0;transform:translateY(10px) scale(.97)}
-          2%{opacity:1;transform:translateY(0) scale(1)}
-          25%{opacity:1;transform:translateY(0) scale(1)}
-          27%{opacity:0;transform:translateY(-10px) scale(.97)}
-          100%{opacity:0;transform:translateY(10px) scale(.97)}
-         }
          @media (prefers-reduced-motion:reduce){
-          .cert-outcomes .co-tile{animation:none;opacity:0}
-          .cert-outcomes .co-tile:first-child{opacity:1}
           .cert-outcomes .co-done,.cert-outcomes .co-done::after{animation:none;transform:none}
          }
          .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;background:var(--color-gray-50)}
-         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:12px;background:var(--color-gray-50);display:block}
-         /* the white strip: title centred, tags underneath, as on the full card */
-         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 12px 11px;text-align:center}
-         .cert-outcomes .co-tile .co-cap .co-t{font-size:10px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
-         .cert-outcomes .co-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:4px}
-         .cert-outcomes .co-tags span{display:inline-flex;align-items:center;padding:1px 6px;border-radius:999px;background:var(--color-blue-50);color:var(--color-blue-700);border:1px solid var(--color-blue-100);font-size:8.5px;font-weight:600;line-height:1.3;white-space:nowrap}
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:8px;background:var(--color-gray-50);display:block}
+         /* at quarter size the card carries the title only - the tags are unreadable here
+            and the titles already say what each project is */
+         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:7px 8px 8px;text-align:center;border-top:1px solid var(--color-gray-100)}
+         .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
          /* 03: a snippet of unfamiliar code, one line marked up */
          .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden}
          .cert-outcomes .co-code .co-bar{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.09)}
@@ -2013,88 +1992,6 @@
          .cert-outcomes .co-code .str{color:var(--color-green-200)}
          .cert-outcomes .co-code .cmt{color:var(--color-gray-500)}
          .cert-outcomes .co-code .hit{display:block;background:rgba(251,191,36,.14);box-shadow:inset 3px 0 0 var(--color-amber-300);margin-inline:-14px;padding-inline:14px}
-         /* 03 alternates between the code snippet and the architecture diagram: reading
-            unfamiliar code and knowing how the pieces fit are the same understanding */
-         /* the two states are driven by a class rather than a keyframe loop, so the dots
-            above can switch between them. The snippet gets a shorter turn than the
-            diagram: it is the quicker of the two to read. */
-         .cert-outcomes .co-swap{position:relative;width:96%}
-         .cert-outcomes .co-swap > .co-code,
-         .cert-outcomes .co-swap > .co-arch{opacity:0;transition:opacity .35s ease}
-         .cert-outcomes .co-swap > .co-code{position:relative}
-         .cert-outcomes .co-swap > .co-arch{position:absolute;inset:0}
-         .cert-outcomes .co-swap.is-a > .co-code{opacity:1}
-         .cert-outcomes .co-swap.is-b > .co-arch{opacity:1}
-         /* the call-out points at a line of the snippet, so it belongs to that state */
-         .cert-outcomes .co-col:last-child .co-anno,
-         .cert-outcomes .co-col:last-child .co-arrow{opacity:0;transition:opacity .35s ease}
-         .cert-outcomes .co-col:last-child.is-a .co-anno,
-         .cert-outcomes .co-col:last-child.is-a .co-arrow{opacity:1}
-         /* the dots: above the card, out of flow so the three columns stay top aligned */
-         .cert-outcomes .co-dots{position:absolute;top:-28px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:6}
-         .cert-outcomes .co-dots button{width:9px;height:9px;padding:0;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.18);cursor:pointer;transition:background-color .25s ease,border-color .25s ease,transform .25s ease}
-         .cert-outcomes .co-dots button:hover{background:rgba(255,255,255,.45)}
-         .cert-outcomes .co-dots button[aria-selected="true"]{background:var(--color-amber-300);border-color:var(--color-amber-300);transform:scale(1.25)}
-         .cert-outcomes .co-dots button:focus-visible{outline:2px solid var(--color-amber-300);outline-offset:3px}
-         @media (prefers-reduced-motion:reduce){
-          .cert-outcomes .co-swap > .co-code,
-          .cert-outcomes .co-swap > .co-arch,
-          .cert-outcomes .co-col:last-child .co-anno,
-          .cert-outcomes .co-col:last-child .co-arrow{transition:none}
-          .cert-outcomes .co-arch .co-node,
-          .cert-outcomes .co-arch .co-wire,
-          .cert-outcomes .co-arch .co-parts span,
-          .cert-outcomes .co-col:last-child .co-anno,
-          .cert-outcomes .co-col:last-child .co-arrow{animation:none}
-         }
-         /* the diagram, on white so it reads as a document rather than a second terminal */
-         .cert-outcomes .co-arch{border-radius:10px;background:#fff;border:1px solid var(--color-gray-200);box-shadow:0 16px 40px rgba(0,0,0,.45);padding:20px;display:flex;flex-direction:column;justify-content:center;gap:0}
-         /* the request path across the top */
-         .cert-outcomes .co-arch .co-path{display:flex;align-items:center;gap:5px}
-         .cert-outcomes .co-arch .co-node{flex:1;padding:10px 4px;border-radius:7px;border:1px solid var(--color-blue-200);background:var(--color-blue-50);color:var(--color-blue-800);font-size:10.5px;font-weight:700;text-align:center;white-space:nowrap;transition:none}
-         .cert-outcomes .co-arch .co-wire{flex-shrink:0;width:9px;height:1.5px;background:var(--color-blue-300)}
-         /* the drop line down to the pieces that hang off it */
-         .cert-outcomes .co-arch .co-drop{height:12px;margin-inline:12%;border-left:1.5px dashed var(--color-blue-200);border-right:1.5px dashed var(--color-blue-200);border-bottom:1.5px dashed var(--color-blue-200)}
-         .cert-outcomes .co-arch .co-parts{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:12px}
-         .cert-outcomes .co-arch .co-parts span{padding:5px 9px;border-radius:999px;border:1px solid var(--color-blue-200);background:#fff;color:var(--color-blue-700);font-size:10px;font-weight:600;line-height:1.2;white-space:nowrap}
-
-         /* Each element lights up in turn, so the diagram walks the request through:
-            browser, frontend, API, database, then the pieces hanging off it. The delays
-            are absolute positions in the same 14s cycle as the swap, chosen to land
-            inside the window where the diagram is the visible state (7s to 13s). */
-         .cert-outcomes .co-swap.is-b .co-arch .co-node,
-         .cert-outcomes .co-swap.is-b .co-arch .co-wire,
-         .cert-outcomes .co-swap.is-b .co-arch .co-parts span{animation-duration:9s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-         .cert-outcomes .co-swap.is-b .co-arch .co-node{animation-name:co-nodeOn}
-         .cert-outcomes .co-swap.is-b .co-arch .co-wire{animation-name:co-wireOn}
-         .cert-outcomes .co-swap.is-b .co-arch .co-parts span{animation-name:co-partOn}
-         .cert-outcomes .co-arch .co-path > :nth-child(1){animation-delay:0.35s}
-         .cert-outcomes .co-arch .co-path > :nth-child(2){animation-delay:0.7s}
-         .cert-outcomes .co-arch .co-path > :nth-child(3){animation-delay:1.05s}
-         .cert-outcomes .co-arch .co-path > :nth-child(4){animation-delay:1.4s}
-         .cert-outcomes .co-arch .co-path > :nth-child(5){animation-delay:1.75s}
-         .cert-outcomes .co-arch .co-path > :nth-child(6){animation-delay:2.1s}
-         .cert-outcomes .co-arch .co-path > :nth-child(7){animation-delay:2.45s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(1){animation-delay:3.3s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(2){animation-delay:3.44s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(3){animation-delay:3.58s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(4){animation-delay:3.72s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(5){animation-delay:3.86s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(6){animation-delay:4s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(7){animation-delay:4.14s}
-         @keyframes co-nodeOn{
-          0%,11%,100%{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-800);box-shadow:none;transform:translateY(0)}
-          3%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
-          7%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
-         }
-         @keyframes co-wireOn{
-          0%,11%,100%{background:var(--color-blue-300);transform:scaleX(1)}
-          3%,7%{background:var(--color-blue-600);transform:scaleX(1.35)}
-         }
-         @keyframes co-partOn{
-          0%,11%,100%{background:#fff;border-color:var(--color-blue-200);color:var(--color-blue-700);transform:translateY(0)}
-          3%,7%{background:var(--color-blue-100);border-color:var(--color-blue-400);color:var(--color-blue-800);transform:translateY(-2px)}
-         }
          @media (max-width:900px){.cert-outcomes .co-cols{grid-template-columns:1fr;gap:44px}.cert-outcomes .co-anno,.cert-outcomes .co-arrow{display:none}}
         </style>
         <div class="cert-outcomes">
@@ -2146,28 +2043,26 @@
           </div>
           <div class="co-col">
            <div class="co-viz">
-            <div class="co-folder">
-             <div class="co-fan">
+            <div class="co-grid">
              <div class="co-tile">
               <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-todo.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build a habit tracker</div><div class="co-tags"><span>Databases</span><span>Auth</span></div></div>
+              <div class="co-cap"><div class="co-t">Build a habit tracker</div></div>
              </div>
              <div class="co-tile">
               <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-weather.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build your personal homepage</div><div class="co-tags"><span>HTML/CSS</span><span>Git</span></div></div>
+              <div class="co-cap"><div class="co-t">Build your homepage</div></div>
              </div>
              <div class="co-tile">
               <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-memory.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build a recipe box</div><div class="co-tags"><span>APIs</span><span>Frontends</span></div></div>
+              <div class="co-cap"><div class="co-t">Build a recipe box</div></div>
              </div>
              <div class="co-tile">
               <span class="co-done" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
               <div class="co-art"><img src="images/project-icons/icon-space-invaders.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build an arcade game</div><div class="co-tags"><span>Canvas</span><span>Game loop</span></div></div>
-             </div>
+              <div class="co-cap"><div class="co-t">Build an arcade game</div></div>
              </div>
             </div>
            </div>
@@ -2181,12 +2076,6 @@
           </div>
           <div class="co-col">
            <div class="co-viz">
-            <!-- two dots so the reader can switch states rather than only wait -->
-            <div class="co-dots" role="tablist" aria-label="Choose which view to show">
-             <button type="button" role="tab" aria-selected="true" aria-label="Reading unfamiliar code"></button>
-             <button type="button" role="tab" aria-selected="false" aria-label="How the pieces fit together"></button>
-            </div>
-            <div class="co-swap">
             <div class="co-code">
              <div class="co-bar"><i></i><i></i><i></i></div>
 <pre><span class="cmt"># code you've never seen</span>
@@ -2197,24 +2086,8 @@
     <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
       <span class="kw">return</span> cell</pre>
             </div>
-            <!-- the other half of the same understanding: how the pieces fit together.
-                 Ported from the Learn to Build card of two-parts-ideas.html. -->
-            <div class="co-arch" aria-label="How the pieces fit together: browser, frontend, API and database, with auth, caching, queues, emails, payments, testing and deploys hanging off them">
-             <div class="co-path">
-              <span class="co-node">Browser</span><span class="co-wire"></span>
-              <span class="co-node">Frontend</span><span class="co-wire"></span>
-              <span class="co-node">API</span><span class="co-wire"></span>
-              <span class="co-node">Database</span>
-             </div>
-             <div class="co-drop" aria-hidden="true"></div>
-             <div class="co-parts">
-              <span>Auth</span><span>Caching</span><span>Queues</span><span>Emails</span>
-              <span>Payments</span><span>Testing</span><span>Deploys</span>
-             </div>
-            </div>
-            </div>
-            <span class="co-anno" style="bottom:-6px;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
-            <svg class="co-arrow" style="bottom:28px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
+            <span class="co-anno" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+            <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
              <path d="M70 21C52 19 26 13 6 3"/>
              <path d="M15 2L4 3l5 9"/>
             </svg>
@@ -2228,42 +2101,6 @@
            </div>
           </div>
          </div>
-         <script>
-          // Outcome 03 alternates between the snippet and the diagram. The snippet takes a
-          // shorter turn: it is the quicker read of the two. Clicking either dot picks a
-          // state and stops the rotation, since the reader has taken over at that point.
-          (function () {
-           var col = document.querySelector('.cert-outcomes .co-col:last-child');
-           if (!col) return;
-           var swap = col.querySelector('.co-swap');
-           var dots = col.querySelectorAll('.co-dots button');
-           if (!swap || dots.length !== 2) return;
-
-           var HOLD = [4600, 9000];   // snippet, then diagram
-           var current = 0, timer = null, auto = false;
-
-           function show(n) {
-            current = n;
-            var first = n === 0;
-            swap.classList.toggle('is-a', first);
-            swap.classList.toggle('is-b', !first);
-            col.classList.toggle('is-a', first);
-            col.classList.toggle('is-b', !first);
-            dots.forEach(function (d, k) { d.setAttribute('aria-selected', k === n ? 'true' : 'false'); });
-           }
-           function queue() {
-            clearTimeout(timer);
-            if (!auto) return;
-            timer = setTimeout(function () { show(current === 0 ? 1 : 0); queue(); }, HOLD[current]);
-           }
-           dots.forEach(function (d, k) {
-            d.addEventListener('click', function () { auto = false; clearTimeout(timer); show(k); });
-           });
-
-           show(0);
-           if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { auto = true; queue(); }
-          })();
-         </script>
          <script>
           (function () {
            var list = document.getElementById('co-checklist');
@@ -2425,10 +2262,12 @@
        /* The same looping dashed doodle used beside the "Make Games" heading, rotated so
           it flows from Thom's card down into the section heading. Pinned to the page
           centre line: the quote row is content-sized (976px) rather than container-width,
-          so Thom's card sits a fixed ~359px right of centre at every desktop width. */
-       .SectionStitch_arrow__jk191{position:absolute;top:-110px;left:calc(50% + 34px);width:250px;height:auto;opacity:.45;transform:rotate(35deg);pointer-events:none}
-       /* below 900px the quote row stacks, so the card is no longer where the arrow points */
-       @media (max-width:1024px){.SectionStitch_arrow__jk191{display:none}}
+          so Thom's card sits a fixed ~359px right of centre at every desktop width, with
+          its right edge at roughly +488px. The arrow starts just past that edge. */
+       .SectionStitch_arrow__jk191{position:absolute;top:-110px;left:calc(50% + 500px);width:200px;height:auto;opacity:.45;transform:rotate(35deg);pointer-events:none}
+       /* it now sits outside the quote row, so it needs a wide viewport to have room:
+          below this the row stacks or the arrow would push the page sideways */
+       @media (max-width:1400px){.SectionStitch_arrow__jk191{display:none}}
       </style>
       <div class="SectionStitch_stitch__jk190" aria-hidden="true">
        <img class="SectionStitch_arrow__jk191" src="images/heading-arrow-loop.png" alt="" aria-hidden="true">
@@ -2945,18 +2784,18 @@
        .PrintRow_print__jk196:nth-child(3){transform:rotate(3deg);z-index:2}
        /* the middle print is the one on top of the pile: straight, a size up, and with
           a deeper shadow, so the two either side read as tossed in behind it. It's also
-          the project you actually build first, so it carries a purple ring and a slow
-          breathing glow to single it out from the other two */
+          the project you actually build first, so it carries a slow breathing glow to
+          single it out from the other two - the glow alone, with no ring around it */
        .PrintRow_print__jk196:nth-child(2){
         width:196px;transform:rotate(0deg);z-index:3;
-        box-shadow:0 0 0 3px rgba(168,85,247,.5),0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 30px 4px rgba(168,85,247,.28);
+        box-shadow:0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 30px 4px rgba(168,85,247,.28);
         animation:PrintRow_first-glow__jk204 3.2s ease-in-out infinite;
        }
        /* the glow swells and the print grows a touch on the same beat, so it reads as
           breathing rather than just flashing */
        @keyframes PrintRow_first-glow__jk204{
-        0%,100%{transform:scale(1);box-shadow:0 0 0 3px rgba(168,85,247,.42),0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 24px 2px rgba(168,85,247,.2)}
-        50%{transform:scale(1.035);box-shadow:0 0 0 3px rgba(168,85,247,.72),0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 42px 8px rgba(168,85,247,.42)}
+        0%,100%{transform:scale(1);box-shadow:0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 24px 2px rgba(168,85,247,.2)}
+        50%{transform:scale(1.035);box-shadow:0 1px 2px rgba(30,20,10,.3),0 18px 34px -10px rgba(30,20,10,.32),0 0 42px 8px rgba(168,85,247,.42)}
        }
        @media (prefers-reduced-motion:reduce){.PrintRow_print__jk196:nth-child(2){animation:none}}
        .PrintRow_print__jk196 video{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--color-gray-100);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);filter:contrast(.92) saturate(.94) sepia(.06) brightness(1.02)}
@@ -2973,8 +2812,9 @@
        .PrintRow_tick__jk202 svg{width:12px;height:12px}
        /* the site's purple signup button, with an arrow in place of the rocket - the
           rocket is saved for the hero and footer asks, so this mid-page one stays quieter */
-       .PrintRow_btn__jk203{display:inline-flex;align-items:center;gap:12px;padding:18px 48px;border-radius:12px;border:1px solid #c1b1dc;background:#7c3aed;color:#fff;font-size:20px;font-weight:600;white-space:nowrap;transition:background-color .2s ease,box-shadow .2s ease}
-       .PrintRow_btn__jk203:hover{background:var(--color-purple-700);box-shadow:0 8px 24px rgba(147,51,234,.3)}
+       /* hover is a darker fill and a crisp light ring, with no bloom behind it */
+       .PrintRow_btn__jk203{display:inline-flex;align-items:center;gap:12px;padding:18px 48px;border-radius:12px;border:2px solid transparent;background:#7c3aed;color:#fff;font-size:20px;font-weight:600;white-space:nowrap;transition:background-color .2s ease,border-color .2s ease}
+       .PrintRow_btn__jk203:hover{background:var(--color-purple-700);border-color:var(--color-purple-300)}
        .PrintRow_btn__jk203 svg{width:20px;height:20px;transition:transform .2s ease}
        .PrintRow_btn__jk203:hover svg{transform:translateX(4px)}
       </style>
@@ -3274,6 +3114,18 @@
        .LatestNewsSection_postExcerpt__qPfFW{line-clamp:3;min-height:calc(3 * 1.7em);flex-grow:0}
        /* one shade lighter section background */
        .LatestNewsSection_section__3ysfh{background:linear-gradient(180deg,var(--color-gray-50) 0%,#fff 100%)}
+
+       /* Three cards, trimmed - idea 2 of latest-news-ideas.html. The section was six
+          cards over two rows at the very bottom of the page, after the reader has already
+          been asked to sign up twice. Cut to a single row of three, with the blog link
+          promoted from body copy to a button so there is still one way through to the rest. */
+       @media (min-width:768px){.LatestNewsSection_grid__V5Lzr{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}}
+       .LatestNewsSection_blogPostCard__BB_3g{margin-bottom:0}
+       /* read time only, no date: on a card a date competes with the title for attention */
+       .LatestNewsSection_postMeta__gNmZ7{margin-bottom:12px;font-size:13px;font-weight:500;color:var(--color-gray-500)}
+       .LatestNewsSection_blogFoot__k2p8w{display:flex;justify-content:center;padding-top:32px}
+       .LatestNewsSection_blogFoot__k2p8w svg{width:18px;height:18px;transition:transform .2s ease}
+       .LatestNewsSection_blogFoot__k2p8w a:hover svg{transform:translateX(3px)}
       </style>
       <div class="LatestNewsSection_inner__lnOJX">
        <h2 class="LatestNewsSection_heading__atGL_">
@@ -3287,6 +3139,9 @@
         <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/translatathon">
          <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)">
          </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          4 min read
+         </div>
          <h3 class="LatestNewsSection_postTitle__Ml9n5">
           The Big Jiki &amp; Exercism Translatathon
          </h3>
@@ -3296,6 +3151,9 @@
         </a>
         <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/how-to-get-into-tech-in-2026">
          <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)">
+         </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          7 min read
          </div>
          <h3 class="LatestNewsSection_postTitle__Ml9n5">
           How to get into tech in 2026
@@ -3307,6 +3165,9 @@
         <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/should-i-still-learn-to-code-in-2026">
          <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)">
          </div>
+         <div class="LatestNewsSection_postMeta__gNmZ7">
+          6 min read
+         </div>
          <h3 class="LatestNewsSection_postTitle__Ml9n5">
           Should I still learn to code in 2026?
          </h3>
@@ -3314,35 +3175,14 @@
           It's 2026 and Claude can out-code me in seconds. So why bother learning to code? Because you still need to read code well enough to catch the mistakes LLMs confidently make.
          </p>
         </a>
-        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/why-we-built-our-own-editor">
-         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)">
-         </div>
-         <h3 class="LatestNewsSection_postTitle__Ml9n5">
-          Why we built our own editor
-         </h3>
-         <p class="LatestNewsSection_postExcerpt__qPfFW">
-          Every off-the-shelf editor assumed you already knew how to code. So we built one that shows you what your program is actually doing, line by line.
-         </p>
-        </a>
-        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/the-first-100-beta-users">
-         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)">
-         </div>
-         <h3 class="LatestNewsSection_postTitle__Ml9n5">
-          What our first 100 beta users taught us
-         </h3>
-         <p class="LatestNewsSection_postExcerpt__qPfFW">
-          We watched a hundred complete beginners work through the first three weeks of Jiki. Here's every place they got stuck, and what we changed because of it.
-         </p>
-        </a>
-        <a class="LatestNewsSection_blogPostCard__BB_3g" href="/blog/learning-to-code-is-not-about-syntax">
-         <div class="LatestNewsSection_postImage__rRDIv" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)">
-         </div>
-         <h3 class="LatestNewsSection_postTitle__Ml9n5">
-          Learning to code isn't about syntax
-         </h3>
-         <p class="LatestNewsSection_postExcerpt__qPfFW">
-          Nobody ever got stuck because they forgot a semicolon. They got stuck because nobody explained what the computer was actually doing. Our whole curriculum starts there.
-         </p>
+       </div>
+       <!-- the blog link, promoted from the subheading to a real way out of the section -->
+       <div class="LatestNewsSection_blogFoot__k2p8w">
+        <!-- same variant and same colour variables as the header Login button, so the two
+             behave identically on hover -->
+        <a class="ui-btn ui-btn-secondary" href="/blog" style="box-sizing:border-box;padding-block:14px;padding-inline:26px;font-size:16px;line-height:1.2;--primary-color:var(--color-blue-600);--primary-color-dark:var(--color-blue-700);--primary-color-light:var(--color-blue-300);--primary-shadow:var(--color-blue-500-30);--primary-shadow-light:var(--color-blue-500-20);--primary-shadow-dark:var(--color-blue-500-40);">
+         Read the blog
+         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
        </div>
       </div>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fake video: localisable Space Invaders demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../ui-kit/styles.css">
 <script>
 const IMPLEMENTATION_NOTES = `
@@ -127,6 +127,11 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     --confetti-5: #BEEEAB;
   }
 
+  /* The real editor font, from front-end/app/app/styles/theme/typography.css */
+  :root {
+    --font-mono: 'Source Code Pro', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  }
+
   body { background: var(--color-gray-100); padding: 48px 24px 96px; }
   h1 { font-size: 30px; font-weight: 800; color: var(--color-gray-800); margin-bottom: 8px; text-wrap-style: balance; }
   .lede { font-size: 16px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 28px; max-width: 760px; text-wrap-style: balance; }
@@ -162,7 +167,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   /* --- Code editor --- */
   .editor { position: relative; padding: 10px 0; overflow: hidden; }
-  .code-line { display: flex; gap: 12px; padding: 0 14px; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 13.5px; line-height: 22px; white-space: pre; }
+  .code-line { display: flex; gap: 12px; padding: 0 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
   .code-line .num { width: 15px; text-align: right; color: var(--color-gray-400); flex: none; font-size: 12px; }
   .code-line .txt { position: relative; color: var(--color-gray-700); }
   .code-line.is-active { background: var(--color-blue-50); }
@@ -206,13 +211,17 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .scenario.is-pass .verdict { color: var(--color-green-800); }
 
   /* Game canvas — from curriculum/src/exercise-categories/space-invaders/exercise.css */
-  /* Squarer than the pane it sits in: height-led, 4:3, centred in its column */
+  /* Squarer than the pane it sits in: height-led, 4:3, centred in its column.
+     Sprites live in .playfield, inset 5px, so nothing ever reaches the canvas edge.
+     (Padding alone wouldn't do it: absolutely positioned children resolve their
+     percentages against the padding box, which includes the padding.) */
   .game {
     position: relative; height: 100%; aspect-ratio: 4 / 3; max-width: 100%;
     justify-self: center; border-radius: 6px; overflow: hidden;
     background-color: #222; background-image: radial-gradient(rgba(255, 255, 255, .05), #000);
   }
-  .alien { position: absolute; width: 8.5%; transform: translateX(-50%); color: #fff; transition: opacity .12s linear; }
+  .playfield { position: absolute; inset: 5px; }
+  .alien { position: absolute; width: 8.2%; transform: translateX(-50%); color: #fff; transition: opacity .12s linear; }
   .alien svg { display: block; width: 100%; height: auto; }
   .alien.is-dead { opacity: 0; }
   .laser {
@@ -221,8 +230,10 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   }
   .laser svg { display: block; width: 100%; height: auto; }
   .shot { position: absolute; width: 3px; background: #fff; transform: translateX(-50%); border-radius: 2px; }
-  /* The cannon nudges past the frame edge, then snaps back as the error lands */
-  .laser.is-off-edge { filter: drop-shadow(0 0 6px var(--color-red-500)); }
+  /* The wall stops the cannon dead: a red glow and a short inward shake, with the
+     sprite staying inside the 5px inset rather than overhanging the canvas. */
+  .laser.is-off-edge { filter: drop-shadow(0 0 7px var(--color-red-500)); animation: bump .32s ease-out 2; }
+  @keyframes bump { 0%, 100% { margin-inline-start: 0; } 50% { margin-inline-start: -5px; } }
 
   /* Scrubber strip (screenshot layer — no live state, it just has to look right) */
   .scrubber { display: flex; align-items: center; gap: 10px; padding: 7px 14px; border-top: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
@@ -247,7 +258,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .instr p { font-size: 13px; color: var(--color-gray-700); line-height: 1.65; margin-bottom: 11px; text-wrap-style: balance; }
   .instr ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .instr li { font-size: 13px; color: var(--color-gray-700); line-height: 1.55; text-wrap-style: balance; }
-  code { font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 12px; background: var(--color-purple-100); color: var(--color-purple-700); padding: 2px 6px; border-radius: 4px; }
+  code { font-family: var(--font-mono); font-size: 12.5px; background: var(--color-purple-100); color: var(--color-purple-700); padding: 2px 6px; border-radius: 4px; }
 
   /* Error callout — mirrors informationTooltip.module.css: 2px red-500 border,
      red title with a divider under it, arrow pointing back at the code line. */
@@ -268,12 +279,14 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .error-callout .title { display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 700; color: var(--color-red-500); padding: 13px 16px; border-bottom: 1px solid var(--color-gray-200); text-wrap-style: balance; }
   .error-callout .body { font-size: 13px; color: var(--color-gray-700); line-height: 1.6; padding: 13px 16px; text-wrap-style: balance; }
   .error-callout .body code { background: var(--color-red-50); color: var(--color-red-600); }
+  .msg .bubble code { font-family: var(--font-mono); font-size: 12.5px; background: var(--color-purple-100); color: var(--color-purple-700); padding: 2px 6px; border-radius: 4px; }
 
   /* Ask Jiki conversation */
   .chat { display: flex; flex-direction: column; gap: 11px; }
   .msg { display: flex; gap: 9px; align-items: flex-start; opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease; }
   .msg.is-shown { opacity: 1; transform: none; }
-  .msg .who { flex: none; width: 27px; height: 27px; border-radius: 50%; background: var(--color-gray-100); border: 1px solid var(--color-gray-200); display: grid; place-items: center; font-size: 12px; }
+  /* Avatars match ChatMessageItem.module.css: round, object-fit cover, faint ring */
+  .msg .who { flex: none; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #fff; box-shadow: 0 0 2px 1px var(--color-gray-300); }
   .msg .bubble { padding: 9px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.55; color: var(--color-gray-800); text-wrap-style: balance; }
   .msg.jiki .bubble { background: var(--color-purple-50); }
   .msg.me { flex-direction: row-reverse; }
@@ -282,7 +295,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Success modal + confetti */
   .modal-scrim { position: absolute; inset: 0; z-index: 12; background: rgba(15, 23, 42, .45); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
   .modal-scrim.is-shown { opacity: 1; }
-  .modal { width: min(400px, 74%); background: #fff; border-radius: 12px; padding: 24px 26px; text-align: center; box-shadow: 0 30px 60px -25px rgba(15, 23, 42, .6); transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1); }
+  /* 2px green border, mirroring the error callout's 2px red one: the two verdicts
+     are framed the same way. Note the app's own modal shell uses 1px gray-200. */
+  .modal { width: min(400px, 74%); background: #fff; border: 2px solid var(--color-green-600); border-radius: 12px; padding: 24px 26px; text-align: center; box-shadow: 0 30px 60px -25px rgba(15, 23, 42, .6); transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1); }
   .modal-scrim.is-shown .modal { transform: none; }
   .modal h2 { font-size: 20px; font-weight: 700; color: var(--color-green-700); margin-bottom: 8px; text-wrap-style: balance; }
   .modal p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 18px; text-wrap-style: balance; }
@@ -327,7 +342,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .stage.lang-ja, .stage.lang-ja * { font-family: 'Poppins', 'Noto Sans JP', sans-serif; }
   .stage.lang-ar, .stage.lang-ar * { font-family: 'Noto Sans Arabic', 'Poppins', sans-serif; }
   .stage.lang-ja .code-line, .stage.lang-ar .code-line,
-  .stage.lang-ja code, .stage.lang-ar code { font-family: 'SF Mono', Menlo, Consolas, monospace; }
+  .stage.lang-ja code, .stage.lang-ar code { font-family: var(--font-mono); }
 </style>
 </head>
 <body class="ui-body">
@@ -440,11 +455,11 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     <!-- Screenshot B: Ask Jiki -->
     <div class="shot-state is-text-layer" id="shot-jiki">
       <div class="chat">
-        <div class="msg jiki" id="msg-1"><span class="who">🙂</span><span class="bubble" data-i18n="chat1">Hey there! What's up?</span></div>
-        <div class="msg me" id="msg-2"><span class="who">🧑</span><span class="bubble" data-i18n="chat2">My cannon keeps going off the edge of the screen.</span></div>
-        <div class="msg jiki" id="msg-3"><span class="who">🙂</span><span class="bubble" data-i18n-html="chat3">Good spotting. Your loop calls <code>move_right()</code> every single time, so nothing ever tells it to stop. What would you need to remember to know you'd reached the last column?</span></div>
-        <div class="msg me" id="msg-4"><span class="who">🧑</span><span class="bubble" data-i18n="chat4">Which column I'm in?</span></div>
-        <div class="msg jiki" id="msg-5"><span class="who">🙂</span><span class="bubble" data-i18n-html="chat5">Exactly. Keep your position in a variable, add one every time you move right, and once it reaches 11 start calling <code>move_left()</code> instead. Give it a go!</span></div>
+        <div class="msg jiki" id="msg-1"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n="chat1">Hey there! What's up?</span></div>
+        <div class="msg me" id="msg-2"><img class="who" src="../designs/assets/avatars/avatar-placeholder-2.png" alt=""><span class="bubble" data-i18n="chat2">My cannon keeps going off the edge of the screen.</span></div>
+        <div class="msg jiki" id="msg-3"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n-html="chat3">Good spotting. Your loop calls <code>move_right()</code> every single time, so nothing ever tells it to stop. What would you need to remember to know you'd reached the last column?</span></div>
+        <div class="msg me" id="msg-4"><img class="who" src="../designs/assets/avatars/avatar-placeholder-2.png" alt=""><span class="bubble" data-i18n="chat4">Which column I'm in?</span></div>
+        <div class="msg jiki" id="msg-5"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n-html="chat5">Exactly. Keep your position in a variable, add one every time you move right, and once it reaches 11 start calling <code>move_left()</code> instead. Give it a go!</span></div>
       </div>
     </div>
 
@@ -735,22 +750,25 @@ const game = document.getElementById('game');
 const colX = c => ((c - 0.5) / COLS) * 100;
 
 let alienEls = [];
-let laserEl;
+let laserEl, field;
 function buildGame() {
   game.innerHTML = '';
+  field = document.createElement('div');
+  field.className = 'playfield';
+  game.appendChild(field);
   alienEls = ALIENS.map(a => {
     const el = document.createElement('div');
     el.className = 'alien';
     el.style.left = colX(a.col) + '%';
     el.style.top = ROW_TOP[a.row] + '%';
     el.innerHTML = '<svg viewBox="0 0 200 160"><use href="#alien"/></svg>';
-    game.appendChild(el);
+    field.appendChild(el);
     return el;
   });
   laserEl = document.createElement('div');
   laserEl.className = 'laser';
   laserEl.innerHTML = '<svg viewBox="0 0 200 115"><use href="#laser"/></svg>';
-  game.appendChild(laserEl);
+  field.appendChild(laserEl);
 }
 buildGame();
 
@@ -778,7 +796,7 @@ function fireShot(col, targetIdx) {
   const target = alienEls[targetIdx].offsetTop + alienEls[targetIdx].offsetHeight * 0.6;
   shot.style.height = '15px';                                       // a dash, not a beam
   shot.style.top = base + 'px';
-  game.appendChild(shot);
+  field.appendChild(shot);
   requestAnimationFrame(() => {
     shot.style.transition = 'top .11s linear';
     shot.style.top = target + 'px';
@@ -944,7 +962,6 @@ function buildTimeline() {
     if (act.type === 'shoot') push(at, () => fireShot(act.col, targetIn(act.col)));
     if (act.type === 'error') push(at, () => {
       laserEl.classList.add('is-off-edge');
-      laserEl.style.left = 'calc(100% + 10px)';
       track.style.setProperty('--progress', '100%');
     });
   });
@@ -952,7 +969,6 @@ function buildTimeline() {
 
   // ---------- beat 4: the error lands ----------
   push(t, () => {
-    laserEl.style.left = colX(COLS) + '%';
     typedLine = -1;
     renderCode(CODE_A, { errorLine: 4 });
     anchorCallout(4);
