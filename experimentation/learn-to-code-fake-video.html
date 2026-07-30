@@ -152,18 +152,20 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* The middle column is capped rather than content-sized: an `auto` column would
      track the widest code line or chat bubble, so the video would change width as
      it played. The rails sit above the stage so their leader lines can overlay it. */
-  .demo { display: grid; grid-template-columns: minmax(210px, 1fr) minmax(0, 1040px) minmax(210px, 1fr); gap: 26px; align-items: stretch; }
+  .demo { display: grid; grid-template-columns: minmax(210px, 1fr) auto minmax(210px, 1fr); gap: 26px; align-items: stretch; }
   .rail { position: relative; min-width: 0; z-index: 5; }
   .callout {
     position: absolute; box-sizing: border-box; width: 100%; max-width: 240px;
-    background: #fff; border: 1px solid var(--color-gray-200); border-radius: 10px;
-    padding: 14px 16px;
+    background: #fff; border: 2px solid var(--color-purple-300); border-radius: 10px;
+    padding: 4px 16px;
     box-shadow: 0 14px 28px -14px rgba(15, 23, 42, .35), 0 4px 10px -6px rgba(15, 23, 42, .2);
     opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease;
   }
   .callout.is-shown { opacity: 1; transform: none; }
-  .callout h4 { font-size: 16px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-bottom: 6px; text-wrap-style: balance; }
-  .callout p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.55; text-wrap-style: balance; }
+  /* Balancing is deliberately off here: these cards are a fixed width, and balanced
+     wrapping left the lines ragged rather than filling to the edge. */
+  .callout h4 { font-size: 16px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-bottom: 6px; text-wrap-style: auto; }
+  .callout p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.55; text-wrap-style: auto; }
   /* Leader line out to the stage, with a dot at the far end */
   .callout::after { content: ''; position: absolute; top: 22px; width: 60px; height: 2px; border-radius: 1px; background: var(--color-purple-300); }
   .callout::before {
@@ -172,6 +174,10 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   }
   .rail-left .callout { inset-inline-end: 0; }
   .rail-left .callout::after { inset-inline-start: 100%; margin-inline-start: 4px; }
+  /* Bottom-anchored cards point from their lower edge, level with what they describe */
+  #co-rewind::after, #co-rewind::before { top: auto; }
+  #co-rewind::after { bottom: 22px; }
+  #co-rewind::before { bottom: 18px; }
   .rail-left .callout::before { inset-inline-start: 100%; margin-inline-start: 60px; }
   .rail-right .callout { inset-inline-start: 0; }
   .rail-right .callout::after { inset-inline-end: 100%; margin-inline-end: 4px; }
@@ -181,7 +187,10 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Fixed aspect so overlay coordinates stay stable, exactly as they would against
      a real Playwright capture. Layout mirrors CodingExercise.module.css. */
   .stage {
-    position: relative; width: 100%; aspect-ratio: 16 / 11.4;
+    /* Fixed internal width, drawn at 80% via zoom: the whole frame scales as one
+       piece, so every size inside keeps its proportion and the column can't be
+       driven by the content. */
+    position: relative; width: 1040px; zoom: .8; aspect-ratio: 16 / 11.4;
     background: var(--color-gray-50); border-radius: 14px; overflow: hidden;
     border: 1px solid var(--color-gray-200);
     box-shadow: 0 30px 70px -40px rgba(15, 23, 42, .45);
@@ -199,15 +208,15 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* --- Code editor --- */
   .editor { position: relative; padding: 10px 0; overflow: hidden; }
   /* Gutter divider, as CodeMirror draws on .cm-gutters. Numbers end at 32px (14px
-     inset + 18px wide) and the code starts at 39px, so the rule at 35px has exactly
-     3px of clear space on each side. */
-  .editor::before { content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 35px; width: 1px; background: var(--color-gray-200); }
+     inset + 18px wide) and the code starts at 41px, so the rule at 36px has exactly
+     4px of clear space on each side. */
+  .editor::before { content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 36px; width: 1px; background: var(--color-gray-200); }
   /* Type from codemirror.css: Source Code Pro, .cm-line padding 2px 4px, and line
      numbers right-aligned at the same size as the code. The app runs 16px; this
      stage is narrower than the real editor so it sits 2px down. The app's gutter is
      #4D4D4C80 and its code colour #4D4D4C — gray-400 and gray-700 match those
      closely and keep the file on the UI Kit palette. */
-  .code-line { display: flex; gap: 7px; padding: 2px 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
+  .code-line { display: flex; gap: 9px; padding: 2px 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
   .code-line .num { width: 18px; text-align: end; color: var(--color-gray-400); flex: none; font-size: 14px; }
   .code-line .txt { position: relative; color: var(--color-gray-700); }
   .code-line.is-active { background: var(--color-blue-50); }
@@ -364,16 +373,16 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .modal-scrim.is-shown { opacity: 1; }
   .modal-wrap { position: absolute; inset: 0; z-index: 16; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
   .modal-scrim.is-shown ~ .modal-wrap { opacity: 1; }
-  /* White rim plus a layered shadow, so the card lifts off the scrim rather than
-     being outlined. Note the app's own modal shell uses 1px gray-200. */
+  /* Grey rim plus a layered shadow, so the card lifts off the scrim. Matches the
+     colour of the app's own modal shell (1px gray-200), a touch heavier. */
   .modal {
-    width: min(400px, 74%); background: #fff; border: 2px solid #fff; border-radius: 12px;
+    width: min(400px, 74%); background: #fff; border: 2px solid var(--color-gray-200); border-radius: 12px;
     padding: 42px 26px 44px; text-align: center;
     box-shadow: 0 28px 56px -16px rgba(15, 23, 42, .5), 0 10px 20px -10px rgba(15, 23, 42, .3);
     transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
   }
   .modal-scrim.is-shown ~ .modal-wrap .modal { transform: none; }
-  .modal h2 { font-size: 20px; font-weight: 700; color: var(--color-blue-600); margin-bottom: 8px; text-wrap-style: balance; }
+  .modal h2 { font-size: 26px; font-weight: 800; color: var(--color-blue-600); margin-bottom: 10px; text-wrap-style: balance; }
 
   /* Green tick: the ring draws, then the mark, then the whole thing settles.
      Keyed off .is-shown so it replays on every loop of the video. */
@@ -476,11 +485,11 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 <div class="demo">
   <!-- Left rail: callouts about the editor, the game and the scrubber -->
   <div class="rail rail-left">
-    <aside class="callout" id="co-see" style="top:420px">
+    <aside class="callout" id="co-see" style="top:330px">
       <h4>See what your code did</h4>
       <p>Your instructions, playing out in front of you. No guessing what the computer heard.</p>
     </aside>
-    <aside class="callout" id="co-rewind" style="top:620px">
+    <aside class="callout" id="co-rewind" style="bottom:0">
       <h4>Rewind your own code</h4>
       <p>Step back through every instruction and watch exactly what happened, one line at a time.</p>
     </aside>
@@ -617,15 +626,15 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   <!-- Right rail: callouts about the panel -->
   <div class="rail rail-right">
-    <aside class="callout" id="co-errors" style="top:130px">
+    <aside class="callout" id="co-errors" style="top:100px">
       <h4>Errors in plain English</h4>
       <p>When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
     </aside>
-    <aside class="callout" id="co-help" style="top:250px">
+    <aside class="callout" id="co-help" style="top:196px">
       <h4>Help, not answers</h4>
       <p>Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
     </aside>
-    <aside class="callout" id="co-next" style="top:330px">
+    <aside class="callout" id="co-next" style="top:250px">
       <h4>Always one step up</h4>
       <p>Each exercise asks for a little more than the last. The next step is always within reach.</p>
     </aside>
