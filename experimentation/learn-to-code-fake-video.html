@@ -48,7 +48,7 @@ repeat_until_game_over do
   if is_alien_above() do
     shoot()
   end
-  if position < 20 do        <- typed in beat 1, edited to 11 in beat 6
+  if position < 20 do        <- the bug, edited to 11 in beat 6
     move_right()
     change position to position + 1
   else do
@@ -70,9 +70,9 @@ gets specific.
 
 One \`TIMELINE\` array of \`{at, do}\` steps driven by a single timer, ~24s, then loops.
 The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
-\`STEP\` (ms per game action), \`TYPE\` (ms per character) and \`MSG_GAP\` (chat pacing).
+\`STEP\` (ms per game action), \`TICK\` (chat typing) and \`MSG_GAP\` (chat pacing).
 
-1. Type \`if position < 20 do\` on line 6
+1. The finished program is on screen, with the wrong boundary on line 6
 2. Cursor to Run Code, press
 3. The cannon sweeps right, shooting five aliens as it passes (the stacked one
    survives), reaches column 11 and steps off the edge
@@ -166,11 +166,38 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
      it played. The rails sit above the stage so their leader lines can overlay it. */
   .demo { display: grid; grid-template-columns: minmax(210px, 1fr) auto minmax(210px, 1fr); gap: 26px; align-items: stretch; }
   .rail { position: relative; min-width: 0; z-index: 20; }   /* above the stage's own layers */
+
+  /* Finale: every callout on screen at once, stacked and centred against the video,
+     with the leaders dropped since nothing is being pointed at any more. */
+  .demo.is-finale .rail { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .demo.is-finale .callout {
+    position: static; inset: auto;
+    /* White on the closing frame: nothing is being pointed at, so the cards read as
+       page copy rather than annotations on the video. */
+    background: #fff; border-color: transparent;
+    box-shadow: 0 14px 28px -14px rgba(15, 23, 42, .35), 0 4px 10px -6px rgba(15, 23, 42, .2);
+  }
+  .demo.is-finale .callout h4 { color: var(--color-purple-600); }
+  .demo.is-finale .callout p { color: var(--color-gray-700); }
+  .demo.is-finale .rail-left .callout { margin-inline-start: auto; }
+  /* Leads the left column on the closing frame, whatever its DOM order */
+  .demo.is-finale #co-tested { order: -1; }
+  /* The right column spreads to meet the left column's top and bottom edges; the
+     inset it spreads within is measured in calloutsAll(). */
+  .demo.is-finale .rail-right { justify-content: space-between; }
+  .demo.is-finale .callout::after { display: none; }
+  .demo.is-finale .callout { max-width: 255px; }
+
+  /* Progress through the video itself, above the frame. Page furniture, not part
+     of the app being demonstrated. */
+  .video-wrap { position: relative; }
+  .video-progress { position: absolute; bottom: calc(100% + 12px); inset-inline: 0; height: 4px; border-radius: 2px; background: var(--color-gray-200); overflow: hidden; }
+  .video-progress i { display: block; height: 100%; width: 0; border-radius: 2px; background: var(--color-purple-600); }
   .callout {
     position: absolute; box-sizing: border-box; width: 100%; max-width: 240px;
-    background: #fff; border: 2px solid var(--color-purple-300); border-radius: 10px;
+    background: var(--color-purple-600); border: 2px solid var(--color-purple-600); border-radius: 10px;
     padding: 9px 16px;
-    box-shadow: 0 14px 28px -14px rgba(15, 23, 42, .35), 0 4px 10px -6px rgba(15, 23, 42, .2);
+    box-shadow: 0 14px 28px -14px rgba(88, 28, 135, .45), 0 4px 10px -6px rgba(15, 23, 42, .2);
     opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease;
   }
   .callout.is-shown { opacity: 1; transform: none; }
@@ -178,8 +205,8 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
      wrapping left the lines ragged rather than filling to the edge. */
   /* margin-block clears the browser defaults (21px above the heading, 13.5px above
      the copy) which were adding space the card padding had no say over. */
-  .callout h4 { font-size: 16px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-block: 0 6px; text-wrap-style: auto; }
-  .callout p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.55; margin-block: 0; text-wrap-style: auto; }
+  .callout h4 { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.3; margin-block: 0 3px; text-wrap-style: auto; }
+  .callout p { font-size: 13.5px; font-weight: 400; color: var(--color-purple-100); line-height: 1.55; margin-block: 0; text-wrap-style: auto; }
   /* Leader: one element carrying both the rule and the dot at its far end, so the
      whole thing can be rotated as a unit. Each card leans a different way — the
      angle is decorative, they all still land on the region they describe. */
@@ -210,11 +237,14 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Bottom-anchored card leads from its lower edge, level with the scrubber */
   #co-rewind::after { top: auto; bottom: 17px; }
 
+  /* Aimed just left of the line number on line 3 */
+  #co-tested { --lean: -13deg; }
+  #co-tested::after { width: 51px; }
   #co-see    { --lean: 11deg; }
   /* Card sits 15px further left than the others; its leader stops just short of the
      play button rather than landing on it. */
-  #co-rewind { --lean: 38deg; }
-  #co-rewind::after { width: 68px; }
+  #co-rewind { --lean: 32deg; }
+  #co-rewind::after { width: 57px; }
   #co-errors { --lean: -8deg; }
   #co-help   { --lean: 10deg; }
   #co-next   { --lean: -13deg; }
@@ -226,7 +256,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     /* Fixed internal width, drawn at 80% via zoom: the whole frame scales as one
        piece, so every size inside keeps its proportion and the column can't be
        driven by the content. */
-    position: relative; width: 1040px; zoom: .8; aspect-ratio: 16 / 11.4;
+    position: relative; width: 1040px; zoom: .55; aspect-ratio: 16 / 11.4;
     background: var(--color-gray-50); border-radius: 14px; overflow: hidden;
     border: 1px solid var(--color-gray-200);
     box-shadow: 0 30px 70px -40px rgba(15, 23, 42, .45);
@@ -289,7 +319,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   /* --- Exercise card: scenario copy | game canvas, scrubber underneath --- */
   .exercise { display: grid; grid-template-rows: 1fr auto; min-height: 0; }
-  .exercise-body { display: grid; grid-template-columns: minmax(0, 200px) 1fr; gap: 14px; padding: 12px 14px; min-height: 0; }
+  .exercise-body { display: grid; grid-template-columns: minmax(0, 220px) 1fr; gap: 14px; padding: 12px 14px; min-height: 0; }
   .scenario h4 { font-size: 14px; font-weight: 700; color: var(--color-gray-800); line-height: 1.35; margin-bottom: 8px; text-wrap-style: auto; }
   .scenario p { font-size: 12.5px; color: var(--color-gray-600); line-height: 1.5; margin-bottom: 0; text-wrap-style: auto; }
   /* Pending is amber, so all three verdicts read as a traffic light: amber, red, green */
@@ -390,7 +420,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .chat-input { flex: none; display: flex; align-items: flex-start; gap: 12px; padding: 10px 18px 14px; background: var(--color-gray-50); border-top: 1px solid var(--color-gray-100); }
   .chat-input .who { margin-top: 4px; }
   .chat-field { position: relative; flex: 1; min-width: 0; }
-  .chat-field .box { height: 72px; padding: 11px 12px; border: 2px solid var(--color-purple-200); border-radius: 8px; background: #fff; font-size: 13px; line-height: 1.5; color: var(--color-gray-400); text-wrap-style: balance; transition: border-color .2s; }
+  /* Balancing off: this is a textarea, so it should fill each line the way typed
+     text does rather than evening the lines out. */
+  .chat-field .box { height: 72px; padding: 11px 12px; border: 2px solid var(--color-purple-200); border-radius: 8px; background: #fff; font-size: 13px; line-height: 1.5; color: var(--color-gray-400); text-wrap-style: auto; transition: border-color .2s; }
   .chat-field .box.is-typing { color: var(--color-gray-800); border-color: var(--color-purple-300); }
   .chat-field .box .caret { height: 13px; vertical-align: -2px; }
   .chat-field .send { position: absolute; bottom: 8px; inset-inline-end: 8px; display: flex; align-items: center; background: var(--color-blue-600); color: #fff; border-radius: 6px; padding: 7px 9px; transition: transform .12s ease, background .12s ease; }
@@ -425,13 +457,13 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Blue rim plus a layered shadow, so the card lifts off the scrim and picks up the
      heading and button. Note the app's own shell uses 1px gray-200. */
   .modal {
-    width: min(400px, 74%); background: #fff; border: 2px solid var(--color-blue-600); border-radius: 12px;
+    width: min(410px, 74%); background: #fff; border: 2px solid var(--color-blue-600); border-radius: 12px;
     padding: 42px 26px 44px; text-align: center;
     box-shadow: 0 28px 56px -16px rgba(15, 23, 42, .5), 0 10px 20px -10px rgba(15, 23, 42, .3);
     transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
   }
   .modal-scrim.is-shown ~ .modal-wrap .modal { transform: none; }
-  .modal h2 { font-size: 26px; font-weight: 600; color: var(--color-blue-600); margin-bottom: 10px; text-wrap-style: balance; }
+  .modal h2 { font-size: 28px; font-weight: 600; color: var(--color-blue-600); margin-bottom: 10px; text-wrap-style: balance; }
 
   /* Green tick: the ring draws, then the mark, then the whole thing settles.
      Keyed off .is-shown so it replays on every loop of the video. */
@@ -450,8 +482,8 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     .modal-scrim.is-shown ~ .modal-wrap .tick circle,
     .modal-scrim.is-shown ~ .modal-wrap .tick path { animation: none; }
   }
-  .modal p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 18px; text-wrap-style: balance; }
-  .modal .go { display: inline-block; padding: 9px 22px; border-radius: 8px; background: var(--color-blue-600); border: 2px solid var(--color-blue-200); color: #fff; font-weight: 700; font-size: 15px; }
+  .modal p { font-size: 15.5px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 18px; text-wrap-style: balance; }
+  .modal .go { display: inline-block; padding: 9px 22px; border-radius: 8px; background: var(--color-blue-600); border: 2px solid var(--color-blue-200); color: #fff; font-weight: 700; font-size: 17px; }
 
   .confetti { position: absolute; inset: 0; z-index: 14; overflow: hidden; pointer-events: none; }
   .confetti i { position: absolute; bottom: -14px; width: 9px; height: 12px; border-radius: 1px; opacity: 0; }
@@ -517,6 +549,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   <span style="width:12px"></span>
   <button class="ctl-btn" id="layers-btn" aria-pressed="false">Show layers</button>
   <button class="ctl-btn" id="replay-btn" aria-pressed="false">Replay</button>
+  <button class="ctl-btn" id="end-btn" aria-pressed="false">End screen</button>
 </div>
 
 <!-- Alien sprite, reassembled from the four quadrant SVGs in
@@ -537,16 +570,21 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 <div class="demo">
   <!-- Left rail: callouts about the editor, the game and the scrubber -->
   <div class="rail rail-left">
-    <aside class="callout" id="co-see" style="top:446px">
+    <aside class="callout" id="co-see" style="top:296px">
       <h4>See what your code did</h4>
       <p>Your instructions, playing out in front of you. No guessing what the computer heard.</p>
     </aside>
-    <aside class="callout" id="co-rewind" style="bottom:42px; inset-inline-end:15px">
+    <aside class="callout" id="co-rewind" style="bottom:30px; inset-inline-end:15px">
       <h4>Rewind your own code</h4>
       <p>Step back through every instruction and watch exactly what happened, one line at a time.</p>
     </aside>
+    <aside class="callout" id="co-tested" style="top:36px; inset-inline-end:15px">
+      <h4>Every exercise is a real program</h4>
+      <p>Loops, conditionals, variables, all doing something you can watch play out on screen.</p>
+    </aside>
   </div>
 
+<div class="video-wrap">
 <div class="stage" id="stage" lang="en" dir="ltr">
 
   <!-- ============ LEFT: editor, run bar, exercise ============ -->
@@ -675,18 +713,20 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     <span><i style="background:var(--color-gray-300)"></i>Screenshot</span>
   </div>
 </div>
+  <div class="video-progress"><i id="video-progress-fill"></i></div>
+</div>
 
   <!-- Right rail: callouts about the panel -->
   <div class="rail rail-right">
-    <aside class="callout" id="co-errors" style="top:100px">
+    <aside class="callout" id="co-errors" style="top:74px">
       <h4>Errors in plain English</h4>
       <p>When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
     </aside>
-    <aside class="callout" id="co-help" style="top:196px">
+    <aside class="callout" id="co-help" style="top:154px">
       <h4>Help, not answers</h4>
       <p>Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
     </aside>
-    <aside class="callout" id="co-next" style="top:250px">
+    <aside class="callout" id="co-next" style="top:164px">
       <h4>Always one step up</h4>
       <p>Each exercise asks for a little more than the last. The next step is always within reach.</p>
     </aside>
@@ -1072,7 +1112,6 @@ const track = document.getElementById('track');
 
 const STEP = 145;      // ms per game action (also drives the CSS transitions)
 stage.style.setProperty('--step', STEP + 'ms');
-const TYPE = 65;       // ms per typed character
 
 function moveCursor(x, y) { cursor.style.transform = 'translate(' + x + 'px, ' + y + 'px)'; }
 
@@ -1102,9 +1141,42 @@ function showMsg(n, on) { document.getElementById('msg-' + n).classList.toggle('
 /* Callouts: page copy, not part of the video. Only one is up at a time, and each
    is timed to the beat it describes. */
 const CALLOUTS = ['see', 'rewind', 'errors', 'help', 'next'];
+const demo = document.querySelector('.demo');
 function callout(which) {
-  CALLOUTS.forEach(id =>
-    document.getElementById('co-' + id).classList.toggle('is-shown', id === which));
+  demo.classList.remove('is-finale');
+  railRight.style.paddingTop = railRight.style.paddingBottom = '';
+  document.querySelectorAll('.callout').forEach(el =>
+    el.classList.toggle('is-shown', el.id === 'co-' + which));
+}
+/* The closing frame: every card up at once, stacked either side of the video. The
+   left column is the taller one and centres; the right column is then spread to
+   start and finish level with it. */
+const railLeft = document.querySelector('.rail-left');
+const railRight = document.querySelector('.rail-right');
+function calloutsAll() {
+  demo.classList.add('is-finale');
+  document.querySelectorAll('.callout').forEach(el => el.classList.add('is-shown'));
+  requestAnimationFrame(() => {
+    // offsetTop/offsetHeight rather than rects: the cards fade in on a translate,
+    // and a rect measured mid-transition would bake that offset into the padding.
+    const cards = [...railLeft.querySelectorAll('.callout')];
+    if (!cards.length) return;
+    const top = Math.min(...cards.map(c => c.offsetTop));
+    const bottom = railLeft.offsetHeight - Math.max(...cards.map(c => c.offsetTop + c.offsetHeight));
+    railRight.style.paddingTop = top + 'px';
+    railRight.style.paddingBottom = bottom + 'px';
+  });
+}
+
+/* Fills across the length of one loop, so you can see how far through the video
+   you are. Reset without a transition, then run for the whole duration. */
+const videoFill = document.getElementById('video-progress-fill');
+function runVideoProgress(duration) {
+  videoFill.style.transition = 'none';
+  videoFill.style.width = '0%';
+  void videoFill.offsetWidth;
+  videoFill.style.transition = 'width ' + duration + 'ms linear';
+  videoFill.style.width = '100%';
 }
 
 /* The chat input. Stored as a key + fraction rather than a literal string, so
@@ -1187,7 +1259,7 @@ function buildTimeline() {
 
   // ---------- reset ----------
   push(0, () => {
-    edit = { prefix: '  ', value: '', suffix: '', caret: true };
+    edit = { prefix: '  if position < ', value: BAD, suffix: ' do', caret: false };
     renderCode({ activeLine: EDIT_LINE });
     errorCallout.classList.remove('is-shown');
     scrim.classList.remove('is-shown');
@@ -1202,14 +1274,11 @@ function buildTimeline() {
     for (let i = 1; i <= 5; i++) showMsg(i, false);
     cursorTo('#editor .code-line:nth-child(6)', 40, 4);
   });
+  push(300, () => callout('tested'));      // opens on the code itself
   t = 700;
 
-  // ---------- beat 1: type the line, boundary and all ----------
-  const line = 'if position < ' + BAD + ' do';
-  for (let i = 1; i <= line.length; i++) {
-    push(t + i * TYPE, () => { edit.value = line.slice(0, i); renderCode({ activeLine: EDIT_LINE }); });
-  }
-  t += line.length * TYPE + 450;
+  // ---------- beat 1: a moment to read the code before it runs ----------
+  t += 900;
 
   // ---------- beat 2: press Run ----------
   push(t, () => cursorTo('#run-btn', 4, 4));
@@ -1282,7 +1351,10 @@ function buildTimeline() {
   // ---------- beat 5: over to Ask Jiki (the screenshot swap) ----------
   push(t, () => cursorTo('#tab-jiki', 2, 2));
   t += 650;
-  push(t, () => { errorCallout.classList.remove('is-shown'); setTab('jiki'); callout('help'); });
+  push(t, () => {
+    errorCallout.classList.remove('is-shown'); setTab('jiki'); callout('help');
+    showMsg(1, true); showMsg(2, true);            // already in the thread when it opens
+  });
   t += 350;
 
   /* The learner's messages are typed into the box and sent; Jiki's just appear.
@@ -1290,7 +1362,7 @@ function buildTimeline() {
      and a long one takes longer, while the loop still runs to the same duration in
      every language (the translation is sliced by fraction, not per character). */
   const TICK = 55;
-  const ticksFor = key => Math.max(5, Math.min(22, Math.round(STRINGS.en[key].length / 2.6)));
+  const ticksFor = key => Math.max(11, Math.min(22, Math.round(STRINGS.en[key].length / 2.6)));
   const typeBox = (key, from) => {
     const ticks = ticksFor(key);
     push(from, () => { boxKey = key; boxFrac = 0; paintBox(); cursorTo('#chat-box', -40, 10); });
@@ -1311,10 +1383,6 @@ function buildTimeline() {
     return from + 620;
   };
 
-  push(t, () => showMsg(1, true));                // Jiki's greeting
-  t += 900;
-  t = typeBox('chat2', t) + 250;                  // "My cannon keeps going off the edge"
-  t = send(2, t) + 900;
   push(t, () => showMsg(3, true));                // Jiki asks about the boundary
   t += 1100;                                      // a beat to read it, then straight in
   t = typeBox('chat4', t) + 250;                  // "Eleven."
@@ -1373,7 +1441,8 @@ function buildTimeline() {
       outcome = 'pass'; paintScenario();
       confetti.classList.add('is-firing');
     });
-    push(t + 350, () => { scrim.classList.add('is-shown'); callout('next'); });
+    push(t + 350, () => scrim.classList.add('is-shown'));
+    push(t + 700, () => calloutsAll());        // cards follow the modal in
   } else {
     push(t, () => { outcome = 'fail'; paintScenario(); });
   }
@@ -1385,6 +1454,7 @@ let timers = [];
 function play() {
   timers.forEach(clearTimeout); timers = [];
   const { steps, duration } = buildTimeline();
+  runVideoProgress(duration);
   steps.forEach(s => timers.push(setTimeout(s.do, s.at)));
   timers.push(setTimeout(play, duration));
 }
@@ -1405,6 +1475,38 @@ document.getElementById('layers-btn').addEventListener('click', e => {
   stage.classList.toggle('show-layers', layersOn);
 });
 document.getElementById('replay-btn').addEventListener('click', play);
+
+/* Freeze on the closing frame: the state the loop ends on, with the timers stopped
+   so it holds instead of rolling round again. */
+function showEndScreen() {
+  timers.forEach(clearTimeout); timers = [];
+  videoFill.style.transition = 'none';
+  videoFill.style.width = '100%';
+
+  edit = { prefix: '  if position < ', value: GOOD, suffix: ' do', caret: false };
+  renderCode();
+  errorCallout.classList.remove('is-shown');
+  setTab('instructions');
+  cursor.classList.remove('is-scrubbing');
+  confetti.classList.remove('is-firing');
+
+  resetGame();
+  const runB = simulate(+GOOD);
+  runB.forEach(a => {
+    if (a.type !== 'shoot') return;
+    alive[a.target] = false;
+    alienEls[a.target].classList.add('is-dead');
+  });
+  const lastMove = [...runB].reverse().find(a => a.type === 'move');
+  if (lastMove) moveLaser(lastMove.col);
+  setTrack(1, 0);
+
+  outcome = 'pass'; paintScenario();
+  scrim.classList.add('is-shown');
+  calloutsAll();
+  cursorTo('.modal .go', 4, 4);
+}
+document.getElementById('end-btn').addEventListener('click', showEndScreen);
 
 applyLanguage();
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
