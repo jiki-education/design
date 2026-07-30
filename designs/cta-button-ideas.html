@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTA button ideas - styles &amp; hover effects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Six CTA button treatments, each with its hover effect, shown on **every background the landing
+page actually has** and checked against the header pair.
+
+Every button is live - hover it. The one beside it marked *hover* is the same button with the
+hover state forced on, so the two can be compared side by side without moving the mouse.
+
+## The problem this is trying to fix
+
+There are currently **four different CTA buttons** on \`jiki-landing.html\`, and no two of them
+agree:
+
+| Where | What it is | Colour |
+|---|---|---|
+| Header | \`.ui-btn-small.ui-btn-primary\` | **blue** gradient, blue ring on hover |
+| Header | \`.ui-btn-small.ui-btn-secondary\` | white, blue-300 border |
+| Hero + footer asks | \`.SignupButton_btn__lEwmG\` + rocket | **purple** \`#7c3aed\`, 2px \`#c1b1dc\` border, pulse animation |
+| Hero secondary | \`.Hero_btn__Lgj7I\` | **blue** \`#0f45d1\`, 5px radius, no border |
+| Mid-page CTA | \`.PrintRow_btn__jk203\` | purple, arrow |
+
+Three different radii (5px, 8px, 12px), two different brand colours, and one animation that only
+appears on two of the five. **Whichever direction gets picked, the important outcome is that the
+header and the page use one button system.**
+
+### On the purple
+
+The page's purple is \`#7c3aed\`, which is **Tailwind violet-600**, not the \`purple-600\` in the UI
+Kit (\`#9133ea\`). They are close enough to look like a mistake and far enough apart to be visible
+if they ever sit near each other. Pick one and put it in \`ui-kit/styles.css\` as the brand purple.
+Every idea below uses \`#7c3aed\` because that is what ships today.
+
+## The five backgrounds
+
+Each idea is shown on all five surfaces the page has, because a hover effect that reads beautifully
+on white can be invisible on the hero:
+
+1. **White** - track cards, bootcamp section
+2. **White + slate dot grid** - testimonials wall, Exercism band
+3. **Cream paper** - the projects prints band and both paper CTAs
+4. **Hero navy** - the dark blue/teal gradient at the top of the page
+5. **Near-black** - the outcomes band (\`gray-950\`)
+
+The rule that catches most of them: **a drop shadow does nothing on a dark background.** Anything
+that relies on a shadow for its hover has to switch to a glow or a border on surfaces 4 and 5.
+
+## The six treatments
+
+1. **UI Kit ring** - the header's own hover, scaled up: a 4px translucent ring blooms around the
+   button. Nothing moves. Already built, already in the UI Kit, and by definition consistent with
+   the header. The ring needs to go lighter on dark backgrounds or it disappears.
+2. **Lift and glow** - the button rises 2px and casts a coloured glow. The most familiar big-CTA
+   behaviour and the strongest signal that something is clickable. Works on every background,
+   because a coloured glow reads on dark where a grey shadow does not.
+3. **Arrow slide** - the button holds still and the arrow moves right. The quietest of the six, and
+   the only one that says *where the click goes* rather than just "this is a button". Good for
+   mid-page asks that shouldn't outshout the hero.
+4. **Sticker press** - a hard offset shadow with no blur; on hover the button slides into its own
+   shadow, like something being pressed. The only one that belongs to the page's paper-wall
+   language (tape, polaroids, sticky notes). Playful, and it will divide opinion.
+5. **Gradient sweep** - purple to blue, the Learn to Code and Learn to Build colours in one object,
+   sweeping on hover. Ties the button to the two-strands story the page tells. The risk is that
+   gradients on buttons date quickly and it fights the hero's own gradient.
+6. **Outline to fill** - transparent with a 2px border, filling solid on hover. This is the
+   **secondary** button in every set, not a primary. Shown here in both a light and a dark variant,
+   because on the navy hero the outline has to be white rather than purple.
+
+## Recommendation
+
+**Idea 2 (lift and glow) for the primary, Idea 6 for the secondary**, with Idea 1's ring kept for
+the small header buttons.
+
+That gives one system with a clear hierarchy: the big page asks lift and glow, the small header
+ask gets the tighter ring so it doesn't jump around inside a sticky bar, and every secondary
+action is the outline. It reads on all five backgrounds without a special case, and the only new
+thing to build is a \`.ui-btn-purple\` fill.
+
+**Idea 3** is the one to add on top rather than instead: the arrow-slide can sit on any of the
+fills, and it is worth using specifically on the mid-page CTA so it stays a step below the hero.
+
+**Idea 4** is the most on-brand and the most divisive - worth a look precisely because it is the
+only one that matches the rest of the page, but it will not survive next to the header, which is
+why it is not the recommendation.
+
+## Build notes
+
+- Every hover is \`transition: all .2s ease\` or tighter. The current header uses \`.3s\`, which is
+  slightly slow for a button; \`.2s\` is a better default.
+- \`prefers-reduced-motion\` must switch off the translate in ideas 2, 3 and 4 - keep the colour
+  change so the state is still legible.
+- Focus is **not** shown here and still needs designing. Whatever the hover does, the keyboard
+  focus ring has to be visible on the navy hero too, which rules out a default blue outline.
+- Sizes: 18px/48px padding at 20px type for the big page asks, 8px/16px at 16px for the header,
+  radius 12px and 8px respectively. Those are the sizes already shipping; nothing here changes
+  them.
+- Idea 5's gradient needs \`background-size:200%\` and a \`background-position\` shift on hover -
+  gradients themselves are not animatable.
+- The pulse animation currently on \`.SignupButton_btn__lEwmG\` is **not** carried into any of these.
+  If it stays, it should be on one button per page, not four.
+        `;
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--color-gray-100);
+            color: var(--color-gray-900);
+            padding: 48px 0 96px;
+        }
+
+        .page-header { max-width: 900px; margin: 0 auto 40px; padding: 0 24px; }
+        .page-header h1 { font-size: 30px; font-weight: 600; margin-bottom: 10px; text-wrap-style: balance; }
+        .page-header p { font-size: 16px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 10px; text-wrap-style: balance; }
+        .page-header strong { font-weight: 600; color: var(--color-gray-900); }
+
+        .idea { margin-bottom: 56px; }
+        .idea-label { max-width: 900px; margin: 0 auto 14px; padding: 0 24px; }
+        .idea-label h2 { font-size: 19px; font-weight: 600; margin-bottom: 4px; }
+        .idea-label span { font-size: 14px; color: var(--color-gray-500); line-height: 1.6; text-wrap-style: balance; }
+
+        .slice {
+            background: white;
+            border-top: 1px solid var(--color-gray-200);
+            border-bottom: 1px solid var(--color-gray-200);
+            overflow: hidden;
+        }
+
+        /* ── the board: one tile per landing-page background ───────────────────
+           Five columns, no gap, so the surfaces sit edge to edge and can be
+           compared without white gutters between them. */
+        .board { display: grid; grid-template-columns: repeat(5, 1fr); }
+        .tile {
+            padding: 30px 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 190px;
+        }
+        .tile-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--color-gray-500);
+        }
+        .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .state {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--color-gray-400);
+            align-self: center;
+        }
+
+        /* the five surfaces, lifted from the landing page */
+        .bg-white { background: #fff; }
+        .bg-dots {
+            background-color: #fff;
+            background-image: radial-gradient(var(--color-gray-200) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .bg-cream {
+            background:
+                radial-gradient(90% 60% at 15% 0%, rgba(168, 85, 247, .16) 0%, rgba(168, 85, 247, 0) 60%),
+                radial-gradient(80% 70% at 90% 100%, rgba(59, 130, 246, .16) 0%, rgba(59, 130, 246, 0) 60%),
+                linear-gradient(180deg, #fffdf8 0%, #fdf6ec 100%);
+        }
+        .bg-hero {
+            background-image:
+                linear-gradient(135deg, rgba(0, 0, 0, .85) 0%, rgba(0, 0, 0, 0) 45%),
+                url(https://assets.jiki.io/static/hashed/css/images/landing-page/hero-grid-d727b-d727b47abd37.svg),
+                linear-gradient(rgb(13, 18, 33), rgb(19, 47, 68));
+            background-repeat: no-repeat, repeat, repeat-y;
+            background-size: 100% 100%, 20px, 100%;
+        }
+        .bg-ink { background: var(--color-gray-950); }
+        /* labels have to flip on the two dark surfaces */
+        .bg-hero .tile-label, .bg-ink .tile-label { color: rgba(255, 255, 255, .55); }
+        .bg-hero .state, .bg-ink .state { color: rgba(255, 255, 255, .38); }
+
+        /* ── the button shell every idea shares ────────────────────────────────
+           Size, type and radius are identical across all six, so the hover
+           treatment is the only variable. */
+        .b {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+            white-space: nowrap;
+            border: 2px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .2s ease;
+        }
+        .b svg { width: 17px; height: 17px; flex-shrink: 0; transition: transform .2s ease; }
+
+        /* the brand purple as it currently ships - Tailwind violet-600, not the
+           UI Kit's purple-600. See the implementation notes. */
+        :root {
+            --brand: #7c3aed;
+            --brand-dark: #6b28d9;
+            --brand-glow: rgba(124, 58, 237, .45);
+        }
+
+        /* ── Idea 1: UI Kit ring ───────────────────────────────────────────────
+           The header's own hover, scaled up: a translucent ring blooms outward.
+           Nothing moves. */
+        .b1 { background: var(--brand); color: #fff; border-color: var(--brand); box-shadow: 0 2px 8px rgba(124, 58, 237, .3); }
+        .b1:hover, .b1.on { border-color: var(--brand-dark); box-shadow: 0 0 0 4px rgba(124, 58, 237, .25), 0 4px 16px rgba(124, 58, 237, .45); }
+        /* on dark the ring has to lighten, or it vanishes into the background */
+        .dark .b1:hover, .dark .b1.on { box-shadow: 0 0 0 4px rgba(255, 255, 255, .22), 0 4px 18px rgba(124, 58, 237, .6); }
+
+        /* ── Idea 2: lift and glow ─────────────────────────────────────────────
+           Rises 2px and casts a coloured glow. A coloured glow is the one shadow
+           that still reads on a dark band. */
+        .b2 { background: var(--brand); color: #fff; box-shadow: 0 2px 6px rgba(30, 20, 40, .18); }
+        .b2:hover, .b2.on { background: var(--brand-dark); transform: translateY(-2px); box-shadow: 0 10px 24px -6px var(--brand-glow); }
+        .dark .b2 { box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+        .dark .b2:hover, .dark .b2.on { box-shadow: 0 10px 30px -6px rgba(124, 58, 237, .75); }
+
+        /* ── Idea 3: arrow slide ───────────────────────────────────────────────
+           The button holds still and only the arrow moves. */
+        .b3 { background: var(--brand); color: #fff; }
+        .b3:hover, .b3.on { background: var(--brand-dark); }
+        .b3:hover svg, .b3.on svg { transform: translateX(5px); }
+
+        /* ── Idea 4: sticker press ─────────────────────────────────────────────
+           A hard offset shadow with no blur; on hover the button slides into it.
+           The only treatment that speaks the page's paper-wall language. */
+        .b4 {
+            background: var(--brand);
+            color: #fff;
+            border-color: rgba(0, 0, 0, .12);
+            box-shadow: 4px 4px 0 0 #3b1d70;
+        }
+        .b4:hover, .b4.on { transform: translate(4px, 4px); box-shadow: 0 0 0 0 #3b1d70; }
+        /* on dark the hard shadow needs a light edge instead of a darker purple */
+        .dark .b4 { box-shadow: 4px 4px 0 0 rgba(255, 255, 255, .55); border-color: rgba(255, 255, 255, .3); }
+        .dark .b4:hover, .dark .b4.on { box-shadow: 0 0 0 0 rgba(255, 255, 255, .55); }
+
+        /* ── Idea 5: gradient sweep ────────────────────────────────────────────
+           Purple to blue - Learn to Code and Learn to Build in one object.
+           Gradients are not animatable, so the fill is 200% wide and the
+           position slides instead. */
+        .b5 {
+            color: #fff;
+            background-image: linear-gradient(100deg, #7c3aed 0%, #4f46e5 45%, #2570eb 100%);
+            background-size: 200% 100%;
+            background-position: 0% 0%;
+            box-shadow: 0 2px 8px rgba(60, 50, 190, .28);
+        }
+        .b5:hover, .b5.on { background-position: 100% 0%; box-shadow: 0 8px 22px -6px rgba(70, 60, 220, .6); }
+
+        /* ── Idea 6: outline to fill (the secondary) ───────────────────────────
+           Two variants, because on the navy hero the outline has to be white. */
+        .b6 { background: transparent; color: var(--brand); border-color: var(--brand); }
+        .b6:hover, .b6.on { background: var(--brand); color: #fff; }
+        .b6-light { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .65); }
+        .b6-light:hover, .b6-light.on { background: #fff; color: var(--color-gray-900); border-color: #fff; }
+
+        /* ── header check ──────────────────────────────────────────────────────
+           A replica of the real sticky header, so each idea can be seen at small
+           size next to the Login button it has to live with. */
+        .hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            padding: 0 32px;
+            background: #fff;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+        .hdr-left { display: flex; align-items: center; gap: 28px; }
+        .hdr-logo { font-size: 20px; font-weight: 800; color: var(--color-blue-600); letter-spacing: -.02em; }
+        .hdr-nav { display: flex; gap: 20px; font-size: 15px; color: var(--color-gray-600); }
+        .hdr-right { display: flex; align-items: center; gap: 12px; }
+        /* the header's own smaller size, applied on top of whichever idea class */
+        .b-sm { padding: 8px 16px; border-radius: 8px; font-size: 16px; }
+        .b-sm svg { width: 15px; height: 15px; }
+        /* the real header Login button, unchanged, for comparison */
+        .hdr-login {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            border: 2px solid var(--color-blue-300);
+            color: var(--color-blue-500);
+            background: #fff;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, .3);
+            transition: all .2s ease;
+        }
+        .hdr-login:hover { border-color: var(--color-blue-500); box-shadow: 0 0 0 4px rgba(59, 130, 246, .2), 0 4px 16px rgba(59, 130, 246, .4); }
+
+        .hdr-note {
+            padding: 12px 32px 14px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--color-gray-600);
+            background: var(--color-gray-50);
+            border-top: 1px solid var(--color-gray-200);
+            text-wrap-style: balance;
+        }
+        .hdr-note strong { font-weight: 600; color: var(--color-gray-800); }
+
+        @media (max-width: 1100px) { .board { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="page-header">
+    <h1>CTA button ideas - styles &amp; hover effects</h1>
+    <p>Six button treatments, each shown on <strong>all five backgrounds the landing page actually
+       has</strong> and checked against the header pair underneath. Every button is live - hover it.
+       The one beside it marked <em>hover</em> is the same button with its hover state forced on, so
+       the two can be compared without moving the mouse.</p>
+    <p>The page currently ships <strong>four different CTA buttons</strong> in two different brand
+       colours and three different corner radii. The point of this page is to pick one system for
+       the header and the page together.</p>
+</div>
+
+<!-- ══ What's on the page today ════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>Today: what's actually on the page</h2>
+        <span>The four buttons currently shipping, each on the background it appears against. The header is blue, the page asks are purple, and the hero has a fifth blue in it. Nothing here is a proposal - it's the starting point.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">Header · white</div>
+                <div class="row">
+                    <a class="hdr-login" href="#">Login</a>
+                    <a class="b b-sm" style="background:linear-gradient(135deg,var(--color-blue-500) 0%,var(--color-blue-600) 100%);color:#fff;border-color:var(--color-blue-500);box-shadow:0 2px 8px rgba(59,130,246,.3);font-weight:500" href="#">Sign Up For Free</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">ui-btn-small · blue · 8px radius</div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero · navy gradient</div>
+                <div class="row">
+                    <a class="b" style="background:#7c3aed;color:#fff;border:1px solid #c1b1dc;padding:16px 40px;font-size:18px" href="#">Sign Up <span style="opacity:.85;font-weight:500">(it's free!)</span> 🚀</a>
+                </div>
+                <div class="row">
+                    <a class="b" style="background:#0f45d1;color:#fff;border-radius:5px;padding:12px 24px;font-size:18px" href="#">See how it works</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">purple #7c3aed · 12px · and blue #0f45d1 · 5px</div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Paper CTAs · cream</div>
+                <div class="row">
+                    <a class="b" style="background:#7c3aed;color:#fff;border:1px solid #c1b1dc;padding:16px 40px;font-size:18px" href="#">Sign Up <span style="opacity:.85;font-weight:500">(it's free!)</span> 🚀</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">same button, cream background</div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Mid-page CTA · dotted white</div>
+                <div class="row">
+                    <a class="b" style="background:#7c3aed;color:#fff;border:1px solid #c1b1dc;padding:18px 40px;font-size:20px" href="#">Get started
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">purple · arrow · no defined hover</div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Outcomes band · near-black</div>
+                <div class="row">
+                    <a class="b" style="background:#7c3aed;color:#fff;border:1px solid #c1b1dc;padding:16px 40px;font-size:18px" href="#">Sign Up <span style="opacity:.85;font-weight:500">(it's free!)</span> 🚀</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">the shadow does nothing here</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 1 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>1. UI Kit ring</h2>
+        <span>The header's own hover, scaled up: a 4px translucent ring blooms around the button and nothing moves. Already built and already in the UI Kit, so it is consistent with the header by definition. On the two dark surfaces the ring has to switch from purple to white, or it disappears.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b1" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b1 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b1" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b1 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b1" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b1 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy</div>
+                <div class="row"><a class="b b1" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b1 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black</div>
+                <div class="row"><a class="b b1" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b1 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="hdr-login" href="#">Login</a>
+                <a class="b b1 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> the only idea that needs no adaptation - it <em>is</em> the header hover. The purple ring next to the blue Login ring is the one thing to check: two rings of different hues on one bar.</p>
+    </div>
+</div>
+
+<!-- ══ Idea 2 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>2. Lift and glow</h2>
+        <span>The button rises 2px and casts a coloured glow. The most familiar big-CTA behaviour and the clearest "this is clickable" signal. A coloured glow is the one shadow that still reads on the navy and near-black bands, where a grey drop shadow does nothing at all.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b2" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b2 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b2" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b2 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b2" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b2 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy</div>
+                <div class="row"><a class="b b2" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b2 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black</div>
+                <div class="row"><a class="b b2" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b2 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="hdr-login" href="#">Login</a>
+                <a class="b b2 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> the 2px lift is too much movement inside a sticky bar - the button appears to twitch as you pass over it. Use idea 1's ring at header size and keep the lift for the big page asks. That split is the recommendation.</p>
+    </div>
+</div>
+
+<!-- ══ Idea 3 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>3. Arrow slide</h2>
+        <span>The button holds still and only the arrow moves right. The quietest of the six, and the only one that says <em>where the click goes</em> rather than just "this is a button". Best for mid-page asks that shouldn't outshout the hero.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b3" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">rest</span></div>
+                <div class="row"><a class="b b3 on" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b3" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">rest</span></div>
+                <div class="row"><a class="b b3 on" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b3" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">rest</span></div>
+                <div class="row"><a class="b b3 on" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy</div>
+                <div class="row"><a class="b b3" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">rest</span></div>
+                <div class="row"><a class="b b3 on" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black</div>
+                <div class="row"><a class="b b3" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">rest</span></div>
+                <div class="row"><a class="b b3 on" href="#">Get started <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="hdr-login" href="#">Login</a>
+                <a class="b b3 b-sm" href="#">Sign Up For Free <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> works, but the arrow makes an already-long "Sign Up For Free" wider still. If this is the direction, drop the arrow at header size and keep the fill change only - the treatment survives, the width doesn't grow.</p>
+    </div>
+</div>
+
+<!-- ══ Idea 4 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>4. Sticker press</h2>
+        <span>A hard offset shadow with no blur; on hover the button slides down into its own shadow, like something being pressed. The only treatment that belongs to the page's paper-wall language - tape, polaroids, sticky notes. Playful, and it will divide opinion.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b4" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b4 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b4" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b4 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b4" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b4 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy</div>
+                <div class="row"><a class="b b4" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b4 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black</div>
+                <div class="row"><a class="b b4" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b4 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="hdr-login" href="#">Login</a>
+                <a class="b b4 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> this is where it falls down. The hard shadow reads as a mis-render at small size, and the Login button beside it would need the same treatment in blue, which is two hard shadows in a 72px bar. Lovely on the page, wrong in the header - which is why it isn't the recommendation.</p>
+    </div>
+</div>
+
+<!-- ══ Idea 5 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>5. Gradient sweep</h2>
+        <span>Purple to blue - the Learn to Code and Learn to Build colours in one object - sweeping across on hover. Ties the button to the two-strands story the page tells. The risks: gradient buttons date quickly, and on the hero it competes with the background's own gradient.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b5" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b5 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b5" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b5 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b5" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b5 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy</div>
+                <div class="row"><a class="b b5" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b5 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black</div>
+                <div class="row"><a class="b b5" href="#">Get started</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b5 on" href="#">Get started</a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="hdr-login" href="#">Login</a>
+                <a class="b b5 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> the closest of the six to what the header already does - <code>.ui-btn-primary</code> is a blue gradient today, so this is that idea extended into purple. At 8px radius the gradient has very little room to read, though; it looks flat.</p>
+    </div>
+</div>
+
+<!-- ══ Idea 6 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>6. Outline to fill - the secondary</h2>
+        <span>Transparent with a 2px border, filling solid on hover. This is the <em>secondary</em> button in every set, not a primary - it's what the hero's "See how it works" and the Login button should become. Two variants, because on the navy hero the outline has to be white rather than purple.</span>
+    </div>
+    <div class="slice">
+        <div class="board">
+            <div class="tile bg-white">
+                <div class="tile-label">White</div>
+                <div class="row"><a class="b b6" href="#">See how it works</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b6 on" href="#">See how it works</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-dots">
+                <div class="tile-label">Dotted white</div>
+                <div class="row"><a class="b b6" href="#">See how it works</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b6 on" href="#">See how it works</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-cream">
+                <div class="tile-label">Cream paper</div>
+                <div class="row"><a class="b b6" href="#">See how it works</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b6 on" href="#">See how it works</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-hero dark">
+                <div class="tile-label">Hero navy · light variant</div>
+                <div class="row"><a class="b b6-light" href="#">See how it works</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b6-light on" href="#">See how it works</a><span class="state">hover</span></div>
+            </div>
+            <div class="tile bg-ink dark">
+                <div class="tile-label">Near-black · light variant</div>
+                <div class="row"><a class="b b6-light" href="#">See how it works</a><span class="state">rest</span></div>
+                <div class="row"><a class="b b6-light on" href="#">See how it works</a><span class="state">hover</span></div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="b b6 b-sm" href="#">Login</a>
+                <a class="b b2 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>With the header:</strong> shown here as the pairing that comes out of the recommendation - outline Login beside a solid purple Sign Up. Cleaner than today's two-blue-buttons header, and the outline reads immediately as the lesser of the two actions.</p>
+    </div>
+</div>
+
+<!-- ══ The recommendation, assembled ═══════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>The recommendation, assembled</h2>
+        <span>Idea 2 for the big page asks, idea 6 for every secondary, idea 1's tighter ring for the small header button so it doesn't twitch inside a sticky bar. One system, three sizes, works on all five surfaces with no special case.</span>
+    </div>
+    <div class="slice">
+        <div class="board" style="grid-template-columns:repeat(3,1fr)">
+            <div class="tile bg-cream" style="min-height:230px">
+                <div class="tile-label">Page ask · primary + secondary</div>
+                <div class="row">
+                    <a class="b b2" style="padding:18px 40px;font-size:20px" href="#">Get started</a>
+                    <a class="b b6" style="padding:18px 32px;font-size:20px" href="#">See how it works</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">20px type · 12px radius · lift &amp; glow</div>
+            </div>
+            <div class="tile bg-hero dark" style="min-height:230px">
+                <div class="tile-label">Hero · primary + secondary</div>
+                <div class="row">
+                    <a class="b b2" style="padding:18px 40px;font-size:20px" href="#">Get started</a>
+                    <a class="b b6-light" style="padding:18px 32px;font-size:20px" href="#">See how it works</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">same buttons, light secondary variant</div>
+            </div>
+            <div class="tile bg-ink dark" style="min-height:230px">
+                <div class="tile-label">Outcomes band · primary only</div>
+                <div class="row">
+                    <a class="b b2" style="padding:18px 40px;font-size:20px" href="#">Get started</a>
+                </div>
+                <div class="tile-label" style="margin-top:auto">the glow carries the hover, not a shadow</div>
+            </div>
+        </div>
+        <div class="hdr">
+            <div class="hdr-left">
+                <span class="hdr-logo">jiki</span>
+                <div class="hdr-nav"><span>About Jiki</span><span>Testimonials</span></div>
+            </div>
+            <div class="hdr-right">
+                <span style="font-size:15px">🇬🇧</span>
+                <a class="b b6 b-sm" href="#">Login</a>
+                <a class="b b1 b-sm" href="#">Sign Up For Free</a>
+            </div>
+        </div>
+        <p class="hdr-note"><strong>The one deliberate inconsistency:</strong> the header Sign Up uses idea 1's ring rather than idea 2's lift. Movement inside a sticky bar reads as a glitch, and a 16px button doesn't need 2px of travel to feel clickable. Same colour, same radius family, same fill - only the hover differs, and only at that one size.</p>
+    </div>
+</div>
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

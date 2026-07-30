@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our latest news - section ideas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Six treatments for the **"Our latest news"** section - the last band on \`jiki-landing.html\`
+before the footer. Every idea uses the six real blog posts already on the page, so nothing here
+needs new copy or new artwork.
+
+## Why look at it
+
+The section today is a **six-card grid**: image, title, three clamped lines of excerpt, repeated
+six times. Three problems with it in that slot:
+
+- **It is the deepest section on the page** and it sits at the very bottom, after the reader has
+  already been asked to sign up twice. Six full cards is a lot of page to scroll past the ask.
+- **The excerpts do no work.** Three clamped lines is enough to trail off mid-sentence but not
+  enough to decide with, and nobody reads six of them.
+- **It is the only band on the page in a different visual language.** Everything above it has
+  become a paper wall - torn tape, polaroid prints, sticky notes, Caveat asides. The news grid is
+  a generic blog index dropped on the end.
+
+## The directions
+
+1. **Featured lead + headline list** - one story gets a large image and a real excerpt, the rest
+   are title-and-date rows beside it. The front page of a newspaper: one thing to read, the others
+   to scan. Cuts the section to roughly half its current depth.
+1b. **Featured lead + thumbnail rows** - the same layout, with a small image on each side row.
+   Every post gets something to look at, so the list reads as posts rather than links. The
+   trade-off is that the lead no longer stands as far above the rest.
+2. **Three cards, trimmed** - the smallest change: the existing grid cut from six cards to three,
+   with a read time added and a "Read the blog" button underneath. Same component, less of it.
+3. **Clippings on the wall** - the posts as newspaper cuttings taped to the wall, tilted, in the
+   page's own handmade language. The only idea that makes the section belong to the page around it.
+4. **Contact-sheet strip** - a single horizontally scrolling row. All six posts stay, but the
+   section is one card deep instead of two rows. Carries the film-strip idea already used elsewhere.
+5. **Sorted by the question you're asking** - two columns headed "Still deciding?" and "Behind the
+   scenes", so the section reads as answers rather than announcements. The strongest use of this
+   slot: the reader who scrolled past two sign-up buttons is usually still deciding.
+6. **News + newsletter** - three posts on the left, a subscribe box on the right. Catches the
+   reader who is interested but not ready, which is exactly who reaches the bottom of the page.
+
+## Recommendation
+
+**Idea 5**, then **Idea 1** if the topic grouping is too much editorial upkeep.
+
+Idea 5 is the only one that changes what the section is *for*. Two of the six real posts
+("Should I still learn to code in 2026?", "How to get into tech in 2026") answer the exact
+objection that stops someone signing up. Filed under "Our latest news" they look like company
+announcements; filed under "Still deciding?" they do a job.
+
+Idea 1 is the safe pick - same content, same components, half the depth, no editorial decisions
+needed. Choose between 1 and 1b on how strong the artwork is: thumbnails help when the images
+are distinctive and clutter the list when they aren't.
+
+**Idea 3** is the fun one, but be careful: it is the fourth taped-paper element on the page, and
+the wall metaphor starts to feel like a theme rather than a texture if it runs all the way to the
+footer.
+
+## Build notes
+
+- All six posts, titles, excerpts and images are the ones already rendering in
+  \`.LatestNewsSection_grid__V5Lzr\`. Dates and read times are **invented** for these mockups -
+  they need to come from the CMS, and if they are not available, every idea works without them
+  (drop the meta row).
+- The card ideas (2 and 4) carry **read time only, no date** - a date on a card competes with the
+  title for attention. The list ideas keep both, because a list is scanned chronologically.
+- Idea 1b reuses idea 1's \`.i1-split\`, lead and button - only the row internals differ, so it is
+  one component with a "show thumbnails" switch, not a second build.
+- Card hover is the existing pattern: grey border by default, \`blue-500\` on hover, no glow.
+- Idea 4 scrolls with \`overflow-x:auto\` and \`scroll-snap-type\`. Two details make it read as
+  deliberate rather than clipped: the **right-edge fade** (a \`mask-image\` on the row - it should
+  lift once the reader hits the end, which the mockup can't show) and the **slim styled
+  scrollbar**. Its titles are clamped to two lines so the read times land on one baseline across
+  the row. It is the only idea here that hides content behind an interaction.
+- Idea 3's tape is the same translucent amber block used by \`.sticky-tape\` on the landing page -
+  no artwork.
+- Idea 6's email field is the UI Kit's \`.ui-form-field-large\`. The subscribe box is the only idea
+  that adds a **backend** requirement (list signup), so check that exists before choosing it.
+- Colours are palette tokens throughout, except the cream paper (\`#fffdf8\` to \`#fdf6ec\`) and the
+  newsprint grey in idea 3, both lifted from the landing page.
+        `;
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--color-gray-100);
+            color: var(--color-gray-900);
+            padding: 48px 0 96px;
+        }
+
+        a { text-decoration: none; }
+
+        .page-header {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding: 0 24px;
+        }
+        .page-header h1 { font-size: 30px; font-weight: 600; margin-bottom: 10px; text-wrap-style: balance; }
+        .page-header p { font-size: 16px; color: var(--color-gray-600); line-height: 1.6; text-wrap-style: balance; }
+
+        .idea { margin-bottom: 56px; }
+
+        .idea-label {
+            max-width: 900px;
+            margin: 0 auto 14px;
+            padding: 0 24px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .idea-label h2 { font-size: 19px; font-weight: 600; }
+        .idea-label span { font-size: 14px; color: var(--color-gray-500); text-wrap-style: balance; }
+
+        .slice {
+            background: white;
+            border-top: 1px solid var(--color-gray-200);
+            border-bottom: 1px solid var(--color-gray-200);
+            overflow: hidden;
+        }
+
+        /* the section's own background on the landing page: one shade lighter at the top */
+        .band { background: linear-gradient(180deg, var(--color-gray-50) 0%, #fff 100%); padding: 56px 0 64px; }
+        .paper {
+            padding: 56px 0 64px;
+            background:
+                radial-gradient(90% 60% at 15% 0%, rgba(168, 85, 247, .14) 0%, rgba(168, 85, 247, 0) 60%),
+                radial-gradient(80% 70% at 90% 100%, rgba(59, 130, 246, .14) 0%, rgba(59, 130, 246, 0) 60%),
+                linear-gradient(180deg, #fffdf8 0%, #fdf6ec 100%);
+        }
+
+        .inner {
+            max-width: 1200px;
+            margin-inline: auto;
+            padding-inline: 5%;
+        }
+
+        /* ── shared section furniture ──────────────────────────────────────────
+           Heading, subheading and the blog link are the same in every idea, so
+           only what sits beneath them is actually the variable. */
+        .sec-h { font-size: 32px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 6px; text-wrap-style: balance; }
+        .sec-p { font-size: 17px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 32px; text-wrap-style: balance; }
+        .sec-link { color: var(--color-blue-500); font-weight: 500; }
+        .sec-link:hover { color: var(--color-blue-600); }
+        .centred { text-align: center; }
+        .centred .sec-p { max-width: 620px; margin-inline: auto; }
+
+        /* meta row: date and read time, in the same grey as the excerpts */
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-gray-500);
+        }
+        .meta span:not(:last-child)::after { content: "·"; margin-left: 8px; }
+
+        /* the existing card: grey border, purple-free, blue only on hover */
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 3px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 24px 28px;
+            background: #fff;
+            transition: border-color .2s ease;
+        }
+        .card:hover { border-color: var(--color-blue-500); }
+        .card-img {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            background-color: var(--color-gray-100);
+        }
+        .card h3 { font-size: 18px; font-weight: 600; line-height: 1.35; color: var(--color-gray-900); text-wrap-style: balance; }
+        .card p { font-size: 15px; line-height: 1.7; color: var(--color-gray-600); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 26px;
+            border-radius: 12px;
+            white-space: nowrap;
+            transition: box-shadow .2s ease, background-color .2s ease;
+        }
+        .btn svg { width: 18px; height: 18px; transition: transform .2s ease; }
+        .btn:hover svg { transform: translateX(3px); }
+        .btn-outline { border: 2px solid var(--color-gray-300); color: var(--color-gray-800); }
+        .btn-outline:hover { border-color: var(--color-blue-500); color: var(--color-blue-600); }
+        .btn-purple { background: var(--color-purple-600); color: #fff; }
+        .btn-purple:hover { background: var(--color-purple-700); box-shadow: 0 8px 24px rgba(147, 51, 234, .3); }
+
+        /* ── Idea 1: featured lead + headline list ─────────────────────────────── */
+        .i1-split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+        .i1-lead .card-img { aspect-ratio: 16 / 10; margin-bottom: 16px; }
+        .i1-lead h3 { font-size: 26px; font-weight: 700; line-height: 1.25; color: var(--color-gray-900); margin-bottom: 10px; text-wrap-style: balance; }
+        .i1-lead p { font-size: 16px; line-height: 1.7; color: var(--color-gray-600); margin-bottom: 12px; }
+        .i1-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--color-purple-600);
+            margin-bottom: 10px;
+        }
+        .i1-rows { display: flex; flex-direction: column; }
+        /* hairline rules rather than boxes, so the list stays subordinate to the lead */
+        .i1-row { display: block; padding: 18px 0; border-bottom: 1px solid var(--color-gray-200); }
+        .i1-row:first-child { padding-top: 0; }
+        .i1-row h4 { font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--color-gray-900); margin-bottom: 6px; text-wrap-style: balance; }
+        .i1-row:hover h4 { color: var(--color-blue-600); }
+        .i1-more { padding-top: 20px; }
+
+        /* ── Idea 1b: as idea 1, but the side rows carry thumbnails ────────────── */
+        /* only the row internals change - the split, the lead and the button are idea 1's */
+        .i1b-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        .i1b-row:first-child { padding-top: 0; }
+        .i1b-thumb {
+            flex: 0 0 88px;
+            aspect-ratio: 4 / 3;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            background-color: var(--color-gray-100);
+        }
+        .i1b-row h4 { font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--color-gray-900); margin-bottom: 5px; text-wrap-style: balance; }
+        .i1b-row:hover h4 { color: var(--color-blue-600); }
+
+        /* ── Idea 2: three cards, trimmed ──────────────────────────────────────── */
+        .i2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+        .i2-foot { text-align: center; }
+
+        /* ── Idea 3: clippings taped to the wall ───────────────────────────────── */
+        .i3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding-top: 14px; }
+        .i3-clip {
+            position: relative;
+            display: block;
+            padding: 22px 24px 24px;
+            /* newsprint: a hair greyer and cooler than the cream wall behind it */
+            background: #fbf9f4;
+            box-shadow: 0 1px 2px rgba(30, 20, 10, .22), 0 12px 26px -10px rgba(30, 20, 10, .24);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .i3-clip:nth-child(1) { transform: rotate(-1.4deg); }
+        .i3-clip:nth-child(2) { transform: rotate(.8deg); }
+        .i3-clip:nth-child(3) { transform: rotate(-.6deg); }
+        .i3-clip:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 0 2px 4px rgba(30, 20, 10, .24), 0 18px 34px -12px rgba(30, 20, 10, .3); }
+        /* the landing page's masking tape: a translucent amber block, no artwork */
+        .i3-tape {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            width: 96px;
+            height: 26px;
+            transform: translateX(-50%) rotate(-2deg);
+            background: rgba(251, 191, 36, .42);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+        }
+        .i3-clip .card-img { border-radius: 2px; margin-bottom: 14px; filter: contrast(.95) saturate(.92); }
+        .i3-kicker {
+            font-family: 'Caveat', cursive;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--color-purple-600);
+            transform: rotate(-1.5deg);
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+        .i3-clip h3 { font-size: 19px; font-weight: 700; line-height: 1.3; color: var(--color-gray-900); margin-bottom: 8px; text-wrap-style: balance; }
+        .i3-clip p { font-size: 15px; line-height: 1.65; color: var(--color-gray-600); }
+
+        /* ── Idea 4: contact-sheet strip ───────────────────────────────────────── */
+        .i4-strip {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 18px;
+            /* the row runs to the screen edge, so it is obvious it continues */
+            margin-inline: -5%;
+            padding-inline: 5%;
+        }
+        /* the row is cut off by the viewport, so fade the last card out rather than
+           slicing it - on the real thing the fade should lift once you reach the end */
+        .i4-strip {
+            mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 110px), transparent 100%);
+        }
+        .i4-strip .card {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+            gap: 14px;
+            padding: 20px;
+        }
+        /* title above the read time, and clamped to two lines, so the meta sits on one
+           baseline all the way along the row instead of stepping up and down */
+        .i4-strip .card h3 {
+            font-size: 17px;
+            line-height: 1.4;
+            min-height: 2.8em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+        .i4-strip .meta {
+            font-size: 12px;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            color: var(--color-gray-500);
+        }
+
+        /* a slim scrollbar rather than the browser default, which is heavy under a card */
+        .i4-strip::-webkit-scrollbar { height: 6px; }
+        .i4-strip::-webkit-scrollbar-track { background: var(--color-gray-200); border-radius: 99px; }
+        .i4-strip::-webkit-scrollbar-thumb { background: var(--color-gray-400); border-radius: 99px; }
+
+        .i4-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+        .i4-head .sec-p { margin-bottom: 0; }
+
+        /* ── Idea 5: sorted by the question you're asking ──────────────────────── */
+        .i5-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+        .i5-colhead {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 14px;
+            margin-bottom: 6px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+        .i5-colhead h3 { font-size: 20px; font-weight: 700; color: var(--color-gray-900); }
+        .i5-colhead span { font-size: 14px; color: var(--color-gray-500); }
+        .i5-row { display: block; padding: 18px 0; border-bottom: 1px solid var(--color-gray-200); }
+        .i5-row h4 { font-size: 18px; font-weight: 600; line-height: 1.4; color: var(--color-gray-900); margin-bottom: 6px; text-wrap-style: balance; }
+        .i5-row:hover h4 { color: var(--color-blue-600); }
+        .i5-row p { font-size: 15px; line-height: 1.6; color: var(--color-gray-600); }
+        .i5-foot { text-align: center; padding-top: 34px; }
+
+        /* ── Idea 6: news + newsletter ─────────────────────────────────────────── */
+        .i6-split { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start; }
+        .i6-rows { display: flex; flex-direction: column; }
+        .i6-row {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        .i6-row:first-child { padding-top: 0; }
+        .i6-thumb {
+            flex: 0 0 96px;
+            aspect-ratio: 4 / 3;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            background-color: var(--color-gray-100);
+        }
+        .i6-row h4 { font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--color-gray-900); margin-bottom: 5px; text-wrap-style: balance; }
+        .i6-row:hover h4 { color: var(--color-blue-600); }
+        .i6-box {
+            padding: 30px 30px 32px;
+            border-radius: 14px;
+            background: var(--color-purple-50);
+            border: 1px solid var(--color-purple-100);
+        }
+        .i6-box h3 { font-size: 21px; font-weight: 700; color: var(--color-gray-900); margin-bottom: 8px; text-wrap-style: balance; }
+        .i6-box p { font-size: 15px; line-height: 1.65; color: var(--color-gray-600); margin-bottom: 18px; text-wrap-style: balance; }
+        .i6-box .ui-form-field-large { margin-bottom: 14px; }
+        .i6-box .btn { width: 100%; justify-content: center; }
+        .i6-fine { font-size: 13px; color: var(--color-gray-500); margin-bottom: 0; padding-top: 12px; }
+
+        @media (max-width: 900px) {
+            .i1-split, .i5-cols, .i6-split { grid-template-columns: 1fr; gap: 36px; }
+            .i2-grid, .i3-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="page-header">
+    <h1>Our latest news - section ideas</h1>
+    <p>Six treatments for the blog band at the very bottom of the landing page. Today it is six
+       cards with clamped excerpts - the deepest section on the page, sitting after the reader has
+       already been asked to sign up twice. Every idea below uses the same six real posts.</p>
+</div>
+
+<!-- ══ Idea 1 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>1. Featured lead + headline list</h2>
+        <span>One story gets the image and a real excerpt; the rest are title-and-date rows beside it. Roughly half the depth of the current grid, and the reader is given one thing to read rather than six to choose between.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner">
+                <h2 class="sec-h">Our latest news</h2>
+                <p class="sec-p">Keep up to date with what's happening at Jiki in <a class="sec-link" href="/blog">our blog</a>.</p>
+                <div class="i1-split">
+                    <a class="i1-lead" href="/blog/translatathon">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <span class="i1-tag">Latest post</span>
+                        <h3>The Big Jiki &amp; Exercism Translatathon</h3>
+                        <p>Over the weekend of July 31st - August 2nd, we're translating Jiki and Exercism into as many languages as we can, together. Here's how it works and how you can help.</p>
+                        <div class="meta"><span>24 July 2026</span><span>4 min read</span></div>
+                    </a>
+                    <div class="i1-rows">
+                        <a class="i1-row" href="/blog/how-to-get-into-tech-in-2026">
+                            <h4>How to get into tech in 2026</h4>
+                            <div class="meta"><span>11 July 2026</span><span>7 min read</span></div>
+                        </a>
+                        <a class="i1-row" href="/blog/should-i-still-learn-to-code-in-2026">
+                            <h4>Should I still learn to code in 2026?</h4>
+                            <div class="meta"><span>2 July 2026</span><span>6 min read</span></div>
+                        </a>
+                        <a class="i1-row" href="/blog/why-we-built-our-own-editor">
+                            <h4>Why we built our own editor</h4>
+                            <div class="meta"><span>19 June 2026</span><span>5 min read</span></div>
+                        </a>
+                        <a class="i1-row" href="/blog/the-first-100-beta-users">
+                            <h4>What our first 100 beta users taught us</h4>
+                            <div class="meta"><span>3 June 2026</span><span>8 min read</span></div>
+                        </a>
+                        <div class="i1-more">
+                            <a class="btn btn-outline" href="/blog">Read the blog
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 1b ════════════════════════════════════════════════════════════ -->
+<!-- Same layout as idea 1; the side rows gain thumbnails, so the section reads
+     as five posts rather than one post and a list of links. -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>1b. Featured lead + thumbnail rows</h2>
+        <span>Idea 1 with a small image on each side row. Every post gets something to look at, which makes the list feel like posts rather than links - at the cost of the lead standing quite so far above the rest.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner">
+                <h2 class="sec-h">Our latest news</h2>
+                <p class="sec-p">Keep up to date with what's happening at Jiki in <a class="sec-link" href="/blog">our blog</a>.</p>
+                <div class="i1-split">
+                    <a class="i1-lead" href="/blog/translatathon">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <span class="i1-tag">Latest post</span>
+                        <h3>The Big Jiki &amp; Exercism Translatathon</h3>
+                        <p>Over the weekend of July 31st - August 2nd, we're translating Jiki and Exercism into as many languages as we can, together. Here's how it works and how you can help.</p>
+                        <div class="meta"><span>24 July 2026</span><span>4 min read</span></div>
+                    </a>
+                    <div class="i1-rows">
+                        <a class="i1b-row" href="/blog/how-to-get-into-tech-in-2026">
+                            <div class="i1b-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                            <div>
+                                <h4>How to get into tech in 2026</h4>
+                                <div class="meta"><span>11 July 2026</span><span>7 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i1b-row" href="/blog/should-i-still-learn-to-code-in-2026">
+                            <div class="i1b-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                            <div>
+                                <h4>Should I still learn to code in 2026?</h4>
+                                <div class="meta"><span>2 July 2026</span><span>6 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i1b-row" href="/blog/why-we-built-our-own-editor">
+                            <div class="i1b-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                            <div>
+                                <h4>Why we built our own editor</h4>
+                                <div class="meta"><span>19 June 2026</span><span>5 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i1b-row" href="/blog/the-first-100-beta-users">
+                            <div class="i1b-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                            <div>
+                                <h4>What our first 100 beta users taught us</h4>
+                                <div class="meta"><span>3 June 2026</span><span>8 min read</span></div>
+                            </div>
+                        </a>
+                        <div class="i1-more">
+                            <a class="btn btn-outline" href="/blog">Read the blog
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 2 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>2. Three cards, trimmed</h2>
+        <span>The smallest possible change: the existing grid cut from six cards to three, with a read time added and the blog link promoted to a button. Same component, half the page.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner centred">
+                <h2 class="sec-h">Our latest news</h2>
+                <p class="sec-p">Keep up to date with what's happening at Jiki in <a class="sec-link" href="/blog">our blog</a>.</p>
+                <div class="i2-grid" style="text-align:left">
+                    <a class="card" href="/blog/translatathon">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <div class="meta"><span>4 min read</span></div>
+                        <h3>The Big Jiki &amp; Exercism Translatathon</h3>
+                        <p>Over the weekend of July 31st - August 2nd, we're translating Jiki and Exercism into as many languages as we can, together.</p>
+                    </a>
+                    <a class="card" href="/blog/how-to-get-into-tech-in-2026">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                        <div class="meta"><span>7 min read</span></div>
+                        <h3>How to get into tech in 2026</h3>
+                        <p>For 30 years, code was the gatekeeper into tech. Now that LLMs write it for you, the route in has changed.</p>
+                    </a>
+                    <a class="card" href="/blog/should-i-still-learn-to-code-in-2026">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                        <div class="meta"><span>6 min read</span></div>
+                        <h3>Should I still learn to code in 2026?</h3>
+                        <p>It's 2026 and Claude can out-code me in seconds. So why bother learning? Because you still need to catch the mistakes.</p>
+                    </a>
+                </div>
+                <div class="i2-foot">
+                    <a class="btn btn-outline" href="/blog">Read the blog
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 3 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>3. Clippings taped to the wall</h2>
+        <span>The posts as newspaper cuttings taped up, tilted, on the same cream paper as the projects band. The only version that speaks the page's own language - but it is the fourth taped-paper element on the page, so check the wall doesn't become a theme.</span>
+    </div>
+    <div class="slice">
+        <div class="paper">
+            <div class="inner centred">
+                <h2 class="sec-h">Fresh off the press</h2>
+                <p class="sec-p">What we've been writing about lately, over on <a class="sec-link" href="/blog">the blog</a>.</p>
+                <div class="i3-grid" style="text-align:left">
+                    <a class="i3-clip" href="/blog/translatathon">
+                        <span class="i3-tape" aria-hidden="true"></span>
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <span class="i3-kicker">this weekend!</span>
+                        <h3>The Big Jiki &amp; Exercism Translatathon</h3>
+                        <p>Over the weekend of July 31st - August 2nd, we're translating Jiki into as many languages as we can, together.</p>
+                    </a>
+                    <a class="i3-clip" href="/blog/how-to-get-into-tech-in-2026">
+                        <span class="i3-tape" aria-hidden="true"></span>
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                        <span class="i3-kicker">worth a read</span>
+                        <h3>How to get into tech in 2026</h3>
+                        <p>For 30 years, code was the gatekeeper into tech. Now that LLMs write it for you, the route in has changed.</p>
+                    </a>
+                    <a class="i3-clip" href="/blog/should-i-still-learn-to-code-in-2026">
+                        <span class="i3-tape" aria-hidden="true"></span>
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                        <span class="i3-kicker">the big question</span>
+                        <h3>Should I still learn to code in 2026?</h3>
+                        <p>Claude can out-code me in seconds. So why bother? Because you still need to catch the mistakes it confidently makes.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 4 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>4. Contact-sheet strip</h2>
+        <span>All six posts kept, but on one horizontally scrolling row instead of two stacked ones - so the section is a single card deep. The trade-off: half the posts start off screen, and scroll rows get ignored on desktop.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner">
+                <div class="i4-head">
+                    <div>
+                        <h2 class="sec-h">Our latest news</h2>
+                        <p class="sec-p">Keep up to date with what's happening at Jiki.</p>
+                    </div>
+                    <a class="btn btn-outline" href="/blog">Read the blog
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                <div class="i4-strip">
+                    <a class="card" href="/blog/translatathon">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <h3>The Big Jiki &amp; Exercism Translatathon</h3>
+                        <div class="meta"><span>4 min</span></div>
+                    </a>
+                    <a class="card" href="/blog/how-to-get-into-tech-in-2026">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                        <h3>How to get into tech in 2026</h3>
+                        <div class="meta"><span>7 min</span></div>
+                    </a>
+                    <a class="card" href="/blog/should-i-still-learn-to-code-in-2026">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                        <h3>Should I still learn to code in 2026?</h3>
+                        <div class="meta"><span>6 min</span></div>
+                    </a>
+                    <a class="card" href="/blog/why-we-built-our-own-editor">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                        <h3>Why we built our own editor</h3>
+                        <div class="meta"><span>5 min</span></div>
+                    </a>
+                    <a class="card" href="/blog/the-first-100-beta-users">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                        <h3>What our first 100 beta users taught us</h3>
+                        <div class="meta"><span>8 min</span></div>
+                    </a>
+                    <a class="card" href="/blog/learning-to-code-is-not-about-syntax">
+                        <div class="card-img" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                        <h3>Learning to code isn't about syntax</h3>
+                        <div class="meta"><span>6 min</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 5 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>5. Sorted by the question you're asking</h2>
+        <span>The same posts, filed under what the reader wants to know rather than when we published them. Two of the six real posts answer the exact objection that stops someone signing up - under "Our latest news" they read as announcements, under "Still deciding?" they do a job.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner centred">
+                <h2 class="sec-h">Still thinking it over?</h2>
+                <p class="sec-p">We've written about most of it already. Here's where people usually start.</p>
+                <div class="i5-cols" style="text-align:left">
+                    <div>
+                        <div class="i5-colhead">
+                            <h3>Still deciding?</h3>
+                            <span>Is this worth my time?</span>
+                        </div>
+                        <a class="i5-row" href="/blog/should-i-still-learn-to-code-in-2026">
+                            <h4>Should I still learn to code in 2026?</h4>
+                            <p>Claude can out-code you in seconds. Here's why that makes reading code more valuable, not less.</p>
+                        </a>
+                        <a class="i5-row" href="/blog/how-to-get-into-tech-in-2026">
+                            <h4>How to get into tech in 2026</h4>
+                            <p>For 30 years code was the gatekeeper. The route in has changed - here's what it looks like now.</p>
+                        </a>
+                        <a class="i5-row" href="/blog/learning-to-code-is-not-about-syntax">
+                            <h4>Learning to code isn't about syntax</h4>
+                            <p>Nobody ever got stuck on a semicolon. They got stuck because nobody explained what the computer was doing.</p>
+                        </a>
+                    </div>
+                    <div>
+                        <div class="i5-colhead">
+                            <h3>Behind the scenes</h3>
+                            <span>How we're building it</span>
+                        </div>
+                        <a class="i5-row" href="/blog/why-we-built-our-own-editor">
+                            <h4>Why we built our own editor</h4>
+                            <p>Every off-the-shelf editor assumed you already knew how to code. So we built one that doesn't.</p>
+                        </a>
+                        <a class="i5-row" href="/blog/the-first-100-beta-users">
+                            <h4>What our first 100 beta users taught us</h4>
+                            <p>Every place a hundred complete beginners got stuck, and what we changed because of it.</p>
+                        </a>
+                        <a class="i5-row" href="/blog/translatathon">
+                            <h4>The Big Jiki &amp; Exercism Translatathon</h4>
+                            <p>One weekend, as many languages as we can manage, and how you can help us do it.</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="i5-foot">
+                    <a class="btn btn-outline" href="/blog">Read the blog
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 6 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>6. News + newsletter</h2>
+        <span>Three posts on the left, a subscribe box on the right - a second, lower-commitment ask for the reader who got all the way down the page without signing up. The only idea that needs backend work.</span>
+    </div>
+    <div class="slice">
+        <div class="band">
+            <div class="inner">
+                <h2 class="sec-h">Our latest news</h2>
+                <p class="sec-p">Keep up to date with what's happening at Jiki in <a class="sec-link" href="/blog">our blog</a>.</p>
+                <div class="i6-split">
+                    <div class="i6-rows">
+                        <a class="i6-row" href="/blog/translatathon">
+                            <div class="i6-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/translatathon-805ce2bb5287.webp)"></div>
+                            <div>
+                                <h4>The Big Jiki &amp; Exercism Translatathon</h4>
+                                <div class="meta"><span>24 July 2026</span><span>4 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i6-row" href="/blog/how-to-get-into-tech-in-2026">
+                            <div class="i6-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/how-to-get-into-tech-in-2026-7274d05906cd.webp)"></div>
+                            <div>
+                                <h4>How to get into tech in 2026</h4>
+                                <div class="meta"><span>11 July 2026</span><span>7 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i6-row" href="/blog/should-i-still-learn-to-code-in-2026">
+                            <div class="i6-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                            <div>
+                                <h4>Should I still learn to code in 2026?</h4>
+                                <div class="meta"><span>2 July 2026</span><span>6 min read</span></div>
+                            </div>
+                        </a>
+                        <a class="i6-row" href="/blog/why-we-built-our-own-editor">
+                            <div class="i6-thumb" style="background-image:url(https://assets.jiki.io/static/content/images/blog/should-i-still-learn-to-code-in-2026-172bc11c8511.webp)"></div>
+                            <div>
+                                <h4>Why we built our own editor</h4>
+                                <div class="meta"><span>19 June 2026</span><span>5 min read</span></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="i6-box">
+                        <h3>Not ready to start yet?</h3>
+                        <p>We'll send you one email a month - what we've built, what we've written, and when the next cohort opens.</p>
+                        <div class="ui-form-field-large">
+                            <label for="news-email">Email address</label>
+                            <div>
+                                <input type="email" id="news-email" placeholder="you@example.com">
+                            </div>
+                        </div>
+                        <a class="btn btn-purple" href="#">Subscribe</a>
+                        <p class="i6-fine">No spam, and one click to unsubscribe.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
