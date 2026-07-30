@@ -13,8 +13,9 @@
         const IMPLEMENTATION_NOTES = `
 # Implementation Notes
 
-Eight replacements for the **"Ready to get started?"** bar that sits between the parallel-tracks
-section and the Learn to Code / Learn to Build cards on \`jiki-landing.html\`.
+Thirteen replacements for the **"Ready to get started?"** bar that sits between the parallel-tracks
+section and the Learn to Code / Learn to Build cards on \`jiki-landing.html\`. Ideas 9 and 10 are
+built for a different slot: the gap between the testimonials wall and the Exercism band.
 
 ## Why replace it
 
@@ -48,6 +49,44 @@ commissioned.
 8. **Polaroid + checklist** - idea 4 with the same three ticked outcomes under the intro line. The
    print shows what you'll make, the list says what you'll get. The most complete of the set, and
    the heaviest - worth checking it doesn't overpower the two track cards right beneath it.
+9. **Puzzle seam, flat band** - idea 6 rebuilt for the gap between the testimonials wall and the
+   Exercism band. The testimonials are white with a slate dot grid, and the Exercism band is a wash
+   of purple, teal and yellow glows, so a tinted gradient here would fight the section right below
+   it. This band is flat instead: one solid slate, no gradient, no glow, hairline rules top and
+   bottom, and the dashed purple seam as the only colour. It separates itself by texture rather than
+   hue. The pieces are filled white so they stay the brightest thing in the band.
+10. **Puzzle seam, navy gradient** - idea 9 in the dark. The background is idea 8's cream paper
+   construction rebuilt in deep navy: a purple glow in the top left, a blue glow in the bottom
+   right, over a base gradient. Each glow sits on the same side as the piece it belongs to, so the
+   background agrees with the coloured piece outlines. Deeper and bluer than the near-black of the
+   outcomes band, so the two dark sections don't read as the same surface. The pieces keep the
+   purple and blue outlines from idea 6, both over the same slightly translucent white fill (88%) so
+   a little navy comes through and they sit in the band rather than on top of it, lit by a soft white
+   glow since a drop shadow does nothing against a dark band. The trade-off is a second heavy section
+   in that stretch of the page.
+
+   Two build details: the glows are opened up to roughly double idea 8's opacity, because coloured
+   light reads far more faintly on a dark surface than on cream; and the navy pair (\`#0b1437\` to
+   \`#131c4a\`) are arbitrary colours rather than palette tokens, because \`blue-950\` was too light to
+   read as a dark navy. Swap them for tokens if that matters more than the exact shade.
+
+### Further arrangements of idea 8
+
+Ideas 11-13 all reuse idea 8's two components - the polaroid print and the ticked checklist -
+without changing either. There is nothing new to build in any of them, only a different arrangement.
+
+11. **Print row + ticks on one line** - three overlapping prints across the top, centred, with the
+   checklist turned horizontal instead of stacked. The shallowest of the print ideas, so it fits a
+   tight gap without pushing the page down. The tick copy is shortened to suit a single line. The
+   middle print is the one on top of the pile: straight rather than tilted, 196px against the
+   others' 162px, and with a deeper shadow, so the eye lands on it first.
+12. **Checklist sheet, print clipped on** - the checklist becomes the whole block, on a sheet of
+   paper with the ticks scaled up, and one print sits over its top right corner like a photo clipped
+   to a list. This is the only one that puts the weight on what you get rather than what you make.
+   The print is absolutely positioned and hidden below 700px, where it would overhang the screen.
+13. **Print either side, ask in the middle** - idea 8 made symmetrical, with a print flanking each
+   side of the ask. The prints frame the CTA rather than compete with it. Both prints drop out below
+   900px, so the ask has to stand on its own there.
 
 ## Recommendation
 
@@ -381,6 +420,105 @@ blocks in a row.
         .i6 .cta-h { color: var(--color-gray-800); }
         .i6 .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 24px; }
 
+        /* ── Idea 9: puzzle seam on a flat band ───────────────────────────────
+           Idea 6, but placed between the testimonials wall and the Exercism band.
+           The testimonials are white with a slate dot grid, and the Exercism band
+           is a wash of purple, teal and yellow glows - so a tinted gradient here
+           would fight the section directly below it. This band is deliberately
+           FLAT: one solid slate, no gradient and no glow. It separates itself from
+           the neighbours by texture rather than by colour, and reads as a quiet
+           divider strip rather than a third feature background in a row. */
+        .i9 {
+            position: relative;
+            padding: 56px 0 62px;
+            text-align: center;
+            background: var(--color-gray-100);
+            border-top: 1px solid var(--color-gray-200);
+            border-bottom: 1px solid var(--color-gray-200);
+        }
+        /* the dashed seam from idea 6, kept as the one bit of colour in the band */
+        .i9::before {
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, var(--color-purple-300) 0 10px, transparent 10px 20px);
+        }
+        /* the pieces sit in flow, same as idea 6, so nothing clips against the rules */
+        .i9-pieces {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            filter: drop-shadow(0 6px 12px rgba(15, 23, 42, .14));
+        }
+        .i9-pieces svg { width: 152px; height: 152px; display: block; }
+        .i9-pieces svg + svg { margin-left: -51px; }
+        .i9-pieces text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        /* the pieces get a white fill here: on flat slate, white is the brightest
+           thing in the band, so the artwork stays the focus */
+        .i9 .cta-h { color: var(--color-gray-800); }
+        .i9 .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 24px; }
+
+        /* ── Idea 10: puzzle seam, navy gradient ──────────────────────────────
+           Idea 9 flipped dark. The background borrows idea 8's paper construction -
+           a purple glow top left, a blue glow bottom right, over a base gradient -
+           rebuilt in deep navy. The two glows land on the same side as the piece
+           they belong to, so the background and the coloured piece outlines agree
+           with each other. */
+        .i10 {
+            position: relative;
+            padding: 56px 0 62px;
+            text-align: center;
+            /* the same construction as the cream paper in idea 8 - a purple glow in
+               the top left, a blue glow in the bottom right, over a base gradient -
+               but with the base in deep navy and the glows opened up, since coloured
+               light reads much more faintly on a dark surface than on cream */
+            background:
+                radial-gradient(90% 60% at 15% 0%, rgba(168, 85, 247, .34) 0%, rgba(168, 85, 247, 0) 62%),
+                radial-gradient(80% 70% at 90% 100%, rgba(59, 130, 246, .32) 0%, rgba(59, 130, 246, 0) 62%),
+                linear-gradient(180deg, #0b1437 0%, #131c4a 100%);
+        }
+        /* the dashed seam in white, so the band stays a two-colour piece */
+        .i10::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .55) 0 10px, transparent 10px 20px);
+        }
+        .i10-pieces {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 24px;
+            transform: rotate(-1.5deg);
+            /* a soft white glow rather than a drop shadow: a shadow does nothing
+               against a dark band */
+            filter: drop-shadow(0 0 18px rgba(255, 255, 255, .22));
+        }
+        .i10-pieces svg { width: 152px; height: 152px; display: block; }
+        .i10-pieces svg + svg { margin-left: -51px; }
+        .i10-pieces text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        .i10 .cta-h { color: #fff; }
+        .i10 .cta-p { color: rgba(255, 255, 255, .72); margin-inline: auto; margin-bottom: 24px; }
+        /* the button is the one thing left in colour, so the ask stays the loudest
+           element on the band. Swap to a white button with navy text if the band
+           should be strictly two-colour */
+
         /* ── Idea 7: bare sentence ───────────────────────────────────────────── */
         .i7 { padding: 80px 24px; text-align: center; }
         .i7-line {
@@ -431,6 +569,88 @@ blocks in a row.
         }
         .i8-tick svg { width: 12px; height: 12px; }
 
+        /* ── Ideas 11-13: further arrangements of idea 8's two components ──────
+           All three reuse the polaroid print (.i4-print) and the ticked checklist
+           (.i8-list / .i8-row / .i8-tick) verbatim, so there is nothing new to
+           build - only a different arrangement of the same two pieces. */
+
+        /* Idea 11: a row of prints, with the ticks laid out on one line ───────── */
+        .i11 { padding: 60px 0 64px; text-align: center; }
+        .i11-prints {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* the prints overlap slightly, so the row reads as a handful of photos
+               put down together rather than a tidy grid */
+            gap: 0;
+            margin-bottom: 30px;
+        }
+        .i11-prints .i4-print { width: 162px; margin-inline: -12px; }
+        .i11-prints .i4-print:nth-child(1) { transform: rotate(-3.5deg); z-index: 1; }
+        .i11-prints .i4-print:nth-child(3) { transform: rotate(3deg); z-index: 2; }
+        /* the middle print is the one on top of the pile: straight, a size up, and
+           with a deeper shadow, so it reads as the print that was put down first
+           and the two others as ones tossed behind it */
+        .i11-prints .i4-print:nth-child(2) {
+            width: 196px;
+            transform: rotate(0deg);
+            z-index: 3;
+            box-shadow: 0 1px 2px rgba(30, 20, 10, .3), 0 18px 34px -10px rgba(30, 20, 10, .32);
+        }
+        .i11 .cta-h { color: var(--color-gray-800); }
+        .i11 .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 22px; }
+        /* the same list, turned horizontal: shallower, so the band stays short */
+        .i11 .i8-list {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px 34px;
+            margin-bottom: 28px;
+        }
+
+        /* Idea 12: the checklist is the whole block, a print clipped to it ────── */
+        .i12 { padding: 64px 0 68px; }
+        .i12-sheet {
+            position: relative;
+            max-width: 620px;
+            margin-inline: auto;
+            padding: 40px 44px 42px;
+            background: #fffdf8;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(30, 20, 10, .2), 0 14px 30px -12px rgba(30, 20, 10, .3);
+            transform: rotate(-.5deg);
+        }
+        .i12 .cta-h { color: var(--color-gray-800); }
+        .i12 .cta-p { color: var(--color-gray-600); margin-bottom: 22px; }
+        /* the ticks get bigger here: the list is the hero of this one, not a footnote */
+        .i12 .i8-list { gap: 16px; margin-bottom: 26px; }
+        .i12 .i8-row { font-size: 17px; }
+        .i12 .i8-tick { width: 26px; height: 26px; }
+        .i12 .i8-tick svg { width: 14px; height: 14px; }
+        /* one print, paperclipped over the top right corner of the sheet */
+        .i12-clipped {
+            position: absolute;
+            top: -26px;
+            right: -34px;
+            width: 132px;
+            transform: rotate(7deg);
+            z-index: 2;
+        }
+        @media (max-width: 700px) { .i12-clipped { display: none; } }
+
+        /* Idea 13: a print either side, the ask in the middle ─────────────────── */
+        .i13 { padding: 60px 0 64px; }
+        .i13 .inner { display: flex; align-items: center; justify-content: center; gap: 40px; }
+        .i13-mid { text-align: center; max-width: 440px; }
+        .i13 .cta-h { color: var(--color-gray-800); }
+        .i13 .cta-p { color: var(--color-gray-600); margin-inline: auto; margin-bottom: 20px; }
+        .i13 .i8-list { align-items: flex-start; display: inline-flex; margin-bottom: 26px; text-align: left; }
+        .i13 .i4-print { width: 190px; }
+        .i13 .i4-print:first-child { transform: rotate(-3deg); }
+        .i13 .i4-print:last-child { transform: rotate(2.5deg); }
+        /* the flanking prints are the first thing to go: the ask has to survive alone */
+        @media (max-width: 900px) { .i13 .i4-print { display: none; } }
+
         @media (max-width: 900px) {
             .i2 .inner, .i3 .inner, .i4 .inner, .i8 .inner { flex-direction: column; align-items: flex-start; }
         }
@@ -440,7 +660,7 @@ blocks in a row.
 
 <div class="page-header">
     <h1>"Ready to get started?" - mid-page CTA ideas</h1>
-    <p>Eight replacements for the dark gradient bar between the parallel-tracks section and the two track cards. The page around it has become a paper wall (torn tape, prints, sticky notes, hand-drawn arrows, dot grid), and the bar is now the only thing in that stretch that reads as an advert dropped in rather than part of the page. Every idea below is built from things the page already does.</p>
+    <p>Thirteen replacements for the dark gradient bar between the parallel-tracks section and the two track cards (ideas 9 and 10 are built for a different slot: the gap between the testimonials wall and the Exercism band). The page around it has become a paper wall (torn tape, prints, sticky notes, hand-drawn arrows, dot grid), and the bar is now the only thing in that stretch that reads as an advert dropped in rather than part of the page. Every idea below is built from things the page already does.</p>
 </div>
 
 <!-- ══ Idea 1 ═══════════════════════════════════════════════════════════════ -->
@@ -641,6 +861,198 @@ blocks in a row.
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 9 ══════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>9. Puzzle seam, flat band</h2>
+        <span>Idea 6 with a background of its own for the gap below "What do our students think?". Flat solid slate rather than a tint, because the Exercism band directly underneath is already a wash of purple, teal and yellow - a second gradient would fight it.</span>
+    </div>
+    <div class="slice">
+        <div class="i9">
+            <div class="i9-pieces" aria-hidden="true">
+                <!-- Learn to Code: purple, knob on the right. Solid white fill so the
+                     pieces stay crisp against the tinted band -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14,4 H90 A10,10 0 0 1 100,14 V42 C118,32 118,88 100,78 V106 A10,10 0 0 1 90,116 H14 A10,10 0 0 1 4,106 V14 A10,10 0 0 1 14,4 Z" fill="#fff" stroke="var(--color-purple-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="52" y="67" fill="var(--color-purple-700)">Code</text>
+                </svg>
+                <!-- Learn to Build: blue, matching socket on the left -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30,4 H106 A10,10 0 0 1 116,14 V106 A10,10 0 0 1 106,116 H30 A10,10 0 0 1 20,106 V78 C38,88 38,32 20,42 V14 A10,10 0 0 1 30,4 Z" fill="#fff" stroke="var(--color-blue-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="70" y="67" fill="var(--color-blue-700)">Build</text>
+                </svg>
+            </div>
+            <h2 class="cta-h">Ready to put it together?</h2>
+            <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+            <a class="btn btn-purple" href="/auth/signup">Get started free
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 10 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>10. Puzzle seam, navy gradient</h2>
+        <span>Idea 9 in the dark, with idea 8's paper gradient rebuilt in deep navy: a purple glow top left and a blue glow bottom right, each on the same side as the piece it belongs to. The pieces keep their purple and blue outlines, so the artwork and the background agree.</span>
+    </div>
+    <div class="slice">
+        <div class="i10">
+            <div class="i10-pieces" aria-hidden="true">
+                <!-- Coloured outlines matching the glow behind each piece, over a
+                     slightly translucent white fill so a little of the navy comes
+                     through and the pieces sit in the band rather than on top of it.
+                     Code: purple edge, knob on the right -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14,4 H90 A10,10 0 0 1 100,14 V42 C118,32 118,88 100,78 V106 A10,10 0 0 1 90,116 H14 A10,10 0 0 1 4,106 V14 A10,10 0 0 1 14,4 Z" fill="rgba(255,255,255,.88)" stroke="var(--color-purple-500)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="52" y="67" fill="var(--color-purple-700)">Code</text>
+                </svg>
+                <!-- Build: blue edge, matching socket on the left. Same fill as Code,
+                     so the pair reads as one object in two halves -->
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30,4 H106 A10,10 0 0 1 116,14 V106 A10,10 0 0 1 106,116 H30 A10,10 0 0 1 20,106 V78 C38,88 38,32 20,42 V14 A10,10 0 0 1 30,4 Z" fill="rgba(255,255,255,.88)" stroke="var(--color-blue-400)" stroke-width="2.5" stroke-linejoin="round"/>
+                    <text x="70" y="67" fill="var(--color-blue-700)">Build</text>
+                </svg>
+            </div>
+            <h2 class="cta-h">Ready to put it together?</h2>
+            <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+            <a class="btn btn-purple" href="/auth/signup">Get started free
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 11 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>11. Print row + ticks on one line</h2>
+        <span>Idea 8's two components, centred and turned landscape: three overlapping prints across the top, and the checklist laid out on a single line instead of stacked. The middle print sits straight and a size up, so it reads as the one on top of the pile. The shallowest of the print ideas, so it can sit in a tight gap without pushing the page down.</span>
+    </div>
+    <div class="slice">
+        <div class="paper i11">
+            <div class="inner">
+                <div class="i11-prints">
+                    <div class="i4-print">
+                    <video class="i4-video i4-pixel" aria-label="Space invaders" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/space-invaders-74644-74644a8c8810.mp4"></video>
+                    <span>space invaders</span>
+                </div>
+                    <div class="i4-print">
+                    <video class="i4-video i4-pixel" aria-label="Breakout" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/breakout-bcaa3-bcaa37eb7509.mp4"></video>
+                    <span>breakout</span>
+                </div>
+                    <div class="i4-print">
+                    <video class="i4-video i4-pixel" aria-label="Maze" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/maze-59a6d-59a6d1950cc2.mp4"></video>
+                    <span>maze</span>
+                </div>
+                </div>
+                <h2 class="cta-h">Ready to make your first one?</h2>
+                <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+                <div class="i8-list">
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Free to start
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Real projects, week one
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Jeremy on the livestreams
+                    </div>
+                </div>
+                <a class="btn btn-purple" href="/auth/signup">Get started free
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 12 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>12. Checklist sheet, print clipped on</h2>
+        <span>The checklist becomes the whole block - a sheet of paper on the wall with bigger ticks - and one print sits over its top corner like a photo clipped to a list. Puts the weight on what you get rather than on what you make.</span>
+    </div>
+    <div class="slice dots">
+        <div class="i12">
+            <div class="inner">
+                <div class="i12-sheet">
+                    <div class="i4-print i12-clipped">
+                    <video class="i4-video" aria-label="Flower" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/flower-22e43-22e431363fa3.mp4"></video>
+                    <span>flower</span>
+                </div>
+                    <h2 class="cta-h">Ready to get your hands dirty?</h2>
+                    <p class="cta-p">Everything you need to go from your first line of code to projects you'd actually show someone.</p>
+                    <div class="i8-list">
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        The whole "learn to code" curriculum, free
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Real projects from your first week
+                    </div>
+                    <div class="i8-row">
+                        <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                        Jeremy on the livestreams when you get stuck
+                    </div>
+                    </div>
+                    <a class="btn btn-purple" href="/auth/signup">Get started free
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ Idea 13 ═════════════════════════════════════════════════════════════ -->
+<div class="idea">
+    <div class="idea-label">
+        <h2>13. Print either side, ask in the middle</h2>
+        <span>Idea 8 made symmetrical: a print on each side with the ask and the checklist between them. The two prints frame the CTA rather than compete with it, and the block reads as part of the wall instead of a panel sat on top of it.</span>
+    </div>
+    <div class="slice">
+        <div class="paper i13">
+            <div class="inner">
+                <div class="i4-print">
+                    <video class="i4-video i4-pixel" aria-label="Tic tac toe" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/tic-tac-toe-736a8-736a8a54c4f5.mp4"></video>
+                    <span>tic tac toe</span>
+                </div>
+                <div class="i13-mid">
+                    <h2 class="cta-h">Ready to make your first one?</h2>
+                    <p class="cta-p">Learn to code and build real projects from day one, with Jeremy guiding you every step of the way.</p>
+                    <div class="i8-list">
+                        <div class="i8-row">
+                            <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                            Free to start
+                        </div>
+                        <div class="i8-row">
+                            <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                            Real projects, week one
+                        </div>
+                        <div class="i8-row">
+                            <span class="i8-tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+                            Jeremy on the livestreams
+                        </div>
+                    </div>
+                    <a class="btn btn-purple" href="/auth/signup">Get started free
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                </div>
+                <div class="i4-print">
+                    <video class="i4-video i4-pixel" aria-label="Breakout" autoplay loop muted playsinline src="https://assets.jiki.io/static/hashed/assets/images/landing-page/breakout-bcaa3-bcaa37eb7509.mp4"></video>
+                    <span>breakout</span>
+                </div>
             </div>
         </div>
     </div>
