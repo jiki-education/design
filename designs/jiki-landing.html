@@ -508,6 +508,8 @@
     background: var(--color-purple-600);
     border: none;
     font-weight: 600;
+    /* 2px down on the captured 20px */
+    font-size: 18px;
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-purple-400) 50%, transparent), 0 8px 24px color-mix(in srgb, var(--color-purple-500) 40%, transparent);
     /* the UI Kit's standard button shape, not a pill */
     border-radius: 12px;
@@ -1900,9 +1902,9 @@
          @media (prefers-reduced-motion:reduce){.cert-outcomes .co-num > span,.cert-outcomes .co-num > svg{transition:none}}
          /* the visual sits in a fixed box with a clear band underneath for the call-out,
             so no label or arrow ever covers an image and the three columns line up */
-         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
-         /* only the column that still carries a call-out reserves the band beneath it */
-         .cert-outcomes .co-col:last-child .co-viz{padding-bottom:62px}
+         /* the three visuals share a top edge so the row reads as one band, whatever
+            each one's natural height is */
+         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:flex-start;justify-content:center;margin-bottom:22px}
          .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:18px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
          .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
@@ -1911,6 +1913,19 @@
          .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0)}
          .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:#0A66C2;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
          .cert-outcomes .co-verify svg{width:14px;height:14px}
+         /* a small burst off the top right corner of the chip, drawn rather than an asset:
+            the repo has no splash artwork and this needs no new file */
+         /* the fan starts at the pill's top right corner and opens outwards through the
+            upper right quadrant, so it wraps the corner without any ray crossing the pill.
+            The 4px tuck accounts for the fully rounded end: the bounding corner sits about
+            that far outside the ink. */
+         .cert-outcomes .co-splash{position:absolute;bottom:100%;left:100%;margin-bottom:-4px;margin-left:-4px;width:30px;height:30px;pointer-events:none;color:var(--color-amber-300);transform-origin:0 100%;animation:co-splashTwinkle 3.4s ease-in-out infinite}
+         .cert-outcomes .co-splash svg{width:100%;height:100%;display:block;overflow:visible}
+         @keyframes co-splashTwinkle{
+          0%,100%{transform:scale(1);opacity:.9}
+          45%{transform:scale(1.13);opacity:1}
+         }
+         @media (prefers-reduced-motion:reduce){.cert-outcomes .co-splash{animation:none}}
          /* 02: three project cards fanned out, same anatomy as the square tiles above */
                   /* four project cards in a 2x2 grid, each nudged off square so the set still
             reads as things laid out by hand rather than a table */
@@ -1951,12 +1966,14 @@
          .cert-outcomes .co-tile:nth-child(2){animation-delay:-3.3s}
          .cert-outcomes .co-tile:nth-child(3){animation-delay:-6.6s}
          .cert-outcomes .co-tile:nth-child(4){animation-delay:-9.9s}
+         /* each card is visible for slightly longer than the 25% gap between them, so one
+            is always in the folder rather than it flashing empty between cards */
          @keyframes co-cardCycle{
-          0%{opacity:0;transform:translateY(12px) scale(.97)}
-          3%{opacity:1;transform:translateY(0) scale(1)}
-          22%{opacity:1;transform:translateY(0) scale(1)}
-          25%{opacity:0;transform:translateY(-12px) scale(.97)}
-          100%{opacity:0;transform:translateY(12px) scale(.97)}
+          0%{opacity:0;transform:translateY(10px) scale(.97)}
+          2%{opacity:1;transform:translateY(0) scale(1)}
+          25%{opacity:1;transform:translateY(0) scale(1)}
+          27%{opacity:0;transform:translateY(-10px) scale(.97)}
+          100%{opacity:0;transform:translateY(10px) scale(.97)}
          }
          @media (prefers-reduced-motion:reduce){
           .cert-outcomes .co-tile{animation:none;opacity:0}
@@ -1982,23 +1999,32 @@
          .cert-outcomes .co-code .hit{display:block;background:rgba(251,191,36,.14);box-shadow:inset 3px 0 0 var(--color-amber-300);margin-inline:-14px;padding-inline:14px}
          /* 03 alternates between the code snippet and the architecture diagram: reading
             unfamiliar code and knowing how the pieces fit are the same understanding */
+         /* the two states are driven by a class rather than a keyframe loop, so the dots
+            above can switch between them. The snippet gets a shorter turn than the
+            diagram: it is the quicker of the two to read. */
          .cert-outcomes .co-swap{position:relative;width:96%}
-         .cert-outcomes .co-swap > *{animation:co-swapCycle 14s ease-in-out infinite}
+         .cert-outcomes .co-swap > .co-code,
+         .cert-outcomes .co-swap > .co-arch{opacity:0;transition:opacity .35s ease}
          .cert-outcomes .co-swap > .co-code{position:relative}
-         .cert-outcomes .co-swap > .co-arch{position:absolute;inset:0;animation-delay:-7s}
-         /* the call-out points at a line of the snippet, so it leaves with the snippet */
+         .cert-outcomes .co-swap > .co-arch{position:absolute;inset:0}
+         .cert-outcomes .co-swap.is-a > .co-code{opacity:1}
+         .cert-outcomes .co-swap.is-b > .co-arch{opacity:1}
+         /* the call-out points at a line of the snippet, so it belongs to that state */
          .cert-outcomes .co-col:last-child .co-anno,
-         .cert-outcomes .co-col:last-child .co-arrow{animation:co-swapCycle 14s ease-in-out infinite}
-         @keyframes co-swapCycle{
-          0%{opacity:1}
-          45%{opacity:1}
-          48.5%{opacity:0}
-          96.5%{opacity:0}
-          100%{opacity:1}
-         }
+         .cert-outcomes .co-col:last-child .co-arrow{opacity:0;transition:opacity .35s ease}
+         .cert-outcomes .co-col:last-child.is-a .co-anno,
+         .cert-outcomes .co-col:last-child.is-a .co-arrow{opacity:1}
+         /* the dots: above the card, out of flow so the three columns stay top aligned */
+         .cert-outcomes .co-dots{position:absolute;top:-28px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:6}
+         .cert-outcomes .co-dots button{width:9px;height:9px;padding:0;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.18);cursor:pointer;transition:background-color .25s ease,border-color .25s ease,transform .25s ease}
+         .cert-outcomes .co-dots button:hover{background:rgba(255,255,255,.45)}
+         .cert-outcomes .co-dots button[aria-selected="true"]{background:var(--color-amber-300);border-color:var(--color-amber-300);transform:scale(1.25)}
+         .cert-outcomes .co-dots button:focus-visible{outline:2px solid var(--color-amber-300);outline-offset:3px}
          @media (prefers-reduced-motion:reduce){
-          .cert-outcomes .co-swap > *{animation:none}
-          .cert-outcomes .co-swap > .co-arch{opacity:0}
+          .cert-outcomes .co-swap > .co-code,
+          .cert-outcomes .co-swap > .co-arch,
+          .cert-outcomes .co-col:last-child .co-anno,
+          .cert-outcomes .co-col:last-child .co-arrow{transition:none}
           .cert-outcomes .co-arch .co-node,
           .cert-outcomes .co-arch .co-wire,
           .cert-outcomes .co-arch .co-parts span,
@@ -2006,52 +2032,52 @@
           .cert-outcomes .co-col:last-child .co-arrow{animation:none}
          }
          /* the diagram, on white so it reads as a document rather than a second terminal */
-         .cert-outcomes .co-arch{border-radius:10px;background:#fff;border:1px solid var(--color-gray-200);box-shadow:0 16px 40px rgba(0,0,0,.45);padding:22px 20px 24px;display:flex;flex-direction:column;justify-content:center}
+         .cert-outcomes .co-arch{border-radius:10px;background:#fff;border:1px solid var(--color-gray-200);box-shadow:0 16px 40px rgba(0,0,0,.45);padding:20px;display:flex;flex-direction:column;justify-content:center;gap:0}
          /* the request path across the top */
          .cert-outcomes .co-arch .co-path{display:flex;align-items:center;gap:5px}
          .cert-outcomes .co-arch .co-node{flex:1;padding:10px 4px;border-radius:7px;border:1px solid var(--color-blue-200);background:var(--color-blue-50);color:var(--color-blue-800);font-size:10.5px;font-weight:700;text-align:center;white-space:nowrap;transition:none}
          .cert-outcomes .co-arch .co-wire{flex-shrink:0;width:9px;height:1.5px;background:var(--color-blue-300)}
          /* the drop line down to the pieces that hang off it */
          .cert-outcomes .co-arch .co-drop{height:12px;margin-inline:12%;border-left:1.5px dashed var(--color-blue-200);border-right:1.5px dashed var(--color-blue-200);border-bottom:1.5px dashed var(--color-blue-200)}
-         .cert-outcomes .co-arch .co-parts{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;padding-top:12px}
+         .cert-outcomes .co-arch .co-parts{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:12px}
          .cert-outcomes .co-arch .co-parts span{padding:5px 9px;border-radius:999px;border:1px solid var(--color-blue-200);background:#fff;color:var(--color-blue-700);font-size:10px;font-weight:600;line-height:1.2;white-space:nowrap}
 
          /* Each element lights up in turn, so the diagram walks the request through:
             browser, frontend, API, database, then the pieces hanging off it. The delays
             are absolute positions in the same 14s cycle as the swap, chosen to land
             inside the window where the diagram is the visible state (7s to 13s). */
-         .cert-outcomes .co-arch .co-node,
-         .cert-outcomes .co-arch .co-wire,
-         .cert-outcomes .co-arch .co-parts span{animation-duration:14s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
-         .cert-outcomes .co-arch .co-node{animation-name:co-nodeOn}
-         .cert-outcomes .co-arch .co-wire{animation-name:co-wireOn}
-         .cert-outcomes .co-arch .co-parts span{animation-name:co-partOn}
-         .cert-outcomes .co-arch .co-path > :nth-child(1){animation-delay:7.2s}
-         .cert-outcomes .co-arch .co-path > :nth-child(2){animation-delay:7.55s}
-         .cert-outcomes .co-arch .co-path > :nth-child(3){animation-delay:7.9s}
-         .cert-outcomes .co-arch .co-path > :nth-child(4){animation-delay:8.25s}
-         .cert-outcomes .co-arch .co-path > :nth-child(5){animation-delay:8.6s}
-         .cert-outcomes .co-arch .co-path > :nth-child(6){animation-delay:8.95s}
-         .cert-outcomes .co-arch .co-path > :nth-child(7){animation-delay:9.3s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(1){animation-delay:10.1s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(2){animation-delay:10.24s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(3){animation-delay:10.38s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(4){animation-delay:10.52s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(5){animation-delay:10.66s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(6){animation-delay:10.8s}
-         .cert-outcomes .co-arch .co-parts span:nth-child(7){animation-delay:10.94s}
+         .cert-outcomes .co-swap.is-b .co-arch .co-node,
+         .cert-outcomes .co-swap.is-b .co-arch .co-wire,
+         .cert-outcomes .co-swap.is-b .co-arch .co-parts span{animation-duration:9s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+         .cert-outcomes .co-swap.is-b .co-arch .co-node{animation-name:co-nodeOn}
+         .cert-outcomes .co-swap.is-b .co-arch .co-wire{animation-name:co-wireOn}
+         .cert-outcomes .co-swap.is-b .co-arch .co-parts span{animation-name:co-partOn}
+         .cert-outcomes .co-arch .co-path > :nth-child(1){animation-delay:0.35s}
+         .cert-outcomes .co-arch .co-path > :nth-child(2){animation-delay:0.7s}
+         .cert-outcomes .co-arch .co-path > :nth-child(3){animation-delay:1.05s}
+         .cert-outcomes .co-arch .co-path > :nth-child(4){animation-delay:1.4s}
+         .cert-outcomes .co-arch .co-path > :nth-child(5){animation-delay:1.75s}
+         .cert-outcomes .co-arch .co-path > :nth-child(6){animation-delay:2.1s}
+         .cert-outcomes .co-arch .co-path > :nth-child(7){animation-delay:2.45s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(1){animation-delay:3.3s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(2){animation-delay:3.44s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(3){animation-delay:3.58s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(4){animation-delay:3.72s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(5){animation-delay:3.86s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(6){animation-delay:4s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(7){animation-delay:4.14s}
          @keyframes co-nodeOn{
-          0%,7%,100%{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-800);box-shadow:none;transform:translateY(0)}
-          2%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
-          4.5%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
+          0%,11%,100%{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-800);box-shadow:none;transform:translateY(0)}
+          3%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
+          7%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
          }
          @keyframes co-wireOn{
-          0%,7%,100%{background:var(--color-blue-300);transform:scaleX(1)}
-          2%,4.5%{background:var(--color-blue-600);transform:scaleX(1.35)}
+          0%,11%,100%{background:var(--color-blue-300);transform:scaleX(1)}
+          3%,7%{background:var(--color-blue-600);transform:scaleX(1.35)}
          }
          @keyframes co-partOn{
-          0%,7%,100%{background:#fff;border-color:var(--color-blue-200);color:var(--color-blue-700);transform:translateY(0)}
-          2%,4.5%{background:var(--color-blue-100);border-color:var(--color-blue-400);color:var(--color-blue-800);transform:translateY(-2px)}
+          0%,11%,100%{background:#fff;border-color:var(--color-blue-200);color:var(--color-blue-700);transform:translateY(0)}
+          3%,7%{background:var(--color-blue-100);border-color:var(--color-blue-400);color:var(--color-blue-800);transform:translateY(-2px)}
          }
          @media (max-width:900px){.cert-outcomes .co-cols{grid-template-columns:1fr;gap:44px}.cert-outcomes .co-anno,.cert-outcomes .co-arrow{display:none}}
         </style>
@@ -2078,6 +2104,19 @@
              <div class="co-verify">
               <svg viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
               Share on LinkedIn
+              <span class="co-splash" aria-hidden="true">
+               <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                 <path d="M0.6 19L0.6 12"/>
+                 <path d="M3.4 19.7L6.1 13.2"/>
+                 <path d="M6.4 21.6L11.3 16.7"/>
+                 <path d="M8.3 24.6L14.8 21.9"/>
+                 <path d="M9 27.4L16 27.4"/>
+                </g>
+                <circle cx="12.6" cy="10.2" r="1.5" fill="currentColor"/>
+                <circle cx="20.4" cy="24.4" r="1.5" fill="currentColor"/>
+               </svg>
+              </span>
              </div>
             </div>
            </div>
@@ -2126,6 +2165,11 @@
           </div>
           <div class="co-col">
            <div class="co-viz">
+            <!-- two dots so the reader can switch states rather than only wait -->
+            <div class="co-dots" role="tablist" aria-label="Choose which view to show">
+             <button type="button" role="tab" aria-selected="true" aria-label="Reading unfamiliar code"></button>
+             <button type="button" role="tab" aria-selected="false" aria-label="How the pieces fit together"></button>
+            </div>
             <div class="co-swap">
             <div class="co-code">
              <div class="co-bar"><i></i><i></i><i></i></div>
@@ -2153,8 +2197,8 @@
              </div>
             </div>
             </div>
-            <span class="co-anno" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
-            <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
+            <span class="co-anno" style="bottom:-6px;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+            <svg class="co-arrow" style="bottom:28px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
              <path d="M70 21C52 19 26 13 6 3"/>
              <path d="M15 2L4 3l5 9"/>
             </svg>
@@ -2168,6 +2212,42 @@
            </div>
           </div>
          </div>
+         <script>
+          // Outcome 03 alternates between the snippet and the diagram. The snippet takes a
+          // shorter turn: it is the quicker read of the two. Clicking either dot picks a
+          // state and stops the rotation, since the reader has taken over at that point.
+          (function () {
+           var col = document.querySelector('.cert-outcomes .co-col:last-child');
+           if (!col) return;
+           var swap = col.querySelector('.co-swap');
+           var dots = col.querySelectorAll('.co-dots button');
+           if (!swap || dots.length !== 2) return;
+
+           var HOLD = [4600, 9000];   // snippet, then diagram
+           var current = 0, timer = null, auto = false;
+
+           function show(n) {
+            current = n;
+            var first = n === 0;
+            swap.classList.toggle('is-a', first);
+            swap.classList.toggle('is-b', !first);
+            col.classList.toggle('is-a', first);
+            col.classList.toggle('is-b', !first);
+            dots.forEach(function (d, k) { d.setAttribute('aria-selected', k === n ? 'true' : 'false'); });
+           }
+           function queue() {
+            clearTimeout(timer);
+            if (!auto) return;
+            timer = setTimeout(function () { show(current === 0 ? 1 : 0); queue(); }, HOLD[current]);
+           }
+           dots.forEach(function (d, k) {
+            d.addEventListener('click', function () { auto = false; clearTimeout(timer); show(k); });
+           });
+
+           show(0);
+           if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { auto = true; queue(); }
+          })();
+         </script>
          <script>
           (function () {
            var list = document.getElementById('co-checklist');
@@ -2338,7 +2418,7 @@
         /* A torn strip of tape behind the section heading. The ragged left and
            right edges are CSS masks, so there is no artwork to commission and
            the strip stretches to whatever the copy needs. */
-        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:30px auto 62px;padding:26px 0 30px;text-align:center}
+        .TornTape_strip__jk170{position:relative;width:fit-content;max-width:100%;margin:0 auto 32px;padding:26px 0 30px;text-align:center}
         .TornTape_sub__jk171{font-size:20px;font-weight:400;color:var(--color-gray-600);text-wrap-style:balance;line-height:1.85}
         /* A hand-drawn ring around the country count. It's an SVG loop that is
            stroked on when the section scrolls into view — the line is dashed to
@@ -2346,9 +2426,9 @@
            being drawn by hand. pathLength="1" means the dash maths is the same
            whatever size the path ends up. */
         .TornTape_circled__jk172{position:relative;display:inline-block;padding:0 .15em;font-weight:600;color:var(--color-gray-900)}
-        /* Nudged down so the loop sits low around the number rather than
-           centred on it. */
-        .TornTape_circled__jk172 svg{position:absolute;inset:-.34em -.3em;width:auto;height:auto;overflow:visible;pointer-events:none;transform:translateY(15px)}
+        /* Centred on the number, and 15px wider and taller than the text box: the em part
+           scales the loop with the type, the px part is the extra room around it. */
+        .TornTape_circled__jk172 svg{position:absolute;inset:calc(-.34em - 7.5px) calc(-.3em - 7.5px);width:auto;height:auto;overflow:visible;pointer-events:none}
         .TornTape_circled__jk172 svg path{fill:none;stroke:var(--color-purple-500);stroke-width:3;stroke-linecap:round;opacity:.85;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
         .TornTape_circled__jk172.is-visible svg path{animation:TornTape_circle-draw__jk173 .75s cubic-bezier(.55,.1,.35,1) .3s forwards}
         @keyframes TornTape_circle-draw__jk173{to{stroke-dashoffset:0}}
@@ -2356,10 +2436,10 @@
        </style>
        <div class="TornTape_strip__jk170">
         <h2 class="TestimonialsConfetti_wrap__jk80" id="testimonials-heading">
-         Thousands of beginners later&hellip;
+         What do our students think?
         </h2>
         <p class="TornTape_sub__jk171">
-         We've taught people to code in <span class="TornTape_circled__jk172" id="testimonials-countries-circle">40+<svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M95 15C90 5 61 1 38 4 13 7 4 19 5 33c1 14 22 24 50 25 27 1 44-9 43-24-1-11-9-20-23-25"/></svg></span> countries.<br>Here's what a few of them had to say.
+         These are some extracts from what our beta users said.
         </p>
         <script>
          /* Draw the ring around the country count when the section scrolls in. */
