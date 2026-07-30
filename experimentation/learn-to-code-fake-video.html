@@ -252,7 +252,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .code-line.is-active { background: var(--color-blue-50); }
   .code-line.is-added { animation: flash-added 1.6s ease-out forwards; }
   @keyframes flash-added {
-    0%, 55% { background: color-mix(in srgb, var(--color-green-200) 60%, #fff); }
+    /* Mixed into transparent rather than white, so whatever is behind the row shows
+       through and the flash reads as a tint rather than a fill. */
+    0%, 55% { background: color-mix(in srgb, var(--color-green-200) 20%, transparent); }
     100% { background: transparent; }
   }
   /* The fill and ring belong to the text layer: which line errored isn't knowable
@@ -395,7 +397,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .msg .who, .chat-input .who { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #fff center / cover no-repeat; box-shadow: 0 0 2px 1px var(--color-gray-300); }
   .msg.jiki .who { background-image: url('../designs/assets/chat-jiki-avatar.png'); }
   .msg.me .who, .chat-input .who { background-image: url('../designs/assets/avatars/learner.jpg'); }
-  .msg .bubble { padding: 9px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.55; color: var(--color-gray-800); text-wrap-style: balance; }
+  /* Balancing off: bubbles size to their content, and balanced wrapping left short
+     messages breaking oddly rather than filling the line. */
+  .msg .bubble { padding: 9px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.55; color: var(--color-gray-800); text-wrap-style: auto; }
   .msg.jiki .bubble { background: var(--color-purple-50); }
   .msg.me { flex-direction: row-reverse; }
   .msg.me .bubble { background: var(--color-blue-50); }
