@@ -37,22 +37,10 @@ Taken from \`front-end/curriculum/src/exercises/alien-detector\` (the variant wi
 across three rows, with **two stacked in column 6** — so a single left-to-right
 sweep cannot clear them all, and the cannon has to turn around and come back.
 
-The bug is the naive sweep: \`move_right()\` with nothing to stop it, so after
-column 11 the cannon walks off the edge. The fix tracks \`position\` and moves left
-once it reaches the edge — which is exactly what the error message tells them.
-
-Buggy (what beat 1 types is line 5):
-
-\`\`\`
-repeat_until_game_over do
-  if is_alien_above() do
-    shoot()
-  end
-  move_right()
-end
-\`\`\`
-
-Fixed:
+The program is right in shape and wrong in one value. Line 6 is the boundary the
+cannon turns around at, and the learner guesses **20** when the grid only has 11
+columns — so the \`else\` branch never runs, \`move_left()\` is never called, and the
+cannon walks off the right edge.
 
 \`\`\`
 set position to 1
@@ -60,7 +48,7 @@ repeat_until_game_over do
   if is_alien_above() do
     shoot()
   end
-  if position < 11 do
+  if position < 20 do        <- typed in beat 1, edited to 11 in beat 6
     move_right()
     change position to position + 1
   else do
@@ -69,19 +57,29 @@ repeat_until_game_over do
 end
 \`\`\`
 
+**The fix is one line, edited in place.** Beat 6 doesn't swap the listing: the caret
+lands after the value, backspaces over \`20\` a character at a time, and types \`11\`.
+Nothing else on screen moves. The conversation in beat 5 is what makes that legible —
+Jiki asks how many columns the grid actually has, rather than explaining loops.
+
+The error message stays generic ("track your position and reverse direction"), which
+is honest: the game only knows the cannon left the grid. Jiki is where the diagnosis
+gets specific.
+
 ## The animation
 
 One \`TIMELINE\` array of \`{at, do}\` steps driven by a single timer, ~24s, then loops.
 The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 \`STEP\` (ms per game action), \`TYPE\` (ms per character) and \`MSG_GAP\` (chat pacing).
 
-1. Type \`move_right()\` on line 5
+1. Type \`if position < 20 do\` on line 6
 2. Cursor to Run Code, press
 3. The cannon sweeps right, shooting five aliens as it passes (the stacked one
    survives), reaches column 11 and steps off the edge
-4. Line 5 rings red, the error callout slides in **in-language**, scenario → FAIL
+4. Line 6 rings red, the error callout slides in **in-language**, scenario → FAIL
 5. Cursor to Ask Jiki — **this is the screenshot swap** — five bubbles type out
-6. Back to the editor: line 5 becomes the position-tracking block, new lines flash green
+6. Back to the editor: the caret lands after \`20\`, deletes it, types \`11\`,
+   and the line flashes green
 7. Rerun. Sweep right, turn at the edge, come back, kill the last alien →
    confetti from both corners and the success modal
 
@@ -109,8 +107,10 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 - **The error callout is anchored to the code line**, not to the panel: it hangs over
   the panel's edge with an arrow pointing back at the offending line, the way the real
   end-of-line information widget does. Under RTL it flips to the panel's other side.
-- **The editor pane is a fixed height.** The code grows from 6 lines to 12 at beat 6;
-  if the pane auto-sized, the whole stage would reflow mid-video.
+- **The edited line is rendered in three pieces** — prefix, value, suffix — so the
+  caret can sit mid-line and the value can be retyped without the rest of the line
+  moving. The prefix and suffix are not re-typed, only the value.
+- **The editor pane is a fixed height**, so nothing reflows mid-video.
 `;
 </script>
 <style>
@@ -146,11 +146,30 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   }
   .ctl-btn[aria-pressed="true"] { background: var(--color-purple-600); border-color: var(--color-purple-600); color: #fff; }
 
+  /* ===== Callouts: page copy in the margins, timed to the beat they describe.
+     A 3-column grid keeps them beside the stage and lets the stage shrink on
+     narrower screens rather than the callouts being pushed off. ===== */
+  .demo { display: grid; grid-template-columns: 1fr auto 1fr; gap: 26px; align-items: stretch; }
+  .rail { position: relative; min-width: 0; }
+  .callout {
+    position: absolute; width: min(232px, 100%);
+    opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease;
+  }
+  .callout.is-shown { opacity: 1; transform: none; }
+  .callout h4 { font-size: 17px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-bottom: 6px; text-wrap-style: balance; }
+  .callout p { font-size: 14px; color: var(--color-gray-600); line-height: 1.55; text-wrap-style: balance; }
+  /* A short rule pointing at the edge of the stage */
+  .callout::after { content: ''; position: absolute; top: 10px; width: 18px; height: 2px; border-radius: 1px; background: var(--color-purple-300); }
+  .rail-left .callout { inset-inline-end: 0; text-align: end; }
+  .rail-left .callout::after { inset-inline-start: 100%; margin-inline-start: 8px; }
+  .rail-right .callout { inset-inline-start: 0; }
+  .rail-right .callout::after { inset-inline-end: 100%; margin-inline-end: 8px; }
+
   /* ===== Stage: this whole box is the "video" ===== */
   /* Fixed aspect so overlay coordinates stay stable, exactly as they would against
      a real Playwright capture. Layout mirrors CodingExercise.module.css. */
   .stage {
-    position: relative; width: 100%; max-width: 1040px; aspect-ratio: 16 / 10.6;
+    position: relative; width: 100%; max-width: 1040px; aspect-ratio: 16 / 11.4;
     background: var(--color-gray-50); border-radius: 14px; overflow: hidden;
     border: 1px solid var(--color-gray-200);
     box-shadow: 0 30px 70px -40px rgba(15, 23, 42, .45);
@@ -162,13 +181,21 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* The editor card is a FIXED height, tall enough for the 12-line version plus the
      run bar: the code grows from 6 lines to 12 at beat 6 and the stage must not
      reflow mid-video. */
-  .left { display: grid; grid-template-rows: 336px 1fr; gap: 8px; min-width: 0; }
+  .left { display: grid; grid-template-rows: 381px 1fr; gap: 8px; min-width: 0; }
   .editor-card { display: grid; grid-template-rows: 1fr auto; min-height: 0; }
 
   /* --- Code editor --- */
   .editor { position: relative; padding: 10px 0; overflow: hidden; }
-  .code-line { display: flex; gap: 12px; padding: 0 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
-  .code-line .num { width: 15px; text-align: right; color: var(--color-gray-400); flex: none; font-size: 12px; }
+  /* Gutter divider, as CodeMirror draws on .cm-gutters. Sits in the gap between the
+     line numbers (14px inset + 18px wide) and the code, so it clears both by 6px. */
+  .editor::before { content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 38px; width: 1px; background: var(--color-gray-200); }
+  /* Type from codemirror.css: Source Code Pro, .cm-line padding 2px 4px, and line
+     numbers right-aligned at the same size as the code. The app runs 16px; this
+     stage is narrower than the real editor so it sits 2px down. The app's gutter is
+     #4D4D4C80 and its code colour #4D4D4C — gray-400 and gray-700 match those
+     closely and keep the file on the UI Kit palette. */
+  .code-line { display: flex; gap: 12px; padding: 2px 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
+  .code-line .num { width: 18px; text-align: end; color: var(--color-gray-400); flex: none; font-size: 14px; }
   .code-line .txt { position: relative; color: var(--color-gray-700); }
   .code-line.is-active { background: var(--color-blue-50); }
   .code-line.is-added { animation: flash-added 1.6s ease-out forwards; }
@@ -212,7 +239,8 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   /* Game canvas — from curriculum/src/exercise-categories/space-invaders/exercise.css */
   /* Squarer than the pane it sits in: height-led, 4:3, centred in its column.
-     Sprites live in .playfield, inset 5px, so nothing ever reaches the canvas edge.
+     Sprites live in .playfield, inset 5px, so the aliens never touch the canvas edge.
+     (The cannon is free to overshoot it — that overshoot is what the error shows.)
      (Padding alone wouldn't do it: absolutely positioned children resolve their
      percentages against the padding box, which includes the padding.) */
   .game {
@@ -226,21 +254,27 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .alien.is-dead { opacity: 0; }
   .laser {
     position: absolute; bottom: 7%; width: 9%; transform: translateX(-50%);
-    transition: left .13s linear;
+    /* --step matches the JS STEP, so consecutive moves join into one glide */
+    transition: left var(--step, 145ms) linear;
   }
   .laser svg { display: block; width: 100%; height: auto; }
   .shot { position: absolute; width: 3px; background: #fff; transform: translateX(-50%); border-radius: 2px; }
-  /* The wall stops the cannon dead: a red glow and a short inward shake, with the
-     sprite staying inside the 5px inset rather than overhanging the canvas. */
-  .laser.is-off-edge { filter: drop-shadow(0 0 7px var(--color-red-500)); animation: bump .32s ease-out 2; }
-  @keyframes bump { 0%, 100% { margin-inline-start: 0; } 50% { margin-inline-start: -5px; } }
+  /* The cannon steps clean off the right edge, past the playfield inset, and the
+     canvas clips it — that overshoot is the error. */
+  .laser.is-off-edge { filter: drop-shadow(0 0 7px var(--color-red-500)); }
+  /* Jumping back to the start at the top of each loop should snap, not rewind */
+  .no-anim .laser, .no-anim .track i, .no-anim .track b { transition: none; }
 
   /* Scrubber strip (screenshot layer — no live state, it just has to look right) */
-  .scrubber { display: flex; align-items: center; gap: 10px; padding: 7px 14px; border-top: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
+  /* The thumb is 16px and centres on the track ends, so it overhangs each end by 8px.
+     The gap is that overhang plus 5px, keeping the thumb 5px clear of the buttons at
+     both ends whether the bar is empty or full. */
+  .scrubber { display: flex; align-items: center; gap: 13px; padding: 7px 14px; border-top: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
   .scrubber .play { width: 26px; height: 26px; border-radius: 50%; background: var(--color-blue-600); color: #fff; display: grid; place-items: center; flex: none; }
   .scrubber .track { flex: 1; height: 4px; border-radius: 2px; background: var(--color-gray-200); position: relative; }
-  .scrubber .track i { position: absolute; inset-block: 0; inset-inline-start: 0; width: var(--progress, 0%); background: var(--color-blue-500); border-radius: 2px; }
-  .scrubber .track b { position: absolute; top: 50%; inset-inline-start: var(--progress, 0%); width: 12px; height: 12px; margin-top: -6px; margin-inline-start: -6px; border-radius: 50%; background: #fff; border: 2px solid var(--color-blue-600); }
+  .scrubber .track i { position: absolute; inset-block: 0; inset-inline-start: 0; width: var(--progress, 0%); background: var(--color-blue-500); border-radius: 2px; transition: width var(--step, 145ms) linear; }
+  /* box-sizing so the 2px border counts inside the 16px, and the -8px offsets centre it */
+  .scrubber .track b { position: absolute; box-sizing: border-box; top: 50%; inset-inline-start: var(--progress, 0%); width: 16px; height: 16px; margin-top: -8px; margin-inline-start: -8px; border-radius: 50%; background: #fff; border: 2px solid var(--color-blue-600); transition: inset-inline-start var(--step, 145ms) linear; }
   .scrubber .step { width: 24px; height: 22px; border-radius: 5px; border: 1px solid var(--color-gray-200); background: #fff; color: var(--color-gray-500); display: grid; place-items: center; flex: none; }
 
   /* --- Right panel --- */
@@ -256,8 +290,11 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   .instr h3 { font-size: 19px; font-weight: 700; color: var(--color-gray-800); margin-bottom: 12px; }
   .instr p { font-size: 13px; color: var(--color-gray-700); line-height: 1.65; margin-bottom: 11px; text-wrap-style: balance; }
-  .instr ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-  .instr li { font-size: 13px; color: var(--color-gray-700); line-height: 1.55; text-wrap-style: balance; }
+  /* Bullets, indent and spacing from instructions-panel.module.css:
+     disc markers, 24px inset, 8px between items. */
+  .instr ul { list-style: disc; padding-inline-start: 24px; margin-bottom: 11px; }
+  .instr li { font-size: 13px; color: var(--color-gray-700); line-height: 1.6; margin-bottom: 8px; text-wrap-style: balance; }
+  .instr li:last-child { margin-bottom: 0; }
   code { font-family: var(--font-mono); font-size: 12.5px; background: var(--color-purple-100); color: var(--color-purple-700); padding: 2px 6px; border-radius: 4px; }
 
   /* Error callout — mirrors informationTooltip.module.css: 2px red-500 border,
@@ -281,25 +318,67 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .error-callout .body code { background: var(--color-red-50); color: var(--color-red-600); }
   .msg .bubble code { font-family: var(--font-mono); font-size: 12.5px; background: var(--color-purple-100); color: var(--color-purple-700); padding: 2px 6px; border-radius: 4px; }
 
-  /* Ask Jiki conversation */
-  .chat { display: flex; flex-direction: column; gap: 11px; }
+  /* Ask Jiki: messages fill the panel, the input sits at the bottom */
+  #shot-jiki { padding: 0; display: flex; flex-direction: column; }
+  .chat { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 11px; padding: 18px; overflow: hidden; }
+
+  /* Input styling from ChatInput.module.css, scaled to this stage */
+  .chat-input { flex: none; display: flex; align-items: flex-start; gap: 12px; padding: 10px 18px 14px; background: var(--color-gray-50); border-top: 1px solid var(--color-gray-100); }
+  .chat-input .who { margin-top: 4px; }
+  .chat-field { position: relative; flex: 1; min-width: 0; }
+  .chat-field .box { height: 72px; padding: 11px 12px; border: 2px solid var(--color-purple-200); border-radius: 8px; background: #fff; font-size: 13px; line-height: 1.5; color: var(--color-gray-400); text-wrap-style: balance; transition: border-color .2s; }
+  .chat-field .box.is-typing { color: var(--color-gray-800); border-color: var(--color-purple-300); }
+  .chat-field .box .caret { height: 13px; vertical-align: -2px; }
+  .chat-field .send { position: absolute; bottom: 8px; inset-inline-end: 8px; display: flex; align-items: center; background: var(--color-blue-600); color: #fff; border-radius: 6px; padding: 7px 9px; transition: transform .12s ease, background .12s ease; }
+  .chat-field .send.is-pressed { transform: scale(.9); background: var(--color-blue-700); }
   .msg { display: flex; gap: 9px; align-items: flex-start; opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease; }
   .msg.is-shown { opacity: 1; transform: none; }
-  /* Avatars match ChatMessageItem.module.css: round, object-fit cover, faint ring */
-  .msg .who { flex: none; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #fff; box-shadow: 0 0 2px 1px var(--color-gray-300); }
+  /* Avatars match ChatMessageItem.module.css: round, cover-cropped, faint ring.
+     Backgrounds rather than <img> so the learner placeholder can be scaled up —
+     its source PNG has whitespace baked in and would otherwise float in the circle. */
+  .msg .who, .chat-input .who { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #fff center / cover no-repeat; box-shadow: 0 0 2px 1px var(--color-gray-300); }
+  .msg.jiki .who { background-image: url('../designs/assets/chat-jiki-avatar.png'); }
+  .msg.me .who, .chat-input .who { background-image: url('../designs/assets/avatars/avatar-placeholder-1.png'); background-size: 134%; }
   .msg .bubble { padding: 9px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.55; color: var(--color-gray-800); text-wrap-style: balance; }
   .msg.jiki .bubble { background: var(--color-purple-50); }
   .msg.me { flex-direction: row-reverse; }
   .msg.me .bubble { background: var(--color-blue-50); }
 
   /* Success modal + confetti */
-  .modal-scrim { position: absolute; inset: 0; z-index: 12; background: rgba(15, 23, 42, .45); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+  /* Backdrop only. The card is a sibling above the confetti (see .modal-wrap), so the
+     confetti flies over the dimmed page but under the modal. */
+  .modal-scrim { position: absolute; inset: 0; z-index: 12; background: rgba(15, 23, 42, .45); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
   .modal-scrim.is-shown { opacity: 1; }
-  /* 2px green border, mirroring the error callout's 2px red one: the two verdicts
-     are framed the same way. Note the app's own modal shell uses 1px gray-200. */
-  .modal { width: min(400px, 74%); background: #fff; border: 2px solid var(--color-green-600); border-radius: 12px; padding: 24px 26px; text-align: center; box-shadow: 0 30px 60px -25px rgba(15, 23, 42, .6); transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1); }
-  .modal-scrim.is-shown .modal { transform: none; }
-  .modal h2 { font-size: 20px; font-weight: 700; color: var(--color-green-700); margin-bottom: 8px; text-wrap-style: balance; }
+  .modal-wrap { position: absolute; inset: 0; z-index: 16; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+  .modal-scrim.is-shown ~ .modal-wrap { opacity: 1; }
+  /* White rim plus a layered shadow, so the card lifts off the scrim rather than
+     being outlined. Note the app's own modal shell uses 1px gray-200. */
+  .modal {
+    width: min(400px, 74%); background: #fff; border: 2px solid #fff; border-radius: 12px;
+    padding: 42px 26px 44px; text-align: center;
+    box-shadow: 0 28px 56px -16px rgba(15, 23, 42, .5), 0 10px 20px -10px rgba(15, 23, 42, .3);
+    transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
+  }
+  .modal-scrim.is-shown ~ .modal-wrap .modal { transform: none; }
+  .modal h2 { font-size: 20px; font-weight: 700; color: var(--color-blue-600); margin-bottom: 8px; text-wrap-style: balance; }
+
+  /* Green tick: the ring draws, then the mark, then the whole thing settles.
+     Keyed off .is-shown so it replays on every loop of the video. */
+  .tick { display: block; width: 52px; height: 52px; margin: 0 auto 14px; overflow: visible; }
+  .tick circle, .tick path { fill: none; stroke: var(--color-green-600); stroke-linecap: round; stroke-linejoin: round; }
+  .tick circle { stroke-width: 4; stroke-dasharray: 145; stroke-dashoffset: 145; }
+  .tick path { stroke-width: 5; stroke-dasharray: 36; stroke-dashoffset: 36; }
+  .modal-scrim.is-shown ~ .modal-wrap .tick { animation: tick-pop .45s cubic-bezier(.34, 1.4, .64, 1) both; }
+  .modal-scrim.is-shown ~ .modal-wrap .tick circle { animation: tick-draw .45s ease-out forwards; }
+  .modal-scrim.is-shown ~ .modal-wrap .tick path { animation: tick-draw .3s .34s ease-out forwards; }
+  @keyframes tick-draw { to { stroke-dashoffset: 0; } }
+  @keyframes tick-pop { 0% { transform: scale(.7); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .tick circle, .tick path { stroke-dashoffset: 0; }
+    .modal-scrim.is-shown ~ .modal-wrap .tick,
+    .modal-scrim.is-shown ~ .modal-wrap .tick circle,
+    .modal-scrim.is-shown ~ .modal-wrap .tick path { animation: none; }
+  }
   .modal p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 18px; text-wrap-style: balance; }
   .modal .go { display: inline-block; padding: 9px 22px; border-radius: 8px; background: var(--color-green-600); color: #fff; font-weight: 700; font-size: 14px; }
 
@@ -381,6 +460,19 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   </symbol>
 </svg>
 
+<div class="demo">
+  <!-- Left rail: callouts about the editor, the game and the scrubber -->
+  <div class="rail rail-left">
+    <aside class="callout" id="co-see" style="top:420px">
+      <h4>See what your code did</h4>
+      <p>Your instructions, playing out in front of you. No guessing what the computer heard.</p>
+    </aside>
+    <aside class="callout" id="co-rewind" style="top:620px">
+      <h4>Rewind your own code</h4>
+      <p>Step back through every instruction and watch exactly what happened, one line at a time.</p>
+    </aside>
+  </div>
+
 <div class="stage" id="stage" lang="en" dir="ltr">
 
   <!-- ============ LEFT: editor, run bar, exercise ============ -->
@@ -449,17 +541,27 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
         <li><code>move_left()</code> <span data-i18n="fnLeft">moves it one column to the left</span></li>
         <li><code>shoot()</code> <span data-i18n="fnShoot">fires the laser upwards</span></li>
       </ul>
-      <p style="margin-top:12px" data-i18n="instr3">There are 11 columns. Move off either edge and you lose, so keep track of where you are.</p>
+      <p data-i18n="instr3">There are 11 columns. Move off either edge and you lose, so keep track of where you are.</p>
     </div>
 
     <!-- Screenshot B: Ask Jiki -->
     <div class="shot-state is-text-layer" id="shot-jiki">
       <div class="chat">
-        <div class="msg jiki" id="msg-1"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n="chat1">Hey there! What's up?</span></div>
-        <div class="msg me" id="msg-2"><img class="who" src="../designs/assets/avatars/avatar-placeholder-2.png" alt=""><span class="bubble" data-i18n="chat2">My cannon keeps going off the edge of the screen.</span></div>
-        <div class="msg jiki" id="msg-3"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n-html="chat3">Good spotting. Your loop calls <code>move_right()</code> every single time, so nothing ever tells it to stop. What would you need to remember to know you'd reached the last column?</span></div>
-        <div class="msg me" id="msg-4"><img class="who" src="../designs/assets/avatars/avatar-placeholder-2.png" alt=""><span class="bubble" data-i18n="chat4">Which column I'm in?</span></div>
-        <div class="msg jiki" id="msg-5"><img class="who" src="../designs/assets/chat-jiki-avatar.png" alt="Jiki"><span class="bubble" data-i18n-html="chat5">Exactly. Keep your position in a variable, add one every time you move right, and once it reaches 11 start calling <code>move_left()</code> instead. Give it a go!</span></div>
+        <div class="msg jiki" id="msg-1"><span class="who" role="img" aria-label="Jiki"></span><span class="bubble" data-i18n="chat1">Hey there! What's up?</span></div>
+        <div class="msg me" id="msg-2"><span class="who"></span><span class="bubble" data-i18n="chat2">My cannon keeps going off the edge of the screen.</span></div>
+        <div class="msg jiki" id="msg-3"><span class="who" role="img" aria-label="Jiki"></span><span class="bubble" data-i18n-html="chat3">Let's look at the line you just wrote.</span></div>
+        <div class="msg me" id="msg-4"><span class="who"></span><span class="bubble" data-i18n="chat4">Eleven.</span></div>
+        <div class="msg jiki" id="msg-5"><span class="who" role="img" aria-label="Jiki"></span><span class="bubble" data-i18n-html="chat5">That's it. Change that boundary to 11.</span></div>
+      </div>
+      <!-- The input the learner types into. Only the placeholder is translated. -->
+      <div class="chat-input">
+        <span class="who"></span>
+        <div class="chat-field is-text-layer">
+          <div class="box" id="chat-box">Respond to Jiki...</div>
+          <span class="send" id="chat-send">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor"><path d="M5.49683 12.5c0 0.8284 0.67157 1.5 1.5 1.5 0.82842 0 1.5 -0.6716 1.5 -1.5l0 -7.38185 2.44247 2.44251c0.5858 0.58579 1.5356 0.58579 2.1214 0 0.5857 -0.58579 0.5857 -1.53553 0 -2.12132l-5.00004 -5c-0.58579 -0.585787 -1.53553 -0.585787 -2.12132 0l-5 5c-0.585787 0.58579 -0.585787 1.53553 0 2.12132 0.58579 0.58579 1.53553 0.58579 2.12132 0l2.43617 -2.43617 0 7.37551Z"/></svg>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -476,14 +578,19 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   </div>
 
   <!-- Success modal + confetti -->
-  <div class="modal-scrim" id="modal-scrim">
+  <div class="modal-scrim" id="modal-scrim"></div>
+  <div class="confetti" id="confetti"></div>
+  <div class="modal-wrap">
     <div class="modal is-text-layer">
+      <svg class="tick" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="23"/>
+        <path d="M15 27.5l7.5 7.5L38 18.5"/>
+      </svg>
       <h2 data-i18n="successTitle">Congratulations!</h2>
       <p data-i18n="successBody">All tests passed! You've successfully completed this exercise.</p>
       <span class="go is-text-layer" data-i18n="successBtn">Continue</span>
     </div>
   </div>
-  <div class="confetti" id="confetti"></div>
 
   <svg class="cursor" id="cursor" viewBox="0 0 24 24" fill="#fff" stroke="#1e293b" stroke-width="1.5" style="transform: translate(300px, 240px)">
     <path d="M5 2.5l13 9.5-6 .8 3 7.2-2.6 1.2-3-7.2-4.4 4.2z"/>
@@ -492,6 +599,23 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   <div class="legend">
     <span><i style="background:var(--color-amber-500)"></i>Live text (translated)</span>
     <span><i style="background:var(--color-gray-300)"></i>Screenshot</span>
+  </div>
+</div>
+
+  <!-- Right rail: callouts about the panel -->
+  <div class="rail rail-right">
+    <aside class="callout" id="co-errors" style="top:130px">
+      <h4>Errors in plain English</h4>
+      <p>When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
+    </aside>
+    <aside class="callout" id="co-help" style="top:250px">
+      <h4>Help, not answers</h4>
+      <p>Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
+    </aside>
+    <aside class="callout" id="co-next" style="top:330px">
+      <h4>Always one step up</h4>
+      <p>Each exercise asks for a little more than the last. The next step is always within reach.</p>
+    </aside>
   </div>
 </div>
 
@@ -521,12 +645,13 @@ const STRINGS = {
     errorBody: 'Your laser cannon moved off the right edge of the screen. Remember to track your position and reverse direction at the end.',
     chat1: "Hey there! What's up?",
     chat2: 'My cannon keeps going off the edge of the screen.',
-    chat3: "Good spotting. Your loop calls {right} every single time, so nothing ever tells it to stop. What would you need to remember to know you'd reached the last column?",
-    chat4: "Which column I'm in?",
-    chat5: 'Exactly. Keep your position in a variable, add one every time you move right, and once it reaches 11 start calling {left} instead. Give it a go!',
+    chat3: "Let's look at the line you just wrote. You turn around once {pos} reaches 20 — but how many columns does the grid actually have?",
+    chat4: 'Eleven.',
+    chat5: "That's it. {pos} never reaches 20, so {left} never runs. Change that boundary to 11 and the cannon will turn at the last column.",
     successTitle: 'Congratulations!',
     successBody: "All tests passed! You've successfully completed this exercise.",
     successBtn: 'Continue',
+    chatPlaceholder: 'Respond to Jiki...',
   },
   es: { dir: 'ltr',
     run: 'Ejecutar código', tabInstructions: 'Instrucciones', tabJiki: 'Pregunta a Jiki', tabLog: 'Registro', tabHints: 'Pistas',
@@ -546,12 +671,13 @@ const STRINGS = {
     errorBody: 'Tu cañón láser se ha salido por el borde derecho de la pantalla. Recuerda ir siguiendo tu posición y cambiar de dirección al llegar al final.',
     chat1: '¡Hola! ¿Qué tal?',
     chat2: 'Mi cañón se sale todo el rato por el borde de la pantalla.',
-    chat3: 'Buena observación. Tu bucle llama a {right} siempre, así que nada le dice cuándo parar. ¿Qué necesitarías recordar para saber que has llegado a la última columna?',
-    chat4: '¿En qué columna estoy?',
-    chat5: 'Exacto. Guarda tu posición en una variable, súmale uno cada vez que te muevas a la derecha y, cuando llegue a 11, empieza a llamar a {left}. ¡Inténtalo!',
+    chat3: 'Vamos a mirar la línea que acabas de escribir. Das la vuelta cuando {pos} llega a 20, pero ¿cuántas columnas tiene el tablero en realidad?',
+    chat4: 'Once.',
+    chat5: 'Exacto. {pos} nunca llega a 20, así que {left} no se ejecuta nunca. Cambia ese límite a 11 y el cañón dará la vuelta en la última columna.',
     successTitle: '¡Enhorabuena!',
     successBody: '¡Todas las pruebas han pasado! Has completado este ejercicio con éxito.',
     successBtn: 'Continuar',
+    chatPlaceholder: 'Responde a Jiki...',
   },
   hu: { dir: 'ltr',
     run: 'Kód futtatása', tabInstructions: 'Útmutató', tabJiki: 'Kérdezd Jikit', tabLog: 'Napló', tabHints: 'Tippek',
@@ -571,12 +697,13 @@ const STRINGS = {
     errorBody: 'A lézerágyúd lelépett a képernyő jobb széléről. Ne felejtsd el számon tartani a pozíciódat, és a végén irányt váltani.',
     chat1: 'Szia! Mi a helyzet?',
     chat2: 'Az ágyúm folyton lelép a képernyő széléről.',
-    chat3: 'Jó észrevétel! A ciklusod minden egyes alkalommal a {right} függvényt hívja, így semmi nem állítja meg. Mit kellene számon tartanod ahhoz, hogy tudd, elérted az utolsó oszlopot?',
-    chat4: 'Hogy melyik oszlopban vagyok?',
-    chat5: 'Pontosan. Tárold a pozíciódat egy változóban, növeld eggyel minden jobbra lépésnél, és amikor eléri a 11-et, kezdd a {left} függvényt hívni. Próbáld ki!',
+    chat3: 'Nézzük meg a sort, amit most írtál. Akkor fordulsz meg, amikor a {pos} eléri a 20-at – de valójában hány oszlop van a pályán?',
+    chat4: 'Tizenegy.',
+    chat5: 'Pontosan. A {pos} soha nem éri el a 20-at, így a {left} sem fut le soha. Írd át ezt a határt 11-re, és az ágyú az utolsó oszlopnál megfordul.',
     successTitle: 'Gratulálunk!',
     successBody: 'Minden teszt átment! Sikeresen megoldottad ezt a feladatot.',
     successBtn: 'Folytatás',
+    chatPlaceholder: 'Válaszolj Jikinek...',
   },
   ja: { dir: 'ltr',
     run: 'コードを実行', tabInstructions: '説明', tabJiki: 'Jiki に質問', tabLog: 'ログ', tabHints: 'ヒント',
@@ -596,12 +723,13 @@ const STRINGS = {
     errorBody: 'レーザー砲が画面の右端をはみ出してしまいました。自分の位置を覚えておいて、端まで来たら向きを変えるようにしましょう。',
     chat1: 'こんにちは！どうしましたか？',
     chat2: '砲台が画面の端からはみ出してしまいます。',
-    chat3: 'よく気づきましたね。ループが毎回 {right} を呼んでいるので、止まるきっかけがありません。最後の列に着いたと分かるには、何を覚えておく必要があるでしょう？',
-    chat4: '今いる列でしょうか？',
-    chat5: 'その通りです。位置を変数に入れて、右に動くたびに1を足し、11になったら {left} を呼ぶように変えてみましょう。やってみて！',
+    chat3: 'いま書いた行を見てみましょう。{pos} が20になったら向きを変える書き方ですが、列は実際にいくつありますか？',
+    chat4: '11です。',
+    chat5: 'その通り。{pos} は20には届かないので、{left} は一度も実行されません。この境界を11に変えれば、最後の列で向きを変えます。',
     successTitle: 'おめでとうございます！',
     successBody: 'すべてのテストに合格しました！この練習問題をクリアしました。',
     successBtn: '続ける',
+    chatPlaceholder: 'Jiki に返信する…',
   },
   ar: { dir: 'rtl',
     run: 'شغّل الكود', tabInstructions: 'التعليمات', tabJiki: 'اسأل جيكي', tabLog: 'السجل', tabHints: 'تلميحات',
@@ -621,12 +749,13 @@ const STRINGS = {
     errorBody: 'خرج مدفع الليزر من الحافة اليمنى للشاشة. تذكّر أن تتابع موقعك وأن تعكس الاتجاه عند النهاية.',
     chat1: 'مرحبًا! كيف الحال؟',
     chat2: 'مدفعي يخرج دائمًا من حافة الشاشة.',
-    chat3: 'ملاحظة جيدة. حلقتك تنادي {right} في كل مرة، فلا شيء يوقفها. ما الذي تحتاج إلى تذكّره لتعرف أنك وصلت إلى العمود الأخير؟',
-    chat4: 'العمود الذي أنا فيه؟',
-    chat5: 'بالضبط. احفظ موقعك في متغيّر، وأضف واحدًا في كل مرة تتحرك يمينًا، وعندما يصل إلى 11 ابدأ بمناداة {left}. جرّبها!',
+    chat3: 'لننظر إلى السطر الذي كتبته للتو. أنت تعكس الاتجاه عندما يصل {pos} إلى 20، لكن كم عمودًا في الشبكة فعلًا؟',
+    chat4: 'أحد عشر.',
+    chat5: 'بالضبط. {pos} لا يصل إلى 20 أبدًا، لذا لا يُنفَّذ {left} مطلقًا. غيّر هذا الحد إلى 11 وسيعكس المدفع اتجاهه عند العمود الأخير.',
     successTitle: 'تهانينا!',
     successBody: 'نجحت كل الاختبارات! لقد أكملت هذا التمرين بنجاح.',
     successBtn: 'متابعة',
+    chatPlaceholder: 'ردّ على جيكي...',
   },
 };
 
@@ -653,9 +782,13 @@ function applyLanguage() {
   // rather than concatenation — the token moves within the sentence per language.
   stage.querySelectorAll('[data-i18n-html]').forEach(el => {
     const v = s[el.dataset.i18nHtml];
-    if (v) el.innerHTML = v.replace('{right}', code('move_right()')).replace('{left}', code('move_left()'));
+    if (v) el.innerHTML = v
+      .replace('{right}', code('move_right()'))
+      .replace('{left}', code('move_left()'))
+      .replace('{pos}', code('position'));
   });
   paintScenario();
+  paintBox();
   // Switching language mid-error changes the callout's side under RTL
   if (document.getElementById('error-callout').classList.contains('is-shown')) anchorCallout(4);
 }
@@ -673,8 +806,10 @@ function paintScenario() {
 }
 
 /* ==========================================================================
-   2. THE CODE — two versions of the same program. Beat 1 types the last line
-      of version A; beat 6 swaps in version B with the new lines flashing.
+   2. THE CODE — one program with one wrong value. Line 6 sets the column the
+      cannon turns around at. The learner types 20 (a guess) when the grid only
+      has 11 columns, so the else branch never runs and the cannon walks off the
+      right edge. Beat 6 fixes that one value in place, character by character.
    ========================================================================== */
 const KEYWORDS = ['repeat_until_game_over', 'set', 'to', 'if', 'do', 'else', 'end', 'change'];
 const FUNCS = ['is_alien_above', 'move_right', 'move_left', 'shoot'];
@@ -688,23 +823,13 @@ function highlight(line) {
     .replace(/\b([a-z_]+)\b/g, (m, w) => KEYWORDS.includes(w) ? '<span class="kw">' + w + '</span>' : m);
 }
 
-// Version A: the naive sweep. Line 5 is typed in beat 1, so it starts empty.
-const CODE_A = [
-  'repeat_until_game_over do',
-  '  if is_alien_above() do',
-  '    shoot()',
-  '  end',
-  '  move_right()',
-  'end',
-];
-// Version B: position tracked, direction reversed at the edge.
-const CODE_B = [
+const CODE = [
   'set position to 1',
   'repeat_until_game_over do',
   '  if is_alien_above() do',
   '    shoot()',
   '  end',
-  '  if position < 11 do',
+  null,                               // the line being typed / edited, composed below
   '    move_right()',
   '    change position to position + 1',
   '  else do',
@@ -712,21 +837,27 @@ const CODE_B = [
   '  end',
   'end',
 ];
-const ADDED_IN_B = [0, 5, 6, 7, 8, 9, 10]; // the new line 1, and the whole if/else block
+const EDIT_LINE = 5;                  // index of that line
+const BAD = '20', GOOD = '11';        // the wrong boundary, and the right one
+
+/* The edited line is rendered in three pieces — prefix, value, suffix — so the
+   caret can sit mid-line and the value can be deleted and retyped without the
+   rest of the line moving. */
+let edit = { prefix: '  ', value: '', suffix: '', caret: false };
 
 const editor = document.getElementById('editor');
-let typedLine = -1;   // index of the line being typed (rendered with a caret)
-let typedText = '';
 
-function renderCode(lines, opts = {}) {
-  const { errorLine = -1, activeLine = -1, added = [] } = opts;
-  editor.innerHTML = lines.map((line, i) => {
-    const isTyped = i === typedLine;
-    const body = isTyped ? highlight(typedText) + '<span class="caret is-blinking"></span>' : highlight(line);
+function renderCode(opts = {}) {
+  const { errorLine = -1, activeLine = -1, flash = [] } = opts;
+  editor.innerHTML = CODE.map((line, i) => {
+    const body = line !== null ? highlight(line)
+      : highlight(edit.prefix) + highlight(edit.value)
+        + (edit.caret ? '<span class="caret is-blinking"></span>' : '')
+        + highlight(edit.suffix);
     const cls = ['code-line',
       i === errorLine ? 'is-error' : '',
       i === activeLine ? 'is-active' : '',
-      added.includes(i) ? 'is-added' : ''].filter(Boolean).join(' ');
+      flash.includes(i) ? 'is-added' : ''].filter(Boolean).join(' ');
     return '<div class="' + cls + '"><span class="num">' + (i + 1) + '</span><span class="txt">' + body + '</span></div>';
   }).join('');
 }
@@ -777,8 +908,11 @@ function resetGame() {
   alive = ALIENS.map(() => true);
   alienEls.forEach(el => el.classList.remove('is-dead'));
   laserEl.classList.remove('is-off-edge');
+  stage.classList.add('no-anim');
   laserEl.style.left = colX(1) + '%';
   document.getElementById('track').style.setProperty('--progress', '0%');
+  void stage.offsetWidth;              // flush, so the snap doesn't animate
+  stage.classList.remove('no-anim');
 }
 
 function moveLaser(col) {
@@ -819,11 +953,16 @@ function targetIn(col) {
 }
 
 /* Runs the program the way the interpreter would, returning the action list.
-   Version A sweeps right forever; version B turns around at column 11. */
-function simulate(version) {
+
+   Note the listing only increments `position` in the right-hand branch — the else
+   branch calls move_left() and leaves the variable alone. So once position reaches
+   the boundary it stays there and the cannon keeps going left, which is why the
+   cannon's real column and the program's variable diverge after the turn. Modelled
+   with two counters so the animation matches the code on screen exactly. */
+function simulate(bound) {
   const live = ALIENS.map(() => true);
   const acts = [];
-  let pos = 1, dir = 'right', guard = 0;
+  let col = 1, pos = 1, guard = 0;
   const targetAt = col => {
     let best = -1;
     ALIENS.forEach((a, i) => {
@@ -833,22 +972,15 @@ function simulate(version) {
     return best;
   };
   while (guard++ < 60) {
-    const t = targetAt(pos);
+    const t = targetAt(col);
     if (t !== -1) {
       live[t] = false;
-      acts.push({ type: 'shoot', col: pos, target: t });
+      acts.push({ type: 'shoot', col, target: t });
       if (live.every(v => !v)) { acts.push({ type: 'win' }); return acts; }
     }
-    if (version === 'A') {
-      if (pos === COLS) { acts.push({ type: 'error' }); return acts; }
-      pos += 1;
-      acts.push({ type: 'move', col: pos });
-    } else {
-      if (pos < COLS && dir === 'right') { pos += 1; }
-      else { dir = 'left'; pos -= 1; }
-      if (pos < 1) { acts.push({ type: 'error' }); return acts; }
-      acts.push({ type: 'move', col: pos });
-    }
+    if (pos < bound) { col += 1; pos += 1; } else { col -= 1; }
+    if (col < 1 || col > COLS) { acts.push({ type: 'error' }); return acts; }
+    acts.push({ type: 'move', col });
   }
   return acts;
 }
@@ -857,13 +989,14 @@ function simulate(version) {
    4. THE TIMELINE — one array of {at, do}, one timer. This is the "video".
    ========================================================================== */
 const cursor = document.getElementById('cursor');
-const callout = document.getElementById('error-callout');
+const errorCallout = document.getElementById('error-callout');
 const runBtn = document.getElementById('run-btn');
 const scrim = document.getElementById('modal-scrim');
 const confetti = document.getElementById('confetti');
 const track = document.getElementById('track');
 
-const STEP = 145;      // ms per game action
+const STEP = 145;      // ms per game action (also drives the CSS transitions)
+stage.style.setProperty('--step', STEP + 'ms');
 const TYPE = 65;       // ms per typed character
 
 function moveCursor(x, y) { cursor.style.transform = 'translate(' + x + 'px, ' + y + 'px)'; }
@@ -882,6 +1015,33 @@ function setTab(which) {
 }
 function showMsg(n, on) { document.getElementById('msg-' + n).classList.toggle('is-shown', on); }
 
+/* Callouts: page copy, not part of the video. Only one is up at a time, and each
+   is timed to the beat it describes. */
+const CALLOUTS = ['see', 'rewind', 'errors', 'help', 'next'];
+function callout(which) {
+  CALLOUTS.forEach(id =>
+    document.getElementById('co-' + id).classList.toggle('is-shown', id === which));
+}
+
+/* The chat input. Stored as a key + fraction rather than a literal string, so
+   switching language mid-type re-slices the new translation instead of freezing
+   the old one. */
+const chatBox = document.getElementById('chat-box');
+const chatSend = document.getElementById('chat-send');
+let boxKey = null, boxFrac = 0;
+function paintBox() {
+  const s = STRINGS[lang];
+  if (!boxKey || boxFrac <= 0) {
+    chatBox.textContent = s.chatPlaceholder;
+    chatBox.classList.remove('is-typing');
+    return;
+  }
+  const full = s[boxKey];
+  chatBox.textContent = full.slice(0, Math.ceil(full.length * boxFrac));
+  chatBox.insertAdjacentHTML('beforeend', '<span class="caret is-blinking"></span>');
+  chatBox.classList.add('is-typing');
+}
+
 /* Anchor the callout to a code line, overhanging the panel's edge. In production
    this is the same maths, run against the screenshot's coordinates. */
 function anchorCallout(lineIndex) {
@@ -890,11 +1050,11 @@ function anchorCallout(lineIndex) {
   if (!line || !panel) return;
   const s = stage.getBoundingClientRect();
   const l = line.getBoundingClientRect(), p = panel.getBoundingClientRect();
-  callout.style.top = (l.top - s.top - 6) + 'px';
+  errorCallout.style.top = (l.top - s.top - 6) + 'px';
   // Under RTL the panel is on the left, so the callout hangs off its right edge
   // instead (the CSS arrow flips on its own, via inset-inline-start).
-  callout.style.left = STRINGS[lang].dir === 'rtl'
-    ? (p.right - s.left + 10 - callout.offsetWidth) + 'px'
+  errorCallout.style.left = STRINGS[lang].dir === 'rtl'
+    ? (p.right - s.left + 10 - errorCallout.offsetWidth) + 'px'
     : (p.left - s.left - 10) + 'px';
 }
 
@@ -927,23 +1087,26 @@ function buildTimeline() {
 
   // ---------- reset ----------
   push(0, () => {
-    typedLine = 4; typedText = '';
-    renderCode(CODE_A, { activeLine: 4 });
-    callout.classList.remove('is-shown');
+    edit = { prefix: '  ', value: '', suffix: '', caret: true };
+    renderCode({ activeLine: EDIT_LINE });
+    errorCallout.classList.remove('is-shown');
     scrim.classList.remove('is-shown');
     confetti.classList.remove('is-firing');
     outcome = 'pending'; paintScenario();
     setTab('instructions');
     resetGame();
+    boxKey = null; boxFrac = 0; paintBox();
+    callout(null);
+    chatSend.classList.remove('is-pressed');
     for (let i = 1; i <= 5; i++) showMsg(i, false);
-    cursorTo('#editor .code-line:nth-child(5)', 30, 4);
+    cursorTo('#editor .code-line:nth-child(6)', 40, 4);
   });
   t = 700;
 
-  // ---------- beat 1: type the naive move_right() ----------
-  const line = 'move_right()';
+  // ---------- beat 1: type the line, boundary and all ----------
+  const line = 'if position < ' + BAD + ' do';
   for (let i = 1; i <= line.length; i++) {
-    push(t + i * TYPE, () => { typedText = line.slice(0, i); renderCode(CODE_A, { activeLine: 4 }); });
+    push(t + i * TYPE, () => { edit.value = line.slice(0, i); renderCode({ activeLine: EDIT_LINE }); });
   }
   t += line.length * TYPE + 450;
 
@@ -955,13 +1118,15 @@ function buildTimeline() {
   t += 430;
 
   // ---------- beat 3: the failing run ----------
-  const runA = simulate('A');
+  push(t - 150, () => callout('see'));
+  const runA = simulate(+BAD);
   runA.forEach((act, i) => {
     const at = t + i * STEP;
     if (act.type === 'move') push(at, () => { moveLaser(act.col); track.style.setProperty('--progress', ((i + 1) / runA.length * 100) + '%'); });
     if (act.type === 'shoot') push(at, () => fireShot(act.col, targetIn(act.col)));
     if (act.type === 'error') push(at, () => {
       laserEl.classList.add('is-off-edge');
+      laserEl.style.left = 'calc(100% + 14px)';   // off the edge, clipped by the canvas
       track.style.setProperty('--progress', '100%');
     });
   });
@@ -969,38 +1134,122 @@ function buildTimeline() {
 
   // ---------- beat 4: the error lands ----------
   push(t, () => {
-    typedLine = -1;
-    renderCode(CODE_A, { errorLine: 4 });
-    anchorCallout(4);
-    callout.classList.add('is-shown');
+    edit.caret = false;
+    renderCode({ errorLine: EDIT_LINE });
+    anchorCallout(EDIT_LINE);
+    errorCallout.classList.add('is-shown');
     outcome = 'fail'; paintScenario();
+    callout('errors');
   });
-  t += 2400;
+  t += 2600;
+
+  /* ---------- beat 4b: scrub back through the run ----------
+     The learner drags the scrubber backwards and the cannon retraces its steps,
+     which is what "Rewind your own code" is pointing at. */
+  const lastCol = COLS, backTo = 7, REW = 130;
+  push(t, () => {
+    callout('rewind');
+    cursorTo('.scrubber .track b', 2, 2);
+    laserEl.classList.remove('is-off-edge');
+    laserEl.style.left = colX(lastCol) + '%';
+  });
+  t += 450;
+  for (let c = lastCol - 1; c >= backTo; c--) {
+    push(t, () => {
+      moveLaser(c);
+      track.style.setProperty('--progress', ((c - 1) / (lastCol - 1) * 100) + '%');
+      cursorTo('.scrubber .track b', 2, 2);
+    });
+    t += REW;
+  }
+  t += 450;
+  for (let c = backTo + 1; c <= lastCol; c++) {
+    push(t, () => {
+      moveLaser(c);
+      track.style.setProperty('--progress', ((c - 1) / (lastCol - 1) * 100) + '%');
+      cursorTo('.scrubber .track b', 2, 2);
+    });
+    t += REW;
+  }
+  push(t, () => {                                   // back to where it broke
+    laserEl.classList.add('is-off-edge');
+    laserEl.style.left = 'calc(100% + 14px)';
+    track.style.setProperty('--progress', '100%');
+  });
+  t += 1100;
 
   // ---------- beat 5: over to Ask Jiki (the screenshot swap) ----------
   push(t, () => cursorTo('#tab-jiki', 2, 2));
   t += 650;
-  push(t, () => { callout.classList.remove('is-shown'); setTab('jiki'); });
+  push(t, () => { errorCallout.classList.remove('is-shown'); setTab('jiki'); callout('help'); });
   t += 350;
-  const MSG_GAP = 1050;
-  for (let n = 1; n <= 5; n++) push(t + (n - 1) * MSG_GAP, () => showMsg(n, true));
-  t += 5 * MSG_GAP + 900;
 
-  // ---------- beat 6: back to the editor, apply the fix ----------
-  push(t, () => { setTab('instructions'); cursorTo('#editor .code-line:nth-child(5)', 40, 4); });
+  /* The learner's messages are typed into the box and sent; Jiki's just appear.
+     Typing runs over a fixed number of ticks rather than per character, so a long
+     translation takes the same time on screen as a short one. */
+  const TICKS = 20, TICK = 55;
+  const typeBox = (key, from) => {
+    push(from, () => { boxKey = key; boxFrac = 0; paintBox(); cursorTo('#chat-box', -40, 10); });
+    for (let i = 1; i <= TICKS; i++) {
+      push(from + i * TICK, () => { boxFrac = i / TICKS; paintBox(); });
+    }
+    return from + TICKS * TICK;
+  };
+  const send = (msgN, from) => {
+    push(from, () => cursorTo('#chat-send', 3, 3));
+    push(from + 420, () => chatSend.classList.add('is-pressed'));
+    push(from + 620, () => {
+      chatSend.classList.remove('is-pressed');
+      boxKey = null; boxFrac = 0; paintBox();      // the box empties...
+      showMsg(msgN, true);                        // ...and the message is posted
+    });
+    return from + 620;
+  };
+
+  push(t, () => showMsg(1, true));                // Jiki's greeting
+  t += 900;
+  t = typeBox('chat2', t) + 250;                  // "My cannon keeps going off the edge"
+  t = send(2, t) + 900;
+  push(t, () => showMsg(3, true));                // Jiki asks about the boundary
+  t += 2600;
+  t = typeBox('chat4', t) + 250;                  // "Eleven."
+  t = send(4, t) + 900;
+  push(t, () => showMsg(5, true));                // Jiki confirms the fix
+  t += 2600;
+
+  // ---------- beat 6: edit that one value in place ----------
+  push(t, () => { setTab('instructions'); callout(null); cursorTo('#editor .code-line:nth-child(6)', 92, 4); });
   t += 700;
-  push(t, () => { renderCode(CODE_B, { added: ADDED_IN_B }); });
-  t += 1900;
+  // Split the line so the caret sits just after the boundary value
+  push(t, () => {
+    edit = { prefix: '  if position < ', value: BAD, suffix: ' do', caret: true };
+    renderCode({ activeLine: EDIT_LINE });
+  });
+  t += 400;
+  // Backspace over the wrong value...
+  for (let i = BAD.length - 1; i >= 0; i--) {
+    push(t, () => { edit.value = BAD.slice(0, i); renderCode({ activeLine: EDIT_LINE }); });
+    t += 150;
+  }
+  t += 200;
+  // ...and type the right one
+  for (let i = 1; i <= GOOD.length; i++) {
+    push(t, () => { edit.value = GOOD.slice(0, i); renderCode({ activeLine: EDIT_LINE }); });
+    t += 120;
+  }
+  t += 250;
+  push(t, () => { renderCode({ activeLine: EDIT_LINE, flash: [EDIT_LINE] }); });
+  t += 1300;
 
   // ---------- beat 7: rerun, and this time it wins ----------
   push(t, () => cursorTo('#run-btn', 4, 4));
   t += 620;
   push(t, () => runBtn.classList.add('is-pressed'));
   push(t + 200, () => runBtn.classList.remove('is-pressed'));
-  push(t + 200, () => { resetGame(); renderCode(CODE_B); outcome = 'pending'; paintScenario(); });
+  push(t + 200, () => { resetGame(); edit.caret = false; renderCode(); outcome = 'pending'; paintScenario(); });
   t += 430;
 
-  const runB = simulate('B');
+  const runB = simulate(+GOOD);
   runB.forEach((act, i) => {
     const at = t + i * STEP;
     if (act.type === 'move') push(at, () => { moveLaser(act.col); track.style.setProperty('--progress', ((i + 1) / runB.length * 100) + '%'); });
@@ -1008,11 +1257,16 @@ function buildTimeline() {
   });
   t += runB.length * STEP + 300;
 
-  push(t, () => {
-    outcome = 'pass'; paintScenario();
-    confetti.classList.add('is-firing');
-  });
-  push(t + 350, () => scrim.classList.add('is-shown'));
+  // Only celebrate if the run actually won — the simulation is the source of truth
+  if (runB.some(a => a.type === 'win')) {
+    push(t, () => {
+      outcome = 'pass'; paintScenario();
+      confetti.classList.add('is-firing');
+    });
+    push(t + 350, () => { scrim.classList.add('is-shown'); callout('next'); });
+  } else {
+    push(t, () => { outcome = 'fail'; paintScenario(); });
+  }
 
   return { steps: T.sort((a, b) => a.at - b.at), duration: t + 3400 };
 }
@@ -1045,13 +1299,13 @@ document.getElementById('replay-btn').addEventListener('click', play);
 applyLanguage();
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   // Reduced motion: hold the error state, no animation
-  typedLine = -1;
-  renderCode(CODE_A, { errorLine: 4 });
-  const runA = simulate('A');
+  edit = { prefix: '  if position < ', value: BAD, suffix: ' do', caret: false };
+  renderCode({ errorLine: EDIT_LINE });
+  const runA = simulate(+BAD);
   runA.forEach(a => { if (a.type === 'shoot') { alive[a.target] = false; alienEls[a.target].classList.add('is-dead'); } });
   moveLaser(COLS);
-  anchorCallout(4);
-  callout.classList.add('is-shown');
+  anchorCallout(EDIT_LINE);
+  errorCallout.classList.add('is-shown');
   outcome = 'fail'; paintScenario();
 } else {
   play();

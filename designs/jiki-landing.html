@@ -1438,39 +1438,83 @@
            observer.observe(el);
           })();
          </script>
-         <!-- The four callouts, ported from idea 4 of learn-to-code-ideas.html
-              ("Four equal blocks"), widened to three cards across. Replaces the
-              synced video demo that used to sit here. -->
+         <!-- One chaptered demo, ported from idea 7 of learn-to-code-ideas.html
+              ("One video, chapters along the bottom"). Replaces the four static
+              blocks that used to sit here.
+
+              THREE chapters rather than the five on the ideas page: the labels
+              and copy below are placeholders in the final format, so swapping in
+              the real three is a copy change, not a layout change.
+
+              TIMING: the bar and the labels run on a 15s CSS loop, 5s a chapter,
+              which assumes the recording is cut to match. In the real build this
+              should be driven by the video's own timeupdate event instead, so the
+              bar and the footage can never drift apart. -->
          <style>
-          .LtcQuad_grid__jk200{list-style:none;margin:8px auto 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 40px;max-width:1000px}
-          .LtcQuad_item__jk201{min-width:0;text-align:left}
-          .LtcQuad_img__jk202{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;background:var(--color-gray-100);border-radius:12px;margin-bottom:18px;box-shadow:0 12px 30px -18px rgba(15,23,42,.35)}
-          .LtcQuad_label__jk203{font-size:18px;font-weight:700;color:var(--color-purple-600);line-height:1.3;margin-bottom:6px}
-          .LtcQuad_copy__jk204{font-size:15px;color:var(--color-gray-600);line-height:1.6;text-wrap-style:balance}
-          @media (max-width:900px){.LtcQuad_grid__jk200{grid-template-columns:minmax(0,1fr);gap:32px}}
+          .LtcDemo_stack__jk210{display:flex;flex-direction:column;gap:22px;max-width:900px;margin-inline:auto;padding-top:8px}
+          .LtcDemo_frame__jk211{position:relative;border-radius:14px;overflow:hidden;background:var(--color-gray-900);box-shadow:0 24px 60px rgba(15,23,42,.28)}
+          /* the chrome is scenery, not content: shallow, and close enough in tone to the
+             frame that it reads as an edge rather than a header bar */
+          .LtcDemo_chrome__jk212{display:flex;align-items:center;gap:5px;padding:6px 12px;background:var(--color-gray-900);border-bottom:1px solid rgba(255,255,255,.07)}
+          .LtcDemo_chrome__jk212 i{width:7px;height:7px;border-radius:50%;display:block;opacity:.55}
+          .LtcDemo_chrome__jk212 span{margin-inline:auto;font-size:10.5px;color:var(--color-gray-500)}
+          .LtcDemo_frame__jk211 video{display:block;width:100%;height:auto}
+          /* the scrubber, sat on the bottom edge of the frame, with a tick at each
+             chapter boundary so the three parts are visible even at rest */
+          .LtcDemo_track__jk213{position:absolute;left:0;right:0;bottom:0;height:5px;z-index:3;background:rgba(255,255,255,.22)}
+          .LtcDemo_fill__jk214{height:100%;width:0;background:var(--color-purple-500);animation:LtcDemo_run__jk219 15s linear infinite}
+          .LtcDemo_tick__jk215{position:absolute;top:0;bottom:0;width:2px;background:var(--color-gray-900);opacity:.55}
+          @keyframes LtcDemo_run__jk219{from{width:0}to{width:100%}}
+          .LtcDemo_chapters__jk216{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;text-align:left}
+          /* the dot sits on the same line as the title, with the explainer underneath
+             running the full width of the column rather than indented beside the dot */
+          .LtcDemo_chapter__jk217{min-width:0}
+          .LtcDemo_head__jk218{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+          .LtcDemo_chapter__jk217 b{flex:none;width:9px;height:9px;border-radius:50%;background:var(--color-gray-300);animation:LtcDemo_dot__jk220 15s linear infinite}
+          .LtcDemo_chapter__jk217 h4{font-size:18px;font-weight:700;line-height:1.3;color:var(--color-gray-400);text-wrap-style:balance;animation:LtcDemo_live__jk221 15s linear infinite}
+          .LtcDemo_chapter__jk217 p{font-size:15px;color:var(--color-gray-600);line-height:1.6;text-wrap-style:balance}
+          /* each chapter lights for its own 5s of the loop. Positive delays, so the
+             base state is "not reached yet" and the very first pass is correct */
+          .LtcDemo_chapter__jk217:nth-child(2) b,.LtcDemo_chapter__jk217:nth-child(2) h4{animation-delay:5s}
+          .LtcDemo_chapter__jk217:nth-child(3) b,.LtcDemo_chapter__jk217:nth-child(3) h4{animation-delay:10s}
+          @keyframes LtcDemo_live__jk221{0%,33.3%{color:var(--color-purple-600)}33.4%,100%{color:var(--color-gray-400)}}
+          @keyframes LtcDemo_dot__jk220{0%,33.3%{background:var(--color-purple-500);transform:scale(1.35)}33.4%,100%{background:var(--color-gray-300);transform:scale(1)}}
+          @media (prefers-reduced-motion:reduce){
+           .LtcDemo_fill__jk214{width:33.3%;animation:none}
+           .LtcDemo_chapter__jk217 b,.LtcDemo_chapter__jk217 h4{animation:none}
+           .LtcDemo_chapter__jk217:first-child h4{color:var(--color-purple-600)}
+           .LtcDemo_chapter__jk217:first-child b{background:var(--color-purple-500)}
+          }
+          @media (max-width:900px){.LtcDemo_chapters__jk216{grid-template-columns:minmax(0,1fr);gap:20px}}
          </style>
-         <ul class="LtcQuad_grid__jk200">
-          <li class="LtcQuad_item__jk201">
-           <img class="LtcQuad_img__jk202" src="assets/ph-errors-in-plain-english.jpg" alt="The Jiki editor with turnright() flagged on line 4 beside an error panel reading &quot;Jiki could not find a function called turnright&quot;">
-           <h4 class="LtcQuad_label__jk203">Errors in plain English</h4>
-           <p class="LtcQuad_copy__jk204">When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
-          </li>
-          <li class="LtcQuad_item__jk201">
-           <img class="LtcQuad_img__jk202" src="assets/ph-rewind-your-own-code.jpg" alt="The Jiki editor part way through an edit, with the maze and the run controls below it">
-           <h4 class="LtcQuad_label__jk203">Rewind your own code</h4>
-           <p class="LtcQuad_copy__jk204">Step back through every instruction and watch exactly what happened, one line at a time.</p>
-          </li>
-          <li class="LtcQuad_item__jk201">
-           <img class="LtcQuad_img__jk202" src="assets/ph-help-not-answers.jpg" alt="The Ask Jiki chat panel, where the learner asks for the solution and Jiki replies with a question">
-           <h4 class="LtcQuad_label__jk203">Help, not answers</h4>
-           <p class="LtcQuad_copy__jk204">Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
-          </li>
-          <li class="LtcQuad_item__jk201">
-           <img class="LtcQuad_img__jk202" src="assets/ph-see-what-your-code-did.jpg" alt="The maze part way through a run, with the character mid path and the goal square ahead">
-           <h4 class="LtcQuad_label__jk203">See what your code did</h4>
-           <p class="LtcQuad_copy__jk204">Your instructions, playing out in front of you. No guessing what the computer heard.</p>
-          </li>
-         </ul>
+         <div class="LtcDemo_stack__jk210">
+          <div class="LtcDemo_frame__jk211">
+           <div class="LtcDemo_chrome__jk212">
+            <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+            <span>jiki.io — Shoot the Aliens</span>
+           </div>
+           <video src="assets/learn-to-code-demo.mov" autoplay muted loop playsinline aria-label="Screen recording of the Jiki editor solving the maze exercise, in three chapters"></video>
+           <div class="LtcDemo_track__jk213" aria-hidden="true">
+            <div class="LtcDemo_fill__jk214"></div>
+            <span class="LtcDemo_tick__jk215" style="left:33.3%"></span>
+            <span class="LtcDemo_tick__jk215" style="left:66.6%"></span>
+           </div>
+          </div>
+          <ul class="LtcDemo_chapters__jk216">
+           <li class="LtcDemo_chapter__jk217">
+            <div class="LtcDemo_head__jk218"><b aria-hidden="true"></b><h4>Errors in plain English</h4></div>
+            <p>When something breaks, Jiki tells you what went wrong in normal English, not technical jargon.</p>
+           </li>
+           <li class="LtcDemo_chapter__jk217">
+            <div class="LtcDemo_head__jk218"><b aria-hidden="true"></b><h4>Rewind your own code</h4></div>
+            <p>Step back through every instruction and watch exactly what happened, one line at a time.</p>
+           </li>
+           <li class="LtcDemo_chapter__jk217">
+            <div class="LtcDemo_head__jk218"><b aria-hidden="true"></b><h4>Help, not answers</h4></div>
+            <p>Ask Jiki anything and get help working it out, rather than the solution pasted in.</p>
+           </li>
+          </ul>
+         </div>
          </div>
         </div>
         <!-- Card 2: Learn to Build in the LLM Era -->
@@ -1922,13 +1966,16 @@
             each one's natural height is */
          /* the three visuals are different heights, so centre each in the same fixed box
             and they sit on a shared middle line rather than a shared top edge */
-         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+         .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:37px}
          .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:18px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
          .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
          /* 01: the certificate, with the share card and the verification chip */
-         .cert-outcomes .co-cert{position:relative;width:calc(72% + 45px)}
-         .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0)}
+         .cert-outcomes .co-cert{position:relative;width:calc(72% + 55px)}
+         /* the inset trims a hairline off the top and bottom of the source image. The
+            radius has to live on the clip-path too: a clip-path with square corners cuts
+            straight through whatever border-radius the element has */
+         .cert-outcomes .co-cert img{width:100%;border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0 round 10px)}
          .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:#0A66C2;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
          .cert-outcomes .co-verify svg{width:14px;height:14px}
          /* a small burst off the top right corner of the chip, drawn rather than an asset:
@@ -1949,7 +1996,9 @@
             of the outcome is that there are lots of them, so showing them together says it
             faster than cycling one at a time did */
          .cert-outcomes .co-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:calc(92% - 16px)}
-         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;background:#fff;border:1px solid var(--color-gray-200);border-radius:6px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45)}
+         /* 5px of white inside the card, so the art sits on a mount rather than running
+            to the edge, with a slightly stronger border around it */
+         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;padding:5px 5px 10px;background:#fff;border:1px solid var(--color-gray-300);border-radius:8px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45)}
          /* each one is finished, so it carries a tick */
          .cert-outcomes .co-done{position:absolute;top:6px;right:6px;z-index:3;width:20px;height:20px;border-radius:999px;background:var(--color-green-500);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);animation:co-tickPop 9s linear infinite}
          .cert-outcomes .co-done svg{width:11px;height:11px}
@@ -1976,14 +2025,17 @@
          @media (prefers-reduced-motion:reduce){
           .cert-outcomes .co-done,.cert-outcomes .co-done::after{animation:none;transform:none}
          }
-         .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;background:var(--color-gray-50)}
-         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:8px;background:var(--color-gray-50);display:block}
+         /* the art is now a rounded panel inside the mount rather than a bled edge */
+         .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;border-radius:4px;background:var(--color-gray-50)}
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:6px;background:var(--color-gray-50);display:block}
          /* at quarter size the card carries the title only - the tags are unreadable here
             and the titles already say what each project is */
-         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:7px 8px 8px;text-align:center;border-top:1px solid var(--color-gray-100)}
+         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px 4px 2px;text-align:center}
          .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
          /* 03: a snippet of unfamiliar code, one line marked up */
-         .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden}
+         /* sits 10px above the centre line the other two share, so the Caveat note and
+            arrow beneath it have room without pushing the snippet down the column */
+         .cert-outcomes .co-code{position:relative;top:-10px;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden}
          .cert-outcomes .co-code .co-bar{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.09)}
          .cert-outcomes .co-code .co-bar i{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.2)}
          .cert-outcomes .co-code pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.75;color:var(--color-gray-300);padding:11px 14px 14px;overflow-x:auto}
@@ -2086,8 +2138,8 @@
     <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
       <span class="kw">return</span> cell</pre>
             </div>
-            <span class="co-anno" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
-            <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
+            <span class="co-anno" style="bottom:-5px;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
+            <svg class="co-arrow" style="bottom:31px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
              <path d="M70 21C52 19 26 13 6 3"/>
              <path d="M15 2L4 3l5 9"/>
             </svg>
@@ -3178,9 +3230,11 @@
        </div>
        <!-- the blog link, promoted from the subheading to a real way out of the section -->
        <div class="LatestNewsSection_blogFoot__k2p8w">
-        <!-- same variant and same colour variables as the header Login button, so the two
-             behave identically on hover -->
-        <a class="ui-btn ui-btn-secondary" href="/blog" style="box-sizing:border-box;padding-block:14px;padding-inline:26px;font-size:16px;line-height:1.2;--primary-color:var(--color-blue-600);--primary-color-dark:var(--color-blue-700);--primary-color-light:var(--color-blue-300);--primary-shadow:var(--color-blue-500-30);--primary-shadow-light:var(--color-blue-500-20);--primary-shadow-dark:var(--color-blue-500-40);">
+        <!-- properly composed UI Kit button: ui-btn + a size + a variant. The size class is
+             what carries border-radius and padding, so leaving it off gave square corners.
+             Same variant and colour variables as the header Login button, so the two behave
+             identically on hover. -->
+        <a class="ui-btn ui-btn-default ui-btn-secondary" href="/blog" style="--primary-color:var(--color-blue-600);--primary-color-dark:var(--color-blue-700);--primary-color-light:var(--color-blue-300);--primary-shadow:var(--color-blue-500-30);--primary-shadow-light:var(--color-blue-500-20);--primary-shadow-dark:var(--color-blue-500-40);">
          Read the blog
          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
