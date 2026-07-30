@@ -128,6 +128,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Amber isn't in the UI Kit yet: used by the pending badge and the "Show layers" overlay. */
   :root {
     --color-amber-100: #fef3c7;
+    --color-amber-400: #fbbf24;
     --color-amber-500: #f59e0b;
     --color-amber-600: #d97706;
     /* Brand confetti colours, lifted from front-end/app/lib/confetti.ts */
@@ -164,19 +165,21 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
      track the widest code line or chat bubble, so the video would change width as
      it played. The rails sit above the stage so their leader lines can overlay it. */
   .demo { display: grid; grid-template-columns: minmax(210px, 1fr) auto minmax(210px, 1fr); gap: 26px; align-items: stretch; }
-  .rail { position: relative; min-width: 0; z-index: 5; }
+  .rail { position: relative; min-width: 0; z-index: 20; }   /* above the stage's own layers */
   .callout {
     position: absolute; box-sizing: border-box; width: 100%; max-width: 240px;
     background: #fff; border: 2px solid var(--color-purple-300); border-radius: 10px;
-    padding: 4px 16px;
+    padding: 9px 16px;
     box-shadow: 0 14px 28px -14px rgba(15, 23, 42, .35), 0 4px 10px -6px rgba(15, 23, 42, .2);
     opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease;
   }
   .callout.is-shown { opacity: 1; transform: none; }
   /* Balancing is deliberately off here: these cards are a fixed width, and balanced
      wrapping left the lines ragged rather than filling to the edge. */
-  .callout h4 { font-size: 16px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-bottom: 6px; text-wrap-style: auto; }
-  .callout p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.55; text-wrap-style: auto; }
+  /* margin-block clears the browser defaults (21px above the heading, 13.5px above
+     the copy) which were adding space the card padding had no say over. */
+  .callout h4 { font-size: 16px; font-weight: 700; color: var(--color-purple-600); line-height: 1.3; margin-block: 0 6px; text-wrap-style: auto; }
+  .callout p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.55; margin-block: 0; text-wrap-style: auto; }
   /* Leader: one element carrying both the rule and the dot at its far end, so the
      whole thing can be rotated as a unit. Each card leans a different way — the
      angle is decorative, they all still land on the region they describe. */
@@ -208,7 +211,10 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   #co-rewind::after { top: auto; bottom: 17px; }
 
   #co-see    { --lean: 11deg; }
-  #co-rewind { --lean: 37deg; }
+  /* Card sits 15px further left than the others; its leader stops just short of the
+     play button rather than landing on it. */
+  #co-rewind { --lean: 38deg; }
+  #co-rewind::after { width: 68px; }
   #co-errors { --lean: -8deg; }
   #co-help   { --lean: 10deg; }
   #co-next   { --lean: -13deg; }
@@ -238,15 +244,15 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* --- Code editor --- */
   .editor { position: relative; padding: 10px 0; overflow: hidden; }
   /* Gutter divider, as CodeMirror draws on .cm-gutters. Numbers end at 32px (14px
-     inset + 18px wide) and the code starts at 41px, so the rule at 36px has exactly
-     4px of clear space on each side. */
-  .editor::before { content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 36px; width: 1px; background: var(--color-gray-200); }
+     inset + 18px wide) and the code starts at 47px, so the rule at 39px has exactly
+     7px of clear space on each side. */
+  .editor::before { content: ''; position: absolute; top: 0; bottom: 0; inset-inline-start: 39px; width: 1px; background: var(--color-gray-200); }
   /* Type from codemirror.css: Source Code Pro, .cm-line padding 2px 4px, and line
      numbers right-aligned at the same size as the code. The app runs 16px; this
      stage is narrower than the real editor so it sits 2px down. The app's gutter is
      #4D4D4C80 and its code colour #4D4D4C — gray-400 and gray-700 match those
      closely and keep the file on the UI Kit palette. */
-  .code-line { display: flex; gap: 9px; padding: 2px 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
+  .code-line { display: flex; gap: 15px; padding: 2px 14px; font-family: var(--font-mono); font-size: 14px; line-height: 22px; white-space: pre; }
   .code-line .num { width: 18px; text-align: end; color: var(--color-gray-400); flex: none; font-size: 14px; }
   .code-line .txt { position: relative; color: var(--color-gray-700); }
   .code-line.is-active { background: var(--color-blue-50); }
@@ -284,8 +290,8 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* --- Exercise card: scenario copy | game canvas, scrubber underneath --- */
   .exercise { display: grid; grid-template-rows: 1fr auto; min-height: 0; }
   .exercise-body { display: grid; grid-template-columns: minmax(0, 200px) 1fr; gap: 14px; padding: 12px 14px; min-height: 0; }
-  .scenario h4 { font-size: 14px; font-weight: 700; color: var(--color-gray-800); line-height: 1.35; margin-bottom: 8px; text-wrap-style: balance; }
-  .scenario p { font-size: 12.5px; color: var(--color-gray-600); line-height: 1.5; margin-bottom: 0; text-wrap-style: balance; }
+  .scenario h4 { font-size: 14px; font-weight: 700; color: var(--color-gray-800); line-height: 1.35; margin-bottom: 8px; text-wrap-style: auto; }
+  .scenario p { font-size: 12.5px; color: var(--color-gray-600); line-height: 1.5; margin-bottom: 0; text-wrap-style: auto; }
   /* Pending is amber, so all three verdicts read as a traffic light: amber, red, green */
   .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; margin-bottom: 8px; background: var(--color-amber-600); color: #fff; }
   .scenario.is-fail .badge { background: var(--color-red-500); color: #fff; }
@@ -328,9 +334,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .scrubber { display: flex; align-items: center; gap: 13px; padding: 7px 14px; border-top: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
   .scrubber .play { width: 26px; height: 26px; border-radius: 50%; background: var(--color-blue-600); color: #fff; display: grid; place-items: center; flex: none; }
   .scrubber .track { flex: 1; height: 4px; border-radius: 2px; background: var(--color-gray-200); position: relative; }
-  .scrubber .track i { position: absolute; inset-block: 0; inset-inline-start: 0; width: var(--progress, 0%); background: var(--color-blue-500); border-radius: 2px; transition: width var(--step, 145ms) linear; }
+  .scrubber .track i { position: absolute; inset-block: 0; inset-inline-start: 0; width: var(--progress, 0%); background: var(--color-blue-500); border-radius: 2px; transition: width var(--track-ms, var(--step, 145ms)) linear; }
   /* box-sizing so the 2px border counts inside the 16px, and the -8px offsets centre it */
-  .scrubber .track b { position: absolute; box-sizing: border-box; top: 50%; inset-inline-start: var(--progress, 0%); width: 16px; height: 16px; margin-top: -8px; margin-inline-start: -8px; border-radius: 50%; background: #fff; border: 2px solid var(--color-blue-600); transition: inset-inline-start var(--step, 145ms) linear; }
+  .scrubber .track b { position: absolute; box-sizing: border-box; top: 50%; inset-inline-start: var(--progress, 0%); width: 16px; height: 16px; margin-top: -8px; margin-inline-start: -8px; border-radius: 50%; background: #fff; border: 2px solid var(--color-blue-600); transition: inset-inline-start var(--track-ms, var(--step, 145ms)) linear; }
   .scrubber .step { width: 24px; height: 22px; border-radius: 5px; border: 1px solid var(--color-gray-200); background: #fff; color: var(--color-gray-500); display: grid; place-items: center; flex: none; }
 
   /* --- Right panel --- */
@@ -407,20 +413,25 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   /* Success modal + confetti */
   /* Backdrop only. The card is a sibling above the confetti (see .modal-wrap), so the
      confetti flies over the dimmed page but under the modal. */
-  .modal-scrim { position: absolute; inset: 0; z-index: 12; background: rgba(15, 23, 42, .45); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+  /* A spotlight rather than a flat dim, so the card feels lit rather than just
+     sitting on a grey sheet. */
+  .modal-scrim {
+    position: absolute; inset: 0; z-index: 12; opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    background: radial-gradient(58% 52% at 50% 46%, rgba(255, 255, 255, .22), rgba(15, 23, 42, .52) 68%);
+  }
   .modal-scrim.is-shown { opacity: 1; }
   .modal-wrap { position: absolute; inset: 0; z-index: 16; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
   .modal-scrim.is-shown ~ .modal-wrap { opacity: 1; }
-  /* Grey rim plus a layered shadow, so the card lifts off the scrim. Matches the
-     colour of the app's own modal shell (1px gray-200), a touch heavier. */
+  /* Blue rim plus a layered shadow, so the card lifts off the scrim and picks up the
+     heading and button. Note the app's own shell uses 1px gray-200. */
   .modal {
-    width: min(400px, 74%); background: #fff; border: 2px solid var(--color-gray-200); border-radius: 12px;
+    width: min(400px, 74%); background: #fff; border: 2px solid var(--color-blue-600); border-radius: 12px;
     padding: 42px 26px 44px; text-align: center;
     box-shadow: 0 28px 56px -16px rgba(15, 23, 42, .5), 0 10px 20px -10px rgba(15, 23, 42, .3);
     transform: scale(.94); transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
   }
   .modal-scrim.is-shown ~ .modal-wrap .modal { transform: none; }
-  .modal h2 { font-size: 26px; font-weight: 800; color: var(--color-blue-600); margin-bottom: 10px; text-wrap-style: balance; }
+  .modal h2 { font-size: 26px; font-weight: 600; color: var(--color-blue-600); margin-bottom: 10px; text-wrap-style: balance; }
 
   /* Green tick: the ring draws, then the mark, then the whole thing settles.
      Keyed off .is-shown so it replays on every loop of the video. */
@@ -440,7 +451,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     .modal-scrim.is-shown ~ .modal-wrap .tick path { animation: none; }
   }
   .modal p { font-size: 13.5px; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 18px; text-wrap-style: balance; }
-  .modal .go { display: inline-block; padding: 9px 22px; border-radius: 8px; background: var(--color-blue-600); border: 2px solid var(--color-blue-200); color: #fff; font-weight: 700; font-size: 14px; }
+  .modal .go { display: inline-block; padding: 9px 22px; border-radius: 8px; background: var(--color-blue-600); border: 2px solid var(--color-blue-200); color: #fff; font-weight: 700; font-size: 15px; }
 
   .confetti { position: absolute; inset: 0; z-index: 14; overflow: hidden; pointer-events: none; }
   .confetti i { position: absolute; bottom: -14px; width: 9px; height: 12px; border-radius: 1px; opacity: 0; }
@@ -530,7 +541,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
       <h4>See what your code did</h4>
       <p>Your instructions, playing out in front of you. No guessing what the computer heard.</p>
     </aside>
-    <aside class="callout" id="co-rewind" style="bottom:42px">
+    <aside class="callout" id="co-rewind" style="bottom:42px; inset-inline-end:15px">
       <h4>Rewind your own code</h4>
       <p>Step back through every instruction and watch exactly what happened, one line at a time.</p>
     </aside>
@@ -974,6 +985,7 @@ function resetGame() {
   stage.classList.add('no-anim');
   laserEl.style.left = colX(1) + '%';
   document.getElementById('track').style.setProperty('--progress', '0%');
+  document.getElementById('track').style.removeProperty('--track-ms');
   void stage.offsetWidth;              // flush, so the snap doesn't animate
   stage.classList.remove('no-anim');
 }
@@ -1067,7 +1079,10 @@ function moveCursor(x, y) { cursor.style.transform = 'translate(' + x + 'px, ' +
 /* The stage is drawn at 80% via zoom, so getBoundingClientRect returns page pixels
    while anything we position inside the stage is in its own unscaled pixels.
    Everything measured off a rect has to be divided back out by that factor. */
-const zoomOf = () => parseFloat(getComputedStyle(stage).zoom) || 1;
+const zoomOf = () => {
+  const w = stage.offsetWidth;                   // the stage's own, unscaled width
+  return w ? stage.getBoundingClientRect().width / w : 1;
+};
 
 /* Aim at a real element's centre, so the cursor stays right at any stage size. */
 function cursorTo(selector, dx = 0, dy = 0) {
@@ -1114,6 +1129,13 @@ function paintBox() {
 /* Put the cursor on the scrubber thumb for a given progress fraction. Measuring the
    thumb's live rect would chase it mid-transition; the track plus the fraction gives
    the position it is heading for. */
+/* Drive the bar to `pct` over `ms`. A whole run is one long linear sweep rather
+   than a transition restarted on every action, which is what made it stutter. */
+function setTrack(pct, ms) {
+  track.style.setProperty('--track-ms', ms + 'ms');
+  track.style.setProperty('--progress', (pct * 100) + '%');
+}
+
 function cursorToTrack(pct) {
   const s = stage.getBoundingClientRect(), tr = track.getBoundingClientRect(), z = zoomOf();
   moveCursor((tr.left - s.left) / z + pct * (tr.width / z) + 2,
@@ -1199,14 +1221,14 @@ function buildTimeline() {
   // ---------- beat 3: the failing run ----------
   push(t - 150, () => callout('see'));
   const runA = simulate(+BAD);
+  push(t, () => setTrack(1, runA.length * STEP));   // one continuous sweep for the run
   runA.forEach((act, i) => {
     const at = t + i * STEP;
-    if (act.type === 'move') push(at, () => { moveLaser(act.col); track.style.setProperty('--progress', ((i + 1) / runA.length * 100) + '%'); });
+    if (act.type === 'move') push(at, () => moveLaser(act.col));
     if (act.type === 'shoot') push(at, () => fireShot(act.col, targetIn(act.col)));
     if (act.type === 'error') push(at, () => {
       laserEl.classList.add('is-off-edge');
       laserEl.style.left = 'calc(100% + 14px)';   // off the edge, clipped by the canvas
-      track.style.setProperty('--progress', '100%');
     });
   });
   t += runA.length * STEP + 240;
@@ -1229,7 +1251,7 @@ function buildTimeline() {
   const scrubTo = c => {
     const pct = (c - 1) / (lastCol - 1);
     moveLaser(c);
-    track.style.setProperty('--progress', (pct * 100) + '%');
+    setTrack(pct, STEP);
     cursorToTrack(pct);
   };
   push(t, () => {
@@ -1253,7 +1275,7 @@ function buildTimeline() {
     cursor.classList.remove('is-scrubbing');
     laserEl.classList.add('is-off-edge');
     laserEl.style.left = 'calc(100% + 14px)';
-    track.style.setProperty('--progress', '100%');
+    setTrack(1, STEP);
   });
   t += 1100;
 
@@ -1298,17 +1320,17 @@ function buildTimeline() {
   t = typeBox('chat4', t) + 250;                  // "Eleven."
   t = send(4, t) + 900;
   push(t, () => showMsg(5, true));                // Jiki confirms the fix
-  t += 2600;
+  t += 800;                                       // straight on to the fix
 
   // ---------- beat 6: edit that one value in place ----------
   push(t, () => { setTab('instructions'); callout(null); cursorTo('#editor .code-line:nth-child(6)', 92, 4); });
-  t += 700;
+  t += 520;
   // Split the line so the caret sits just after the boundary value
   push(t, () => {
     edit = { prefix: '  if position < ', value: BAD, suffix: ' do', caret: true };
     renderCode({ activeLine: EDIT_LINE });
   });
-  t += 400;
+  t += 280;
   // Backspace over the wrong value...
   for (let i = BAD.length - 1; i >= 0; i--) {
     push(t, () => { edit.value = BAD.slice(0, i); renderCode({ activeLine: EDIT_LINE }); });
@@ -1333,9 +1355,10 @@ function buildTimeline() {
   t += 430;
 
   const runB = simulate(+GOOD);
+  push(t, () => setTrack(1, runB.length * STEP));
   runB.forEach((act, i) => {
     const at = t + i * STEP;
-    if (act.type === 'move') push(at, () => { moveLaser(act.col); track.style.setProperty('--progress', ((i + 1) / runB.length * 100) + '%'); });
+    if (act.type === 'move') push(at, () => moveLaser(act.col));
     if (act.type === 'shoot') push(at, () => fireShot(act.col, targetIn(act.col)));
   });
   t += runB.length * STEP + 300;
@@ -1344,7 +1367,7 @@ function buildTimeline() {
   if (runB.some(a => a.type === 'win')) {
     // The last action is the winning shot, not a move, so the bar would stop short.
     // Run it to the end and let the thumb arrive before the modal opens over it.
-    push(t, () => track.style.setProperty('--progress', '100%'));
+    push(t, () => setTrack(1, STEP));
     t += 300;
     push(t, () => {
       outcome = 'pass'; paintScenario();
