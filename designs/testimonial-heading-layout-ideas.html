@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" class="ui-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Heading Layouts - Ideas</title>
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+    <style>
+        body {
+            background: var(--color-gray-100);
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            max-width: 1100px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+            text-wrap-style: balance;
+        }
+
+        .page-header p {
+            color: var(--color-gray-600);
+            font-size: 1rem;
+            max-width: 70ch;
+            text-wrap-style: balance;
+        }
+
+        .idea {
+            max-width: 1100px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .idea-label {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .idea-label h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-gray-800);
+        }
+
+        .idea-label span {
+            font-size: 0.85rem;
+            color: var(--color-gray-500);
+            text-wrap-style: balance;
+        }
+
+        /* Every treatment sits in the same neutral stage so the typography is
+           the only thing changing between ideas. */
+        .stage {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+        }
+
+        .stage-dark {
+            background: #0b1220;
+            border-color: #0b1220;
+        }
+
+        /* A hint of the testimonial cards below, so each heading can be judged
+           against what it actually sits on top of. */
+        .cards-hint {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 0;
+        }
+
+        .cards-hint div {
+            height: 84px;
+            border-radius: 12px;
+            background: var(--color-gray-100);
+            border: 1px solid var(--color-gray-200);
+        }
+
+        .stage-dark .cards-hint div {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="ui-body">
+    <div class="page-header">
+        <h1>Testimonial Heading Layouts — Ideas</h1>
+        <p>Eight layout and typographic treatments of the same copy (option 4, "Leads with the number", from <a href="testimonials-ideas.html" class="ui-link">testimonials-ideas.html</a>). The words stay fixed throughout — only the arrangement, emphasis and scale change — so the layout is the only variable. Each sits above a greyed-out hint of the testimonial cards that would follow.</p>
+    </div>
+
+    <!-- 1. Baseline: centred stack, matching today's landing page rhythm -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>1. Centred stack (baseline)</h2>
+            <span>What the current section does — big centred heading, one line of intro. Safe, calm, gives the number no special treatment.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--color-gray-900); margin-bottom: 0.75rem; text-wrap-style: balance;">Thousands of beginners later&hellip;</h2>
+                <p style="font-size: 1.2rem; font-weight: 300; color: var(--color-gray-600); max-width: 46ch; margin-left: auto; margin-right: auto; text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 2. The number is the artwork -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>2. Oversized first word</h2>
+            <span>"Thousands" set huge in the brand gradient, with the rest of the sentence tucked under it. Makes the scale the visual, not just the claim.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="font-size: 5.5rem; line-height: 0.95; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(100deg, var(--color-purple-600), var(--color-blue-600)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.25rem;">Thousands</div>
+                <h2 style="font-size: 2rem; font-weight: 300; color: var(--color-gray-900); margin-bottom: 1rem;">of beginners later&hellip;</h2>
+                <p style="font-size: 1.15rem; font-weight: 300; color: var(--color-gray-600); max-width: 44ch; margin-left: auto; margin-right: auto; text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 3. Editorial split -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>3. Editorial split</h2>
+            <span>Heading left, intro right, both left-aligned on a shared baseline. Feels more grown-up and reads faster on desktop.</span>
+        </div>
+        <div class="stage">
+            <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: end; padding-bottom: 1.75rem; border-bottom: 1px solid var(--color-gray-200); margin-bottom: 2.5rem;">
+                <h2 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-gray-900); text-wrap-style: balance;">Thousands of beginners later&hellip;</h2>
+                <p style="font-size: 1.1rem; font-weight: 300; color: var(--color-gray-600); text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 4. Stat rail -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>4. Heading plus a stat rail</h2>
+            <span>The intro's numbers are lifted out into three figures under the heading. Strongest proof, but needs numbers we're happy to publish.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--color-gray-900); margin-bottom: 0.75rem; text-wrap-style: balance;">Thousands of beginners later&hellip;</h2>
+                <p style="font-size: 1.15rem; font-weight: 300; color: var(--color-gray-600); max-width: 46ch; margin-left: auto; margin-right: auto; margin-bottom: 2rem; text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+                <div style="display: flex; justify-content: center; gap: 3.5rem;">
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--color-purple-600); line-height: 1;">15,000+</div>
+                        <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-500);">students taught</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--color-blue-600); line-height: 1;">40+</div>
+                        <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-500);">countries</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--color-amber-500); line-height: 1;">4.9<span style="font-size: 1.1rem; color: var(--color-gray-400);">/5</span></div>
+                        <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-500);">average rating</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 5. Highlighter -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>5. Highlighter sweep</h2>
+            <span>A hand-drawn marker stripe behind "beginners" and a rough circle round "40+". Playful, and closest in spirit to the torn-tape treatment.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--color-gray-900); margin-bottom: 1rem; text-wrap-style: balance;">Thousands of <span style="position: relative; display: inline-block;"><span style="position: absolute; left: -0.15em; right: -0.15em; bottom: 0.08em; height: 0.42em; background: var(--color-amber-300); border-radius: 3px 8px 4px 10px; transform: rotate(-1.2deg); z-index: 0;"></span><span style="position: relative; z-index: 1;">beginners</span></span> later&hellip;</h2>
+                <p style="font-size: 1.2rem; font-weight: 300; color: var(--color-gray-600); max-width: 46ch; margin-left: auto; margin-right: auto; text-wrap-style: balance;">We've taught people to code in <span style="position: relative; display: inline-block; padding: 0 0.15em; font-weight: 600; color: var(--color-gray-900);">40+<span style="position: absolute; inset: -0.25em -0.1em; border: 2px solid var(--color-purple-500); border-radius: 50%; transform: rotate(-3deg); opacity: 0.85;"></span></span> countries. Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 6. Counter -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>6. Odometer counter</h2>
+            <span>The number appears as boxed digits, like a counter ticking over. Nods to the product being about code without shouting it.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="display: inline-flex; gap: 0.3rem; margin-bottom: 1.25rem;">
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">1</span>
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">5</span>
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">,</span>
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">0</span>
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">0</span>
+                    <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 2.5rem; font-weight: 700; color: #fff; background: var(--color-gray-900); border-radius: 8px; padding: 0.25rem 0.5rem;">0</span>
+                </div>
+                <h2 style="font-size: 2.1rem; font-weight: 800; color: var(--color-gray-900); margin-bottom: 0.75rem; text-wrap-style: balance;">Thousands of beginners later&hellip;</h2>
+                <p style="font-size: 1.15rem; font-weight: 300; color: var(--color-gray-600); max-width: 46ch; margin-left: auto; margin-right: auto; text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 7. Two-line contrast -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>7. Two-line weight contrast</h2>
+            <span>Heading broken over two lines — light on top, heavy underneath — with the intro as a small eyebrow above. Very editorial, very quiet.</span>
+        </div>
+        <div class="stage">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-purple-600); margin-bottom: 1.25rem;">We've taught people to code in 40+ countries</p>
+                <h2 style="font-size: 3rem; line-height: 1.05; letter-spacing: -0.02em; color: var(--color-gray-900); margin-bottom: 1rem;">
+                    <span style="display: block; font-weight: 300;">Thousands of beginners</span>
+                    <span style="display: block; font-weight: 800;">later&hellip;</span>
+                </h2>
+                <p style="font-size: 1.1rem; font-weight: 300; color: var(--color-gray-600); text-wrap-style: balance;">Here's what a few of them had to say.</p>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <!-- 8. Dark band -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>8. Dark band, left-aligned</h2>
+            <span>Full-width dark band with the heading pinned left and the intro sitting under a rule. Best if the testimonial cards below go dark too.</span>
+        </div>
+        <div class="stage stage-dark">
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center; margin-bottom: 3rem;">
+                <div style="font-size: 4rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--color-amber-400);">40+</div>
+                <div style="border-left: 1px solid rgba(255, 255, 255, 0.15); padding-left: 2.5rem;">
+                    <h2 style="font-size: 2.25rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; text-wrap-style: balance;">Thousands of beginners later&hellip;</h2>
+                    <p style="font-size: 1.1rem; font-weight: 300; color: rgba(255, 255, 255, 0.7); text-wrap-style: balance;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+                </div>
+            </div>
+            <div class="cards-hint"><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+All eight treatments use identical copy — only layout, weight and scale differ. Pick one and the copy needs no further sign-off.
+
+- **Colours**: purple/blue gradient (idea 2), amber highlighter (idea 5) and amber accent (idea 8) all come from UI Kit variables. No new colours introduced.
+- **Idea 4 (stat rail)**: the three figures are placeholders. Do not ship until Jeremy confirms real student count and average rating, and where they come from (BE — needs a source, ideally a cached value rather than a live query).
+- **Idea 5 (highlighter)**: the marker stripe and the circle are plain absolutely-positioned elements with asymmetric border-radius, so there is no artwork to commission. FE only.
+- **Idea 6 (odometer)**: shown static. If we want it to count up on scroll, that is a small FE addition (IntersectionObserver plus a tween) and must respect \`prefers-reduced-motion\`.
+- **Idea 8 (dark band)**: only works if the testimonial cards beneath it are the dark variant — see idea 9 in testimonials-ideas.html.
+- The grey blocks under each heading are stand-ins for the testimonial cards, not part of the design.
+        `;
+    </script>
+    <script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>

@@ -2017,7 +2017,86 @@
 <body class="ui-body">
     <div class="page-header">
         <h1>What Do Our Students Think? — Ideas</h1>
-        <p>Concepts for the testimonials section that lean into playful motion instead of a static grid of quote cards — the first four use initials-only avatars, ideas 5–7 add profile photos and student locations, idea 8 hides the flag/location/status behind a hover flip, idea 9 refines the actual jiki-landing.html quote card style with an accent-edged and a dark variant, ideas 10–11 go for fun and lively over star ratings — a pinned sticky-note wall and a group-chat bubble stream — and idea 12 widens the sticky-note wall to 3 columns using the real names, quotes, and photos from jiki-landing.html's 21 testimonials, on a white dotted background with purple/blue note colors.</p>
+        <p>Starts with eight heading and intro copy options that can be dropped above any of the layouts. Then: concepts for the testimonials section that lean into playful motion instead of a static grid of quote cards — the first four use initials-only avatars, ideas 5–7 add profile photos and student locations, idea 8 hides the flag/location/status behind a hover flip, idea 9 refines the actual jiki-landing.html quote card style with an accent-edged and a dark variant, ideas 10–11 go for fun and lively over star ratings — a pinned sticky-note wall and a group-chat bubble stream — and idea 12 widens the sticky-note wall to 3 columns using the real names, quotes, and photos from jiki-landing.html's 21 testimonials, on a white dotted background with purple/blue note colors.</p>
+    </div>
+
+    <!-- Heading & intro copy options ------------------------------------------
+         Copy-only ideas for the section heading + intro that sits above
+         whichever testimonial layout is chosen. Rendered at the real landing
+         page sizes so line lengths can be judged. Each has a note on the angle
+         it takes and which layouts it suits. -->
+    <div class="idea">
+        <div class="idea-label">
+            <h2>Heading &amp; intro copy options</h2>
+            <span>Copy only — swap into any of the layouts below. Option 1 is what's live on jiki-landing.html today.</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;">
+
+            <!-- 1. Current -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">1 · Current</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">What do our students think?</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have learnt to code with us. Here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Safe and clear. Reads as a label rather than a reason to keep reading — the scale ("thousands") is doing all the persuading.</p>
+            </div>
+
+            <!-- 2. Don't take our word for it -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">2 · Hand the mic over</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">Don't take our word for it</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have learnt to code with us. Here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Acknowledges that everything above this point is us selling. Works with every layout, and especially well straight after a claim-heavy section.</p>
+            </div>
+
+            <!-- 3. Neither were they -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">3 · Speaks to the doubt</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">Not sure you're the coding type?</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Neither were they. Thousands of people have learnt to code with us — here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">The strongest option if the quotes we lead with are the "no previous experience" ones. Pairs best with layouts that show skill-level badges (ideas 5–8).</p>
+            </div>
+
+            <!-- 4. Thousands of beginners later -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">4 · Leads with the number</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">Thousands of beginners later&hellip;</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">We've taught people to code in 40+ countries. Here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Puts the proof in the heading. Needs a real country or student number we're happy to publish. Good with the map and marquee layouts.</p>
+            </div>
+
+            <!-- 5. In their words -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">5 · Quiet and short</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">In their words</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have learnt to code with us. These are a few of them.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Gets out of the way fast, which suits the busiest layouts — the sticker wall, sticky notes and scrolling rows already carry plenty of energy.</p>
+            </div>
+
+            <!-- 6. The moment it clicked -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">6 · Emotional payoff</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">The moment it clicks</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have found it with us. Here's how a few of them describe it.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Frames the quotes as one shared feeling rather than separate reviews. Best with the spotlight carousel, where one quote gets full attention.</p>
+            </div>
+
+            <!-- 7. Real people -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">7 · Playful</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">Real people. Real code. Really proud.</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have learnt to code with us. Here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Matches the confetti, sticker and polaroid treatments. Would feel over-cheerful above the refined or dark quote cards.</p>
+            </div>
+
+            <!-- 8. Ask them -->
+            <div style="background: #fff; border: 1px solid var(--color-gray-200); border-radius: 16px; padding: 2rem 1.75rem;">
+                <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-gray-400); margin-bottom: 1.25rem;">8 · Direct address</div>
+                <h2 class="section-heading" style="font-size: 1.9rem;">Ask the people who got here first</h2>
+                <p class="section-sub" style="margin-bottom: 1.25rem;">Thousands of people have learnt to code with us. Here's what a few of them had to say.</p>
+                <p style="font-size: 0.85rem; color: var(--color-gray-500); text-wrap-style: balance;">Positions the reader as next in line rather than as an outsider looking at reviews. Sits comfortably above any layout.</p>
+            </div>
+
+        </div>
     </div>
 
     <!-- Idea 6: World map pins -->
