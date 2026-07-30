@@ -1267,13 +1267,10 @@
        .TwoHalves_buildWord__jk190{color:var(--color-blue-600);font-weight:800}
        /* the technology logos, moved down out of the Learn to Build panel */
        .TwoHalves_tech__jk191{position:relative;padding-top:36px}
-       /* Hand-drawn dashed doodle on the right of the technologies label,
-          mirrored so it curls in towards the middle of the page. It is taller
-          than its container on purpose so the tail spills over the section edge
-          into the section below — the section keeps overflow visible for
-          exactly this reason. */
-       .TwoHalves_doodle__jk192{position:absolute;right:-130px;top:138px;height:calc(100% + 20px);width:auto;opacity:.45;pointer-events:none;z-index:2;transform:rotate(-45deg)}
-       @media (max-width:900px){.TwoHalves_doodle__jk192{display:none}}
+       /* A dotted rule closing the section off from the one below it. */
+       /* Full-bleed dotted rule marking the seam between this section and the
+          next one. Sits outside the inner container so it runs edge to edge. */
+       .TwoHalves_divider__jk192{border:0;border-top:4px dotted var(--color-purple-200);width:100%;margin:56px 0 -68px}
        .TwoHalves_tech__jk191 .BuildGrid_langsLabel__jk101{margin-top:0}
        .TwoHalves_tech__jk191 .BuildGrid_langs__jk102{justify-content:center}
       </style>
@@ -1321,7 +1318,6 @@
         })();
        </script>
        <div class="TwoHalves_tech__jk191">
-    <img class="TwoHalves_doodle__jk192" src="images/heading-arrow-loop.png" alt="" aria-hidden="true">
     <div class="BuildGrid_langsLabel__jk101">Learn technologies including:</div>
     <div class="BuildGrid_langs__jk102" id="build-langs-row">
     <div class="BuildGrid_lang__jk103">
@@ -1384,6 +1380,7 @@
         observer.observe(row);
        })();
       </script>
+      <hr class="TwoHalves_divider__jk192">
      </section>
      <!-- Detail cards for the two strands: structurally identical cards, sitting below the parallel-tracks section above -->
      <section class="TrackCardsSection_section__k3Bp9">
@@ -1427,18 +1424,12 @@
               ("Four equal blocks"), widened to three cards across. Replaces the
               synced video demo that used to sit here. -->
          <style>
-          .LtcQuad_grid__jk200{list-style:none;margin:8px auto 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px;max-width:1100px}
+          .LtcQuad_grid__jk200{list-style:none;margin:8px auto 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 40px;max-width:1000px}
           .LtcQuad_item__jk201{min-width:0;text-align:left}
-          /* with four cards across three columns the last one is centred rather
-             than left hanging in the first column */
-          .LtcQuad_item__jk201:last-child{grid-column:2}
           .LtcQuad_img__jk202{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;background:var(--color-gray-100);border-radius:12px;margin-bottom:18px;box-shadow:0 12px 30px -18px rgba(15,23,42,.35)}
           .LtcQuad_label__jk203{font-size:18px;font-weight:700;color:var(--color-purple-600);line-height:1.3;margin-bottom:6px}
           .LtcQuad_copy__jk204{font-size:15px;color:var(--color-gray-600);line-height:1.6;text-wrap-style:balance}
-          @media (max-width:900px){
-           .LtcQuad_grid__jk200{grid-template-columns:minmax(0,1fr);gap:32px}
-           .LtcQuad_item__jk201:last-child{grid-column:1}
-          }
+          @media (max-width:900px){.LtcQuad_grid__jk200{grid-template-columns:minmax(0,1fr);gap:32px}}
          </style>
          <ul class="LtcQuad_grid__jk200">
           <li class="LtcQuad_item__jk201">
@@ -1473,7 +1464,7 @@
         .FunPrints_heading__jk143{font-size:34px;font-weight:800;color:var(--color-gray-800);line-height:1.15;margin-bottom:12px;text-wrap-style:balance}
         .FunPrints_headingWrap__jk146{position:relative;display:inline-block}
         /* mirrored, so the arrowhead points back in at the start of the heading */
-        .FunPrints_headingArrow__jk147{position:absolute;right:calc(100% + 24px);bottom:-4px;width:340px;height:auto;opacity:.45;transform:scaleX(-1);pointer-events:none}
+        .FunPrints_headingArrow__jk147{position:absolute;right:calc(100% + 24px);bottom:-4px;width:290px;height:auto;opacity:.45;transform:scaleX(-1);pointer-events:none}
         @media (max-width:900px){.FunPrints_headingArrow__jk147{display:none}}
         .FunPrints_sub__jk144{font-size:18px;font-weight:400;color:var(--color-gray-600);line-height:1.6;max-width:720px;margin-inline:auto;margin-bottom:44px;text-wrap-style:balance}
         /* the footnote runs straight on into the CTA below it, so it sits bigger and closer */
@@ -1931,7 +1922,8 @@
          /* the front flap, sat over the bottom of the cards */
          .cert-outcomes .co-folder::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,var(--color-amber-200) 0%,var(--color-amber-300) 100%);box-shadow:0 -1px 2px rgba(30,20,10,.14);z-index:2}
          /* one card at a time: they are stacked, and each takes its turn in the folder */
-         .cert-outcomes .co-fan{position:relative;z-index:1;width:100%;height:162px;margin-inline:auto}
+         /* the cards sit 30px narrower than the folder, so more of the wallet shows either side */
+         .cert-outcomes .co-fan{position:relative;z-index:1;width:calc(100% - 30px);height:162px;margin-inline:auto}
          /* each one is finished, so it carries a tick */
          .cert-outcomes .co-done{position:absolute;top:8px;right:8px;z-index:3;width:24px;height:24px;border-radius:999px;background:var(--color-green-500);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);animation:co-tickPop 13.2s linear infinite}
          .cert-outcomes .co-done svg{width:14px;height:14px}
@@ -1988,6 +1980,79 @@
          .cert-outcomes .co-code .str{color:var(--color-green-200)}
          .cert-outcomes .co-code .cmt{color:var(--color-gray-500)}
          .cert-outcomes .co-code .hit{display:block;background:rgba(251,191,36,.14);box-shadow:inset 3px 0 0 var(--color-amber-300);margin-inline:-14px;padding-inline:14px}
+         /* 03 alternates between the code snippet and the architecture diagram: reading
+            unfamiliar code and knowing how the pieces fit are the same understanding */
+         .cert-outcomes .co-swap{position:relative;width:96%}
+         .cert-outcomes .co-swap > *{animation:co-swapCycle 14s ease-in-out infinite}
+         .cert-outcomes .co-swap > .co-code{position:relative}
+         .cert-outcomes .co-swap > .co-arch{position:absolute;inset:0;animation-delay:-7s}
+         /* the call-out points at a line of the snippet, so it leaves with the snippet */
+         .cert-outcomes .co-col:last-child .co-anno,
+         .cert-outcomes .co-col:last-child .co-arrow{animation:co-swapCycle 14s ease-in-out infinite}
+         @keyframes co-swapCycle{
+          0%{opacity:1}
+          45%{opacity:1}
+          48.5%{opacity:0}
+          96.5%{opacity:0}
+          100%{opacity:1}
+         }
+         @media (prefers-reduced-motion:reduce){
+          .cert-outcomes .co-swap > *{animation:none}
+          .cert-outcomes .co-swap > .co-arch{opacity:0}
+          .cert-outcomes .co-arch .co-node,
+          .cert-outcomes .co-arch .co-wire,
+          .cert-outcomes .co-arch .co-parts span,
+          .cert-outcomes .co-col:last-child .co-anno,
+          .cert-outcomes .co-col:last-child .co-arrow{animation:none}
+         }
+         /* the diagram, on white so it reads as a document rather than a second terminal */
+         .cert-outcomes .co-arch{border-radius:10px;background:#fff;border:1px solid var(--color-gray-200);box-shadow:0 16px 40px rgba(0,0,0,.45);padding:22px 20px 24px;display:flex;flex-direction:column;justify-content:center}
+         /* the request path across the top */
+         .cert-outcomes .co-arch .co-path{display:flex;align-items:center;gap:5px}
+         .cert-outcomes .co-arch .co-node{flex:1;padding:10px 4px;border-radius:7px;border:1px solid var(--color-blue-200);background:var(--color-blue-50);color:var(--color-blue-800);font-size:10.5px;font-weight:700;text-align:center;white-space:nowrap;transition:none}
+         .cert-outcomes .co-arch .co-wire{flex-shrink:0;width:9px;height:1.5px;background:var(--color-blue-300)}
+         /* the drop line down to the pieces that hang off it */
+         .cert-outcomes .co-arch .co-drop{height:12px;margin-inline:12%;border-left:1.5px dashed var(--color-blue-200);border-right:1.5px dashed var(--color-blue-200);border-bottom:1.5px dashed var(--color-blue-200)}
+         .cert-outcomes .co-arch .co-parts{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;padding-top:12px}
+         .cert-outcomes .co-arch .co-parts span{padding:5px 9px;border-radius:999px;border:1px solid var(--color-blue-200);background:#fff;color:var(--color-blue-700);font-size:10px;font-weight:600;line-height:1.2;white-space:nowrap}
+
+         /* Each element lights up in turn, so the diagram walks the request through:
+            browser, frontend, API, database, then the pieces hanging off it. The delays
+            are absolute positions in the same 14s cycle as the swap, chosen to land
+            inside the window where the diagram is the visible state (7s to 13s). */
+         .cert-outcomes .co-arch .co-node,
+         .cert-outcomes .co-arch .co-wire,
+         .cert-outcomes .co-arch .co-parts span{animation-duration:14s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+         .cert-outcomes .co-arch .co-node{animation-name:co-nodeOn}
+         .cert-outcomes .co-arch .co-wire{animation-name:co-wireOn}
+         .cert-outcomes .co-arch .co-parts span{animation-name:co-partOn}
+         .cert-outcomes .co-arch .co-path > :nth-child(1){animation-delay:7.2s}
+         .cert-outcomes .co-arch .co-path > :nth-child(2){animation-delay:7.55s}
+         .cert-outcomes .co-arch .co-path > :nth-child(3){animation-delay:7.9s}
+         .cert-outcomes .co-arch .co-path > :nth-child(4){animation-delay:8.25s}
+         .cert-outcomes .co-arch .co-path > :nth-child(5){animation-delay:8.6s}
+         .cert-outcomes .co-arch .co-path > :nth-child(6){animation-delay:8.95s}
+         .cert-outcomes .co-arch .co-path > :nth-child(7){animation-delay:9.3s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(1){animation-delay:10.1s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(2){animation-delay:10.24s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(3){animation-delay:10.38s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(4){animation-delay:10.52s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(5){animation-delay:10.66s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(6){animation-delay:10.8s}
+         .cert-outcomes .co-arch .co-parts span:nth-child(7){animation-delay:10.94s}
+         @keyframes co-nodeOn{
+          0%,7%,100%{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-800);box-shadow:none;transform:translateY(0)}
+          2%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
+          4.5%{background:var(--color-blue-600);border-color:var(--color-blue-600);color:#fff;box-shadow:0 6px 16px -6px rgba(37,99,235,.65);transform:translateY(-2px)}
+         }
+         @keyframes co-wireOn{
+          0%,7%,100%{background:var(--color-blue-300);transform:scaleX(1)}
+          2%,4.5%{background:var(--color-blue-600);transform:scaleX(1.35)}
+         }
+         @keyframes co-partOn{
+          0%,7%,100%{background:#fff;border-color:var(--color-blue-200);color:var(--color-blue-700);transform:translateY(0)}
+          2%,4.5%{background:var(--color-blue-100);border-color:var(--color-blue-400);color:var(--color-blue-800);transform:translateY(-2px)}
+         }
          @media (max-width:900px){.cert-outcomes .co-cols{grid-template-columns:1fr;gap:44px}.cert-outcomes .co-anno,.cert-outcomes .co-arrow{display:none}}
         </style>
         <div class="cert-outcomes">
@@ -2061,6 +2126,7 @@
           </div>
           <div class="co-col">
            <div class="co-viz">
+            <div class="co-swap">
             <div class="co-code">
              <div class="co-bar"><i></i><i></i><i></i></div>
 <pre><span class="cmt"># code you've never seen</span>
@@ -2070,6 +2136,22 @@
     cell = queue.<span class="fn">pop</span>(<span class="str">0</span>)
     <span class="kw">if</span> maze.<span class="fn">is_exit</span>(cell):
       <span class="kw">return</span> cell</pre>
+            </div>
+            <!-- the other half of the same understanding: how the pieces fit together.
+                 Ported from the Learn to Build card of two-parts-ideas.html. -->
+            <div class="co-arch" aria-label="How the pieces fit together: browser, frontend, API and database, with auth, caching, queues, emails, payments, testing and deploys hanging off them">
+             <div class="co-path">
+              <span class="co-node">Browser</span><span class="co-wire"></span>
+              <span class="co-node">Frontend</span><span class="co-wire"></span>
+              <span class="co-node">API</span><span class="co-wire"></span>
+              <span class="co-node">Database</span>
+             </div>
+             <div class="co-drop" aria-hidden="true"></div>
+             <div class="co-parts">
+              <span>Auth</span><span>Caching</span><span>Queues</span><span>Emails</span>
+              <span>Payments</span><span>Testing</span><span>Deploys</span>
+             </div>
+            </div>
             </div>
             <span class="co-anno" style="bottom:0;right:0;text-align:right">You'll know <em>why</em><br>this loop ends</span>
             <svg class="co-arrow" style="bottom:36px;right:112px;width:72px;height:24px;color:var(--color-amber-300)" viewBox="0 0 72 24" aria-hidden="true">
