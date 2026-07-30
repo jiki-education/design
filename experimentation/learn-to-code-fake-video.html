@@ -449,6 +449,9 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   /* Fake mouse cursor */
   .cursor { position: absolute; z-index: 10; width: 19px; height: 19px; transition: transform .5s cubic-bezier(.4, 0, .2, 1); pointer-events: none; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35)); }
+  /* While dragging the scrubber the cursor moves in lockstep with the thumb: same
+     duration, same easing, so it doesn't trail behind it. */
+  .cursor.is-scrubbing { transition: transform var(--step, 145ms) linear; }
 
   /* "Show layers": tints every region that is live translated text. Whatever is
      left untinted is, by definition, the captured screenshot. */
@@ -1104,6 +1107,15 @@ function paintBox() {
   chatBox.classList.add('is-typing');
 }
 
+/* Put the cursor on the scrubber thumb for a given progress fraction. Measuring the
+   thumb's live rect would chase it mid-transition; the track plus the fraction gives
+   the position it is heading for. */
+function cursorToTrack(pct) {
+  const s = stage.getBoundingClientRect(), tr = track.getBoundingClientRect(), z = zoomOf();
+  moveCursor((tr.left - s.left) / z + pct * (tr.width / z) + 2,
+             (tr.top - s.top) / z + (tr.height / z) / 2 + 2);
+}
+
 /* Anchor the callout to a code line, overhanging the panel's edge. In production
    this is the same maths, run against the screenshot's coordinates. */
 function anchorCallout(lineIndex) {
@@ -1160,6 +1172,7 @@ function buildTimeline() {
     boxKey = null; boxFrac = 0; paintBox();
     callout(null);
     chatSend.classList.remove('is-pressed');
+    cursor.classList.remove('is-scrubbing');
     for (let i = 1; i <= 5; i++) showMsg(i, false);
     cursorTo('#editor .code-line:nth-child(6)', 40, 4);
   });
@@ -1208,32 +1221,32 @@ function buildTimeline() {
   /* ---------- beat 4b: scrub back through the run ----------
      The learner drags the scrubber backwards and the cannon retraces its steps,
      which is what "Rewind your own code" is pointing at. */
-  const lastCol = COLS, backTo = 7, REW = 130;
+  const lastCol = COLS, backTo = 7, REW = STEP;    // same rate as the thumb's transition
+  const scrubTo = c => {
+    const pct = (c - 1) / (lastCol - 1);
+    moveLaser(c);
+    track.style.setProperty('--progress', (pct * 100) + '%');
+    cursorToTrack(pct);
+  };
   push(t, () => {
     callout('rewind');
-    cursorTo('.scrubber .track b', 2, 2);
     laserEl.classList.remove('is-off-edge');
     laserEl.style.left = colX(lastCol) + '%';
+    cursorToTrack(1);                               // reach for the thumb at the end
   });
-  t += 450;
+  t += 600;
+  push(t, () => cursor.classList.add('is-scrubbing'));
   for (let c = lastCol - 1; c >= backTo; c--) {
-    push(t, () => {
-      moveLaser(c);
-      track.style.setProperty('--progress', ((c - 1) / (lastCol - 1) * 100) + '%');
-      cursorTo('.scrubber .track b', 2, 2);
-    });
+    push(t, () => scrubTo(c));
     t += REW;
   }
   t += 450;
   for (let c = backTo + 1; c <= lastCol; c++) {
-    push(t, () => {
-      moveLaser(c);
-      track.style.setProperty('--progress', ((c - 1) / (lastCol - 1) * 100) + '%');
-      cursorTo('.scrubber .track b', 2, 2);
-    });
+    push(t, () => scrubTo(c));
     t += REW;
   }
   push(t, () => {                                   // back to where it broke
+    cursor.classList.remove('is-scrubbing');
     laserEl.classList.add('is-off-edge');
     laserEl.style.left = 'calc(100% + 14px)';
     track.style.setProperty('--progress', '100%');
@@ -1265,6 +1278,7 @@ function buildTimeline() {
     push(from + 420, () => chatSend.classList.add('is-pressed'));
     push(from + 620, () => {
       chatSend.classList.remove('is-pressed');
+    cursor.classList.remove('is-scrubbing');
       boxKey = null; boxFrac = 0; paintBox();      // the box empties...
       showMsg(msgN, true);                        // ...and the message is posted
     });
@@ -1276,7 +1290,7 @@ function buildTimeline() {
   t = typeBox('chat2', t) + 250;                  // "My cannon keeps going off the edge"
   t = send(2, t) + 900;
   push(t, () => showMsg(3, true));                // Jiki asks about the boundary
-  t += 2600;
+  t += 1100;                                      // a beat to read it, then straight in
   t = typeBox('chat4', t) + 250;                  // "Eleven."
   t = send(4, t) + 900;
   push(t, () => showMsg(5, true));                // Jiki confirms the fix
