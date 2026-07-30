@@ -1247,21 +1247,19 @@
        /* Scroll-triggered emphasis: the Code piece lifts and glows first, then
           the Build piece does the same, so the eye reads them in order. Each
           piece is raised above the other while it is the one being emphasised. */
-       /* Both keyframe sets keep a drop-shadow at every step (transparent at the
-          ends) — animating to and from filter:none snaps instead of fading. */
-       .TwoHalves_pieces__jk188.is-lit svg:first-of-type{animation:TwoHalves_liftCode__jk193 1.9s cubic-bezier(.4,0,.2,1) .3s both;will-change:transform,filter}
-       .TwoHalves_pieces__jk188.is-lit svg:last-of-type{animation:TwoHalves_liftBuild__jk194 1.9s cubic-bezier(.4,0,.2,1) 1.5s both;will-change:transform,filter}
+       .TwoHalves_pieces__jk188.is-lit svg:first-of-type{animation:TwoHalves_liftCode__jk193 1.1s cubic-bezier(.34,1.3,.64,1) .25s both}
+       .TwoHalves_pieces__jk188.is-lit svg:last-of-type{animation:TwoHalves_liftBuild__jk194 1.1s cubic-bezier(.34,1.3,.64,1) 1.15s both}
        @keyframes TwoHalves_liftCode__jk193{
-        0%{transform:scale(1) translateY(0);filter:drop-shadow(0 6px 12px rgba(168,85,247,0));z-index:3}
-        35%{transform:scale(1.06) translateY(-8px);filter:drop-shadow(0 12px 18px rgba(168,85,247,.45));z-index:3}
-        65%{transform:scale(1.06) translateY(-8px);filter:drop-shadow(0 12px 18px rgba(168,85,247,.45));z-index:3}
-        100%{transform:scale(1) translateY(0);filter:drop-shadow(0 6px 12px rgba(168,85,247,0));z-index:3}
+        0%{transform:scale(1) translateY(0);filter:none;z-index:1}
+        30%{transform:scale(1.09) translateY(-9px);filter:drop-shadow(0 10px 16px rgba(168,85,247,.5));z-index:3}
+        60%{transform:scale(1.09) translateY(-9px);filter:drop-shadow(0 10px 16px rgba(168,85,247,.5));z-index:3}
+        100%{transform:scale(1) translateY(0);filter:none;z-index:1}
        }
        @keyframes TwoHalves_liftBuild__jk194{
-        0%{transform:scale(1) translateY(0);filter:drop-shadow(0 6px 12px rgba(59,130,246,0));z-index:4}
-        35%{transform:scale(1.06) translateY(-8px);filter:drop-shadow(0 12px 18px rgba(59,130,246,.45));z-index:4}
-        65%{transform:scale(1.06) translateY(-8px);filter:drop-shadow(0 12px 18px rgba(59,130,246,.45));z-index:4}
-        100%{transform:scale(1) translateY(0);filter:drop-shadow(0 6px 12px rgba(59,130,246,0));z-index:4}
+        0%{transform:scale(1) translateY(0);filter:none;z-index:1}
+        30%{transform:scale(1.09) translateY(-9px);filter:drop-shadow(0 10px 16px rgba(59,130,246,.5));z-index:3}
+        60%{transform:scale(1.09) translateY(-9px);filter:drop-shadow(0 10px 16px rgba(59,130,246,.5));z-index:3}
+        100%{transform:scale(1) translateY(0);filter:none;z-index:1}
        }
        @media (prefers-reduced-motion:reduce){.TwoHalves_pieces__jk188.is-lit svg{animation:none}}
        .TwoHalves_pieces__jk188 text{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;text-anchor:middle}
@@ -1919,24 +1917,44 @@
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
          /* 01: the certificate, with the share card and the verification chip */
          .cert-outcomes .co-cert{position:relative;width:72%}
-         .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0);transform:rotate(-2deg)}
-         .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:#0A66C2;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4);transform:rotate(-2deg)}
+         .cert-outcomes .co-cert img{width:100%;border-radius:4px;box-shadow:0 16px 40px rgba(0,0,0,.55);clip-path:inset(0.42% 0)}
+         .cert-outcomes .co-verify{position:absolute;bottom:-12px;right:-24px;z-index:3;display:flex;align-items:center;gap:6px;background:#0A66C2;color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:5px 11px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
          .cert-outcomes .co-verify svg{width:14px;height:14px}
          /* 02: three project cards fanned out, same anatomy as the square tiles above */
                   /* four project cards in a 2x2 grid, each nudged off square so the set still
             reads as things laid out by hand rather than a table */
          /* the four cards sit in a folder of finished work: a tabbed manila wallet with a
             front flap the cards tuck behind */
-         .cert-outcomes .co-folder{position:relative;width:78%;padding:20px 14px 24px;border-radius:2px 3px 3px 3px;background:linear-gradient(180deg,var(--color-amber-100) 0%,var(--color-amber-200) 100%);box-shadow:0 10px 26px -12px rgba(30,20,10,.6);transform:rotate(-1deg)}
+         .cert-outcomes .co-folder{position:relative;width:78%;padding:20px 14px 24px;border-radius:2px 3px 3px 3px;background:linear-gradient(180deg,var(--color-amber-100) 0%,var(--color-amber-200) 100%);box-shadow:0 10px 26px -12px rgba(30,20,10,.6)}
          /* the tab */
          .cert-outcomes .co-folder::before{content:"";position:absolute;top:-13px;left:16px;width:108px;height:14px;border-radius:3px 3px 0 0;background:var(--color-amber-100)}
          /* the front flap, sat over the bottom of the cards */
          .cert-outcomes .co-folder::after{content:"";position:absolute;left:0;right:0;bottom:0;height:20px;border-radius:0 0 3px 3px;background:linear-gradient(180deg,var(--color-amber-200) 0%,var(--color-amber-300) 100%);box-shadow:0 -1px 2px rgba(30,20,10,.14);z-index:2}
          /* one card at a time: they are stacked, and each takes its turn in the folder */
-         .cert-outcomes .co-fan{position:relative;z-index:1;width:100%;height:148px;margin-inline:auto}
+         .cert-outcomes .co-fan{position:relative;z-index:1;width:100%;height:162px;margin-inline:auto}
          /* each one is finished, so it carries a tick */
-         .cert-outcomes .co-done{position:absolute;top:5px;right:5px;z-index:2;width:15px;height:15px;border-radius:999px;background:var(--color-green-500);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
-         .cert-outcomes .co-done svg{width:9px;height:9px}
+         .cert-outcomes .co-done{position:absolute;top:8px;right:8px;z-index:3;width:24px;height:24px;border-radius:999px;background:var(--color-green-500);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);animation:co-tickPop 13.2s linear infinite}
+         .cert-outcomes .co-done svg{width:14px;height:14px}
+         /* the ring lives on a pseudo element so the tick keeps its own drop shadow */
+         .cert-outcomes .co-done::after{content:"";position:absolute;inset:-2px;border-radius:999px;animation:co-tickRing 13.2s linear infinite}
+         /* each tick pops just after its own card lands, so it reads as the card being marked done */
+         .cert-outcomes .co-tile:nth-child(2) .co-done,
+         .cert-outcomes .co-tile:nth-child(2) .co-done::after{animation-delay:-3.3s}
+         .cert-outcomes .co-tile:nth-child(3) .co-done,
+         .cert-outcomes .co-tile:nth-child(3) .co-done::after{animation-delay:-6.6s}
+         .cert-outcomes .co-tile:nth-child(4) .co-done,
+         .cert-outcomes .co-tile:nth-child(4) .co-done::after{animation-delay:-9.9s}
+         @keyframes co-tickPop{
+          0%,3%{transform:scale(.3)}
+          7%{transform:scale(1.3)}
+          10%{transform:scale(.92)}
+          13%,100%{transform:scale(1)}
+         }
+         @keyframes co-tickRing{
+          0%,4%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}
+          16%{box-shadow:0 0 0 13px rgba(16,185,129,0)}
+          100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}
+         }
          .cert-outcomes .co-tile{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-gray-200);border-radius:6px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(15,23,42,.45);opacity:0;animation:co-cardCycle 13.2s linear infinite}
          .cert-outcomes .co-tile:nth-child(2){animation-delay:-3.3s}
          .cert-outcomes .co-tile:nth-child(3){animation-delay:-6.6s}
@@ -1951,16 +1969,17 @@
          @media (prefers-reduced-motion:reduce){
           .cert-outcomes .co-tile{animation:none;opacity:0}
           .cert-outcomes .co-tile:first-child{opacity:1}
+          .cert-outcomes .co-done,.cert-outcomes .co-done::after{animation:none;transform:none}
          }
          .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;background:var(--color-gray-50)}
-         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:5px;background:var(--color-gray-50);display:block}
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:12px;background:var(--color-gray-50);display:block}
          /* the white strip: title centred, tags underneath, as on the full card */
-         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 8px 8px;text-align:center}
+         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 12px 11px;text-align:center}
          .cert-outcomes .co-tile .co-cap .co-t{font-size:10px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
          .cert-outcomes .co-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:4px}
          .cert-outcomes .co-tags span{display:inline-flex;align-items:center;padding:1px 6px;border-radius:999px;background:var(--color-blue-50);color:var(--color-blue-700);border:1px solid var(--color-blue-100);font-size:8.5px;font-weight:600;line-height:1.3;white-space:nowrap}
          /* 03: a snippet of unfamiliar code, one line marked up */
-         .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden;transform:rotate(-1deg)}
+         .cert-outcomes .co-code{position:relative;width:96%;border-radius:10px;background:var(--color-gray-950);border:1px solid rgba(255,255,255,.12);box-shadow:0 16px 40px rgba(0,0,0,.55);overflow:hidden}
          .cert-outcomes .co-code .co-bar{display:flex;gap:5px;padding:8px 11px;border-bottom:1px solid rgba(255,255,255,.09)}
          .cert-outcomes .co-code .co-bar i{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.2)}
          .cert-outcomes .co-code pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.75;color:var(--color-gray-300);padding:11px 14px 14px;overflow-x:auto}
