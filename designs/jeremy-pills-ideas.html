@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi there, I'm Jeremy - credential pill ideas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Seven treatments for the three credential pills in the **"Hi there! I'm Jeremy"** section of
+\`jiki-landing.html\` - "2M+ people taught", "20 years building software", "Founder of Exercism".
+Same three facts in every idea; only the treatment changes.
+
+## Why look at it
+
+The pills are the only part of that section doing the credibility work. The heading is warm
+and the paragraphs are long, so for a reader skimming, these three chips *are* the argument.
+Three things are off with them as they ship:
+
+- **They read as tags, not credentials.** A grey hairline pill is the same component a blog uses
+  for "javascript, tutorial, beginner". It signals metadata, not authority.
+- **The numbers are buried.** "2M+" is the strongest fact on the page and it is set at 13px,
+  the smallest type in the section, inside a box that de-emphasises it.
+- **They are the only hairline-pill component in that half of the page.** Everything around them
+  is paper, tape and handwriting; the pills are from a different kit.
+
+## The directions
+
+1. **Tightened baseline** - what ships now, with the vertical padding and line-height sorted.
+   The reference point, not a proposal.
+2. **Stat rail** - the number at 32px with a small label under it, hairline dividers between.
+   Credentials rather than tags, and "2M+" finally gets to be the big thing.
+3. **Tinted by meaning** - each pill takes its icon's colour at a light tint. Three facts that
+   are three different *kinds* of thing (reach, experience, standing) stop looking like one list.
+4. **Taped cards** - the facts as three small cards taped to the wall at slight angles, in the
+   page's own handmade language. The only idea that belongs to the section around it.
+5. **Marker underline** - no container at all. The facts as a line of text with the same
+   hand-drawn highlighter sweep the page already uses on "Jeremy is a master teacher".
+6. **Inline sentence** - fold all three into one sentence under the heading, numbers in bold.
+   The least furniture of any option, and the fastest to read.
+7. **Icon-led rows** - a stacked list with a circular icon per row, sat beside the portrait.
+   Suits the layout where the copy column is narrow.
+
+## Recommendation
+
+**Idea 2 (stat rail)**, with **Idea 3** as the safe fallback.
+
+Idea 2 is the only one that fixes the actual problem: it makes "2M+" the biggest thing in the
+block instead of the smallest. It also matches what the Exercism band lower down the page
+already does with its figures, so the two moments of social proof would speak the same way.
+
+Idea 3 is a one-line change to what already ships and still separates the three facts, so it is
+the option if this section is not open for restructuring.
+
+**Idea 4** is the fun one and fits the wall, but the page is already carrying polaroids, sticky
+notes, tape and two Caveat asides by this point. Adding a fourth paper element here risks the
+handmade language reading as a theme rather than a texture.
+
+**Idea 6** is worth a look if the section ever gets tight on space - it costs no vertical room
+at all - but it gives up the scannability that made the pills worth having.
+
+## Build notes
+
+- Every idea uses the same three facts and the same three icons, so switching between them is a
+  markup change in one block, not new content or new artwork.
+- Idea 2's dividers need \`align-items: stretch\` on the row, not a fixed height, or they will not
+  match when a label wraps to two lines at narrower widths.
+- The current pills have \`padding: 2px 12px\` but an inherited \`line-height: 33px\`, which is what
+  is actually setting their height. Any tightening should go through the line-height first.
+        `;
+    </script>
+
+    <style>
+        :root {
+            --color-blue-50:#eff5ff; --color-blue-100:#dbe8fe; --color-blue-200:#bfd7fe;
+            --color-blue-300:#93bbfd; --color-blue-400:#609afa; --color-blue-500:#3b82f6;
+            --color-blue-600:#2570eb; --color-blue-700:#1d64d8; --color-blue-800:#1e55af;
+            --color-blue-900:#1e3a8a; --color-blue-950:#172e54;
+
+            --color-green-50:#ecfdf5; --color-green-100:#d1fae5; --color-green-200:#a7f3d0;
+            --color-green-300:#6ee7b7; --color-green-400:#34d399; --color-green-500:#10b981;
+            --color-green-600:#059669; --color-green-700:#047857; --color-green-800:#065f46;
+            --color-green-900:#064e3b;
+
+            --color-red-50:#fef2f2; --color-red-100:#fee2e2; --color-red-300:#fca5a5;
+            --color-red-500:#ef4444; --color-red-600:#dc2626; --color-red-700:#b91c1c;
+
+            --color-amber-50:#fffbeb; --color-amber-100:#fef3c7; --color-amber-200:#fde68a;
+            --color-amber-300:#fcd34d; --color-amber-400:#fbbf24; --color-amber-500:#f59e0b;
+            --color-amber-600:#d97706; --color-amber-700:#b45309;
+
+            --color-gray-50:#f8fafc; --color-gray-100:#f1f5f9; --color-gray-200:#e2e8f0;
+            --color-gray-300:#cbd5e1; --color-gray-400:#94a3b8; --color-gray-500:#64748b;
+            --color-gray-600:#475569; --color-gray-700:#334155; --color-gray-800:#1e293b;
+            --color-gray-900:#0f172a; --color-gray-950:#020617;
+
+            --color-purple-50:#faf5ff; --color-purple-100:#f4e8ff; --color-purple-200:#ebd5ff;
+            --color-purple-300:#dab4fe; --color-purple-400:#c184fc; --color-purple-500:#a855f7;
+            --color-purple-600:#9133ea; --color-purple-700:#7a22ce; --color-purple-800:#6621a8;
+            --color-purple-900:#531c87;
+        }
+
+        body { background: var(--color-gray-100); padding: 48px 24px 120px; }
+        .wrap { max-width: 1040px; margin-inline: auto; }
+        h1 { font-size: 32px; font-weight: 800; color: var(--color-gray-900); margin-bottom: 8px; text-wrap-style: balance; }
+        .lede { font-size: 16px; color: var(--color-gray-600); line-height: 1.65; margin-bottom: 40px; max-width: 760px; text-wrap-style: balance; }
+
+        /* ===== One idea per card, each showing the pills in the context they sit in ===== */
+        .idea { background: #fff; border: 1px solid var(--color-gray-200); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+        .idea-head { display: flex; align-items: baseline; gap: 12px; padding: 20px 26px 0; }
+        .idea-num { flex: none; width: 26px; height: 26px; border-radius: 999px; background: var(--color-purple-600); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; align-self: center; }
+        .idea-head h2 { font-size: 19px; font-weight: 700; color: var(--color-gray-900); text-wrap-style: auto; }
+        .idea-note { padding: 8px 26px 0 64px; font-size: 14px; color: var(--color-gray-600); line-height: 1.6; text-wrap-style: balance; }
+        /* the stage carries the section's own background so the treatments are judged
+           against what they will actually sit on, not against white */
+        .stage { margin: 20px; padding: 30px 34px 34px; border-radius: 10px; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+
+        /* stand-in for the section's heading, so each idea is seen in situ */
+        .jh { font-size: 27px; font-weight: 300; line-height: 1.25; color: var(--color-gray-800); margin-bottom: 18px; max-width: 620px; }
+        .jh strong { font-weight: 600; }
+        .jp { font-size: 15px; font-weight: 300; line-height: 1.65; color: var(--color-gray-400); max-width: 620px; margin-top: 18px; }
+
+        /* ===== 1. Tightened baseline ===== */
+        .p1-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .p1 { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 100px; font-size: 13px; line-height: 1; font-weight: 600; background: #fff; border: 1px solid var(--color-gray-200); color: var(--color-gray-700); box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+        .p1 svg { width: 15px; height: 15px; flex: none; }
+
+        /* ===== 2. Stat rail ===== */
+        .p2-row { display: flex; align-items: stretch; gap: 0; }
+        .p2 { padding-inline: 26px; }
+        .p2:first-child { padding-inline-start: 0; }
+        .p2 + .p2 { border-inline-start: 1px solid var(--color-gray-200); }
+        .p2 b { display: block; font-size: 32px; font-weight: 700; line-height: 1.05; color: var(--color-gray-900); letter-spacing: -.01em; }
+        .p2 span { display: block; margin-top: 4px; font-size: 13px; font-weight: 500; line-height: 1.35; color: var(--color-gray-500); max-width: 130px; }
+        .p2:nth-child(1) b { color: var(--color-purple-600); }
+        .p2:nth-child(2) b { color: var(--color-blue-600); }
+        .p2:nth-child(3) b { color: var(--color-green-600); }
+
+        /* ===== 3. Tinted by meaning ===== */
+        .p3-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .p3 { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 100px; font-size: 13px; line-height: 1; font-weight: 600; border: 1px solid; }
+        .p3 svg { width: 15px; height: 15px; flex: none; }
+        .p3-a { background: var(--color-purple-50); border-color: var(--color-purple-200); color: var(--color-purple-700); }
+        .p3-b { background: var(--color-blue-50); border-color: var(--color-blue-200); color: var(--color-blue-700); }
+        .p3-c { background: var(--color-green-50); border-color: var(--color-green-200); color: var(--color-green-700); }
+
+        /* ===== 4. Taped cards ===== */
+        .p4-row { display: flex; flex-wrap: wrap; gap: 18px; padding-top: 10px; }
+        .p4 { position: relative; padding: 14px 18px 12px; background: #fffdf6; border-radius: 2px; box-shadow: 0 1px 2px rgba(30,20,10,.24), 0 10px 20px -10px rgba(30,20,10,.2); }
+        .p4:nth-child(1) { transform: rotate(-1.6deg); }
+        .p4:nth-child(2) { transform: rotate(1.1deg); }
+        .p4:nth-child(3) { transform: rotate(-.7deg); }
+        /* the tape is a pseudo-element so the cards stay single elements in the markup */
+        .p4::before { content: ""; position: absolute; top: -9px; left: 50%; width: 52px; height: 17px; transform: translateX(-50%) rotate(-2deg); background: rgba(252,211,77,.55); box-shadow: 0 1px 1px rgba(30,20,10,.12); }
+        .p4 b { display: block; font-family: 'Caveat', cursive; font-size: 25px; font-weight: 700; line-height: 1.1; color: var(--color-gray-800); }
+        .p4 span { display: block; font-size: 12.5px; font-weight: 500; color: var(--color-gray-500); margin-top: 2px; }
+
+        /* ===== 5. Marker underline ===== */
+        .p5-row { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 16px; font-weight: 500; color: var(--color-gray-700); }
+        .p5 { position: relative; padding-bottom: 3px; }
+        /* a swept highlighter stroke rather than a straight rule, so it reads as drawn */
+        .p5::after { content: ""; position: absolute; left: -3px; right: -3px; bottom: 0; height: 7px; border-radius: 4px 6px 5px 7px; }
+        .p5:nth-child(1)::after { background: var(--color-purple-200); }
+        .p5:nth-child(2)::after { background: var(--color-blue-200); }
+        .p5:nth-child(3)::after { background: var(--color-green-200); }
+
+        /* ===== 6. Inline sentence ===== */
+        .p6 { font-size: 17px; font-weight: 300; line-height: 1.6; color: var(--color-gray-700); max-width: 620px; }
+        .p6 strong { font-weight: 600; color: var(--color-gray-900); }
+
+        /* ===== 7. Icon-led rows ===== */
+        .p7-row { display: flex; flex-direction: column; gap: 12px; }
+        .p7 { display: flex; align-items: center; gap: 12px; font-size: 14.5px; font-weight: 500; color: var(--color-gray-700); }
+        .p7 i { flex: none; width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center; }
+        .p7 svg { width: 15px; height: 15px; }
+        .p7:nth-child(1) i { background: var(--color-purple-100); color: var(--color-purple-600); }
+        .p7:nth-child(2) i { background: var(--color-blue-100); color: var(--color-blue-600); }
+        .p7:nth-child(3) i { background: var(--color-green-100); color: var(--color-green-600); }
+        .p7 b { font-weight: 700; color: var(--color-gray-900); }
+
+        @media (max-width: 720px) {
+            .p2-row { flex-wrap: wrap; gap: 18px; }
+            .p2 { padding-inline: 0; }
+            .p2 + .p2 { border-inline-start: 0; }
+        }
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="wrap">
+    <h1>Hi there, I'm Jeremy — credential pill ideas</h1>
+    <p class="lede">
+        Seven treatments for the three credential pills in the founder intro on
+        <strong>jiki-landing.html</strong>. Same three facts throughout — only the treatment changes.
+        Each one is shown under a stand-in of the section's heading, on the background it actually
+        sits on, so the comparison is fair.
+    </p>
+
+    <!-- Shared icon definitions: one set, reused by every idea, so switching treatment is
+         never a change of artwork -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="ic-people" viewBox="0 0 20 20">
+            <path fill="currentColor" d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.97 5.97 0 00-.75-2.906A3 3 0 0119 15v3h-3zM4.75 12.094A5.97 5.97 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+        </symbol>
+        <symbol id="ic-clock" viewBox="0 0 20 20">
+            <path fill="currentColor" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+        </symbol>
+        <symbol id="ic-star" viewBox="0 0 20 20">
+            <path fill="currentColor" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </symbol>
+    </svg>
+
+    <!-- ============ 1 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">1</span><h2>Tightened baseline</h2></div>
+        <p class="idea-note">
+            What ships today, with the vertical padding and line-height sorted out. Here as a
+            reference point to judge the others against, not as a proposal.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p1-row">
+                <span class="p1"><svg style="color:var(--color-purple-500)"><use href="#ic-people"/></svg>2M+ people taught</span>
+                <span class="p1"><svg style="color:var(--color-blue-500)"><use href="#ic-clock"/></svg>20 years building software</span>
+                <span class="p1"><svg style="color:var(--color-green-500)"><use href="#ic-star"/></svg>Founder of Exercism</span>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 2 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2</span><h2>Stat rail</h2></div>
+        <p class="idea-note">
+            The number does the talking: figure at 32px, small label underneath, hairline dividers
+            between. "2M+" stops being the smallest type in the section and becomes the largest.
+            Speaks the same way as the Exercism figures further down the page.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p2-row">
+                <div class="p2"><b>2M+</b><span>people taught</span></div>
+                <div class="p2"><b>20</b><span>years building software</span></div>
+                <div class="p2"><b>Exercism</b><span>founder</span></div>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 3 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">3</span><h2>Tinted by meaning</h2></div>
+        <p class="idea-note">
+            Each pill takes its icon's colour at a light tint. The three facts are three different
+            kinds of thing — reach, experience, standing — and this stops them reading as one
+            undifferentiated list of tags. A one-line change from what ships now.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p3-row">
+                <span class="p3 p3-a"><svg><use href="#ic-people"/></svg>2M+ people taught</span>
+                <span class="p3 p3-b"><svg><use href="#ic-clock"/></svg>20 years building software</span>
+                <span class="p3 p3-c"><svg><use href="#ic-star"/></svg>Founder of Exercism</span>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 4 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">4</span><h2>Taped cards</h2></div>
+        <p class="idea-note">
+            The facts as three small cards taped to the wall at slight angles, with the numbers in
+            Caveat. The only idea that belongs to the paper language the rest of the page is in —
+            but also the fourth taped-paper element by this point in the scroll.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p4-row">
+                <div class="p4"><b>2M+</b><span>people taught</span></div>
+                <div class="p4"><b>20 years</b><span>building software</span></div>
+                <div class="p4"><b>Exercism</b><span>founder</span></div>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 5 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">5</span><h2>Marker underline</h2></div>
+        <p class="idea-note">
+            No container at all — the facts as plain text with a hand-drawn highlighter sweep under
+            each, reusing the treatment already on "Jeremy is a master teacher" lower in the same
+            section. Quietest option that still separates the three.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p5-row">
+                <span class="p5">2M+ people taught</span>
+                <span class="p5">20 years building software</span>
+                <span class="p5">Founder of Exercism</span>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 6 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">6</span><h2>Inline sentence</h2></div>
+        <p class="idea-note">
+            All three folded into one line under the heading, numbers in bold. Costs no vertical
+            room at all and is the fastest to read — but gives up the scannability that made the
+            pills worth having in the first place.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <p class="p6">
+                <strong>20 years</strong> building software, <strong>2M+</strong> people taught,
+                and founder of <strong>Exercism</strong>.
+            </p>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+    <!-- ============ 7 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">7</span><h2>Icon-led rows</h2></div>
+        <p class="idea-note">
+            Stacked rather than in a row, each fact with a circular icon. Suits the layout where
+            the copy column is narrow or the pills would otherwise wrap awkwardly — and it is the
+            only option that never breaks onto a second line badly.
+        </p>
+        <div class="stage">
+            <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+            <div class="p7-row">
+                <div class="p7"><i><svg><use href="#ic-people"/></svg></i><span><b>2M+</b> people taught</span></div>
+                <div class="p7"><i><svg><use href="#ic-clock"/></svg></i><span><b>20 years</b> building software</span></div>
+                <div class="p7"><i><svg><use href="#ic-star"/></svg></i><span>Founder of <b>Exercism</b></span></div>
+            </div>
+            <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different…</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
