@@ -220,6 +220,7 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
     opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease;
   }
   .callout.is-shown { opacity: 1; transform: none; }
+  .demo.no-card-anim .callout { transition: none; }
   /* Balancing is deliberately off here: these cards are a fixed width, and balanced
      wrapping left the lines ragged rather than filling to the edge. */
   /* margin-block clears the browser defaults (21px above the heading, 13.5px above
@@ -1179,6 +1180,15 @@ function showMsg(n, on) { document.getElementById('msg-' + n).classList.toggle('
 const CALLOUTS = ['see', 'rewind', 'errors', 'help', 'next'];
 const demo = document.querySelector('.demo');
 function callout(which) {
+  if (demo.classList.contains('is-finale')) {
+    /* Drop the closing frame's cards instantly rather than fading them out: the finale
+       styling comes off in the same breath, so a fade would show them flip back to
+       purple on the way out. */
+    demo.classList.add('no-card-anim');
+    document.querySelectorAll('.callout').forEach(el => el.classList.remove('is-shown'));
+    void demo.offsetWidth;
+    demo.classList.remove('no-card-anim');
+  }
   demo.classList.remove('is-finale');
   stopEmphasis();
   railRight.style.paddingTop = railRight.style.paddingBottom = '';
@@ -1378,7 +1388,7 @@ function buildTimeline() {
   let t = 0;
 
   // ---------- reset ----------
-  push(0, () => { resetStage(); callout(null); cursor.classList.remove('is-hidden'); });
+  push(0, () => { resetStage(); callout(null); });
   push(300, () => callout('tested'));      // opens on the code itself
   t = 700;
 
@@ -1386,7 +1396,9 @@ function buildTimeline() {
   t += 900;
 
   // ---------- beat 2: press Run ----------
-  push(t, () => cursorTo('#run-btn', 4, 4));
+  // The cursor comes back here rather than at the top of the loop, so it appears as it
+  // starts moving instead of sitting over the code through the opening beat.
+  push(t, () => { cursor.classList.remove('is-hidden'); cursorTo('#run-btn', 4, 4); });
   t += 650;
   push(t, () => runBtn.classList.add('is-pressed'));
   push(t + 200, () => runBtn.classList.remove('is-pressed'));
