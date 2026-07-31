@@ -4010,8 +4010,8 @@
            panel's own bottom padding: the panel's 24px margin goes entirely and the
            section's 40px padding drops to 14px. The notes keep their internal breathing
            room; it is the gap after them that was long. */
-        .sticky-panel{padding:2rem 2rem 3rem;margin-bottom:0}
-        .TestimonialsSection_testimonial-section__XCiRB{padding-bottom:14px}
+        .sticky-panel{padding:2rem 2rem 1.0625rem;margin-bottom:0}
+        .TestimonialsSection_testimonial-section__XCiRB{padding-bottom:0}
         /* columns rather than a grid, so each note is only as tall as its own quote */
         .sticky-grid{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;gap:74px}
         .sticky-col{flex:1;min-width:0}
@@ -4030,7 +4030,7 @@
         .sticky-blue-light{border-color:var(--color-gray-200)}
         /* the same tape as the Exercism card, at a stronger 70% amber */
         .sticky-tape{position:absolute;top:-12px;left:50%;width:92px;height:24px;transform:translateX(-50%);background:rgba(251,191,36,.5);border-inline:1px solid rgba(251,191,36,.25);box-shadow:0 1px 2px rgba(30,20,10,.12)}
-        .sticky-note p{font-size:17px;line-height:1.7;color:var(--color-gray-800);margin-bottom:1rem}
+        .sticky-note p{font-size:18px;line-height:1.7;color:var(--color-gray-800);margin-bottom:1rem}
         .sticky-note p strong{font-weight:600}
         .sticky-footer{display:flex;align-items:center;gap:.6rem}
         /* five stars, sat bottom right of the note */
@@ -4390,6 +4390,10 @@
           that the line begins under "Sound Good?" rather than running up past it, plus the
           40 left / 20 down nudge on top of that. */
        .PrintRow_joinPath__jk239{width:240px;height:auto;display:block;transform:translate(-80px,90px)}
+       /* Same purple as the artwork's own dashes, sampled from the file. Positioned at the
+          line's end and rotated onto its heading, then offset back along that heading so the
+          head starts where the last dash stops rather than sitting on top of it. */
+       .PrintRow_joinHead__jk241{position:absolute;left:76px;top:409px;width:26px;height:auto;color:#876bd4;transform:translate(-4px,-11px) rotate(41deg);transform-origin:0 50%}
        /* the same Caveat the "Look what you'll make" eyebrow uses, in brand purple - this
           is an invitation into the ask below it, not a neutral note. Sits at the head of
           the line, just under the note it comes out from. */
@@ -4398,11 +4402,11 @@
        @media (max-width:1250px){.PrintRow_join__jk238{display:none}}
        /* the prints overlap slightly, so the row reads as a handful of photos put
           down together rather than a tidy grid */
-       .PrintRow_prints__jk195{display:flex;justify-content:center;align-items:center;gap:0;margin-bottom:30px}
+       .PrintRow_prints__jk195{display:flex;justify-content:center;align-items:center;gap:0;margin-bottom:40px}
        .PrintRow_print__jk196{
         container-type:inline-size;position:relative;flex-shrink:0;
         width:162px;margin-inline:-12px;padding:11px 11px 57px;border-radius:2px;
-        background:radial-gradient(120% 100% at 50% 0%,#fdfcf9 40%,#f3efe8 100%);
+        background:radial-gradient(120% 100% at 50% 0%,#fffefd 40%,#faf7f2 100%);
         box-shadow:0 1px 2px rgba(30,20,10,.28),0 12px 24px -8px rgba(30,20,10,.22);
        }
        /* the same paper grain as the prints band */
@@ -4430,7 +4434,7 @@
        .PrintRow_print__jk196 video.PrintRow_pixel__jk197{filter:none}
        .PrintRow_print__jk196 span{position:absolute;left:0;right:0;bottom:10px;height:26cqw;display:flex;align-items:center;justify-content:center;padding:0 6%;font-family:'Caveat',cursive;font-weight:700;font-size:calc(8.5cqw + 4px);line-height:1.05;color:rgba(42,49,66,.88);text-align:center;transform:rotate(1.2deg)}
        .PrintRow_h__jk198{font-size:28px;font-weight:700;line-height:1.2;color:var(--color-gray-800);margin-bottom:8px;text-wrap-style:balance}
-       .PrintRow_p__jk199{font-size:18px;font-weight:440;line-height:1.75;color:var(--color-gray-600);max-width:550px;margin:0 auto 22px;text-wrap-style:balance}
+       .PrintRow_p__jk199{font-size:18px;font-weight:400;line-height:1.75;color:var(--color-gray-600);max-width:550px;margin:0 auto 22px;text-wrap-style:auto}
        /* the checklist laid out on one line, so the band stays shallow */
        .PrintRow_list__jk200{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 34px;margin-bottom:28px}
        .PrintRow_row__jk201{display:flex;align-items:center;gap:14px;font-size:16px;font-weight:500;color:var(--color-gray-700)}
@@ -4471,6 +4475,13 @@
       <div class="PrintRow_band__jk193">
        <div class="PrintRow_join__jk238" aria-hidden="true">
         <img class="PrintRow_joinPath__jk239" src="images/join-loop-dashed.png" alt="" aria-hidden="true">
+        <!-- The artwork ends on an open dash, so the head is drawn separately and placed at
+             the line's own end point, carrying on its direction. Both were measured off the
+             PNG: the ink stops at 518,1060 of 797x1078 travelling 41 degrees below
+             horizontal, which is 156,319 once scaled to the 240px render. -->
+        <svg class="PrintRow_joinHead__jk241" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+         <path d="M23 10 L3 18 L7.5 10 L3 2 Z" fill="currentColor"/>
+        </svg>
         <span class="PrintRow_joinNote__jk240">Get in on the action!</span>
        </div>
        <div class="PrintRow_inner__jk194">
@@ -4611,16 +4622,16 @@
         .FAQItem_details__jk70{background:transparent;border:none;border-bottom:1px solid var(--color-gray-200);border-radius:0;padding:22px 0;margin-bottom:0;box-shadow:none}
         .FAQItem_summary__jk71{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;text-align:left}
         .FAQItem_summary__jk71::-webkit-details-marker{display:none}
-        .FAQItem_summary__jk71 h4{margin:0;font-size:20px;font-weight:700;color:var(--color-blue-950);transition:color .2s ease}
+        .FAQItem_summary__jk71 h4{margin:0;font-size:20px;font-weight:600;color:var(--color-blue-950);transition:color .2s ease}
         .FAQItem_summary__jk71:hover h4{color:var(--color-blue-600)}
         .FAQItem_details__jk70[open] .FAQItem_summary__jk71 h4{color:var(--color-blue-600)}
         .FAQItem_chevron__jk73{width:1.1em;height:1.1em;margin-inline-start:auto;flex-shrink:0;transition:transform .2s ease,color .2s ease;color:var(--color-blue-950)}
         .FAQItem_summary__jk71:hover .FAQItem_chevron__jk73{color:var(--color-blue-600)}
         .FAQItem_details__jk70[open] .FAQItem_chevron__jk73{transform:rotate(180deg);color:var(--color-blue-600)}
-        .FAQItem_body__jk72{margin-top:14px;text-align:left;font-size:17px;line-height:170%;font-weight:400;color:var(--color-gray-500);max-width:800px}
+        .FAQItem_body__jk72{margin-top:14px;text-align:left;font-size:17px;line-height:170%;font-weight:400;color:var(--color-gray-600);max-width:800px}
         .FAQItem_body__jk72 p{margin-bottom:14px}
         .FAQItem_body__jk72 p:last-child{margin-bottom:0}
-        .FAQItem_body__jk72 strong{font-weight:600;color:var(--color-gray-600)}
+        .FAQItem_body__jk72 strong{font-weight:600;color:var(--color-gray-700)}
         .FAQItem_body__jk72 ul{list-style:disc;margin-top:4px;margin-inline-start:30px;display:flex;flex-direction:column;gap:2px}
        </style>
        <details class="FAQItem_details__jk70">
