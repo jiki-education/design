@@ -41,7 +41,7 @@ Two more reasons it is the weakest of the three uses:
 ## The directions
 
 Two families. **1-4** keep the portrait as the subject and change how it is presented;
-**5-8** change the section's colour or its layout, and the portrait comes along with it.
+**5-7** change the section's colour or its layout, and the portrait comes along with it.
 
 1. **Solid ring** - circular, in a flat purple ring. Quiet enough that it does not compete
    with the three coloured credentials sitting beside it.
@@ -55,9 +55,7 @@ Two families. **1-4** keep the portrait as the subject and change how it is pres
    the section is rather than how the photo is framed.
 6. **Type-led** - the heading set huge and the portrait shrunk to a mark beside the signature.
    Worth testing given how weak a stranger's face is as evidence.
-7. **Colour field** - a gradient wash on the section itself with the photo multiplied into it,
-   so the picture and the words share one ground instead of sitting in separate columns.
-8. **Centred stack** - reflowed top-down: portrait centred, credentials under it, copy in two
+7. **Centred stack** - reflowed top-down: portrait centred, credentials under it, copy in two
    columns beneath. Reads as a letter rather than a profile card.
 
 ## Recommendation
@@ -218,16 +216,6 @@ brand colour into a section that currently has none.
         .v18-sign { display: flex; align-items: center; gap: 14px; margin-top: 6px; }
         .v18-sign img { width: 46px; height: 46px; border-radius: 999px; object-fit: cover; flex: none; }
 
-        /* ===== 19. Colour field ===== */
-        /* the wash sits on the stage, so the photo and the copy share one ground */
-        .stage--field { background:
-            radial-gradient(60% 70% at 14% 30%, rgba(168,85,247,.20), transparent 70%),
-            radial-gradient(55% 60% at 88% 70%, rgba(59,130,246,.18), transparent 70%),
-            var(--color-gray-50); }
-        .v19 img { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 999px 999px 18px 18px; mix-blend-mode: multiply; }
-
-        /* ===== 21. Centred stack ===== */
-        .v21 { text-align: center; }
         .v21-top { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 26px; }
         .v21-photo { width: 150px; padding: 4px; border-radius: 999px; background: linear-gradient(135deg, var(--color-purple-500), var(--color-blue-500)); }
         .v21-photo img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; border: 3px solid var(--color-gray-50); }
@@ -489,46 +477,7 @@ brand colour into a section that currently has none.
         </div>
     </div>
     <div class="idea">
-        <div class="idea-head"><span class="idea-num">7</span><h2>Colour field</h2></div>
-        <p class="idea-note">The portrait sunk into a soft gradient block that bleeds out behind the copy, so the photo and the words share one field instead of sitting in separate columns. Colour as the layout, rather than colour applied to a shape.</p>
-        <div class="stage stage--field">
-                <div class="sec">
-                    <div class="viscol">
-                        <div class="v19"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
-                    </div>
-                    </div>
-                    <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">2M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                    </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                    <span class="sig">— Jeremy</span>
-                    </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">8</span><h2>Centred stack</h2></div>
+        <div class="idea-head"><span class="idea-num">7</span><h2>Centred stack</h2></div>
         <p class="idea-note">Reflowed entirely: portrait centred at the top with the credentials under it, then the copy in two columns beneath. Turns a left-right section into a top-down one, which reads more like a letter and less like a profile card.</p>
         <div class="stage">
                 <div class="sec sec--wide v21">
