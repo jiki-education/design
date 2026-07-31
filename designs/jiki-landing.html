@@ -3447,19 +3447,23 @@
             to the edge, with a slightly stronger border around it */
          /* border stepped from gray-300 to gray-400: on a white card over a dark background the
             lighter hairline was invisible, so the cards read as edgeless shapes */
-         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;padding:5px 1px 10px;background:#fff;border:2px solid var(--color-blue-500);border-radius:8px;overflow:hidden;box-shadow:0 0 6px 2px rgba(15,23,42,.55),0 14px 28px -6px rgba(15,23,42,.6)}
+         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;padding:0 1px 10px;background:rgba(255,255,255,.88);border:2px solid var(--color-blue-500);border-radius:8px;overflow:hidden;box-shadow:0 0 6px 2px rgba(15,23,42,.55),0 14px 28px -6px rgba(15,23,42,.6)}
          /* each one is finished, so it carries a tick */
          /* the ring lives on a pseudo element so the tick keeps its own drop shadow */
          /* the four ticks pop in turn, so the set reads as work being completed one by one */
          @media (prefers-reduced-motion:reduce){
          }
          /* the art is now a rounded panel inside the mount rather than a bled edge */
-         .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;border-radius:4px;background:var(--color-gray-50)}
-         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:contain;padding:6px;background:var(--color-gray-50);display:block}
+         .cert-outcomes .co-tile .co-art{flex:1;min-height:0;overflow:hidden;border-radius:6px 6px 4px 4px;background:var(--color-gray-50)}
+         /* screenshots rather than icons now: they fill the panel and crop from the top-left,
+            where the interesting part of a UI is, instead of being letterboxed inside it */
+         .cert-outcomes .co-tile .co-art img{width:100%;height:100%;object-fit:cover;object-position:left top;padding:0;background:#fff;display:block}
          /* at quarter size the card carries the title only - the tags are unreadable here
             and the titles already say what each project is */
-         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px 4px 2px;text-align:center}
-         .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:600;line-height:1.25;color:var(--color-gray-600);text-wrap-style:balance}
+         .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px 4px 0;text-align:center}
+         /* the strip has no bottom padding left to trade, so further nudges ride on the
+            transform - it moves the text without changing the strip's height */
+         .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:500;line-height:1.25;color:var(--color-gray-700);text-wrap-style:balance;transform:translateY(1px)}
          /* 03: a snippet of unfamiliar code, one line marked up */
          /* sits 10px above the centre line the other two share, so the Caveat note and
             arrow beneath it have room without pushing the snippet down the column */
@@ -3529,20 +3533,20 @@
            <div class="co-viz">
             <div class="co-grid">
              <div class="co-tile">
-              <div class="co-art"><img src="images/project-icons/icon-todo.png" alt=""></div>
+              <div class="co-art"><img src="images/project-screens/habit-tracker.png" alt=""></div>
               <div class="co-cap"><div class="co-t">Build a habit tracker</div></div>
              </div>
              <div class="co-tile">
-              <div class="co-art"><img src="images/project-icons/icon-weather.png" alt=""></div>
+              <div class="co-art"><img src="images/project-screens/homepage.png" alt=""></div>
               <div class="co-cap"><div class="co-t">Build your homepage</div></div>
              </div>
              <div class="co-tile">
-              <div class="co-art"><img src="images/project-icons/icon-memory.png" alt=""></div>
+              <div class="co-art"><img src="images/project-screens/recipe-box.png" alt=""></div>
               <div class="co-cap"><div class="co-t">Build a recipe box</div></div>
              </div>
              <div class="co-tile">
-              <div class="co-art"><img src="images/project-icons/icon-space-invaders.png" alt=""></div>
-              <div class="co-cap"><div class="co-t">Build an arcade game</div></div>
+              <div class="co-art"><img src="images/project-screens/dashboard.png" alt=""></div>
+              <div class="co-cap"><div class="co-t">Build a dashboard</div></div>
              </div>
             </div>
            </div>
