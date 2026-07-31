@@ -127,11 +127,6 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
 
   /* Amber isn't in the UI Kit yet: used by the pending badge and the "Show layers" overlay. */
   :root {
-    /* A purple halo tight to the border, over the usual lift */
-    --card-glow:
-      0 0 0 4px color-mix(in srgb, var(--color-purple-500) 22%, transparent),
-      0 0 22px 2px color-mix(in srgb, var(--color-purple-500) 38%, transparent),
-      0 20px 38px -14px rgba(88, 28, 135, .42);
     --color-amber-100: #fef3c7;
     --color-amber-300: #fcd34d;
     --color-amber-400: #fbbf24;
@@ -189,8 +184,8 @@ The two game runs are ~2.5s and ~3.5s; the rest is reading time. The knobs are
   .demo.is-finale .callout h4 { color: var(--color-purple-600); }
   .demo.is-finale .callout p { color: var(--color-gray-700); }
 
-  /* The whole set lights up together as it lands... */
-  .demo.is-finale.is-all-glow .callout.is-shown { box-shadow: var(--card-glow); border-color: var(--color-purple-600); }
+  /* The whole set lands on the full-strength purple border... */
+  .demo.is-finale.is-all-glow .callout.is-shown { border-color: var(--color-purple-600); }
   /* ...then settles, borders quietening off */
   .demo.is-finale.is-all-lit .callout.is-shown { border-color: var(--color-gray-200); }
   /* Held 15px clear of the frame, so the dots stop short of the edge rather than
@@ -1246,6 +1241,10 @@ function startEmphasis() {
   emphasisTimer = setTimeout(() => {
     demo.classList.remove('is-all-glow');
     demo.classList.add('is-all-lit');
+    // The frame rewinds as the borders grey off, so the holding screen is the same
+    // whether the loop got here or the End screen button did.
+    resetStage();
+    cursor.classList.add('is-hidden');
   }, ALL_GLOW_MS);
 }
 
@@ -1560,8 +1559,7 @@ function buildTimeline() {
   // later the frame rewinds to the video's opening state and holds there, cards still
   // up, for four seconds before the loop starts again.
   const cardsAt = t + CARDS_AFTER_MODAL;
-  const rewindsAt = cardsAt + ALL_GLOW_MS + 300;
-  push(rewindsAt, () => { resetStage(); cursor.classList.add('is-hidden'); });
+  const rewindsAt = cardsAt + ALL_GLOW_MS;   // startEmphasis rewinds the frame there
   return { steps: T.sort((a, b) => a.at - b.at), duration: rewindsAt + 4000 };
 }
 
