@@ -3050,11 +3050,20 @@
           @media (min-width:800px){.BuildGrid_pillsCol__jk97{padding-inline-start:22px;display:flex;flex-direction:column;justify-content:flex-start}}
           .BuildGrid_pillsLabel__jk98{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);padding-top:40px;margin-bottom:18px}
           .BuildGrid_pills__jk99{display:flex;flex-wrap:wrap;gap:12px}
-          .BuildGrid_pill__jk100{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:2.5px solid var(--color-gray-200);background:var(--color-gray-50);font-size:13px;font-weight:600;color:var(--color-gray-600);white-space:nowrap;box-shadow:0 2px 5px -2px rgba(15,23,42,.18);transition:background-color .7s ease,border-color .7s ease,color .7s ease}
-          .BuildGrid_pillTick__jk115{width:13px;height:13px;flex-shrink:0;position:relative;top:0px;opacity:0;transform:scale(.4);transition:opacity .5s ease,transform .5s ease}
-          .BuildGrid_pill__jk100.BuildGrid_pillChecked__jk116{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-700)}
+          .BuildGrid_pill__jk100{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--color-gray-200);background:var(--color-gray-50);font-size:13px;font-weight:600;color:var(--color-gray-600);white-space:nowrap;box-shadow:0 2px 5px -2px rgba(15,23,42,.18);transition:background-color .7s ease,border-color .7s ease,color .7s ease}
+          /* Once the whole row is lit it settles back: the border thins by 1px and the fill
+             and border return to the greys they started at. Only the blue text and the
+             shadow are kept, so the row ends up quietly marked rather than still switched
+             on - the colour was there to show each pill arriving, not to be the resting
+             state. See the settle step in the script below. */
+          .BuildGrid_pills__jk99.BuildGrid_pillsSettled__jk245 .BuildGrid_pill__jk100{
+           border-color:var(--color-gray-200);
+           background:var(--color-gray-50);
+          }
+          .BuildGrid_pillTick__jk115{width:16px;height:16px;flex-shrink:0;position:relative;top:0px;opacity:0;transform:scale(.4);transition:opacity .5s ease,transform .5s ease}
+          .BuildGrid_pill__jk100.BuildGrid_pillChecked__jk116{background:var(--color-blue-50);border-color:var(--color-blue-500);color:var(--color-blue-700)}
           .BuildGrid_pill__jk100.BuildGrid_pillChecked__jk116 .BuildGrid_pillTick__jk115{opacity:1;transform:scale(1)}
-          @media (prefers-reduced-motion:reduce){.BuildGrid_pill__jk100{background:var(--color-blue-50);border-color:var(--color-blue-200);color:var(--color-blue-700)}.BuildGrid_pillTick__jk115{opacity:1;transform:scale(1)}}
+          @media (prefers-reduced-motion:reduce){.BuildGrid_pill__jk100{background:var(--color-gray-50);border-color:var(--color-gray-200);color:var(--color-blue-700)}.BuildGrid_pillTick__jk115{opacity:1;transform:scale(1)}}
           .BuildGrid_langsLabel__jk101{font-size:16px;font-weight:600;letter-spacing:normal;color:var(--color-gray-600);margin-top:32px;margin-bottom:18px}
           .BuildGrid_langs__jk102{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:22px}
              /* "Learn wide range of technologies" - everything centred in the panel */
@@ -3373,12 +3382,12 @@
            <div class="BuildGrid_techBlock__jk134">
             <div class="BuildGrid_pillsLabel__jk98">Get hands on with:</div>
             <div class="BuildGrid_pills__jk99" id="build-pills-wrap">
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Databases</span>
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Auth</span>
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Frontend vs backend</span>
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>APIs</span>
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Deployment</span>
-             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7.3 5.7 10 11 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>LLM integration</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/><path d="M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg>Databases</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Auth</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="8" height="14" rx="1.5"/><path d="M2.5 8.5h8"/><rect x="13.5" y="5" width="8" height="14" rx="1.5"/><path d="M13.5 12h8"/></svg>Frontend vs backend</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5 3.5 12l5 4.5"/><path d="M15.5 7.5 20.5 12l-5 4.5"/><path d="M13.5 4.5l-3 15"/></svg>APIs</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 18.5a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.4 1.4 4 4 0 0 1-.8 7.6"/><path d="M12 20.5v-8"/><path d="m9 15 3-3 3 3"/></svg>Deployment</span>
+             <span class="BuildGrid_pill__jk100"><svg class="BuildGrid_pillTick__jk115" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><rect x="10.5" y="10.5" width="3" height="3"/><path d="M10 7V4M14 7V4M10 17v3M14 17v3M7 10H4M7 14H4M17 10h3M17 14h3"/></svg>LLM integration</span>
             </div>
             <script>
              (function () {
@@ -3386,18 +3395,21 @@
               var wrap = document.getElementById('build-pills-wrap');
               if (!wrap) return;
               var pills = wrap.querySelectorAll('.BuildGrid_pill__jk100');
-              var i = 0;
-              function tick() {
-               if (i < pills.length) {
-                pills[i].classList.add('BuildGrid_pillChecked__jk116');
-                i++;
-                setTimeout(tick, 420);
-               }
+              /* The whole row lights together rather than one pill at a time: these are six
+                 facets of one thing, not a sequence, and running them in turn made the row
+                 read as a checklist being ticked off. */
+              function light() {
+               Array.prototype.forEach.call(pills, function (pill) {
+                pill.classList.add('BuildGrid_pillChecked__jk116');
+               });
+               /* held long enough to register - the colour transition alone is .7s - then
+                  the row settles back to its greys with the border a step thinner */
+               setTimeout(function () { wrap.classList.add('BuildGrid_pillsSettled__jk245'); }, 1400);
               }
               var observer = new IntersectionObserver(function (entries) {
                entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
-                 setTimeout(tick, 300);
+                 setTimeout(light, 300);
                  observer.disconnect();
                 }
                });
@@ -3452,7 +3464,7 @@
          /* the three visuals are different heights, so centre each in the same fixed box
             and they sit on a shared middle line rather than a shared top edge */
          .cert-outcomes .co-viz{position:relative;height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:37px}
-         .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:18px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
+         .cert-outcomes .co-anno{position:absolute;font-family:'Caveat',cursive;font-weight:700;font-size:19px;line-height:1.15;color:var(--color-amber-300);max-width:132px;text-wrap-style:balance;z-index:5}
          .cert-outcomes .co-anno.co-anno-purple{color:var(--color-purple-200)}
          .cert-outcomes .co-arrow{position:absolute;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;z-index:5}
          /* 01: the certificate, with the share card and the verification chip */
@@ -3487,7 +3499,7 @@
             to the edge, with a slightly stronger border around it */
          /* border stepped from gray-300 to gray-400: on a white card over a dark background the
             lighter hairline was invisible, so the cards read as edgeless shapes */
-         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;padding:0 1px 10px;background:rgba(255,255,255,.88);border:2px solid var(--color-blue-500);border-radius:8px;overflow:hidden;box-shadow:0 0 6px 2px rgba(15,23,42,.55),0 14px 28px -6px rgba(15,23,42,.6)}
+         .cert-outcomes .co-tile{position:relative;display:flex;flex-direction:column;height:111px;padding:0 1px 10px;background:rgb(238,235,255);border:2px solid var(--color-purple-300);border-radius:8px;overflow:hidden;box-shadow:0 0 6px 2px rgba(15,23,42,.55),0 14px 28px -6px rgba(15,23,42,.6)}
          /* each one is finished, so it carries a tick */
          /* the ring lives on a pseudo element so the tick keeps its own drop shadow */
          /* the four ticks pop in turn, so the set reads as work being completed one by one */
@@ -3503,7 +3515,7 @@
          .cert-outcomes .co-tile .co-cap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:8px 4px 0;text-align:center}
          /* the strip has no bottom padding left to trade, so further nudges ride on the
             transform - it moves the text without changing the strip's height */
-         .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:500;line-height:1.25;color:var(--color-gray-700);text-wrap-style:balance;transform:translateY(1px)}
+         .cert-outcomes .co-tile .co-cap .co-t{font-size:9.5px;font-weight:500;line-height:1.25;color:#7c3aed;text-wrap-style:balance;transform:translateY(1px)}
          /* 03: a snippet of unfamiliar code, one line marked up */
          /* sits 10px above the centre line the other two share, so the Caveat note and
             arrow beneath it have room without pushing the snippet down the column */
