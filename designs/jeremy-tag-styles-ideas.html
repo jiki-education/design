@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi there, I'm Jeremy - nine tag styles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../ui-kit/styles.css">
+
+    <script>
+        const IMPLEMENTATION_NOTES = `
+# Implementation Notes
+
+Nine treatments for the credentials and achievements in the **"Hi there! I'm Jeremy"** section,
+ranging from a straight annotated-portrait lift of the chess-course reference through to things
+the page has never done.
+
+Same facts in all nine:
+
+- **Credentials** (who he is) - Senior developer, 20 years experience, AI background,
+  Founder of Exercism, Conference speaker, Patent holder (heart surgery)
+- **Achievements** (what came of it) - 2M+ people taught, 40+ countries reached, Free forever
+
+## Two variables, not one
+
+Each idea varies **the tag treatment** and **how much prose sits under it**. The badge in every
+idea header says which length it is showing. There are four:
+
+- **No prose** (idea 7) - one handwritten line and nothing else.
+- **Two sentences** (2, 4, 8, 9) - twenty years, Exercism, and one line on how Jiki teaches.
+- **Eight sentences** (1, 3, 5, 6) - the version from
+  \`jeremy-credentials-achievements-ideas.html\`. The default.
+- **Fifteen sentences** - **no example left on this page.** It went with the property-rows idea.
+  The copy still exists in \`jeremy-credentials-achievements-ideas.html\` and can be dropped under
+  any treatment here if the long version needs looking at again.
+
+The two variables are independent. Any tag treatment here works with any of the four lengths -
+they are paired to show the range, not because a pairing is fixed. Only idea 7 now shows an
+extreme, so read it as the short end of the scale rather than as a finished design.
+
+**On length:** the eight-sentence version is the right default. Two sentences is enough if the
+section sits directly under strong social proof and only has to make him a person rather than
+make the argument. The fifteen-sentence version is worth it only if this section is being asked
+to do conversion work on its own - it is the slowest block on the page and it lands after the
+reader has already been asked to sign up twice.
+
+## The big split
+
+Ideas 1-2 **abandon the tag as a component entirely** and annotate the portrait instead, which is
+what the reference does. Ideas 3-6 keep a tag row but push the treatment much further than the
+grey pill that ships today. Idea 7 **dissolves the tags into the headline**, so there is no tag
+row left to style at all. Idea 8 keeps an ordinary tag row and **evidences one of the tags with
+photographs** instead of restyling any of them, and idea 9 is idea 2 with the lines **arriving one
+at a time**.
+
+## The directions
+
+1. **Annotated portrait** - the reference, translated. Credentials float around a cut-out of
+   Jeremy with hand-drawn arrows running outwards from the photo to each, Caveat sub-notes under
+   a couple; the achievements sit as purple tags at the top of the copy block instead.
+2. **Speech bubbles** - the facts as things he is saying, portrait left and the bubbles wrapping
+   in the column beside it, each a single line with its tail pointing back at him. Warmer than idea 1, and the only
+   version where the facts sound like him rather than about him.
+3. **Stickers** - chunky rotated tags with a hard offset shadow, like laptop stickers.
+   Matches the sticker-press CTA in \`cta-button-ideas.html\`.
+4. **Gradient outline** - achievements in pills with a purple-to-blue gradient border, tying
+   the Learn-to-Code and Learn-to-Build colours together.
+5. **Hand-circled** - credentials as plain text, each achievement ringed with a hand-drawn ellipse
+   in marker, as if someone circled the important bits.
+6. **Ticker** - the achievements as an infinite scrolling marquee strip, credentials static
+   above it. Motion where the page currently has none in this section.
+7. **Headline only** - no tags and no paragraph at all. Every fact folded into one oversized
+   sentence with the numbers in purple, plus one handwritten line. Four seconds to read.
+8. **Proof strip** - a plain tag row, evidenced by a looping strip of photographs underneath that
+   opens on a teenage Jeremy at a laptop. The only idea that shows a credential rather than
+   claiming it.
+9. **Typed out** - idea 2 with time added. The bubbles fill one after another in the same wrapped
+   row and the words type themselves out with a caret, as though he is writing as you scroll past.
+
+## Recommendation
+
+**Idea 1** if the section can get a cut-out photo of Jeremy commissioned, **idea 2** if it cannot.
+
+Idea 1 is the closest to the reference and the best fit for what this section is actually doing:
+the facts are *about him*, so attaching them to him rather than stacking them in a row under the
+heading is the right structural move. It also gets the portrait doing work - at the moment it is
+just a picture with a coloured ring around it.
+
+The catch is real, though: it needs a **background-free cut-out** of Jeremy, ideally with his
+shoulders cropped on a curve like the reference. The current avatar is a square photo with a
+background in it, and this idea does not work with a circle-cropped headshot - the arrows have
+nothing to point at and the facts end up orbiting a disc.
+
+**Idea 2** gets most of the same warmth with the photo as it is, since a speech bubble can point
+at a circular portrait perfectly happily.
+
+**Idea 5** is the safe one. It is the closest of the nine to the hand-drawn language the page
+already uses, it costs no extra furniture, and it is a small change from what ships today.
+
+**Idea 7** is the one to reach for if this section ever needs to get out of the way - it is a
+quarter of the height of anything else here. That is a layout decision rather than a styling one.
+
+**Idea 8** is the strongest argument on the page and the most expensive. "Conference speaker" is
+the only credential on the list that can be photographed, and a reader who half-believes the other
+five will believe all six once they have seen him on a stage. It costs roughly the height of two
+other ideas and it locks the section to real photography.
+
+**Idea 9** is idea 2 with a reason to watch it. It buys attention in a section that currently
+asks for none, and the copy underneath gets read by anyone who waits out the thread. Two costs to
+weigh: it takes about four seconds to say everything, during which a scroller who does not stop
+sees an unfinished block; and a thread of six lines is a lot of chat for a founder intro. Four
+would land better.
+
+## On the newer credentials
+
+**Patent holder (heart surgery)** is the most interesting fact about Jeremy on the whole page and
+the one that needs the least dressing up - it stops a reader mid-scroll on its own. It is also the
+furthest from what Jiki does, so it wants to sit beside the others rather than lead them. In idea
+1 it is bottom-left with a Caveat note; everywhere else it closes the credential row.
+
+## On the conference credential
+
+It is the weakest of the six on paper - "conference speaker" is a thing anyone can say - and the
+strongest in practice, because it is the only one with pictures. So it either wants evidence
+(idea 8) or it wants to sit quietly at the end of the row (everywhere else). What it should not
+do is get the same emphasis as "2M+ people taught" while being a much smaller claim.
+
+## Build notes
+
+- Idea 1 places its facts absolutely on a fixed 900x560 canvas and falls back to a stacked list
+  under 1010px. Do not try to keep the annotation layout on narrow screens.
+- Idea 1's arrows are one inline SVG overlay sharing that canvas's coordinate system. Each is
+  drawn from a point 13px clear of the portrait circle out to its own label, with the head aimed
+  along the curve's tangent - so they all leave him and land on their fact by construction rather
+  than by eye. Move a fact and its arrow's end point moves with it; the angle it leaves the circle
+  at is the only other number to touch.
+- Idea 1's canvas carries five annotations and is laid out for exactly that. A sixth credential
+  would need the canvas to grow or two facts to merge - the achievements already moved off it to
+  make room for the last two.
+- Idea 8's photographs live in \`designs/images/\`. The three conference shots are 200-430kb each;
+  before this ships they want proper responsive sources - at 250px displayed, a 500px-wide webp
+  would do, which is roughly a tenth of the weight. The "where it all began" shot is already a
+  24kb webp and is the model for the other three.
+- Idea 8's loop duplicates the whole set in the markup so the -50% keyframe lands on the seam. The
+  second copy is \`aria-hidden\`. It pauses on hover, and under \`prefers-reduced-motion: reduce\`
+  the animation stops and the strip becomes hand-scrollable instead.
+- Idea 4's credential tags are the only monospace on the page and pull in JetBrains Mono, a font
+  the landing page does not currently load. If that idea survives, the tags should drop to Poppins
+  rather than cost an extra font request.
+- Idea 9's sequence runs once, on scroll into view. Each bubble is measured while its sentence is
+  still in place, pinned to that width and then emptied, so typing fills a box that never changes
+  size and the row never reflows. The typing walks the bubble's text nodes rather than its markup,
+  so the bold words stay bold as they are written. Under \`prefers-reduced-motion: reduce\` nothing
+  is cleared, the whole row is simply already written, and the replay button is hidden.
+- Idea 9's replay button is a review affordance for this page. It should not ship.
+- Idea 6's marquee must pause on hover and be fully disabled under
+  \`prefers-reduced-motion: reduce\` - it is decorative motion carrying real information.
+- Every idea except 7 keeps credentials and achievements as two separate markup blocks, so a
+  treatment can be swapped on one without touching the other. Idea 7 does not - the facts live inside the
+  headline, so moving to or from it is a copy rewrite, not a CSS change.
+        `;
+    </script>
+
+    <style>
+        :root {
+            --color-blue-50:#eff5ff; --color-blue-100:#dbe8fe; --color-blue-200:#bfd7fe;
+            --color-blue-300:#93bbfd; --color-blue-400:#609afa; --color-blue-500:#3b82f6;
+            --color-blue-600:#2570eb; --color-blue-700:#1d64d8; --color-blue-800:#1e55af;
+            --color-blue-900:#1e3a8a; --color-blue-950:#172e54;
+
+            --color-green-50:#ecfdf5; --color-green-100:#d1fae5; --color-green-200:#a7f3d0;
+            --color-green-300:#6ee7b7; --color-green-400:#34d399; --color-green-500:#10b981;
+            --color-green-600:#059669; --color-green-700:#047857; --color-green-800:#065f46;
+            --color-green-900:#064e3b;
+
+            --color-red-50:#fef2f2; --color-red-100:#fee2e2; --color-red-300:#fca5a5;
+            --color-red-500:#ef4444; --color-red-600:#dc2626; --color-red-700:#b91c1c;
+
+            --color-amber-50:#fffbeb; --color-amber-100:#fef3c7; --color-amber-200:#fde68a;
+            --color-amber-300:#fcd34d; --color-amber-400:#fbbf24; --color-amber-500:#f59e0b;
+            --color-amber-600:#d97706; --color-amber-700:#b45309;
+
+            --color-gray-50:#f8fafc; --color-gray-100:#f1f5f9; --color-gray-200:#e2e8f0;
+            --color-gray-300:#cbd5e1; --color-gray-400:#94a3b8; --color-gray-500:#64748b;
+            --color-gray-600:#475569; --color-gray-700:#334155; --color-gray-800:#1e293b;
+            --color-gray-900:#0f172a; --color-gray-950:#020617;
+
+            --color-purple-50:#faf5ff; --color-purple-100:#f4e8ff; --color-purple-200:#ebd5ff;
+            --color-purple-300:#dab4fe; --color-purple-400:#c184fc; --color-purple-500:#a855f7;
+            --color-purple-600:#9133ea; --color-purple-700:#7a22ce; --color-purple-800:#6621a8;
+            --color-purple-900:#531c87;
+        }
+
+        body { background: var(--color-gray-100); padding: 48px 24px 120px; }
+        .wrap { max-width: 1080px; margin-inline: auto; }
+        h1 { font-size: 32px; font-weight: 800; color: var(--color-gray-900); margin-bottom: 8px; text-wrap-style: balance; }
+        .lede { font-size: 16px; color: var(--color-gray-600); line-height: 1.65; margin-bottom: 36px; max-width: 800px; text-wrap-style: balance; }
+        .lede a { color: var(--color-purple-700); font-weight: 600; }
+
+        .idea { background: #fff; border: 1px solid var(--color-gray-200); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+        .idea-head { display: flex; align-items: center; gap: 12px; padding: 20px 26px 0; }
+        .idea-num { flex: none; width: 26px; height: 26px; border-radius: 999px; background: var(--color-purple-600); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+        .idea-head h2 { font-size: 19px; font-weight: 700; color: var(--color-gray-900); text-wrap-style: auto; }
+        /* the copy-length badge: the amount of prose is a variable on this page, so it is
+           labelled rather than left to be counted */
+        .len { margin-left: auto; flex: none; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); background: var(--color-gray-100); border-radius: 100px; padding: 4px 11px; }
+        .idea-note { padding: 8px 26px 0 64px; font-size: 14px; color: var(--color-gray-600); line-height: 1.6; text-wrap-style: balance; }
+        /* the stage carries the section's own background, so treatments are judged against
+           what they actually sit on rather than against white */
+        .stage { margin: 20px; padding: 32px 34px 36px; border-radius: 10px; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+        .stage-grid { display: grid; grid-template-columns: 250px 1fr; gap: 48px; align-items: start; }
+        /* grid items default to min-width:auto, so the ticker's max-content track was widening
+           the whole copy column and pushing every idea's content past the card edge */
+        .stage-grid > * { min-width: 0; }
+        @media (max-width: 900px) { .stage-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+        .ring { width: 100%; max-width: 210px; padding: 6px; border-radius: 999px; background: conic-gradient(from -92deg, var(--color-purple-500) 0 31%, transparent 31% 34.5%, var(--color-blue-500) 34.5% 64%, transparent 64% 67.5%, var(--color-green-500) 67.5% 97.5%, transparent 97.5% 100%); }
+        .ring img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; border: 4px solid var(--color-gray-50); display: block; }
+
+        .jh { font-size: 29px; font-weight: 300; line-height: 1.25; color: var(--color-gray-800); margin-bottom: 18px; }
+        .jh strong { font-weight: 600; }
+        .jp { font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--color-gray-700); margin-bottom: 14px; }
+        .jp strong { font-weight: 600; color: var(--color-gray-800); }
+        /* the truncated stand-in: the copy is not the variable on this page */
+        .jp-short { color: var(--color-gray-400); }
+        .sig { font-family: 'Caveat', cursive; font-size: 30px; line-height: 1; color: var(--color-gray-700); transform: rotate(-2deg); display: inline-block; }
+        .grp-label { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-gray-400); margin-bottom: 9px; }
+
+        /* ============ 1. Annotated portrait ============ */
+        /* facts placed around a cut-out, arrows drawn back to him. positions are hand-set,
+           which is exactly the trade-off of this idea: it looks composed and it does not
+           survive a copy change without being re-placed. */
+        /* the scene is a fixed 900x560 canvas: the facts are placed in px and the arrows are
+           drawn in the same coordinates, so the two can never drift apart */
+        .t1-scene { position: relative; width: 900px; height: 560px; margin-inline: auto; }
+        .t1-photo { position: absolute; left: 50%; top: 24px; transform: translateX(-50%); width: 300px; }
+        /* the soft brand wash the reference has behind the shoulders - a radial glow rather
+           than a shape, so it never reads as a second container */
+        .t1-photo::before { content: ""; position: absolute; inset: -18% -22% -30%; border-radius: 50%; background: radial-gradient(60% 55% at 50% 62%, var(--color-purple-100), transparent 70%); }
+        .t1-photo img { position: relative; width: 100%; display: block; border-radius: 999px; }
+        /* an explicit width, not max-width: these boxes are absolutely positioned, so they would
+           otherwise shrink to their text and text-align:right would have nothing to work against -
+           which is what left the arrowheads pointing at empty space */
+        .t1-fact { position: absolute; font-size: 19px; font-weight: 700; line-height: 1.3; color: var(--color-purple-600); width: 230px; }
+        /* the achievements come out of the canvas and sit as tags at the top of the copy block:
+           the annotations are all credentials now, which keeps the canvas to one kind of thing */
+        .t1-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .t1-tags span { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 100px; font-size: 14px; font-weight: 700; line-height: 1; background: var(--color-purple-50); border: 1px solid var(--color-purple-200); color: var(--color-purple-700); }
+        .t1-fact em { display: block; font-family: 'Caveat', cursive; font-style: normal; font-size: 20px; font-weight: 700; color: var(--color-gray-600); margin-top: 6px; line-height: 1.25; }
+        .t1-fact i { font-style: italic; font-weight: 700; color: inherit; }
+        .t1-b { left: 0; top: 210px; text-align: right; }
+        .t1-c { right: 0; top: 150px; }
+        .t1-d { right: 10px; top: 320px; }
+        .t1-f { left: 556px; top: 448px; }
+        .t1-g { left: 120px; top: 440px; text-align: right; }
+        /* arrows: inline SVG so they recolour and re-angle in CSS rather than being artwork */
+        /* every arrow lives in one overlay sharing the scene's coordinate system, each drawn from
+           the portrait circle out to its own label, with the head aimed along the curve's tangent -
+           so every arrow leaves him and lands on its fact by construction rather than by eye */
+        .t1-arrows { position: absolute; inset: 0; width: 900px; height: 560px; color: var(--color-gray-800); pointer-events: none; }
+        @media (max-width: 1010px) {
+            /* the annotation layout is desktop-only by nature - below this it becomes a list */
+            .t1-scene { width: auto; height: auto; }
+            .t1-photo { position: static; transform: none; margin: 0 auto 24px; }
+            .t1-fact { position: static; max-width: none; text-align: left !important; margin-bottom: 14px; }
+            .t1-arrows { display: none; }
+        }
+
+        /* ============ 2. Speech bubbles ============ */
+        /* portrait hard left, the bubbles filling the column beside it - they wrap into rows
+           rather than stacking one per line, so they still read as a group he is saying */
+        .t2-scene { display: grid; grid-template-columns: 200px 1fr; gap: 44px; align-items: center; }
+        .t2-photo { width: 200px; }
+        .t2-photo img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; display: block; }
+        .t2-stack { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 14px 16px; }
+        .t2-bub { position: relative; white-space: nowrap; padding: 12px 18px; border-radius: 16px; font-size: 15px; font-weight: 500; line-height: 1.4; background: #fff; border: 1px solid var(--color-gray-200); color: var(--color-gray-700); box-shadow: 0 2px 10px -6px rgba(15,23,42,.25); }
+        /* the tail is a rotated square rather than a triangle, so it takes the border too */
+        /* tail on the left edge, pointing back at the portrait. a rotated square rather than a
+           triangle, so it picks up the bubble's border and fill without a second shape */
+        .t2-bub::before { content: ""; position: absolute; left: -6px; top: 50%; width: 11px; height: 11px; background: inherit; border-left: 1px solid var(--color-gray-200); border-bottom: 1px solid var(--color-gray-200); transform: translateY(-50%) rotate(45deg); }
+        .t2-bub.is-win { background: var(--color-purple-600); border-color: var(--color-purple-600); color: #fff; font-weight: 600; font-size: 16px; }
+        .t2-bub.is-win::before { border-color: var(--color-purple-600); }
+        .t2-bub strong { font-weight: 700; }
+        @media (max-width: 760px) { .t2-scene { grid-template-columns: 1fr; gap: 28px; } }
+
+        /* ============ 3. Stickers ============ */
+        .t3-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+        .t3 { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; background: #fff; border: 2px solid var(--color-gray-900); color: var(--color-gray-900); box-shadow: 3px 3px 0 var(--color-gray-900); }
+        .t3:nth-child(odd) { transform: rotate(-1.4deg); }
+        .t3:nth-child(even) { transform: rotate(1.2deg); }
+        .t3-win { display: inline-block; padding: 10px 18px; border-radius: 8px; font-size: 17px; font-weight: 800; border: 2px solid var(--color-gray-900); color: #fff; }
+        .t3-win:nth-child(1) { background: var(--color-purple-500); box-shadow: 3px 3px 0 var(--color-gray-900); transform: rotate(-2deg); }
+        .t3-win:nth-child(2) { background: var(--color-blue-500); box-shadow: 3px 3px 0 var(--color-gray-900); transform: rotate(1.6deg); }
+        .t3-win:nth-child(3) { background: var(--color-green-500); box-shadow: 3px 3px 0 var(--color-gray-900); transform: rotate(-1deg); }
+
+        /* ============ 4. Gradient outline ============ */
+        /* small lowercase monospace on a soft grey block, so nothing about the credentials
+           competes with the gradient achievement pills above them */
+        .t4-line { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+        .t4-c { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; font-weight: 400; color: var(--color-gray-500); background: var(--color-gray-100); border-radius: 4px; padding: 4px 8px; }
+        .t4-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+        /* gradient border via a padded wrapper - border-image would square off the pill ends */
+        .t4 { padding: 2px; border-radius: 100px; background: linear-gradient(120deg, var(--color-purple-500), var(--color-blue-500)); }
+        .t4 span { display: block; padding: 8px 18px; border-radius: 100px; background: var(--color-gray-50); font-size: 15px; font-weight: 600; color: var(--color-gray-800); }
+        .t4 span b { font-weight: 800; background: linear-gradient(120deg, var(--color-purple-600), var(--color-blue-600)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+        /* ============ 5. Hand-circled ============ */
+        .t5-line { font-size: 15px; font-weight: 500; color: var(--color-gray-600); margin-bottom: 26px; }
+        .t5-line i { font-style: normal; color: var(--color-gray-300); padding-inline: 8px; }
+        .t5-row { display: flex; flex-wrap: wrap; gap: 18px 40px; margin-bottom: 26px; }
+        .t5 { position: relative; font-size: 17px; font-weight: 600; color: var(--color-gray-800); padding: 10px 14px; }
+        /* the ring is an SVG ellipse with a wobbly path, so it reads as drawn rather than as a border */
+        .t5 svg { position: absolute; inset: -6px -10px; width: calc(100% + 20px); height: calc(100% + 12px); overflow: visible; pointer-events: none; }
+        .t5:nth-child(1) svg { color: var(--color-purple-500); }
+        .t5:nth-child(2) svg { color: var(--color-blue-500); }
+        .t5:nth-child(3) svg { color: var(--color-green-500); }
+
+        /* ============ 6. Ticker ============ */
+        .t6-line { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+        .t6-c { font-size: 12.5px; font-weight: 600; color: var(--color-gray-600); border: 1px solid var(--color-gray-200); background: #fff; border-radius: 100px; padding: 5px 11px; }
+        .t6-strip { overflow: hidden; border-block: 1px solid var(--color-gray-200); padding-block: 12px; margin-bottom: 22px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+        .t6-track { display: flex; gap: 40px; width: max-content; animation: t6-run 22s linear infinite; }
+        .t6-strip:hover .t6-track { animation-play-state: paused; }
+        .t6-track span { font-size: 17px; font-weight: 700; color: var(--color-gray-800); white-space: nowrap; display: flex; align-items: center; gap: 40px; }
+        .t6-track span::after { content: "✦"; color: var(--color-purple-400); font-size: 13px; }
+        /* the list is duplicated in the markup, so -50% lands exactly on the seam */
+        @keyframes t6-run { to { transform: translateX(-50%); } }
+        @media (prefers-reduced-motion: reduce) { .t6-track { animation: none; } }
+
+        /* ============ 9. Typed out ============ */
+        .t9-scene { display: grid; grid-template-columns: 200px 1fr; gap: 44px; align-items: center; }
+        .t9-photo { width: 200px; }
+        .t9-photo img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; display: block; }
+        .t9-thread { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 14px 16px; }
+        .t9-bub { position: relative; white-space: nowrap; padding: 12px 18px; border-radius: 16px; font-size: 15px; font-weight: 500; line-height: 1.4; background: #fff; border: 1px solid var(--color-gray-200); color: var(--color-gray-700); box-shadow: 0 2px 10px -6px rgba(15,23,42,.25); }
+        .t9-bub::before { content: ""; position: absolute; left: -6px; top: 50%; width: 11px; height: 11px; background: inherit; border-left: 1px solid var(--color-gray-200); border-bottom: 1px solid var(--color-gray-200); transform: translateY(-50%) rotate(45deg); }
+        .t9-bub.is-win { background: var(--color-purple-600); border-color: var(--color-purple-600); color: #fff; font-weight: 600; font-size: 16px; }
+        .t9-bub.is-win::before { border-color: var(--color-purple-600); }
+        .t9-bub strong { font-weight: 700; }
+        /* every bubble keeps the width of its finished sentence from the start - the script
+           measures it before clearing the text - so the row never reflows as the words arrive */
+        .t9-bub { visibility: hidden; }
+        .t9-bub.is-said { visibility: visible; }
+        /* the caret only exists on the bubble currently being written */
+        .t9-bub.is-typing::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 1px; background: currentColor; vertical-align: -2px; animation: t9-caret .85s steps(1) infinite; }
+        @keyframes t9-caret { 50% { opacity: 0; } }
+        .t9-replay { align-self: center; font-size: 12.5px; font-weight: 600; color: var(--color-gray-500); background: none; border: 1px solid var(--color-gray-200); border-radius: 100px; padding: 6px 13px; cursor: pointer; font-family: inherit; }
+        .t9-replay:hover { color: var(--color-gray-700); border-color: var(--color-gray-300); }
+        /* motion off: everything is simply already written, and no caret ever blinks */
+        @media (prefers-reduced-motion: reduce) {
+            .t9-bub { visibility: visible; }
+            .t9-replay { display: none; }
+        }
+        @media (max-width: 760px) { .t9-scene { grid-template-columns: 1fr; gap: 28px; } }
+
+        /* ============ 8. Proof strip ============ */
+        .t8-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .t8-c { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 100px; font-size: 12.5px; line-height: 1; font-weight: 600; background: #fff; border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
+        /* the shots run as a loop rather than a fixed row: there are four of them and only room
+           for three, and a loop keeps every one of them reachable without a control to press */
+        .t8-strip { overflow: hidden; margin-bottom: 24px; }
+        .t8-track { display: flex; gap: 14px; width: max-content; animation: t8-run 50s linear infinite; }
+        .t8-strip:hover .t8-track { animation-play-state: paused; }
+        /* the set is duplicated in the markup, so -50% lands exactly on the seam */
+        @keyframes t8-run { to { transform: translateX(-50%); } }
+        .t8-shot { margin: 0; width: 250px; flex: none; }
+        .t8-shot img { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 2px 12px -6px rgba(15,23,42,.5); }
+        .t8-shot figcaption { padding-top: 7px; font-size: 12px; font-weight: 600; color: var(--color-gray-500); line-height: 1.35; }
+        /* motion off: the loop stops and the strip becomes something you can scroll by hand */
+        @media (prefers-reduced-motion: reduce) {
+            .t8-strip { overflow-x: auto; }
+            .t8-track { animation: none; }
+        }
+        .t8-wins { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 22px; }
+        .t8-wins div b { display: block; font-size: 26px; font-weight: 700; line-height: 1.05; letter-spacing: -.01em; color: var(--color-purple-600); }
+        .t8-wins div span { font-size: 12.5px; font-weight: 500; color: var(--color-gray-500); }
+
+        /* ============ 7. Headline only ============ */
+        /* the facts are the heading - there is no tag row and no paragraph at all */
+        .t7 { max-width: 820px; }
+        .t7 h3 { font-size: 37px; font-weight: 300; line-height: 1.22; color: var(--color-gray-800); letter-spacing: -.01em; }
+        .t7 h3 b { font-weight: 700; color: var(--color-gray-900); }
+        .t7 h3 u { text-decoration: none; font-weight: 700; color: var(--color-purple-600); }
+        .t7 p { font-family: 'Caveat', cursive; font-size: 27px; font-weight: 700; color: var(--color-gray-600); transform: rotate(-1deg); margin-top: 22px; }
+
+    </style>
+</head>
+<body class="ui-body">
+
+<div class="wrap">
+    <h1>Hi there, I'm Jeremy — nine tag styles</h1>
+    <p class="lede">
+        Nine treatments for the same facts, from a straight translation of the chess-course
+        reference through to things this page has never done. Credentials (senior developer, 20
+        years, AI background, founder of Exercism, conference speaker, patent holder) and achievements (2M+ taught, 40+ countries,
+        free forever) always get different treatments from each other. <strong>The amount of prose
+        varies too</strong> — the badge on each idea says how much, from no paragraph at all
+        (7) through two sentences and the eight-sentence version from
+        <a href="jeremy-credentials-achievements-ideas.html">the credentials &amp; achievements
+        page</a>. Treatments and copy lengths mix
+        freely: any tag style here works with any length.
+    </p>
+
+    <!-- ============ 1 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">1</span><h2>Annotated portrait — the reference, translated</h2><span class="len">8 sentences</span></div>
+        <p class="idea-note">
+            The credentials float around him with hand-drawn arrows running outwards from the
+            photo to each one, so they read as things radiating from him rather than being pinned
+            on; two carry a Caveat sub-note. The achievements come off the canvas entirely and open
+            the copy block as purple tags, which keeps the drawing to one kind of fact and stops
+            the numbers competing with the portrait. Achievements take purple, credentials
+            stay near-black — the same two-tier read the reference gets from its pink and its black.
+            <strong>Needs a background-free cut-out of Jeremy to work</strong>; shown here on the
+            circular photo we have, which is why the arrows land softer than they should.
+        </p>
+        <div class="stage">
+            <div class="t1-scene">
+                <div class="t1-photo">
+                    <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
+                </div>
+
+                <p class="t1-fact t1-b">Founder of <i>Exercism</i><em>free, forever,<br>for everyone</em></p>
+                <p class="t1-fact t1-c">20+ years of building software</p>
+                <p class="t1-fact t1-d">Started out in <i>AI</i><em>back when that<br>meant something else</em></p>
+                <p class="t1-fact t1-f">Conference <i>speaker</i><em>Baruco, Full Stack Fest,<br>and plenty more</em></p>
+                <p class="t1-fact t1-g">Patent <i>holder</i><em>still used in<br>heart surgery</em></p>
+
+                <!-- arrows are paths, not artwork: recolourable and re-angleable in CSS -->
+                <!-- one overlay, scene coordinates: see the CSS note above -->
+                <svg class="t1-arrows" viewBox="0 0 900 560" fill="none" aria-hidden="true">
+   <path d="M294 222 Q272 229 250 223" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+   <path d="M260 232 L250 223 M263 221 L250 223" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+   <path d="M605 124 Q639 141 657 176" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+   <path d="M657 163 L657 176 M647 168 L657 176" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+   <path d="M588 260 Q606 306 647 333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+   <path d="M640 322 L647 333 M634 331 L647 333" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+   <path d="M511 325 Q509 400 550 462" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+   <path d="M548 449 L550 462 M539 455 L550 462" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+   <path d="M422 335 Q372 384 360 454" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+   <path d="M367 443 L360 454 M357 441 L360 454" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            </div>
+
+            <div style="max-width:760px;margin:36px auto 0">
+                <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <div class="t1-tags">
+                    <span>2M+ people taught</span>
+                    <span>40+ countries reached</span>
+                    <span>Free, forever</span>
+                </div>
+                <p class="jp">I've been writing software for twenty years and I still think it's the most fun you can have with a keyboard. I've built companies that worked, a couple that spectacularly didn't, and founded <strong>Exercism</strong> — a not-for-profit that has now taught over two million people to code, for free. What all of that taught me is that <strong>nobody learns to code by watching someone else do it</strong>. So Jiki doesn't hand you answers: it hands you a problem just past what you can already do, then stays next to you while you work it out. When you get stuck it tells you what your code actually did, in plain English, instead of leaving you to decode an error message. I'm not trying to get you through a quiz — I want you to be <strong>the person your friends call when their laptop is on fire</strong>. Programming gave me a career, a livelihood and a genuinely brilliant twenty years making things. I'd very much like you to have that too.</p>
+                <span class="sig">— Jeremy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 2 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2</span><h2>Speech bubbles</h2><span class="len">2 sentences</span></div>
+        <p class="idea-note">
+            The facts as things he is saying rather than labels stuck on him. Portrait hard left,
+            the bubbles filling the column beside it and wrapping into rows, each one a single
+            unbroken line with its tail on the left edge pointing back at him. Achievements in solid purple, credentials in white. Warmer
+            than idea 1, and the only annotation idea that works with the circular photo the page
+            already has — a tail can point at a disc perfectly happily, an arrow cannot.
+        </p>
+        <div class="stage">
+            <div class="t2-scene">
+                <div class="t2-photo"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div class="t2-stack">
+                    <span class="t2-bub is-win">I've taught <strong>2M+ people</strong> to code</span>
+                    <span class="t2-bub">Been building software 20 years</span>
+                    <span class="t2-bub is-win">…in <strong>40+ countries</strong>, all of it free</span>
+                    <span class="t2-bub">Started out in AI, founded Exercism</span>
+                    <span class="t2-bub">I speak at conferences too</span>
+                    <span class="t2-bub">My patent is used in heart surgery</span>
+                </div>
+            </div>
+            <div style="max-width:760px;margin:26px 0 0">
+                <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <p class="jp">Twenty years building software, and I founded <strong>Exercism</strong> — a not-for-profit that's taught over two million people to code for free. Jiki is me trying to do that properly: no answers handed over, just a problem slightly past what you can already do, and someone sat next to you while you work it out.</p>
+                    <span class="sig">— Jeremy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 3 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">3</span><h2>Stickers</h2><span class="len">8 sentences</span></div>
+        <p class="idea-note">
+            Chunky rotated tags with a hard offset shadow — laptop stickers. Achievements get the
+            brand fills, credentials stay white. Speaks the same language as the sticker-press CTA
+            button in <strong>cta-button-ideas.html</strong>, so it would not arrive alone.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div>
+                    <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                    <div class="t3-row">
+                        <span class="t3-win">2M+ taught</span>
+                        <span class="t3-win">40+ countries</span>
+                        <span class="t3-win">Free forever</span>
+                    </div>
+                    <div class="t3-row">
+                        <span class="t3">Senior developer</span>
+                        <span class="t3">20 years experience</span>
+                        <span class="t3">AI background</span>
+                        <span class="t3">Founder of Exercism</span>
+                        <span class="t3">Conference speaker</span>
+                        <span class="t3">Patent holder</span>
+                    </div>
+                    <p class="jp">I've been writing software for twenty years and I still think it's the most fun you can have with a keyboard. I've built companies that worked, a couple that spectacularly didn't, and founded <strong>Exercism</strong> — a not-for-profit that has now taught over two million people to code, for free. What all of that taught me is that <strong>nobody learns to code by watching someone else do it</strong>. So Jiki doesn't hand you answers: it hands you a problem just past what you can already do, then stays next to you while you work it out. When you get stuck it tells you what your code actually did, in plain English, instead of leaving you to decode an error message. I'm not trying to get you through a quiz — I want you to be <strong>the person your friends call when their laptop is on fire</strong>. Programming gave me a career, a livelihood and a genuinely brilliant twenty years making things. I'd very much like you to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 4 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">4</span><h2>Gradient outline</h2><span class="len">2 sentences</span></div>
+        <p class="idea-note">
+            Achievements in pills with a purple-to-blue gradient border and the figure itself
+            gradient-filled, tying the Learn-to-Code purple and Learn-to-Build blue together in one
+            mark. Credentials sit underneath as small lowercase
+            monospace on soft grey — so nothing competes with the pills above.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div>
+                    <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                    <div class="t4-row">
+                        <span class="t4"><span><b>2M+</b> people taught</span></span>
+                        <span class="t4"><span><b>40+</b> countries reached</span></span>
+                        <span class="t4"><span>Free, <b>forever</b></span></span>
+                    </div>
+                    <div class="t4-line">
+                        <span class="t4-c">senior developer</span>
+                        <span class="t4-c">20 years experience</span>
+                        <span class="t4-c">ai background</span>
+                        <span class="t4-c">founder of exercism</span>
+                        <span class="t4-c">conference speaker</span>
+                        <span class="t4-c">patent holder (heart surgery)</span>
+                    </div>
+                    <p class="jp">Twenty years building software, and I founded <strong>Exercism</strong> — a not-for-profit that's taught over two million people to code for free. Jiki is me trying to do that properly: no answers handed over, just a problem slightly past what you can already do, and someone sat next to you while you work it out.</p>
+                    <span class="sig">— Jeremy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 5 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">5</span><h2>Hand-circled</h2><span class="len">8 sentences</span></div>
+        <p class="idea-note">
+            Credentials as a plain grey line; each achievement ringed with a wobbly marker ellipse,
+            as if someone went through and circled the bits that matter. Closest of the twelve to
+            the page's existing hand-drawn language, and it costs no extra furniture.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div>
+                    <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                    <p class="t5-line">Senior developer<i>·</i>20 years experience<i>·</i>AI background<i>·</i>Founder of Exercism<i>·</i>Conference speaker<i>·</i>Patent holder</p>
+                    <div class="t5-row">
+                        <span class="t5">2M+ people taught
+                            <svg viewBox="0 0 200 60" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M22 8C60 1 150 2 180 14c22 9 14 30-16 37-38 9-120 8-152-4C-6 40 0 20 26 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        </span>
+                        <span class="t5">40+ countries
+                            <svg viewBox="0 0 200 60" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M28 6C66 0 152 3 178 16c20 10 10 29-20 35-38 8-118 7-148-6C-6 36 2 18 30 10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        </span>
+                        <span class="t5">Free, forever
+                            <svg viewBox="0 0 200 60" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M24 10C62 2 148 1 176 13c22 10 16 31-14 38-38 8-122 6-152-6C-8 38 2 19 28 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        </span>
+                    </div>
+                    <p class="jp">I've been writing software for twenty years and I still think it's the most fun you can have with a keyboard. I've built companies that worked, a couple that spectacularly didn't, and founded <strong>Exercism</strong> — a not-for-profit that has now taught over two million people to code, for free. What all of that taught me is that <strong>nobody learns to code by watching someone else do it</strong>. So Jiki doesn't hand you answers: it hands you a problem just past what you can already do, then stays next to you while you work it out. When you get stuck it tells you what your code actually did, in plain English, instead of leaving you to decode an error message. I'm not trying to get you through a quiz — I want you to be <strong>the person your friends call when their laptop is on fire</strong>. Programming gave me a career, a livelihood and a genuinely brilliant twenty years making things. I'd very much like you to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 6 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">6</span><h2>Ticker</h2><span class="len">8 sentences</span></div>
+        <p class="idea-note">
+            Credentials static as small outline chips; achievements running as an infinite marquee
+            between two hairlines. Puts motion into a section that currently has none — but it is
+            decorative motion carrying real information, so it has to pause on hover and stop
+            entirely under reduced-motion.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div>
+                    <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                    <div class="t6-line">
+                        <span class="t6-c">Senior developer</span>
+                        <span class="t6-c">20 years experience</span>
+                        <span class="t6-c">AI background</span>
+                        <span class="t6-c">Founder of Exercism</span>
+                        <span class="t6-c">Conference speaker</span>
+                        <span class="t6-c">Patent holder</span>
+                    </div>
+                    <div class="t6-strip">
+                        <!-- the list is duplicated so the -50% keyframe lands exactly on the seam -->
+                        <div class="t6-track">
+                            <span>2M+ people taught</span><span>40+ countries reached</span><span>Free, forever</span>
+                            <span>2M+ people taught</span><span>40+ countries reached</span><span>Free, forever</span>
+                        </div>
+                    </div>
+                    <p class="jp">I've been writing software for twenty years and I still think it's the most fun you can have with a keyboard. I've built companies that worked, a couple that spectacularly didn't, and founded <strong>Exercism</strong> — a not-for-profit that has now taught over two million people to code, for free. What all of that taught me is that <strong>nobody learns to code by watching someone else do it</strong>. So Jiki doesn't hand you answers: it hands you a problem just past what you can already do, then stays next to you while you work it out. When you get stuck it tells you what your code actually did, in plain English, instead of leaving you to decode an error message. I'm not trying to get you through a quiz — I want you to be <strong>the person your friends call when their laptop is on fire</strong>. Programming gave me a career, a livelihood and a genuinely brilliant twenty years making things. I'd very much like you to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 7 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">7</span><h2>Headline only</h2><span class="len">no prose, no tags</span></div>
+        <p class="idea-note">
+            The extreme low-text end: no tag row and no paragraph at all. The facts are folded into
+            one oversized sentence, with the numbers picked out in purple, and a single handwritten
+            line underneath for the personality. Whole section reads in about four seconds — and
+            gives up every fact that does not fit the sentence.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div class="t7">
+                    <h3>Hi 👋 I'm <b>Jeremy</b>. I've spent <u>20 years</u> building software. I'm a patent holder, conference speaker and mission driven entrepreneur. My products have taught <u>2M+ people</u> to code across <u>40+ countries</u>.</h3>
+                    <p>Jiki comprises everything I've learnt about education and coding — hopefully into the best product I've made. — Jeremy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============ 8 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">8</span><h2>Proof strip</h2><span class="len">2 sentences</span></div>
+        <p class="idea-note">
+            The only idea that <em>shows</em> a credential instead of stating it. "Conference
+            speaker" is the one claim on the list that can be photographed, so the tag row stays
+            plain and the evidence goes underneath as a looping strip — a teenage Jeremy at a laptop
+            where it all began, him on stage at Baruco, at Full Stack Fest and mid-talk, the Baruco
+            line-up poster, and him at TEDx. Because it loops, a sixth shot costs no more room than
+            three. Needs real photography, but it is the only version a sceptical reader cannot
+            wave away.
+        </p>
+        <div class="stage">
+            <div class="stage-grid">
+                <div class="ring"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div>
+                    <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                    <div class="t8-row">
+                        <span class="t8-c">Senior developer</span>
+                        <span class="t8-c">20 years experience</span>
+                        <span class="t8-c">AI background</span>
+                        <span class="t8-c">Founder of Exercism</span>
+                        <span class="t8-c">Patent holder (heart surgery)</span>
+                        <span class="t8-c">Conference speaker</span>
+                    </div>
+                    <div class="t8-strip">
+                        <!-- the set appears twice so the -50% keyframe lands on the seam -->
+                        <div class="t8-track">
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-where-it-began.webp" alt="A teenage Jeremy at a laptop with a friend">
+                                <figcaption>Where it all began</figcaption>
+                            </figure>
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-speaking-baruco.jpg" alt="Jeremy on stage at Barcelona Ruby Conference">
+                                <figcaption>Barcelona Ruby Conference, 2014</figcaption>
+                            </figure>
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-speaking-fullstack.jpg" alt="Jeremy MCing at Full Stack Fest">
+                                <figcaption>Full Stack Fest, back-end MC</figcaption>
+                            </figure>
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-baruco-poster.jpg" alt="Barcelona Ruby Conference line-up poster">
+                                <figcaption>On the Baruco line-up poster</figcaption>
+                            </figure>
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-speaking-stage.jpg" alt="Jeremy speaking on stage, mid-talk">
+                                <figcaption>Mid-talk, notes in hand</figcaption>
+                            </figure>
+                            <figure class="t8-shot">
+                                <img src="images/jeremy-ted.jpg" alt="Jeremy leaning on the letters of a TED sign">
+                                <figcaption>TEDx</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-where-it-began.webp" alt="A teenage Jeremy at a laptop with a friend">
+                                <figcaption>Where it all began</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-speaking-baruco.jpg" alt="Jeremy on stage at Barcelona Ruby Conference">
+                                <figcaption>Barcelona Ruby Conference, 2014</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-speaking-fullstack.jpg" alt="Jeremy MCing at Full Stack Fest">
+                                <figcaption>Full Stack Fest, back-end MC</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-baruco-poster.jpg" alt="Barcelona Ruby Conference line-up poster">
+                                <figcaption>On the Baruco line-up poster</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-speaking-stage.jpg" alt="Jeremy speaking on stage, mid-talk">
+                                <figcaption>Mid-talk, notes in hand</figcaption>
+                            </figure>
+                            <figure class="t8-shot" aria-hidden="true">
+                                <img src="images/jeremy-ted.jpg" alt="Jeremy leaning on the letters of a TED sign">
+                                <figcaption>TEDx</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="t8-wins">
+                        <div><b>2M+</b><span>people taught</span></div>
+                        <div><b>40+</b><span>countries reached</span></div>
+                        <div><b>Free</b><span>forever, for everyone</span></div>
+                    </div>
+                    <p class="jp">Twenty years building software, and I founded <strong>Exercism</strong> — a not-for-profit that's taught over two million people to code for free. Jiki is me trying to do that properly: no answers handed over, just a problem slightly past what you can already do, and someone sat next to you while you work it out.</p>
+                    <span class="sig">— Jeremy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ 9 ============ -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">9</span><h2>Typed out</h2><span class="len">2 sentences</span></div>
+        <p class="idea-note">
+            Idea 2 with time added: the bubbles fill in one after another and the words type
+            themselves out, caret and all, as though he is writing to you as you scroll past. Same
+            wrapped row as idea 2 — each bubble is measured and pinned to its finished width before
+            the text is cleared, so nothing on screen moves while the words arrive. Scroll it into
+            view to watch, or hit replay.
+        </p>
+        <div class="stage">
+            <div class="t9-scene">
+                <div class="t9-photo"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                <div class="t9-thread" id="t9-thread">
+                    <span class="t9-bub is-win">I've taught <strong>2M+ people</strong> to code</span>
+                    <span class="t9-bub">Been building software 20 years</span>
+                    <span class="t9-bub is-win">…in <strong>40+ countries</strong>, all of it free</span>
+                    <span class="t9-bub">Started out in AI, founded Exercism</span>
+                    <span class="t9-bub">I speak at conferences too</span>
+                    <span class="t9-bub">My patent is used in heart surgery</span>
+                    <button class="t9-replay" type="button">Replay</button>
+                </div>
+            </div>
+            <div style="max-width:760px;margin:26px 0 0">
+                <h3 class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</h3>
+                <p class="jp">Twenty years building software, and I founded <strong>Exercism</strong> — a not-for-profit that's taught over two million people to code for free. Jiki is me trying to do that properly: no answers handed over, just a problem slightly past what you can already do, and someone sat next to you while you work it out.</p>
+                <span class="sig">— Jeremy</span>
+            </div>
+        </div>
+        <script>
+         (function () {
+          var thread = document.getElementById('t9-thread');
+          if (!thread) return;
+          var bubbles = Array.prototype.slice.call(thread.querySelectorAll('.t9-bub'));
+          var replay = thread.querySelector('.t9-replay');
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+          /* Each bubble is measured while its sentence is still in place, then pinned to that
+             width and emptied. Typing therefore fills a box that never changes size, so no
+             bubble already on screen moves when the next one starts. */
+          var script = bubbles.map(function (bubble) {
+           bubble.style.width = bubble.getBoundingClientRect().width + 'px';
+           var walker = document.createTreeWalker(bubble, NodeFilter.SHOW_TEXT, null);
+           var parts = [], node;
+           while ((node = walker.nextNode())) parts.push({ node: node, text: node.nodeValue });
+           return { bubble: bubble, parts: parts };
+          });
+
+          var timers = [];
+          function clear() {
+           timers.forEach(clearTimeout);
+           timers = [];
+           script.forEach(function (line) {
+            line.bubble.classList.remove('is-said', 'is-typing');
+            line.parts.forEach(function (p) { p.node.nodeValue = ''; });
+           });
+          }
+
+          function type(index, done) {
+           var line = script[index];
+           line.bubble.classList.add('is-said', 'is-typing');
+           var part = 0, at = 0;
+           (function step() {
+            if (part >= line.parts.length) {
+             line.bubble.classList.remove('is-typing');
+             return done();
+            }
+            var p = line.parts[part];
+            if (at >= p.text.length) { part++; at = 0; return step(); }
+            /* two characters a tick: one at a time reads as a teleprinter, and six sentences
+               would take the best part of ten seconds */
+            at = Math.min(at + 2, p.text.length);
+            p.node.nodeValue = p.text.slice(0, at);
+            timers.push(setTimeout(step, 34));
+           })();
+          }
+
+          function run() {
+           clear();
+           var i = 0;
+           (function next() {
+            if (i >= script.length) return;
+            type(i++, function () { timers.push(setTimeout(next, 260)); });
+           })();
+          }
+
+          clear();
+          replay.addEventListener('click', run);
+          var observer = new IntersectionObserver(function (entries) {
+           entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            timers.push(setTimeout(run, 200));
+            observer.disconnect();
+           });
+          }, { threshold: 0.5 });
+          observer.observe(thread);
+         })();
+        </script>
+    </div>
+
+</div>
+
+<script src="../ui-kit/implementation-notes.js"></script>
+</body>
+</html>
