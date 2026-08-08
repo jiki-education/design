@@ -6,7 +6,7 @@
     <title>Hi there, I'm Jeremy - ideas without the polaroid</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../ui-kit/styles.css">
 
     <script>
@@ -138,7 +138,7 @@ brand colour into a section that currently has none.
         .fact:nth-child(2)::after { background: var(--color-blue-200); }
         .fact:nth-child(3)::after { background: var(--color-green-200); }
         .jp { font-size: 15px; font-weight: 300; line-height: 1.65; color: var(--color-gray-600); margin-bottom: 14px; }
-        .sig { font-family: 'Caveat', cursive; font-size: 30px; line-height: 1; color: var(--color-gray-700); transform: rotate(-2deg); display: inline-block; }
+        .sig { font-family: 'Caveat', cursive; font-weight: 500; font-size: 30px; line-height: 1; color: var(--color-gray-700); transform: rotate(-2deg); display: inline-block; }
 
         /* the learner faces row, as it sits under the portrait today */
         .faces { display: flex; align-items: center; gap: 14px; }
@@ -171,9 +171,11 @@ brand colour into a section that currently has none.
         .sec:has(.v8) { grid-template-columns: 240px 1fr; }
         .sec:has(.v8) .jp { font-size: 17px; }
         .sec:has(.v8) .jh { font-size: 30px; }
-        .v8 { width: 176px; padding: 6px; border-radius: 999px;
-               filter: drop-shadow(-2px 0px 6px var(--color-purple-500)); }
-        .v8 img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; border: 4px solid var(--color-gray-50); }
+        .v8 { width: 176px; padding: 6px; border-radius: 999px; }
+        /* hairline ring drawn as a spread shadow so it sits outside the image without
+           changing its size, plus a soft shadow to lift it off the panel */
+        .v8 img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; border: 4px solid var(--color-gray-50);
+                  box-shadow: 0 0 0 1px var(--color-gray-300), 0 4px 12px rgba(15, 23, 42, 0.10); }
 
         /* CV rail, borrowed from the credentials page (idea 5). Each item sits on a coloured
            tick, so the rail and the segmented ring share the same purple/blue/green run. */
@@ -181,19 +183,129 @@ brand colour into a section that currently has none.
         .c8 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
         .c8 li { font-size: 13.5px; font-weight: 600; color: var(--color-gray-700); line-height: 1.35; padding-inline-start: 12px; border-inline-start: 2px solid var(--color-gray-300); }
         .c8 li em { display: block; font-style: normal; font-size: 12px; font-weight: 500; color: var(--color-gray-400); }
+        .c8 li em .sep { color: var(--color-gray-400); }
         .c8 li:nth-child(1) { border-color: var(--color-purple-400); }
         .c8 li:nth-child(2) { border-color: var(--color-blue-400); }
         .c8 li:nth-child(3) { border-color: var(--color-green-400); }
         .c8 li:nth-child(4) { border-color: var(--color-amber-400); }
         .c8 li:nth-child(5) { border-color: var(--color-purple-400); }
 
-        /* achievements as marker-swept lines, same as the CV rail - the sweep is the element's
-           own background, so the text sits over it without needing a z-index */
-        .a8-row { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 16px; font-weight: 600; color: var(--color-gray-800); margin-bottom: 24px; }
-        .a8 { position: relative; padding: 2px 10px; border-radius: 3px 6px 4px 7px; }
-        .a8:nth-child(1) { background: var(--color-purple-200); }
-        .a8:nth-child(2) { background: var(--color-blue-200); }
-        .a8:nth-child(3) { background: var(--color-green-200); }
+        /* icon variant - the tick is replaced by a leading icon, so the item needs a flex row */
+        .c8--icons li { display: flex; gap: 9px; align-items: flex-start; border-inline-start: 0; padding-inline-start: 0; }
+        .c8--icons li > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; stroke-width: 1.9; }
+        .c8--heavy li > svg { stroke-width: 2.9; }
+        /* single-hue rail: every icon the same purple rather than one per credential */
+        .c8--icons li:nth-child(1) > svg { color: var(--color-purple-500); }
+        .c8--icons li:nth-child(2) > svg { color: var(--color-blue-500); }
+        .c8--icons li:nth-child(3) > svg { color: var(--color-green-500); }
+        /* must come after the per-item colours above - same specificity, so order decides */
+        .c8--icons.c8--purple li > svg { color: var(--color-purple-500); }
+
+        /* circled icons - the svg gets a tinted round plate of its own, so the icon reads as a
+           mark rather than as punctuation. Padding is inside the box, hence border-box. */
+        .c8--circles li { gap: 11px; }
+        /* -5px lifts the 28px plate so its centre lines up with the centre of the 18px first
+           line, rather than both sitting flush to the top of the item */
+        .c8--circles li > svg { box-sizing: border-box; width: 28px; height: 28px; padding: 6px; border-radius: 999px; margin-top: -5px; }
+        .c8--circles li:nth-child(1) > svg { background: var(--color-purple-100); }
+        .c8--circles li:nth-child(2) > svg { background: var(--color-blue-100); }
+        .c8--circles li:nth-child(3) > svg { background: var(--color-green-100); }
+
+        /* achievements as hand-drawn highlighter sweeps. The colour sits on a ::before rather than
+           on the element, so it can be rotated and overhang the text without moving it. Each one
+           gets its own elliptical radius and tilt, so no two strokes are the same shape.
+           isolation on the row keeps the negative z-index above the stage background. */
+        .a8-row { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 15px; font-weight: 600; color: var(--color-gray-800); margin-bottom: 24px; isolation: isolate; }
+        .a8 { position: relative; padding: 1px 9px; }
+        .a8::before { content: ''; position: absolute; z-index: -1; inset: -4px -8px; }
+        .a8:nth-child(1)::before { background: var(--color-purple-200); border-radius: 14px 6px 12px 5px / 6px 12px 5px 14px; transform: rotate(-0.7deg); }
+        .a8:nth-child(2)::before { background: var(--color-blue-200); border-radius: 5px 13px 6px 11px / 12px 5px 13px 6px; transform: rotate(0.5deg); }
+        .a8:nth-child(3)::before { background: var(--color-green-200); border-radius: 11px 5px 14px 7px / 5px 12px 6px 11px; transform: rotate(-0.4deg); }
+        /* single-hue sweeps - the shapes and tilts still differ, only the colour is shared */
+        /* Caveat runs much smaller than Poppins at the same px, hence the jump to 22px */
+        /* the font has to be set on .a8 itself - ui-kit's `.ui-body *` matches the span directly,
+           and a directly-matching rule always beats an inherited one from the row */
+        .a8-row--purple { font-size: 22px; font-weight: 600; color: var(--color-purple-700); }
+        .a8-row--purple .a8 { font-family: 'Caveat', cursive; }
+        /* no sweep behind the words - the purple type carries the tag on its own */
+        .a8-row--bare .a8::before { display: none; }
+        .a8-row--bare { font-size: 24px; }
+        .a8-row--bare .a8 { padding: 0; }
+        /* separator sits on the gap between tags, not inside them, so it never wraps alone */
+        .a8-row--bare .a8 + .a8::after { content: '•'; position: absolute; inset-inline-start: -16px; color: var(--color-purple-400); }
+        /* same purple sweeps, set in the page's own typeface instead of the handwriting */
+        .a8-row--purple.a8-row--type { font-size: 15px; }
+        .a8-row--purple.a8-row--type .a8 { font-family: 'Poppins', sans-serif; }
+        .a8-row--purple .a8::before { background: var(--color-purple-100); }
+
+        /* sticker tags, lifted from jeremy-tag-styles-ideas.html (idea 3) - solid brand fill,
+           hard black outline and a 3px offset shadow, each rotated slightly off square */
+        .a8s-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+        .a8s { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 15px; font-weight: 800; color: #fff; border: 2px solid var(--color-gray-900); box-shadow: 3px 3px 0 var(--color-gray-900); }
+        .a8s:nth-child(1) { background: var(--color-purple-500); transform: rotate(-2deg); }
+        .a8s:nth-child(2) { background: var(--color-blue-500); transform: rotate(1.6deg); }
+        .a8s:nth-child(3) { background: var(--color-green-500); transform: rotate(-1deg); }
+
+        /* badge tags - the sticker shape without the black. Each badge is built from one hue:
+           a pale fill, a mid border, dark text and a lighter offset shadow, so the outline
+           belongs to the colour rather than sitting on top of it. */
+        .a8b-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+        .a8b { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 15px; font-weight: 700; border: 2px solid; }
+        .a8b:nth-child(1) { background: var(--color-purple-100); border-color: var(--color-purple-400); color: var(--color-purple-800); box-shadow: 3px 3px 0 var(--color-purple-300); transform: rotate(-2deg); }
+        .a8b:nth-child(2) { background: var(--color-blue-100); border-color: var(--color-blue-400); color: var(--color-blue-800); box-shadow: 3px 3px 0 var(--color-blue-300); transform: rotate(1.6deg); }
+        .a8b:nth-child(3) { background: var(--color-green-100); border-color: var(--color-green-400); color: var(--color-green-800); box-shadow: 3px 3px 0 var(--color-green-300); transform: rotate(-1deg); }
+        /* badges carrying their own icon - the icon takes the badge's text colour, so each one
+           stays inside its single hue */
+        .a8b-row--icons .a8b { display: inline-flex; align-items: center; gap: 7px; }
+        .a8b-row--icons .a8b > svg { flex: none; width: 16px; height: 16px; stroke-width: 1.9; }
+
+        /* alternative portrait - rounded square with a brand block offset behind it, instead of
+           a circle. Keeps the .v8 class so the narrowed column and stage width still apply. */
+        /* extra space below because the offset block hangs 16px past the photo */
+        .v8--square { position: relative; padding: 0; border-radius: 20px; margin-bottom: 20px; }
+        .v8--square img { border: 3px solid var(--color-purple-500); border-radius: 20px; position: relative; z-index: 1; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.10); }
+        /* block offset down-RIGHT so nothing hangs past the photo's left edge, which keeps that
+           edge flush with the icons in the rail below */
+        .v8--square::before { content: ''; position: absolute; z-index: 0; inset: 12px -16px -12px 16px; border-radius: 20px; background: var(--color-purple-200); }
+
+        /* ===== photo treatment gallery ===== */
+        .pg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px 24px; padding: 4px; }
+        .pg figure { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+        .pg figcaption { font-size: 12.5px; line-height: 1.45; color: var(--color-gray-500); text-wrap-style: balance; }
+        .pg figcaption b { display: block; font-size: 13.5px; font-weight: 700; color: var(--color-gray-800); }
+        .pg .ph { position: relative; width: 140px; }
+        .pg .ph img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; position: relative; z-index: 1; }
+
+        /* 1. hairline ring - what the circle variants use now */
+        .p1 img { border-radius: 999px; border: 4px solid var(--color-gray-50); box-shadow: 0 0 0 1px var(--color-gray-300), 0 4px 12px rgba(15, 23, 42, 0.10); }
+        /* 2. solid purple ring, drawn as padding on the wrapper */
+        .p2 { padding: 5px; border-radius: 999px; background: var(--color-purple-500); }
+        .p2 img { border-radius: 999px; border: 4px solid var(--color-gray-50); }
+        /* 3. the tri-colour segmented ring this page is named after */
+        .p3 { padding: 6px; border-radius: 999px;
+              background: conic-gradient(from -92deg,
+                  var(--color-purple-500) 0 31%, transparent 31% 34.5%,
+                  var(--color-blue-500) 34.5% 64%, transparent 64% 67.5%,
+                  var(--color-green-500) 67.5% 97.5%, transparent 97.5% 100%); }
+        .p3 img { border-radius: 999px; border: 4px solid var(--color-gray-50); }
+        /* 4. no frame at all, just a coloured glow */
+        .p4 img { border-radius: 999px; border: 4px solid var(--color-gray-50); }
+        .p4 { filter: drop-shadow(0 3px 10px var(--color-purple-300)); border-radius: 999px; }
+        /* 5. rounded square with a purple edge */
+        .p5 img { border-radius: 20px; border: 3px solid var(--color-purple-500); }
+        /* 6. rounded square on an offset block - the sticker-on-card idea */
+        .p6 img { border-radius: 20px; border: 3px solid var(--color-purple-500); }
+        .p6::before { content: ''; position: absolute; z-index: 0; inset: 14px -14px -14px 14px; border-radius: 20px; background: var(--color-purple-200); }
+        /* 7. arch - rounded at the top, square at the foot, like a doorway */
+        .p7 img { border-radius: 999px 999px 20px 20px; box-shadow: 0 0 0 1px var(--color-gray-300), 0 4px 12px rgba(15, 23, 42, 0.10); }
+        /* 8-13: the hairline ring with one thing changed each time - border weight, ring colour,
+           or the shadow. All circles, so they are directly comparable with 1. */
+        .p8 img { border-radius: 999px; border: 10px solid #fff; box-shadow: 0 0 0 1px var(--color-gray-200), 0 6px 16px rgba(15, 23, 42, 0.12); }
+        .p9 img { border-radius: 999px; border: 4px solid var(--color-gray-50); box-shadow: 0 0 0 3px var(--color-gray-300); }
+        .p10 img { border-radius: 999px; border: 4px solid var(--color-gray-50); box-shadow: 0 0 0 3px var(--color-purple-300); }
+        .p11 img { border-radius: 999px; border: 4px solid var(--color-gray-50); box-shadow: 5px 5px 0 var(--color-purple-200); }
+        .p12 img { border-radius: 999px; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22); }
+        .p13 img { border-radius: 999px; border: 6px solid #fff; box-shadow: 0 0 0 1px var(--color-purple-200), 0 0 0 7px var(--color-purple-100); }
 
         /* placed round the rim by hand rather than with a transform chain - four fixed
            positions read more deliberately than an even orbit */
@@ -262,53 +374,7 @@ brand colour into a section that currently has none.
         same full copy in every one — both paragraphs, the signature, the learner faces and the
         testimonial — so the only variable is how the portrait is presented.
     </p>
-    <p class="rule">
-        <span aria-hidden="true">📌</span>
-        <span><b>The constraint:</b> the polaroid already appears three times on the landing page —
-        the five project prints, the three prints above the mid-page CTA, and Jeremy's portrait here.
-        This is the one that gives it up, because it is the only one where the frame competes with
-        the subject.</span>
-    </p>
 
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">1</span><h2>Solid ring</h2></div>
-        <p class="idea-note">The same circle with a flat purple ring instead of a gradient. Quieter, and it stops the portrait competing with the three coloured credential sweeps directly beside it — worth comparing against idea 1 rather than assuming the gradient wins.</p>
-        <div class="stage">
-                <div class="sec">
-                    <div class="viscol">
-                        <div class="v7"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
-                    </div>
-                    </div>
-                    <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                    </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                    <span class="sig">— Jeremy</span>
-                    </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
     <div class="idea">
         <div class="idea-head"><span class="idea-num">2</span><h2>Segmented ring</h2></div>
         <p class="idea-note">The ring split into three arcs in the credential colours — purple, blue, green — so it reads as the three facts wrapped around him rather than as decoration. The one version where the ring carries information.</p>
@@ -318,9 +384,9 @@ brand colour into a section that currently has none.
                         <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
                     <div class="c8">
                         <ul>
-                            <li>Senior Developer<em>Full stack • 35 years experience • Codes in 20+ languages (including his own!) • AI Degree (from 2005) • Patented Heart Surgery AI system</em></li>
-                            <li>Passionate Teacher<em>20 years experience • 3M+ people taught • Founded four education companies</em></li>
-                            <li>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more • Runs one of the world's largest OSS projects</em></li>
+                            <li>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></li>
+                            <li>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></li>
+                            <li>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></li>
                         </ul>
                     </div>
                     </div>
@@ -346,175 +412,34 @@ brand colour into a section that currently has none.
                 </div>
         </div>
     </div>
+
+    <!-- Variant: 2b with the tags set in Poppins rather than the Caveat handwriting -->
     <div class="idea">
-        <div class="idea-head"><span class="idea-num">3</span><h2>Staff badge</h2></div>
-        <p class="idea-note">The photo in a card with his name and role printed underneath on a tinted footer, like a conference badge. Carries the credentials in the visual itself, so the section leads with who he is before the copy has to say it.</p>
+        <div class="idea-head"><span class="idea-num">2f</span><h2>Segmented ring — purple tags, normal type</h2></div>
+        <p class="idea-note">2b with the handwriting taken out: the same purple sweeps and purple icons, but the tags set in Poppins like the rest of the page. Quieter than 2b, and the only handwritten thing in the section goes back to being the signature.</p>
         <div class="stage">
                 <div class="sec">
                     <div class="viscol">
-                        <div class="v12">
-                            <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
-                            <div class="v12-foot"><b>Jeremy Walker</b><span>Founder, Jiki &amp; Exercism</span></div>
-                        </div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
+                        <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <div class="c8 c8--icons c8--purple">
+                        <ul>
+                            <li><svg><use href="#ic-code"/></svg><div>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></div></li>
+                            <li><svg><use href="#ic-people"/></svg><div>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></div></li>
+                            <li><svg><use href="#ic-globe"/></svg><div>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></div></li>
+                        </ul>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8-row a8-row--purple a8-row--type">
+                        <span class="a8">Senior Developer</span>
+                        <span class="a8">Passionate teacher</span>
+                        <span class="a8">Mission Driven</span>
                     </div>
                     <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">4</span><h2>Offset colour block</h2></div>
-        <p class="idea-note">The photo square, with a solid brand block sitting behind it and shifted down-left. A sticker cut out and laid on coloured card - depth without a drop shadow, and it puts a real area of brand colour into a section that currently has none.</p>
-        <div class="stage">
-                <div class="sec">
-                    <div class="viscol">
-                        <div class="v14"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
-                    </div>
-                    </div>
-                    <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                    </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                    <span class="sig">— Jeremy</span>
-                    </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">5</span><h2>Inverted band</h2></div>
-        <p class="idea-note">The whole section flipped to the dark end of the palette, copy knocked out in white and the portrait ringed against it. Not a portrait treatment at all - it changes what the section IS, and gives the page a dark beat between two light ones.</p>
-        <div class="stage stage--dark">
-                <div class="sec">
-                    <div class="viscol">
-                        <div class="v16-photo"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
-                    </div>
-                    </div>
-                    <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                    </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                    <span class="sig">— Jeremy</span>
-                    </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">6</span><h2>Type-led</h2></div>
-        <p class="idea-note">The layout inverted: the heading set enormous and the portrait shrunk to a small mark beside his signature. The words carry the section and the photo is a footnote - worth testing given how weak a stranger's face is as evidence.</p>
-        <div class="stage">
-                <div class="sec sec--wide">
-                    <div style="max-width:820px">
-                        <p class="jh jh--huge">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                        <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                        </div>
-                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                        <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                        <div class="v18-sign">
-                            <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
-                            <span class="sig">— Jeremy</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="quote">
-                    <span class="mark">“</span>
-                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
-                    <div class="who">
-                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
-                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="idea">
-        <div class="idea-head"><span class="idea-num">7</span><h2>Centred stack</h2></div>
-        <p class="idea-note">Reflowed entirely: portrait centred at the top with the credentials under it, then the copy in two columns beneath. Turns a left-right section into a top-down one, which reads more like a letter and less like a profile card.</p>
-        <div class="stage">
-                <div class="sec sec--wide v21">
-                    <div class="v21-top">
-                        <div class="v21-photo"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                        <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
-                        <div class="facts">
-                        <span class="fact">3M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
-                        </div>
-                    </div>
-                    <div class="v21-cols">
-                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
-                        <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
-                    </div>
-                    <span class="sig">— Jeremy</span>
                 </div>
                 <div class="quote">
                     <span class="mark">“</span>
@@ -527,7 +452,244 @@ brand colour into a section that currently has none.
         </div>
     </div>
 
+    <!-- Variant: same layout, but each rail item is led by an icon instead of a coloured tick -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2b</span><h2>Segmented ring — icon rail</h2></div>
+        <p class="idea-note">The same section, with the rail's coloured ticks swapped for icons. The icon says what kind of fact each item is before the words do, and it removes three vertical coloured lines from a column that already has the ring above it.</p>
+        <div class="stage">
+                <div class="sec">
+                    <div class="viscol">
+                        <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <div class="c8 c8--icons c8--purple">
+                        <ul>
+                            <li><svg><use href="#ic-code"/></svg><div>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></div></li>
+                            <li><svg><use href="#ic-people"/></svg><div>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></div></li>
+                            <li><svg><use href="#ic-globe"/></svg><div>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></div></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8-row a8-row--purple a8-row--bare">
+                        <span class="a8">Senior Developer</span>
+                        <span class="a8">Passionate teacher</span>
+                        <span class="a8">Mission Driven</span>
+                    </div>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
+                    </div>
+                </div>
+                <div class="quote">
+                    <span class="mark">“</span>
+                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
+                    <div class="who">
+                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
+                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Variant: same layout, but the highlight tags become laptop stickers -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2c</span><h2>Segmented ring — sticker tags</h2></div>
+        <p class="idea-note">The same section, with the highlighter sweeps swapped for the sticker treatment from <code>jeremy-tag-styles-ideas.html</code> — solid brand fills, a hard black outline and an offset shadow, each one rotated a degree or two. Louder than the sweeps, and it speaks the same language as the sticker-press CTA.</p>
+        <div class="stage">
+                <div class="sec">
+                    <div class="viscol">
+                        <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <div class="c8 c8--icons c8--heavy">
+                        <ul>
+                            <li><svg><use href="#ic-code"/></svg><div>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></div></li>
+                            <li><svg><use href="#ic-people"/></svg><div>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></div></li>
+                            <li><svg><use href="#ic-globe"/></svg><div>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></div></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8s-row">
+                        <span class="a8s">Senior Developer</span>
+                        <span class="a8s">Passionate teacher</span>
+                        <span class="a8s">Mission Driven</span>
+                    </div>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    <span class="mark">“</span>
+                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
+                    <div class="who">
+                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
+                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Variant: sticker shape without the black outline, and a square portrait on an offset block -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2d</span><h2>Segmented ring — colour badges, square portrait</h2></div>
+        <p class="idea-note">The sticker idea with the black taken out: each badge is built from a single hue — pale fill, mid border, dark text, lighter offset shadow — so the outline belongs to the colour instead of sitting on top of it. Softer than 2c and it keeps the section inside the brand palette. The portrait is also shown differently here: a rounded square with a purple block offset behind it, so you can see the section without a circle in it.</p>
+        <div class="stage">
+                <div class="sec">
+                    <div class="viscol">
+                        <div class="v8 v8--square"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <div class="c8 c8--icons c8--circles">
+                        <ul>
+                            <li><svg><use href="#ic-code"/></svg><div>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></div></li>
+                            <li><svg><use href="#ic-people"/></svg><div>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></div></li>
+                            <li><svg><use href="#ic-globe"/></svg><div>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></div></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8b-row">
+                        <span class="a8b">Senior Developer</span>
+                        <span class="a8b">Passionate teacher</span>
+                        <span class="a8b">Mission Driven</span>
+                    </div>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    <span class="mark">“</span>
+                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
+                    <div class="who">
+                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
+                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Variant: 2d with the icons moved out of the rail and into the badges themselves -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">2e</span><h2>Segmented ring — icon badges, plain rail</h2></div>
+        <p class="idea-note">2d with the icons moved: each badge carries its own icon in the badge's colour, and the rail goes back to plain coloured ticks. The icons land in the column people read first, and the rail stops competing with them.</p>
+        <div class="stage">
+                <div class="sec">
+                    <div class="viscol">
+                        <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <div class="c8">
+                        <ul>
+                            <li>Senior Developer<em>Full stack <span class="sep">•</span> 35 years experience <span class="sep">•</span> Codes in 20+ languages (including his own!) <span class="sep">•</span> AI Degree (from 2005) <span class="sep">•</span> Patented Heart Surgery AI system</em></li>
+                            <li>Passionate Teacher<em>20 years experience <span class="sep">•</span> 3M+ people taught <span class="sep">•</span> Founded four education companies</em></li>
+                            <li>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more <span class="sep">•</span> Runs one of the world's largest OSS projects</em></li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8b-row a8b-row--icons">
+                        <span class="a8b"><svg><use href="#ic-code"/></svg>Senior Developer</span>
+                        <span class="a8b"><svg><use href="#ic-people"/></svg>Passionate teacher</span>
+                        <span class="a8b"><svg><use href="#ic-globe"/></svg>Mission Driven</span>
+                    </div>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
+                    <span class="sig">— Jeremy</span>
+                    </div>
+                </div>
+                <div class="quote">
+                    <span class="mark">“</span>
+                    <p>You learn to write code by writing code to solve problems that match, and push, your abilities. <strong>Jeremy is a master teacher.</strong></p>
+                    <div class="who">
+                        <span class="ring"><img src="https://assets.jiki.io/_next/static/media/thom.6047132d.webp" alt="Thom Chittom"></span>
+                        <div><strong>Thom Chittom</strong><em>Beginner</em></div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Reference strip: the portrait treatments on their own, out of the layout -->
+    <div class="idea">
+        <div class="idea-head"><span class="idea-num">★</span><h2>Seven ways to show the photo</h2></div>
+        <p class="idea-note">The portrait treatments on their own, at the size they appear in the layouts above. Any of these can be dropped into any of the variants — the frame and the tag style are independent choices.</p>
+        <div class="stage">
+            <div class="pg">
+                <figure>
+                    <div class="ph p1"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>1. Hairline ring</b>A thin grey edge and a soft shadow. The quietest option, and what the circle variants use now.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p2"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>2. Solid purple ring</b>One flat band of brand colour. Puts purple into the section without competing with the tags.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p3"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>3. Segmented ring</b>The ring split into three arcs in the credential colours, so the frame carries the three facts.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p4"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>4. Purple glow</b>No frame at all — just coloured light behind him. Softest of the seven.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p5"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>5. Rounded square</b>A purple edge on a square crop. Reads more like a product shot than a portrait.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p6"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>6. Offset block</b>The square on a purple block shifted behind it — a sticker laid on coloured card. Used in 2d.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p7"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>7. Arch</b>Rounded at the top, square at the foot. Keeps the head in a circle but gives the shape a base to sit on.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>8. Thick white mat</b>Idea 1 with a 10px white border instead of 4px. Reads as a print rather than an avatar.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p9"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>9. Thick grey ring</b>The hairline taken to 3px and the shadow dropped. Flat, and it holds its edge on any background.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p10"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>10. Thick purple ring</b>Same as 9 in brand colour. Quieter than the solid ring in 2 because the mat separates it from the face.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p11"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>11. Hard offset shadow</b>No blur — a solid purple shape behind, down-right. Matches the sticker tags in 2c and 2d.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p12"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>12. Deep lift</b>No border, one large soft shadow. Floats off the panel rather than sitting on it.</figcaption>
+                </figure>
+                <figure>
+                    <div class="ph p13"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
+                    <figcaption><b>13. Double ring</b>White mat, a purple hairline, then a wider pale purple ring outside it.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ic-code" viewBox="0 0 20 20">
+        <path fill="currentColor" fill-rule="evenodd" d="M7.3 5.3a1 1 0 010 1.4L4 10l3.3 3.3a1 1 0 11-1.4 1.4l-4-4a1 1 0 010-1.4l4-4a1 1 0 011.4 0zm5.4 0a1 1 0 011.4 0l4 4a1 1 0 010 1.4l-4 4a1 1 0 01-1.4-1.4L16 10l-3.3-3.3a1 1 0 010-1.4z" clip-rule="evenodd"/>
+    </symbol>
+    <symbol id="ic-people" viewBox="0 0 20 20">
+        <path fill="currentColor" d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.97 5.97 0 00-.75-2.906A3 3 0 0119 15v3h-3zM4.75 12.094A5.97 5.97 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+    </symbol>
+    <!-- world globe: outline sphere with an equator and a meridian, so it reads as a globe
+         rather than as a filled circle at 16px -->
+    <symbol id="ic-globe" viewBox="0 0 24 24">
+        <!-- stroke-width is left to CSS so it can be overridden per idea; it inherits into
+             the <use> shadow content only when it is not set on the markup here -->
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18"/>
+            <ellipse cx="12" cy="12" rx="4.2" ry="9"/>
+        </g>
+    </symbol>
+</svg>
 
 <script src="../ui-kit/implementation-notes.js"></script>
 </body>
