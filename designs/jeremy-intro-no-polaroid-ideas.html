@@ -166,12 +166,34 @@ brand colour into a section that currently has none.
         /* ===== 8. Segmented ring ===== */
         /* conic-gradient with hard stops and small transparent gaps, so the three arcs read as
            three separate marks rather than one multicoloured band */
-        .v8 { width: 236px; padding: 6px; border-radius: 999px;
-               background: conic-gradient(from -92deg,
-                   var(--color-purple-500) 0 31%, transparent 31% 34.5%,
-                   var(--color-blue-500) 34.5% 64%, transparent 64% 67.5%,
-                   var(--color-green-500) 67.5% 97.5%, transparent 97.5% 100%); }
+        /* narrower left column for this idea only - the rail needs less room than the faces block did */
+        .stage:has(.v8) { max-width: 900px; }
+        .sec:has(.v8) { grid-template-columns: 240px 1fr; }
+        .sec:has(.v8) .jp { font-size: 17px; }
+        .sec:has(.v8) .jh { font-size: 30px; }
+        .v8 { width: 176px; padding: 6px; border-radius: 999px;
+               filter: drop-shadow(-2px 0px 6px var(--color-purple-500)); }
         .v8 img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 999px; border: 4px solid var(--color-gray-50); }
+
+        /* CV rail, borrowed from the credentials page (idea 5). Each item sits on a coloured
+           tick, so the rail and the segmented ring share the same purple/blue/green run. */
+        .c8 .grp-label { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-gray-400); margin-bottom: 11px; }
+        .c8 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+        .c8 li { font-size: 13.5px; font-weight: 600; color: var(--color-gray-700); line-height: 1.35; padding-inline-start: 12px; border-inline-start: 2px solid var(--color-gray-300); }
+        .c8 li em { display: block; font-style: normal; font-size: 12px; font-weight: 500; color: var(--color-gray-400); }
+        .c8 li:nth-child(1) { border-color: var(--color-purple-400); }
+        .c8 li:nth-child(2) { border-color: var(--color-blue-400); }
+        .c8 li:nth-child(3) { border-color: var(--color-green-400); }
+        .c8 li:nth-child(4) { border-color: var(--color-amber-400); }
+        .c8 li:nth-child(5) { border-color: var(--color-purple-400); }
+
+        /* achievements as marker-swept lines, same as the CV rail - the sweep is the element's
+           own background, so the text sits over it without needing a z-index */
+        .a8-row { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: 16px; font-weight: 600; color: var(--color-gray-800); margin-bottom: 24px; }
+        .a8 { position: relative; padding: 2px 10px; border-radius: 3px 6px 4px 7px; }
+        .a8:nth-child(1) { background: var(--color-purple-200); }
+        .a8:nth-child(2) { background: var(--color-blue-200); }
+        .a8:nth-child(3) { background: var(--color-green-200); }
 
         /* placed round the rim by hand rather than with a transform chain - four fixed
            positions read more deliberately than an even orbit */
@@ -262,17 +284,17 @@ brand colour into a section that currently has none.
                             <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
                             <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
                         </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
+                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                     <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                     </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                     <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
@@ -294,25 +316,23 @@ brand colour into a section that currently has none.
                 <div class="sec">
                     <div class="viscol">
                         <div class="v8"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                    <div class="faces">
-                        <span class="stack">
-                            <img src="https://assets.jiki.io/_next/static/media/laura.2d859ba1.webp" alt="Laura, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/abhinav.958afa66.webp" alt="Abhinav, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
-                            <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
-                        </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
+                    <div class="c8">
+                        <ul>
+                            <li>Senior Developer<em>Full stack • 35 years experience • Codes in 20+ languages (including his own!) • AI Degree (from 2005) • Patented Heart Surgery AI system</em></li>
+                            <li>Passionate Teacher<em>20 years experience • 3M+ people taught • Founded four education companies</em></li>
+                            <li>Mission Driven Entrepreneur<em>Founder of multiple for-good orgs including Exercism, Kaido, Thalamus, and more • Runs one of the world's largest OSS projects</em></li>
+                        </ul>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
-                    <div class="facts">
-                        <span class="fact">2M+ people taught</span>
-                        <span class="fact">20 years building software</span>
-                        <span class="fact">Founder of Exercism</span>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong style="white-space: nowrap;">millions&nbsp;of&nbsp;people</strong> level up their coding skills, all around the world.</p>
+                    <div class="a8-row">
+                        <span class="a8">Senior Developer</span>
+                        <span class="a8">Passionate teacher</span>
+                        <span class="a8">Mission Driven</span>
                     </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
-                    <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
+                    <p class="jp">Programming gave me a career, a livelihood and a lot of good years. I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
                 </div>
@@ -343,17 +363,17 @@ brand colour into a section that currently has none.
                             <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
                             <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
                         </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
+                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                     <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                     </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                     <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
@@ -382,17 +402,17 @@ brand colour into a section that currently has none.
                             <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
                             <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
                         </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
+                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                     <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                     </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                     <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
@@ -421,17 +441,17 @@ brand colour into a section that currently has none.
                             <img src="https://assets.jiki.io/_next/static/media/oleksandra.90dd2b03.webp" alt="Oleksandra, Jiki learner">
                             <img src="https://assets.jiki.io/_next/static/media/lukas.21b8d43d.webp" alt="Lukas, Jiki learner">
                         </span>
-                        <p>my ventures have supported<br><strong>2 million+</strong> learners</p>
+                        <p>my ventures have supported<br><strong>3 million+</strong> learners</p>
                     </div>
                     </div>
                     <div>
-                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                    <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                     <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                     </div>
-                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                    <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                     <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                     <span class="sig">— Jeremy</span>
                     </div>
@@ -452,13 +472,13 @@ brand colour into a section that currently has none.
         <div class="stage">
                 <div class="sec sec--wide">
                     <div style="max-width:820px">
-                        <p class="jh jh--huge">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                        <p class="jh jh--huge">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                         <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                         </div>
-                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                         <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                         <div class="v18-sign">
                             <img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker">
@@ -483,15 +503,15 @@ brand colour into a section that currently has none.
                 <div class="sec sec--wide v21">
                     <div class="v21-top">
                         <div class="v21-photo"><img src="https://assets.jiki.io/static/content/images/avatars/ihid-99edf390ba63.webp" alt="Jeremy Walker"></div>
-                        <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>two million people</strong> level up their coding skills.</p>
+                        <p class="jh">Hi there! 👋 I'm Jeremy, and I've helped over <strong>three million people</strong> level up their coding skills.</p>
                         <div class="facts">
-                        <span class="fact">2M+ people taught</span>
+                        <span class="fact">3M+ people taught</span>
                         <span class="fact">20 years building software</span>
                         <span class="fact">Founder of Exercism</span>
                         </div>
                     </div>
                     <div class="v21-cols">
-                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over two million people to code, for free, forever.</p>
+                        <p class="jp">I've spent 20 years in and around this stuff. I started out in AI, back when that meant something very different, and ended up co-inventing a patented system still used in heart surgery today. I've built and run companies that worked, and a few that didn't. And I founded Exercism, a not-for-profit that has now taught over three million people to code, for free, forever.</p>
                         <p class="jp">Programming has given me a career, a livelihood and a genuinely brilliant twenty years making awesome stuff, and I've never stopped wanting other people to have that too.</p>
                     </div>
                     <span class="sig">— Jeremy</span>
